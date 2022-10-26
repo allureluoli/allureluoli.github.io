@@ -186,7 +186,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-10-26 18:49:21 / Modified: 20:04:04" itemprop="dateCreated datePublished" datetime="2022-10-26T18:49:21+08:00">2022-10-26</time>
+      <time title="Created: 2022-10-26 18:49:21 / Modified: 20:17:17" itemprop="dateCreated datePublished" datetime="2022-10-26T18:49:21+08:00">2022-10-26</time>
     </span>
 
   
@@ -199,8 +199,22 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>使用BurpSuite将抓包的上传文件请求导出，存为譬如<strong>fuzz.txt</strong>的文件</p>
+          <p>#快速找出文件上传支持的扩展名<br>##1.抓包<br>使用BurpSuite将抓包的上传文件请求导出，存为譬如<strong>fuzz.txt</strong>的文件</p>
 
+<p>##2.修改内容<br>对其中进行<strong>模糊测试</strong>的内容修改</p>
+<p>将其修改为 <strong>FUZZ</strong> 而在其后跑的字典会替换这里的<strong>FUZZ</strong>关键词</p>
+
+
+<p>##3.字典小爆破</p>
+<p>使用一个包含各种后缀名的字典开始跑</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -request fuzz.txt -request-proto http -w /opt/SecLists/Fuzzing/extensions-most-common.fuzz.txt</span><br></pre></td></tr></table></figure>
+
+<p>响应结果如图：</p>
+
+<p>主要区别是Size的大小，这里有1115和1110两种。<br>可以看成1110是被允许的文件扩展名。</p>
+<p>##4.优化命令<br>增添 -ms 1110</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -request fuzz.txt -request-proto http -w /opt/SecLists/Fuzzing/extensions-most-common.fuzz.txt -ms 1110</span><br></pre></td></tr></table></figure>
+<p>现在仅显示支持的扩展名了</p>
 
       
     </div>
