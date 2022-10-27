@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20201130214011215.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1N0YXJ0MTIzNDU2Nw==,size_16,color_FFFFFF,t_70#pic_center">
 <meta property="og:image" content="c:\Users\Administrator.DESKTOP-PJMKVVR\AppData\Roaming\Typora\typora-user-images\image-20220505191817653.png">
 <meta property="article:published_time" content="2022-10-26T12:38:19.043Z">
-<meta property="article:modified_time" content="2022-10-27T01:08:41.055Z">
+<meta property="article:modified_time" content="2022-10-27T04:38:14.211Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20201029230018688.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1N0YXJ0MTIzNDU2Nw==,size_16,color_FFFFFF,t_70#pic_center">
@@ -202,7 +202,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-27 09:08:41" itemprop="dateModified" datetime="2022-10-27T09:08:41+08:00">2022-10-27</time>
+      <time title="Modified: 2022-10-27 12:38:14" itemprop="dateModified" datetime="2022-10-27T12:38:14+08:00">2022-10-27</time>
     </span>
 
   
@@ -336,7 +336,7 @@
 </li>
 </ul>
 <h3 id="方法的重装"><a href="#方法的重装" class="headerlink" title="方法的重装"></a>方法的重装</h3><ul>
-<li><p>在一个类中，有相同的函数名称，蛋形参不同的函数。</p>
+<li><p>在一个类中，有相同的函数名称，但形参不同的函数。</p>
 </li>
 <li><p>方法的重装的规则：</p>
 </li>
@@ -360,7 +360,7 @@
 <h3 id="可变参数"><a href="#可变参数" class="headerlink" title="可变参数"></a>可变参数</h3><ul>
 <li>JKD 1.5 开始，Java支持传递同类型的可变参数给一个方法。</li>
 <li>在方法声明中，在指定参数类型后加一个省略号（…）。</li>
-<li>一个方法中只能指定一个可变参数，它必须是方法的最后一个参数。任何扑腾的参数必须在它之前声明。</li>
+<li>一个方法中只能指定一个可变参数，它必须是方法的最后一个参数。任何普通的参数必须在它之前声明。</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> Fangfa;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo04</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">printMax</span><span class="params">(<span class="type">double</span>... numbers)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (numbers.length == <span class="number">0</span>)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;23333&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">     <span class="comment">//懒得写了捏</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -369,8 +369,8 @@
 <li>利用递归可以用简单的程序解决一些复杂的问题。它通常把一个大型复杂的问题层层华为一个与原问题相似的规模较小的问题来求解，递归策略只需少量的程序就可描述出接替过程所需要的多次重复计算，大大地减少了程序的代码量。递归的能力在于用有限的语句来定义对线的无限集合。</li>
 <li>递归结构包括两个部分：</li>
 <li><ul>
-<li>递归头：什么时候不调用资深方法。如果没有头，将陷入死循环。</li>
-<li>递归体：什么时候需要调用资深方法。</li>
+<li>递归头：什么时候不调用自身方法。如果没有头，将陷入死循环。</li>
+<li>递归体：什么时候需要调用自身方法。</li>
 </ul>
 </li>
 </ul>
