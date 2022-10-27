@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Ubuntu 20.04 LTS 使用笔记介绍 服务器是在腾讯云购买的2G 1核轻量级服务器，使用SSH远程连接。 基本命令登录 登录 su 用户名 （用户名默认为ubuntu）   输入密码 即可进入Home页面（在输入密码的过程中密码是隐藏的)   目录切换 使用CD命令：  cd  目录名	进入指定目录  cd - 目录名   返回上一级命令     查看文件使用命令 ls -a 查看当前目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu 20.04 LTS 使用笔记">
+<meta property="og:url" content="http://example.com/2022/10/26/Ubuntu%2020.04%20LTS%20%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Ubuntu 20.04 LTS 使用笔记介绍 服务器是在腾讯云购买的2G 1核轻量级服务器，使用SSH远程连接。 基本命令登录 登录 su 用户名 （用户名默认为ubuntu）   输入密码 即可进入Home页面（在输入密码的过程中密码是隐藏的)   目录切换 使用CD命令：  cd  目录名	进入指定目录  cd - 目录名   返回上一级命令     查看文件使用命令 ls -a 查看当前目">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-10-26T12:38:19.022Z">
+<meta property="article:modified_time" content="2022-10-27T01:07:30.860Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/10/26/Ubuntu%2020.04%20LTS%20%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/10/26/Ubuntu%2020.04%20LTS%20%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/","path":"2022/10/26/Ubuntu 20.04 LTS 使用笔记/","title":"Ubuntu 20.04 LTS 使用笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Ubuntu 20.04 LTS 使用笔记 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu-20-04-LTS-%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu 20.04 LTS 使用笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">基本命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BB%E5%BD%95"><span class="nav-number">1.2.1.</span> <span class="nav-text">登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E5%88%87%E6%8D%A2"><span class="nav-number">1.2.2.</span> <span class="nav-text">目录切换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.3.</span> <span class="nav-text">查看文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mv-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.4.</span> <span class="nav-text">mv 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sudo%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.5.</span> <span class="nav-text">sudo命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E6%BA%90"><span class="nav-number">1.2.6.</span> <span class="nav-text">更新源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6"><span class="nav-number">1.2.7.</span> <span class="nav-text">安装软件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wget"><span class="nav-number">1.2.8.</span> <span class="nav-text">wget</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text">Docker 的基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4-1"><span class="nav-number">2.1.1.</span> <span class="nav-text">基本命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#run-%E5%91%BD%E4%BB%A4"><span class="nav-number">2.1.2.</span> <span class="nav-text">run 命令</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/26/Ubuntu%2020.04%20LTS%20%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Ubuntu 20.04 LTS 使用笔记 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ubuntu 20.04 LTS 使用笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-26 20:38:19" itemprop="dateCreated datePublished" datetime="2022-10-26T20:38:19+08:00">2022-10-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-27 09:07:30" itemprop="dateModified" datetime="2022-10-27T09:07:30+08:00">2022-10-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Ubuntu-20-04-LTS-使用笔记"><a href="#Ubuntu-20-04-LTS-使用笔记" class="headerlink" title="Ubuntu 20.04 LTS 使用笔记"></a>Ubuntu 20.04 LTS 使用笔记</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p> 服务器是在腾讯云购买的2G 1核轻量级服务器，使用SSH远程连接。</p>
+<h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><ol>
+<li><p>登录 su 用户名 （用户名默认为ubuntu） </p>
+</li>
+<li><p>输入密码 即可进入Home页面（在输入密码的过程中密码是隐藏的)</p>
+</li>
+</ol>
+<h3 id="目录切换"><a href="#目录切换" class="headerlink" title="目录切换"></a>目录切换</h3><ol>
+<li><p>使用CD命令：</p>
+<ul>
+<li><p>cd  目录名	进入指定目录</p>
+</li>
+<li><p>cd - 目录名   返回上一级命令</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="查看文件"><a href="#查看文件" class="headerlink" title="查看文件"></a>查看文件</h3><p>使用命令 ls -a 查看当前目录下的文件</p>
+<p>其中文件有不同的颜色，每个颜色都有独特的意义</p>
+<p>绿色文件：可执行文件，可执行的程序 </p>
+<p>红色文件：压缩文件或者包文件 如 （jar zip 后缀的文件）</p>
+<p>蓝色文件：目录    （一般显示为 .. .）</p>
+<p>白色文件：普通文件，如文本文件，配置文件，源码文件等</p>
+<p>浅蓝色文件：链接文件，主要是使用ln命令建立的文件</p>
+<p>红色闪烁：表示链接的文件有问题</p>
+<p>黄色文件：表示设备文件</p>
+<h3 id="mv-命令"><a href="#mv-命令" class="headerlink" title="mv 命令"></a>mv 命令</h3><p>格式 mv [选项] 源文件或者目录 目标文件或者目录</p>
+<p>移动文件	举例： 将文件 233 移动到 666</p>
+<p>mv 233 666</p>
+<p>重命名文件	举例：将文件233 改名为 2333</p>
+<p>mv 233 2333</p>
+<h3 id="sudo命令"><a href="#sudo命令" class="headerlink" title="sudo命令"></a>sudo命令</h3><p>sudo 命令为是linux系统管理指令，是允许系统管理员让普通用户执行一些或者全部的root<em>命令</em>的一个工具。 –百度百科</p>
+<p>简单来说就是给予其他命令管理员权限，就和windows中的用管理员权限打开是相似的。</p>
+<p>举例 sudo wget -c xxxxxxxxxxxxx</p>
+<h3 id="更新源"><a href="#更新源" class="headerlink" title="更新源"></a>更新源</h3><p>apt-get update</p>
+<h3 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h3><p>apt-get install 软件名</p>
+<p>apt install 软件名</p>
+<p>其中apt 是合并了 apt-get 和 apt-cache 的简化命令</p>
+<p>原理是先搜索再下载安装，搜不到不装</p>
+<p><em><strong>其中使用了非常好用的分段下载llastest,得益于联合文件系统</strong></em></p>
+<h3 id="wget"><a href="#wget" class="headerlink" title="wget"></a>wget</h3><p>Wget 常用于下载</p>
+<p>格式: wget 参数 路径</p>
+<h1 id=""><a href="#" class="headerlink" title=""></a></h1><hr>
+<h2 id="Docker-的基本使用"><a href="#Docker-的基本使用" class="headerlink" title="Docker 的基本使用"></a>Docker 的基本使用</h2><p>Docker 名为容器，是挂载软件，子系统，诸如此类的不二选择。</p>
+<h3 id="基本命令-1"><a href="#基本命令-1" class="headerlink" title="基本命令"></a>基本命令</h3><p>镜像命令<br>docker images 查看镜像<br>docker search +名称 搜索镜像 + ##–filter&#x3D;STARTS&#x3D;数字 收藏数搜索）<br>dockers pull #下载镜像:tag 版本</p>
+<p>docker rmi +docker rmi +id +id +id 删除镜像<br>dockers rmi -f 删除全部 $(docker imgaes -aq)<br>dockers rm (运行的不能删除)+id删除容器<br>dockers rm -f 强制删除全部  $(docker ps -aq)<br>docker ps -a -q|xargs docker rm 删除所有容器</p>
+<h3 id="run-命令"><a href="#run-命令" class="headerlink" title="run 命令"></a>run 命令</h3><p>格式：docker run 参数 参数 参数</p>
+<p>举例：</p>
+<p>sudo docker run -it  -v ~&#x2F;txzz2&#x2F;docker:&#x2F;app&#x2F;data -p 5124:5124 5eaf4cfde9c5</p>
+<p>解剖 sudo 获取权限 </p>
+<p>docker run 为基本 </p>
+<p>-it 为交互式运行 </p>
+<p>-v ~&#x2F;路径  绑定容器数据卷 </p>
+<p>-p 指定容器端口</p>
+<p>后面为镜像名</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/10/26/%E9%80%9F%E5%87%BA%E6%96%87%E4%BB%B6%E6%89%A9%E5%B1%95%E5%90%8D/" rel="prev" title="速出文件扩展名">
+                  <i class="fa fa-chevron-left"></i> 速出文件扩展名
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/10/26/%E8%BF%99%E6%98%AF%E7%88%B7%E7%9A%84%E7%AC%94%E8%AE%B0/" rel="next" title="JAVA SE _1">
+                  JAVA SE _1 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
