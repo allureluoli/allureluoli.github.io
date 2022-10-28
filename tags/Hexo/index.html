@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   
   
-  <title>网络安全基础 | 二月的博客</title>
+  <title>标签: Hexo | 二月的博客</title>
   <meta name="author" content="Two Moon" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -14,17 +14,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="format-detection" content="telphone=no, email=no" />
   
-    <meta name="keywords" content="" />
+    <meta name="keywords" content="博客,JAVA,Linux,Python,C++" />
   
-  <meta name="description" content="#漏洞 1.网络协议本身的逻辑漏洞2.通过网络分析工具，窃取3.应用场景中网络协议的不同逻辑错误4.基主机，操作系统，通信层，应用层 协议：ARP协议：根据IP获取物理地址，无法在对等网络中解析数据包的来源 ARP欺骗：通过MAC地址与目标IP相关联。以便于攻击者可以接收到与目标的任何？ 2.DNS 可将域名解析为IP 缓存中毒，DNS欺骗 3.IP协议  根据端到端的设计原则，IP为主机提供一种">
-<meta property="og:type" content="article">
-<meta property="og:title" content="网络安全基础">
-<meta property="og:url" content="http://example.com/2022/09/22/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/index.html">
+  <meta name="description" content="一个小菜菜的个人博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="标签: Hexo">
+<meta property="og:url" content="http://example.com/tags/Hexo/index.html">
 <meta property="og:site_name" content="二月的博客">
-<meta property="og:description" content="#漏洞 1.网络协议本身的逻辑漏洞2.通过网络分析工具，窃取3.应用场景中网络协议的不同逻辑错误4.基主机，操作系统，通信层，应用层 协议：ARP协议：根据IP获取物理地址，无法在对等网络中解析数据包的来源 ARP欺骗：通过MAC地址与目标IP相关联。以便于攻击者可以接收到与目标的任何？ 2.DNS 可将域名解析为IP 缓存中毒，DNS欺骗 3.IP协议  根据端到端的设计原则，IP为主机提供一种">
+<meta property="og:description" content="一个小菜菜的个人博客">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-09-22T01:35:51.201Z">
-<meta property="article:modified_time" content="2022-10-28T12:15:53.102Z">
 <meta property="article:author" content="Two Moon">
 <meta property="article:tag" content="博客,JAVA,Linux,Python,C++">
 <meta name="twitter:card" content="summary">
@@ -130,165 +128,93 @@
 
         
 
-            <article itemscope itemtype="https://schema.org/Article">
-    
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/22/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
-    <div class="kratos-hentry kratos-post-inner clearfix">
-        <header class="kratos-entry-header">
+            <!-- Breadcrumb for tag & category page -->
+
+    <article class="kratos-hentry kratos-entry-border-new clearfix">
+        <div class="kratos-breadcrumb">
+            <a href="/">
+                <i class="fa fa-home"></i>
+            </a>
+            <i class="fa fa-angle-right"></i>
             
-                <h1 class="kratos-entry-title text-center" itemprop="name headline">网络安全基础</h1>
-            
-            
-            <ul class="kratos-post-meta text-center">
-                <li><time datetime="2022-09-22T01:35:51.201Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2022-09-22</time></li>
-                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
-                    <i class="fa fa-user"></i> 作者 <span itemprop="name">Two Moon</span>
-                </li>
-                <li>
-                    <i class="fa fa-edit"></i> 
-                    
-                    
-                        527
-                    
-                    字
-                </li>
-                
-            </ul>
-        </header>
-        <div class="kratos-post-content">
-            
-            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
-                <div class="icon"><i class="fa fa-warning"></i></div>
-                <div class="text"><p>本文最后编辑于 <time datetime="1666959353102"></time> 前，其中的内容可能需要更新。</p></div>
-            </div>
+                <a href="/tags/">
+                    标签
+                </a>
+                <i class="fa fa-angle-right"></i>
+                <a href="/tags/Hexo">
+                    Hexo
+                </a>
             
             
-            
-            <hr />
-            <div itemprop="articleBody"><p>#漏洞</p>
-<p>1.网络协议本身的逻辑漏洞<br>2.通过网络分析工具，窃取<br>3.应用场景中网络协议的不同逻辑错误<br>4.基主机，操作系统，通信层，应用层</p>
-<p>协议：<br>ARP协议：根据IP获取物理地址，无法在对等网络中解析数据包的来源</p>
-<p>ARP欺骗：<br>通过MAC地址与目标IP相关联。以便于攻击者可以接收到与目标的任何？</p>
-<p>2.DNS<br> 可将域名解析为IP<br> 缓存中毒，DNS欺骗</p>
-<p>3.IP协议<br>  根据端到端的设计原则，IP为主机提供一种无连接、不可靠、尽力而为的数据包传输服务。<br>  吧发送的IP包中的源IP地址 改成被新人的友好主机的IP地址，进而实施攻击。</p>
-<p>4.远程桌面协议 RDP<br>  RDP漏洞攻击，不用任何交互绕过认证，直接通过RDP协议进行连接，进而发送恶意代码。</p>
-<p>5.简单邮件传输协议（SMTP）<br>通过电子邮件，发送垃圾软件和电子邮件。执行目录攻击，收集有效电子邮件。<br>根据漏洞进行缓冲区溢出攻击，特洛伊木马攻击和shell脚本攻击等，还可利用电子邮件发送垃圾邮件或恶意软件。</p>
-<p>#软件和硬件的漏洞</p>
-<p>1.软件<br>系统软件<br>应用软件<br>数据库软件</p>
-<p>软件错误，软件缺陷，软件失效</p>
-<ol start="2">
-<li>硬件，通过通信线路传输，传输过程中也可能被截取</li>
-<li>电磁波辐射中的信息也可能被接受<br>4.水电，空调，中断，会影响系统运行</li>
-</ol>
-</div>
         </div>
+    </article>
+
+
+
+
+    
+    
+        <article class="kratos-hentry clearfix" itemscope itemtype="https://schema.org/Article">
+            <div class="kratos-entry-border-new clearfix">
+                
+                <div class="kratos-entry-thumb-new">
+                    <a href="/2022/09/26/hello-world/">
+                        
+                            <img class="kratos-entry-thumb-new-img" alt="">
+                        
+                    </a>
+                </div>
+                <div class="kratos-post-inner-new">
+                    <header class="kratos-entry-header-new">
+                            <a class="label-link" href="/categories/Hexo/">Hexo</a>
+                        <h2 class="kratos-entry-title-new"><a href="/2022/09/26/hello-world/" itemprop="mainEntityOfPage"><span itemprop="name headline">Hello World</span></a>
+                    </header>
+                    <div class="kratos-entry-content-new">
+                        <p itemProp="description">
+                            
+                                Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using ...
+                            
+                        </p>
+                    </div>
+                </div>
+                <footer class="kratos-post-meta-new">
+                    <span class="pull-left">
+                        <time datetime="2022-09-26T14:56:06.139Z" itemprop="datePublished">
+                            <a><i class="fa fa-calendar"></i> 2022-09-26</a>
+                        </time>
+                        <a>
+                            
+                                <i class="fa fa-tags"></i>
+                                <a class="tag-none-link" href="/tags/Hexo/" rel="tag">Hexo</a>
+                            
+                        </a>
+                        
+                            <!-- 当前仅支持valine/waline自带的统计功能 -->
+                            
+                        
+                        
+                            <!-- 当前仅支持waline自带的统计功能 -->
+                            
+                        
+                    </span>
+                    <span class="pull-right">
+                        <a class="read-more" href="/2022/09/26/hello-world/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                    </span>
+                </footer>
+            </div>
+        </article>
+    
+
+
+
+
+
+    <div class="hidden">
+        <!-- 加载文章阅读对应的统计功能，评论自带的那种 -->
         
-            <div class="kratos-copyright text-center clearfix">
-                <h5 itemprop="copyrightNotice">本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
-            </div>
-        
-        <footer class="kratos-entry-footer clearfix">
-            
-                <div class="post-like-donate text-center clearfix" id="post-like-donate">
-                
-                
-                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
-                    <div class="share-wrap" style="display: none;">
-    <div class="share-group">
-        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-qq"></i>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-star"></i>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-weixin"></i>
-            </div>
-            <div class="share-int">
-                <div class="qrcode" id="wechat-qr"></div>
-                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-weibo"></i>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-facebook"></i>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-twitter"></i>
-            </div>
-        </a>
     </div>
-    <script type="text/javascript">
-        $(()=>{
-            new QRCode("wechat-qr", {
-                text: "http://example.com/2022/09/22/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/",
-                width: 150,
-                height: 150,
-                correctLevel : QRCode.CorrectLevel.H
-            });
-        });
-        function share(dest) {
-            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
-            const weiboBase     = "https://service.weibo.com/share/share.php?";
-            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
-            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
-            const twitterBase   = "https://twitter.com/intent/tweet?";
-            const hostUrl       = "http://example.com/2022/09/22/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/";
-            const title         = "「网络安全基础」";
-            const excerpt       = `#漏洞
-1.网络协议本身的逻辑漏洞2.通过网络分析工具，窃取3.应用场景中网络协议的不同逻辑错误4.基主机，操作系统，通信层，应用层
-协议：ARP协议：根据IP获取物理地址，无法在对等网络中解析数据包的来源
-ARP欺骗：通过MAC地址...`;
-            let _URL;
-            switch (dest) {
-                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
-                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
-                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
-                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
-                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
-            }
-            window.open(_URL);
-        };
-    </script>
-</div>
-                
-                </div>
-            
-            <div class="footer-tag clearfix">
-                <div class="pull-left">
-                <i class="fa fa-tags"></i>
-                    
-                </div>
-                <div class="pull-date">
-                    <time datetime="2022-10-28T12:15:53.102Z" itemprop="dateModified">最后编辑：2022-10-28</time>
-                </div>
-            </div>
-        </footer>
-    </div>
-    
-        <nav class="navigation post-navigation clearfix" role="navigation">
-            
-            
-            <div class="nav-next clearfix">
-                <a title=" Hello World" href="/2022/09/26/hello-world/">下一篇 &gt;</a>
-            </div>
-            
-        </nav>
-    
-    
-</article>
+
+
 
         
 
@@ -301,6 +227,8 @@ ARP欺骗：通过MAC地址...`;
 
 <section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
     <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+        <div class="sticky-area">
     
     
                 <aside id="krw-about" class="widget widget-kratos-about clearfix">
@@ -341,8 +269,6 @@ ARP欺骗：通过MAC地址...`;
     </div>
 </aside>
             
-                    <div class="sticky-area">
-                
                 
   <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
     <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
