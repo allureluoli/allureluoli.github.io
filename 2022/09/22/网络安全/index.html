@@ -20,27 +20,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+    <meta name="description" content="#漏洞 1.网络协议本身的逻辑漏洞2.通过网络分析工具，窃取3.应用场景中网络协议的不同逻辑错误4.基主机，操作系统，通信层，应用层 协议：ARP协议：根据IP获取物理地址，无法在对等网络中解析数据包的来源 ARP欺骗：通过MAC地址与目标IP相关联。以便于攻击者可以接收到与目标的任何？ 2.DNS 可将域名解析为IP 缓存中毒，DNS欺骗 3.IP协议  根据端到端的设计原则，IP为主机提供一种">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2022/09/26/hello-world/index.html">
+<meta property="og:title" content="网络安全基础">
+<meta property="og:url" content="http://example.com/2022/09/22/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/index.html">
 <meta property="og:site_name" content="二月的博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="#漏洞 1.网络协议本身的逻辑漏洞2.通过网络分析工具，窃取3.应用场景中网络协议的不同逻辑错误4.基主机，操作系统，通信层，应用层 协议：ARP协议：根据IP获取物理地址，无法在对等网络中解析数据包的来源 ARP欺骗：通过MAC地址与目标IP相关联。以便于攻击者可以接收到与目标的任何？ 2.DNS 可将域名解析为IP 缓存中毒，DNS欺骗 3.IP协议  根据端到端的设计原则，IP为主机提供一种">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-09-26T14:56:06.139Z">
-<meta property="article:modified_time" content="2022-09-27T10:54:27.864Z">
+<meta property="article:published_time" content="2022-09-22T01:35:51.201Z">
+<meta property="article:modified_time" content="2022-10-28T08:31:23.455Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="基础">
+<meta property="article:tag" content="安全">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2022/09/26/hello-world/">
+<link rel="canonical" href="http://example.com/2022/09/22/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/09/26/hello-world/","path":"2022/09/26/hello-world/","title":"Hello World"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/09/22/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/","path":"2022/09/22/网络安全/","title":"网络安全基础"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Hello World | 二月的博客</title>
+<title>网络安全基础 | 二月的博客</title>
   
 
 
@@ -96,7 +98,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -109,7 +111,6 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -170,7 +171,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/26/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/22/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -183,12 +184,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Hello World | 二月的博客">
+      <meta itemprop="name" content="网络安全基础 | 二月的博客">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          网络安全基础
         </h1>
 
         <div class="post-meta-container">
@@ -199,14 +200,23 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2022-09-26 22:56:06" itemprop="dateCreated datePublished" datetime="2022-09-26T22:56:06+08:00">2022-09-26</time>
+      <time title="Created: 2022-09-22 09:35:51" itemprop="dateCreated datePublished" datetime="2022-09-22T09:35:51+08:00">2022-09-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-09-27 18:54:27" itemprop="dateModified" datetime="2022-09-27T18:54:27+08:00">2022-09-27</time>
+      <time title="Modified: 2022-10-28 16:31:23" itemprop="dateModified" datetime="2022-10-28T16:31:23+08:00">2022-10-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">安全</span></a>
+        </span>
     </span>
 
   
@@ -219,19 +229,21 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ 测试<span class="string">&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+        <p>#漏洞</p>
+<p>1.网络协议本身的逻辑漏洞<br>2.通过网络分析工具，窃取<br>3.应用场景中网络协议的不同逻辑错误<br>4.基主机，操作系统，通信层，应用层</p>
+<p>协议：<br>ARP协议：根据IP获取物理地址，无法在对等网络中解析数据包的来源</p>
+<p>ARP欺骗：<br>通过MAC地址与目标IP相关联。以便于攻击者可以接收到与目标的任何？</p>
+<p>2.DNS<br> 可将域名解析为IP<br> 缓存中毒，DNS欺骗</p>
+<p>3.IP协议<br>  根据端到端的设计原则，IP为主机提供一种无连接、不可靠、尽力而为的数据包传输服务。<br>  吧发送的IP包中的源IP地址 改成被新人的友好主机的IP地址，进而实施攻击。</p>
+<p>4.远程桌面协议 RDP<br>  RDP漏洞攻击，不用任何交互绕过认证，直接通过RDP协议进行连接，进而发送恶意代码。</p>
+<p>5.简单邮件传输协议（SMTP）<br>通过电子邮件，发送垃圾软件和电子邮件。执行目录攻击，收集有效电子邮件。<br>根据漏洞进行缓冲区溢出攻击，特洛伊木马攻击和shell脚本攻击等，还可利用电子邮件发送垃圾邮件或恶意软件。</p>
+<p>#软件和硬件的漏洞</p>
+<p>1.软件<br>系统软件<br>应用软件<br>数据库软件</p>
+<p>软件错误，软件缺陷，软件失效</p>
+<ol start="2">
+<li>硬件，通过通信线路传输，传输过程中也可能被截取</li>
+<li>电磁波辐射中的信息也可能被接受<br>4.水电，空调，中断，会影响系统运行</li>
+</ol>
 
     </div>
 
@@ -240,18 +252,19 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag"># 基础</a>
+              <a href="/tags/%E5%AE%89%E5%85%A8/" rel="tag"># 安全</a>
+          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/09/22/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="prev" title="网络安全基础">
-                  <i class="fa fa-chevron-left"></i> 网络安全基础
-                </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/10/26/CSS/" rel="next" title="CSS">
-                  CSS <i class="fa fa-chevron-right"></i>
+                <a href="/2022/09/26/hello-world/" rel="next" title="Hello World">
+                  Hello World <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
