@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <link rel="icon" href="https://ga.candinya.com/avatar/a7f9e15fef26e0a540edc977e21cb3eb">
   
-  <title>搜索 | 二月的博客</title>
+  <title>好伙伴们 | 二月的博客</title>
   <meta name="author" content="Two Moon" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -16,12 +16,12 @@
   
     <meta name="keywords" content="博客,JAVA,Linux,Python,C++" />
   
-  <meta name="description" content="一个小菜菜的个人博客">
+  <meta name="description" content="好伙伴们在哪里~">
 <meta property="og:type" content="website">
-<meta property="og:title" content="搜索">
-<meta property="og:url" content="http://example.com/search/index.html">
+<meta property="og:title" content="好伙伴们">
+<meta property="og:url" content="http://example.com/friends/index.html">
 <meta property="og:site_name" content="二月的博客">
-<meta property="og:description" content="一个小菜菜的个人博客">
+<meta property="og:description" content="好伙伴们在哪里~">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://ga.candinya.com/avatar/a7f9e15fef26e0a540edc977e21cb3eb">
 <meta property="article:author" content="Two Moon">
@@ -195,34 +195,39 @@
 
         
 
-            <div class="kratos-hentry kratos-post-inner clearfix">
-    <div class="kratos-post-content">
-        <h2 class="title-h2 text-center">搜索</h2>
-        <form class="input-group" onsubmit="return inpSearch();">
-            <input class="form-input input-lg" id="search-input" maxlength="80" name="s" placeholder="有什么想找找看的呢o(*￣▽￣*)ブ" required type="search">
-            <button class="btn btn-primary" type="submit">找一找~</button>
-        </form>
-    </div>
-</div>
-
-<div class="alert alert-info" id="kr-search-notice">
-    这里是 二月的博客 的搜索引擎~
-</div>
-
-<div id="result-posts">
+            <article itemscope itemtype="https://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="">
     <div class="kratos-hentry kratos-post-inner clearfix">
         <div class="kratos-post-content">
-            <p>搜索多个关键词时请用空格分割，例如「前端 基础 Python」这样；</p>
-            <p>您也可以使用这些标签碰碰运气哦~</p>
-            <p class="search-demo-tags">
-                <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 18px; color: #b2b7be">前端</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 24px; color: #6c7588">基础</a> <a href="/tags/Python/" style="font-size: 18px; color: #b2b7be">Python</a> <a href="/tags/linux/" style="font-size: 18px; color: #b2b7be">linux</a> <a href="/tags/Hexo/" style="font-size: 18px; color: #b2b7be">Hexo</a> <a href="/tags/JAVA/" style="font-size: 21px; color: #8f96a3">JAVA</a> <a href="/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" style="font-size: 18px; color: #b2b7be">文件系统</a> <a href="/tags/%E5%8D%8F%E8%AE%AE/" style="font-size: 18px; color: #b2b7be">协议</a>
-            </p>
-        </div>
-    </div>
+            <h2 class="title-h2 text-center" itemprop="name headline">好伙伴们</h2>
+            <div itemprop="articleBody"><div class="linkpage">
+    <ul id="friendsList"></ul>
 </div>
 
-<script>var searchDataFile = "/search.json";</script>
-<script defer src="/js/local-search.min.js"></script>
+<script type="text/javascript">
+{
+    const flist = [{"name":"猫猫①号","link":"https://candinya.com","avatar":"../images/avatar.webp","bio":"喵~"},{"name":"猫猫②号","link":"https://candinya.com","avatar":"../images/avatar.webp","bio":"喵喵~"},{"name":"猫猫⑨号","link":"https://candinya.com","avatar":"../images/avatar.webp","bio":"咪啪~"}];
+    let friendNodes = '';
+    while (flist.length > 0) {
+        const rndNum = Math.floor(Math.random()*flist.length);
+        friendNodes += `<li><a target="_blank" href="${flist[rndNum].link}"><img src="${flist[rndNum].avatar}" onerror="this.src='/images/avatar.webp';this.onerror=null;"><h4>${flist[rndNum].name}</h4><p>${flist[rndNum].bio}</p></a></li>`;
+        flist.splice(rndNum, 1);
+    }
+    document.getElementById("friendsList").innerHTML = friendNodes;
+}
+</script></div>
+        </div>
+        <footer class="kratos-entry-footer clearfix">
+            <div class="footer-tag clearfix">
+                <div class="pull-date">
+                    <time datetime="2021-01-18T00:00:00.000Z" itemprop="dateModified">最后编辑：2021-01-18</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    
+</article>
 
         
 
