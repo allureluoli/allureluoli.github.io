@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <link rel="icon" href="../images/avatar.webp">
   
-  <title>档案馆: 2022 | 二月的博客</title>
+  <title>Python 复习笔记（三） | 二月的博客</title>
   <meta name="author" content="Two Moon" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -14,18 +14,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="format-detection" content="telphone=no, email=no" />
   
-    <meta name="keywords" content="博客,JAVA,Linux,Python,C++" />
+    <meta name="keywords" content="Python, 基础" />
   
-  <meta name="description" content="一个小菜菜的个人博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="档案馆: 2022">
-<meta property="og:url" content="http://example.com/archives/2022/page/2/index.html">
+  <meta name="description" content="##声明  Python 中的变量不需要特意声明类型，只需要在使用前提前赋值。而变量所指向的内存中对象的类型会自动的根据变量所赋值的类型去自动声明。   等号（&#x3D;）用来给变量赋值。 ##多变量赋值  Python中可以同时给多个变量赋值同一个数，也可以给同时给多个不同的变量赋不同的值。  如下： 1234a &#x3D; b &#x3D; c &#x3D; 1a,b,c&#x3D;1,2,&quot;三&quot;    基本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 复习笔记（三）">
+<meta property="og:url" content="http://example.com/2022/10/29/Python%20%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
 <meta property="og:site_name" content="二月的博客">
-<meta property="og:description" content="一个小菜菜的个人博客">
+<meta property="og:description" content="##声明  Python 中的变量不需要特意声明类型，只需要在使用前提前赋值。而变量所指向的内存中对象的类型会自动的根据变量所赋值的类型去自动声明。   等号（&#x3D;）用来给变量赋值。 ##多变量赋值  Python中可以同时给多个变量赋值同一个数，也可以给同时给多个不同的变量赋不同的值。  如下： 1234a &#x3D; b &#x3D; c &#x3D; 1a,b,c&#x3D;1,2,&quot;三&quot;    基本">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/avatar.webp">
+<meta property="article:published_time" content="2022-10-29T03:46:42.983Z">
+<meta property="article:modified_time" content="2022-10-29T04:48:56.494Z">
 <meta property="article:author" content="Two Moon">
-<meta property="article:tag" content="博客,JAVA,Linux,Python,C++">
+<meta property="article:tag" content="基础">
+<meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/avatar.webp">
   
@@ -202,103 +205,209 @@
 
         
 
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/29/Python%20%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
             
-<style>
-  .post-meta time{color:#00a7e0}
-  @media (max-width:767px){.posts-collapse{margin:0 20px}
-  .posts-collapse .post-meta,
-  .posts-collapse .post-title{display:block;width:auto;text-align:left}}
-  .posts-collapse{position:relative}
-  .posts-collapse::after{content:" ";position:absolute;top:20px;left:0;margin-left:-2px;width:4px;height:calc(100% - 35px);background:#f5f5f5;z-index:-1}
-  @media (max-width:991px){.posts-collapse{margin:0 20px}}
-  .posts-collapse .collection-title{position:relative}
-  .posts-collapse .collection-title h1,
-  .posts-collapse .collection-title h2{margin-left:20px}
-  .posts-collapse .collection-title small{color:#bbb;margin-left:5px}
-  .posts-collapse .collection-title::before{content:" ";position:absolute;left:0;top:50%;margin-left:-4px;margin-top:-4px;width:8px;height:8px;background:#bbb;border-radius:50%}
-  .posts-collapse .post-header{position:relative;transition-duration:.2s;transition-timing-function:ease-in-out;transition-delay:0s;transition-property:border}
-  .posts-collapse .post-header::before{content:" ";position:absolute;left:0;top:12px;width:6px;height:6px;margin-left:-4px;background:#bbb;border-radius:50%;border:1px solid #fff;transition: all .3s ease-in-out}
-  .posts-collapse .post-header:hover{border-bottom-color:#666}
-  .posts-collapse .post-header:hover::before{background:#222}
-  .posts-collapse .post-meta{position:absolute;font-size:12px;left:20px;top:5px}
-  .posts-collapse .post-comments-count{display:none}
-  .posts-collapse .post-title{margin-left:70px;font-size:16px;font-weight:400;line-height:inherit}
-  .posts-collapse .post-title::after{margin-left:3px;opacity:.6}
-  .posts-collapse .post-title a{color:#666;border-bottom:none}
-</style>
-
-  <article>
-      <div class="kratos-hentry kratos-post-inner clearfix">
-          <div class="kratos-post-content">
-            <h2 class="title-h2 text-center">文章归档</h2>
-            <div id="archives">
-              <div class="post-block archive post" style="margin-left: 2em;">
-                <h3 class="archive-page-counter">当前共有 2 篇文章 (゜-゜)つロ 干杯~</h3>
-                <div class="posts-collapse">
-                  
-                  
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">Python 复习笔记（三）</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2022-10-29T03:46:42.983Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2022-10-29</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">Two Moon</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
                     
                     
-                      <!-- 没遇到Title的会被自动忽略年份，即使并不一致 -->
-                      
-                      <div class="collection-title">
-                        <a href="/archives/2022/"><h2 class="archive-year">2022</h2></a>
-                      </div>
+                        529
                     
-                    
-                      <article class="post" itemscope itemtype="https://schema.org/Article">
-                        <header class="post-header">
-                          <h3 class="post-title">
-                            
-                                <a class="post-title-link" href="/2022/09/26/hello-world/" itemprop="mainEntityOfPage">
-                                  <span itemprop="name headline">Hello World</span>
-                                </a>
-                            
-                          </h3>
-                          <div class="post-meta">
-                            <time class="post-time" itemprop="datePublished"
-                                  datetime="2022-09-26T14:56:06.139Z">
-                              09-26
-                            </time>
-                          </div>
-                        </header>
-                      </article>
-                    
-                  
-                    
-                    
-                    
-                      <article class="post" itemscope itemtype="https://schema.org/Article">
-                        <header class="post-header">
-                          <h3 class="post-title">
-                            
-                                <a class="post-title-link" href="/2022/09/22/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" itemprop="mainEntityOfPage">
-                                  <span itemprop="name headline">网络安全基础</span>
-                                </a>
-                            
-                          </h3>
-                          <div class="post-meta">
-                            <time class="post-time" itemprop="datePublished"
-                                  datetime="2022-09-22T01:35:51.201Z">
-                              09-22
-                            </time>
-                          </div>
-                        </header>
-                      </article>
-                    
-                  
-                </div>
-              </div>
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1667018936494"></time> 前，其中的内容可能需要更新。</p></div>
             </div>
-        </div>
-      </div>
-      
-        <div class='text-center pagination'>
-        <a class="extend prev" rel="prev" href="/archives/2022/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/2022/">1</a><span class="page-number current">2</span>
-        </div>
-      
-  </article>
+            
+            
+            
+            <hr />
+            <div itemprop="articleBody"><p>##声明<br>  Python 中的变量不需要特意声明类型，只需要在使用前提前赋值。而变量所指向的内存中对象的类型会自动的根据变量所赋值的类型去自动声明。</p>
+<p>  等号（&#x3D;）用来给变量赋值。</p>
+<p>##多变量赋值<br>  Python中可以同时给多个变量赋值同一个数，也可以给同时给多个不同的变量赋不同的值。<br>  如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">a = b = c = <span class="number">1</span></span><br><span class="line">a,b,c=<span class="number">1</span>,<span class="number">2</span>,<span class="string">&quot;三&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
+
+<ul>
+<li>基本数据类型</li>
+</ul>
+<p>Python3 中有六个标准的数据类型：</p>
+<pre><code>-    Number（数字）
+-    String（字符串）
+-    List（列表）
+-    Tuple（元组）
+-    Set（集合）
+-    Dictionary（字典）
+</code></pre>
+<p>其中，可分为不可变数据和可变数据:</p>
+<ul>
+<li><p>不可变数据（3 个）：Number（数字）、String（字符串）、Tuple（元组）；</p>
+</li>
+<li><p>可变数据（3 个）：List（列表）、Dictionary（字典）、Set（集合）。</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p><strong>Number（数字）</strong><br>int：整数<br>float：浮点数<br>bool：布尔值<br>complex：复数</p>
+</li>
+<li><p><strong>String（字符串）</strong></p>
+</li>
+<li><p><strong>List（列表）</strong></p>
+</li>
+<li><p><strong>Set（集合）</strong></p>
+</li>
+<li><p><strong>Dictionary（字典）</strong></p>
+</li>
+</ul>
+</div>
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <h5 itemprop="copyrightNotice">本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2022/10/29/Python%20%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2022/10/29/Python%20%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/";
+            const title         = "「Python 复习笔记（三）」";
+            const excerpt       = `##声明  Python 中的变量不需要特意声明类型，只需要在使用前提前赋值。而变量所指向的内存中对象的类型会自动的根据变量所赋值的类型去自动声明。
+  等号（&#x3D;）用来给变量赋值。
+##多变量赋值  Python中可以同时给...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/Python/" rel="tag">Python</a>, <a class="tag-none-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2022-10-29T04:48:56.494Z" itemprop="dateModified">最后编辑：2022-10-29</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 网络七层协议OSI" href="/2022/10/28/7层/">&lt; 上一篇</a>
+            </div>
+            
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2022/10/29/Python%20%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/',
+                path: '/2022/10/29/Python%20%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/'
+            }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Kratos-Rebirth-Demo","owner":"Candinya","admin":["Candinya"],"distractionFreeMode":false}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
 
         
 
@@ -311,8 +420,6 @@
 
 <section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
     <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
-    
-        <div class="sticky-area">
     
     
                 <aside id="krw-about" class="widget widget-kratos-about clearfix">
@@ -353,6 +460,8 @@
     </div>
 </aside>
             
+                    <div class="sticky-area">
+                
                 
   <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
     <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
