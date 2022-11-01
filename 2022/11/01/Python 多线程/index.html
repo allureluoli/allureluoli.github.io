@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <link rel="icon" href="../images/avatar.webp">
   
-  <title>Hello World | 二月的博客</title>
+  <title>Python多线程学习 | 二月的博客</title>
   <meta name="author" content="Two Moon" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -14,20 +14,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="format-detection" content="telphone=no, email=no" />
   
-    <meta name="keywords" content="Hexo" />
+    <meta name="keywords" content="Python模块, 基础" />
   
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="##认识多线程##  多线程类似于同时执行多个不同程序，多线程运行有如下优点：  使用线程可以把占据长时间的程序中的任务放到后台去处理。 用户界面可以更加吸引人，比如用户点击了一个按钮去触发某些事件的处理，可以弹出一个进度条来显示处理的进度。 程序的运行速度可能加快。 在一些等待的任务实现上如用户输入、文件读写和网络收发数据等，线程就比较有用了。在这种情况下我们可以释放一些珍贵的资源如内存占用等等">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2022/09/26/hello-world/index.html">
+<meta property="og:title" content="Python多线程学习">
+<meta property="og:url" content="http://example.com/2022/11/01/Python%20%E5%A4%9A%E7%BA%BF%E7%A8%8B/index.html">
 <meta property="og:site_name" content="二月的博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="##认识多线程##  多线程类似于同时执行多个不同程序，多线程运行有如下优点：  使用线程可以把占据长时间的程序中的任务放到后台去处理。 用户界面可以更加吸引人，比如用户点击了一个按钮去触发某些事件的处理，可以弹出一个进度条来显示处理的进度。 程序的运行速度可能加快。 在一些等待的任务实现上如用户输入、文件读写和网络收发数据等，线程就比较有用了。在这种情况下我们可以释放一些珍贵的资源如内存占用等等">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/avatar.webp">
-<meta property="article:published_time" content="2022-09-26T14:56:06.139Z">
-<meta property="article:modified_time" content="2022-10-28T14:05:47.227Z">
+<meta property="article:published_time" content="2022-11-01T05:00:00.000Z">
+<meta property="article:modified_time" content="2022-11-01T05:29:22.471Z">
 <meta property="article:author" content="Two Moon">
-<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="基础">
+<meta property="article:tag" content="Python模块">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/avatar.webp">
   
@@ -206,15 +207,15 @@
 
             <article itemscope itemtype="https://schema.org/Article">
     
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/26/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/01/Python%20%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
     <div class="kratos-hentry kratos-post-inner clearfix">
         <header class="kratos-entry-header">
             
-                <h1 class="kratos-entry-title text-center" itemprop="name headline">Hello World</h1>
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">Python多线程学习</h1>
             
             
             <ul class="kratos-post-meta text-center">
-                <li><time datetime="2022-09-26T14:56:06.139Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2022-09-26</time></li>
+                <li><time datetime="2022-11-01T05:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2022-11-01</time></li>
                 <li itemprop="author" itemscope itemtype="https://schema.org/Person">
                     <i class="fa fa-user"></i> 作者 <span itemprop="name">Two Moon</span>
                 </li>
@@ -222,7 +223,7 @@
                     <i class="fa fa-edit"></i> 
                     
                     
-                        418
+                        ~1.66K
                     
                     字
                 </li>
@@ -233,25 +234,59 @@
             
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
                 <div class="icon"><i class="fa fa-warning"></i></div>
-                <div class="text"><p>本文最后编辑于 <time datetime="1666965947227"></time> 前，其中的内容可能需要更新。</p></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1667280562471"></time> 前，其中的内容可能需要更新。</p></div>
             </div>
             
             
             
             <hr />
-            <div itemprop="articleBody"><p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g</span><br></pre></td></tr></table></figure>
+            <div itemprop="articleBody"><p>##认识多线程##</p>
+<blockquote><p> 多线程类似于同时执行多个不同程序，多线程运行有如下优点：</p>
+<ul>
+<li>使用线程可以把占据长时间的程序中的任务放到后台去处理。</li>
+<li>用户界面可以更加吸引人，比如用户点击了一个按钮去触发某些事件的处理，可以弹出一个进度条来显示处理的进度。</li>
+<li>程序的运行速度可能加快。</li>
+<li>在一些等待的任务实现上如用户输入、文件读写和网络收发数据等，线程就比较有用了。在这种情况下我们可以释放一些珍贵的资源如内存占用等等。<br>每个独立的线程有一个程序运行的入口、顺序执行序列和程序的出口。但是线程不能够独立执行，必须依存在应用程序中，由应用程序提供多个线程执行控制。</li>
+</ul>
+<p>每个线程都有他自己的一组CPU寄存器，称为线程的上下文，该上下文反映了线程上次运行该线程的CPU寄存器的状态。</p>
+<p>指令指针和堆栈指针寄存器是线程上下文中两个最重要的寄存器，线程总是在进程得到上下文中运行的，这些地址都用于标志拥有线程的进程地址空间中的内存。 </p>
+<footer><strong>@菜鸟教程</strong><cite><a target="_blank" rel="noopener" href="https://www.runoob.com/python3/python3-basic-syntax.html">www.runoob.com/python3/python3-basic-syntax.html</a></cite></footer></blockquote>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>总结：<br>  一、<br>    1.线程无法独立执行<br>    2.线程需要入口，执行序列，以及出口。<br>    3.线程需要主程序来控制。<br>  二、<br>    1.线程有独立的寄存器，称为上下文，反应了线程在CPU寄存器的状态。<br>    2.上下文中包含指令和指针（两个重要的寄存器）。<br>    3.线程在上下文中运行，内存地址都用于标志拥有线程的进程地址空间中的内存。<br>  三、<br>    1.线程可以被抢占，即中断<br>    2.其他线程运行时，线程可以暂搁（睡眠）——线程的退让<br>  四、<br>    线程可以分为：<br>    - 内核线程<br>    - 用户线程<br>    Python3线程最常用的两个模块为：<br>    - _thread<br>    - threading</p>
+<p>thread 模块已被废弃。用户可以使用 threading 模块代替。所以，在 Python3 中不能再使用”thread” 模块。为了兼容性，Python3 将 thread 重命名为 “_thread”。</p>
+<ul>
+<li>Pyton线程学习</li>
+<li>Python使用线程的方式有两种：函数 或者 类 包装线程对象</li>
+<li>函数式： 调用 _thread 模块中的start_new_thread()函数来产生新线程。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">_thread.start_new_thread ( function, args[, kwargs] )</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>参数说明:</p>
+<ul>
+<li><p>function : 线程函数。</p>
+</li>
+<li><p>args : 传递给线程函数的参数,他必须是个tuple类型。</p>
+</li>
+<li><p>kwargs - 可选参数。</p>
+</li>
+<li><p>线程模块</p>
+</li>
+<li><p>Python3 通过两个标准库 _thread 和 threading 提供对线程的支持。</p>
+</li>
+<li><p>_thread 提供了低级别的、原始的线程以及一个简单的锁，它相比于 threading 模块的功能还是比较有限的。</p>
+</li>
+<li><p>threading 模块除了包含 _thread 模块中的所有方法外，还提供的其他方法：</p>
+</li>
+</ul>
+<p>threading.currentThread(): 返回当前的线程变量。 </p>
+<p>threading.enumerate(): 返回一个包含正在运行的线程的list。正在运行指线程启动后、结束前，不包括启动前和终止后的线程。 </p>
+<p>threading.activeCount(): 返回正在运行的线程数量，与len(threading.enumerate())有相同的结果。</p>
+<p>除了使用方法外，线程模块同样提供了Thread类来处理线程，Thread类提供了以下方法:</p>
+<p>run(): 用以表示线程活动的方法。</p>
+<p>start():启动线程活动。</p>
+<p>join([time]): 等待至线程中止。这阻塞调用线程直至线程的join() 方法被调用中止-正常退出或者抛出未处理的异常-或者是可选的超时发生。</p>
+<p>isAlive(): 返回线程是否活动的。</p>
+<p>getName(): 返回线程名。</p>
+<p>setName(): 设置线程名。</p>
 </div>
         </div>
         
@@ -305,7 +340,7 @@
     <script type="text/javascript">
         $(()=>{
             new QRCode("wechat-qr", {
-                text: "http://example.com/2022/09/26/hello-world/",
+                text: "http://example.com/2022/11/01/Python%20%E5%A4%9A%E7%BA%BF%E7%A8%8B/",
                 width: 150,
                 height: 150,
                 correctLevel : QRCode.CorrectLevel.H
@@ -317,9 +352,13 @@
             const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
             const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
             const twitterBase   = "https://twitter.com/intent/tweet?";
-            const hostUrl       = "http://example.com/2022/09/26/hello-world/";
-            const title         = "「Hello World」";
-            const excerpt       = `Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using ...`;
+            const hostUrl       = "http://example.com/2022/11/01/Python%20%E5%A4%9A%E7%BA%BF%E7%A8%8B/";
+            const title         = "「Python多线程学习」";
+            const excerpt       = `##认识多线程##
+ 多线程类似于同时执行多个不同程序，多线程运行有如下优点：
+
+使用线程可以把占据长时间的程序中的任务放到后台去处理。
+用户界面可以更加吸引人，比如用户点击了一个按钮去触发某些事件的处理，可以弹出一个进度条来显示处理...`;
             let _URL;
             switch (dest) {
                 case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
@@ -338,10 +377,10 @@
             <div class="footer-tag clearfix">
                 <div class="pull-left">
                 <i class="fa fa-tags"></i>
-                    <a class="tag-none-link" href="/tags/Hexo/" rel="tag">Hexo</a>
+                    <a class="tag-none-link" href="/tags/Python%E6%A8%A1%E5%9D%97/" rel="tag">Python模块</a>, <a class="tag-none-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a>
                 </div>
                 <div class="pull-date">
-                    <time datetime="2022-10-28T14:05:47.227Z" itemprop="dateModified">最后编辑：2022-10-28</time>
+                    <time datetime="2022-11-01T05:29:22.471Z" itemprop="dateModified">最后编辑：2022-11-01</time>
                 </div>
             </div>
         </footer>
@@ -350,13 +389,9 @@
         <nav class="navigation post-navigation clearfix" role="navigation">
             
             <div class="nav-previous clearfix">
-                <a title=" 网络安全基础" href="/2022/09/22/网络安全/">&lt; 上一篇</a>
+                <a title=" NoneBot读取猫猫词库方法" href="/2022/11/01/Nonebot读取猫猫词库方法/">&lt; 上一篇</a>
             </div>
             
-            
-            <div class="nav-next clearfix">
-                <a title=" 速出文件扩展名" href="/2022/10/26/速出文件扩展名/">下一篇 &gt;</a>
-            </div>
             
         </nav>
     
@@ -368,8 +403,8 @@
         const init = () => {
             console.log('Gitalk loading...');
             const gitalk = new Gitalk(Object.assign({
-                id: '/2022/09/26/hello-world/',
-                path: '/2022/09/26/hello-world/'
+                id: '/2022/11/01/Python%20%E5%A4%9A%E7%BA%BF%E7%A8%8B/',
+                path: '/2022/11/01/Python%20%E5%A4%9A%E7%BA%BF%E7%A8%8B/'
             }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Kratos-Rebirth-Demo","owner":"Candinya","admin":["Candinya"],"distractionFreeMode":false}')));
 
             gitalk.render('gitalk-container');
