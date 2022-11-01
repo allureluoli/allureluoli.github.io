@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <link rel="icon" href="../images/avatar.webp">
   
-  <title>好伙伴们 | 二月的博客</title>
+  <title>NoneBot读取猫猫词库方法 | 二月的博客</title>
   <meta name="author" content="Two Moon" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -14,18 +14,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="format-detection" content="telphone=no, email=no" />
   
-    <meta name="keywords" content="博客,JAVA,Linux,Python,C++" />
+    <meta name="keywords" content="Bot, 基础" />
   
-  <meta name="description" content="好伙伴们在哪里~">
-<meta property="og:type" content="website">
-<meta property="og:title" content="好伙伴们">
-<meta property="og:url" content="http://example.com/friends/index.html">
+  <meta name="description" content="#话不多说，直接上代码###读取文件的方法##为了保证Bot的可移植性，将词库文件存在机器人插件目录中，同时使用此函数读取根目录路径，与之相对路径合并，生成绝对路径，保证文件的可读性。           def getRootPath():         # 获取文件目录         curPath &#x3D; os.path.abspath(os.path.dirname(__file__))">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NoneBot读取猫猫词库方法">
+<meta property="og:url" content="http://example.com/2022/11/01/Nonebot%E8%AF%BB%E5%8F%96%E7%8C%AB%E7%8C%AB%E8%AF%8D%E5%BA%93%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="二月的博客">
-<meta property="og:description" content="好伙伴们在哪里~">
+<meta property="og:description" content="#话不多说，直接上代码###读取文件的方法##为了保证Bot的可移植性，将词库文件存在机器人插件目录中，同时使用此函数读取根目录路径，与之相对路径合并，生成绝对路径，保证文件的可读性。           def getRootPath():         # 获取文件目录         curPath &#x3D; os.path.abspath(os.path.dirname(__file__))">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/avatar.webp">
+<meta property="article:published_time" content="2022-11-01T00:48:00.000Z">
+<meta property="article:modified_time" content="2022-11-01T01:01:40.993Z">
 <meta property="article:author" content="Two Moon">
-<meta property="article:tag" content="博客,JAVA,Linux,Python,C++">
+<meta property="article:tag" content="基础">
+<meta property="article:tag" content="Bot">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/avatar.webp">
   
@@ -203,36 +206,237 @@
         
 
             <article itemscope itemtype="https://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="">
+    
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/01/Nonebot%E8%AF%BB%E5%8F%96%E7%8C%AB%E7%8C%AB%E8%AF%8D%E5%BA%93%E6%96%B9%E6%B3%95/">
     <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">NoneBot读取猫猫词库方法</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2022-11-01T00:48:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2022-11-01</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">Two Moon</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~1.52K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
         <div class="kratos-post-content">
-            <h2 class="title-h2 text-center" itemprop="name headline">好伙伴们</h2>
-            <div itemprop="articleBody"><div class="linkpage">
-    <ul id="friendsList"></ul>
-</div>
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1667264500993"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            
+            <hr />
+            <div itemprop="articleBody"><p>#话不多说，直接上代码#<br>##读取文件的方法##<br>为了保证Bot的可移植性，将词库文件存在机器人插件目录中，同时使用此函数读取根目录路径，与之相对路径合并，生成绝对路径，保证文件的可读性。</p>
+<pre><code class="python">
+    
+    def getRootPath():
+        # 获取文件目录
+        curPath = os.path.abspath(os.path.dirname(__file__))
+        # 获取项目根路径，内容为当前项目的名字
+        rootPath = curPath[:curPath.find(&#39;love2&#39;) + len(&#39;love2&#39;)]
+        return rootPath
+    FilePath_1=str(getRootPath())
 
-<script type="text/javascript">
-{
-    const flist = [{"name":"碳酸天剑","link":"https://blog.tianscar.com/","avatar":"https://blog.tianscar.com/images/avatar.png","bio":"人的梦想，是不会结束的！"},{"name":"心与海制作组","link":"https://space.bilibili.com/352474844?spm_id_from=333.1007.0.0","avatar":"../image/心与海制作组logo.png","bio":"我的心浮于大海，我的眼望向星辰。"},{"name":"月之塔","link":"http://toweryue.ysepan.com/","avatar":"../images/avatar.webp","bio":"二月的E盘"}];
-    let friendNodes = '';
-    while (flist.length > 0) {
-        const rndNum = Math.floor(Math.random()*flist.length);
-        friendNodes += `<li><a target="_blank" href="${flist[rndNum].link}"><img src="${flist[rndNum].avatar}" onerror="this.src='/images/avatar.webp';this.onerror=null;"><h4>${flist[rndNum].name}</h4><p>${flist[rndNum].bio}</p></a></li>`;
-        flist.splice(rndNum, 1);
-    }
-    document.getElementById("friendsList").innerHTML = friendNodes;
-}
-</script></div>
+    print(FilePath_1)
+    def FilePath(FilePath_2):#拼接捏
+        FilePath_2=FilePath_1+FilePath_2
+        return FilePath_2
+
+##将文件生成字典##
+主要分为三个步骤：
+1.读取文件生成列表
+2.读取每个列表利用分割符将每个列表再分成两个列表
+3.遍历列表，将每两个列表生成一个字典
+
+
+```python
+
+    
+    i = 0
+    FG_2 = []
+    Fi_1 = open(FilePath(r&#39;\introduce\cat.ini&#39;))
+    #第一步
+    Fi_2 = Fi_1.readlines()
+    #第二步
+    for i in range(len(Fi_2)):
+        FG_1 = Fi_2[i].split(&quot;=&quot;)
+        FG_2.append(FG_1[0])
+        FG_2.append(FG_1[1])
+        i = i + 1
+    #第三步
+    zd_1 = &#123;&#125;
+    i = 0
+    while i&lt;=175:
+        i = i + 2
+        zd_1[FG_2[i]]=FG_2[i+1]
+
+##无限响应器-处理所有的消息##
+读取词库最大的问题在于，如何将每个消息文本都拿去和字典尝试。
+经过尝试我找到了如此办法。
+- 将on_message的消息反应设置为空，并降低事件响应器优先级。
+- （降低优先级是为了防止将其他正常的事件响应器盖过）
+为什么使用字典：
+因为字典读取失败会返回 None,是不会发出任何消息的。
+一旦Key找到了对应的键，消息就会返回出来。
+基于此机制，代码获得实现，
+原理并不复杂，但很好的避免了大量的使用代码设置回复语的代码厄余问题。
+上代码：（这里的异常处理是多余的,,小声bb）
+
+```python
+    
+    dialogue_1 = on_message(priority=20)
+    @dialogue_1.handle() #出错
+    async def handle_func(bot: Bot,event:GroupMessageEvent):
+    jsq = zd_1.get(str(event.get_message()))
+    try:
+        await dialogue_1.send(jsq)
+    except:
+        print(&quot;不行喵&quot;)
+</code></pre>
+</div>
         </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <h5 itemprop="copyrightNotice">本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+            </div>
+        
         <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2022/11/01/Nonebot%E8%AF%BB%E5%8F%96%E7%8C%AB%E7%8C%AB%E8%AF%8D%E5%BA%93%E6%96%B9%E6%B3%95/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2022/11/01/Nonebot%E8%AF%BB%E5%8F%96%E7%8C%AB%E7%8C%AB%E8%AF%8D%E5%BA%93%E6%96%B9%E6%B3%95/";
+            const title         = "「NoneBot读取猫猫词库方法」";
+            const excerpt       = `#话不多说，直接上代码###读取文件的方法##为了保证Bot的可移植性，将词库文件存在机器人插件目录中，同时使用此函数读取根目录路径，与之相对路径合并，生成绝对路径，保证文件的可读性。
+
+    
+    def getRootPat...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
             <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/Bot/" rel="tag">Bot</a>, <a class="tag-none-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a>
+                </div>
                 <div class="pull-date">
-                    <time datetime="2021-01-18T00:00:00.000Z" itemprop="dateModified">最后编辑：2021-01-18</time>
+                    <time datetime="2022-11-01T01:01:40.993Z" itemprop="dateModified">最后编辑：2022-11-01</time>
                 </div>
             </div>
         </footer>
     </div>
     
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" LOVE酱使用手册" href="/2022/10/30/LOVE_HELP/">&lt; 上一篇</a>
+            </div>
+            
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2022/11/01/Nonebot%E8%AF%BB%E5%8F%96%E7%8C%AB%E7%8C%AB%E8%AF%8D%E5%BA%93%E6%96%B9%E6%B3%95/',
+                path: '/2022/11/01/Nonebot%E8%AF%BB%E5%8F%96%E7%8C%AB%E7%8C%AB%E8%AF%8D%E5%BA%93%E6%96%B9%E6%B3%95/'
+            }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Kratos-Rebirth-Demo","owner":"Candinya","admin":["Candinya"],"distractionFreeMode":false}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
     
 </article>
 
@@ -247,8 +451,6 @@
 
 <section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
     <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
-    
-        <div class="sticky-area">
     
     
                 <aside id="krw-about" class="widget widget-kratos-about clearfix">
@@ -289,6 +491,8 @@
     </div>
 </aside>
             
+                    <div class="sticky-area">
+                
                 
   <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
     <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
