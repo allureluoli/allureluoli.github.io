@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/avatar.webp">
 <meta property="article:published_time" content="2022-11-01T00:48:00.000Z">
-<meta property="article:modified_time" content="2022-11-01T01:38:00.848Z">
+<meta property="article:modified_time" content="2022-11-02T01:52:43.234Z">
 <meta property="article:author" content="Two Moon">
 <meta property="article:tag" content="基础">
 <meta property="article:tag" content="Bot">
@@ -223,7 +223,7 @@
                     <i class="fa fa-edit"></i> 
                     
                     
-                        1370
+                        1388
                     
                     字
                 </li>
@@ -234,7 +234,7 @@
             
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
                 <div class="icon"><i class="fa fa-warning"></i></div>
-                <div class="text"><p>本文最后编辑于 <time datetime="1667266680848"></time> 前，其中的内容可能需要更新。</p></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1667353963234"></time> 前，其中的内容可能需要更新。</p></div>
             </div>
             
             
@@ -250,7 +250,7 @@
 <li>将on_message的消息反应设置为空，并降低事件响应器优先级。</li>
 <li>（降低优先级是为了防止将其他正常的事件响应器盖过）<br>为什么使用字典：<br>因为字典读取失败会返回 None,是不会发出任何消息的。<br>一旦Key找到了对应的键，消息就会返回出来。<br>基于此机制，代码获得实现，<br>原理并不复杂，但很好的避免了大量的使用代码设置回复语的代码厄余问题。<br>上代码：（这里的异常处理是多余的,,小声bb）</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">dialogue_1 = on_message(priority=<span class="number">20</span>)</span><br><span class="line"><span class="meta">@dialogue_1.handle() </span><span class="comment">#出错</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot,event:GroupMessageEvent</span>):</span><br><span class="line">   jsq = zd_1.get(<span class="built_in">str</span>(event.get_message()))</span><br><span class="line">   <span class="keyword">try</span>:</span><br><span class="line">       <span class="keyword">await</span> dialogue_1.send(jsq)</span><br><span class="line">   <span class="keyword">except</span>:</span><br><span class="line">       <span class="built_in">print</span>(<span class="string">&quot;不行喵&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">dialogue_1 = on_message(priority=<span class="number">100</span>)<span class="comment">#这里优先级的大小是数值越大便越小</span></span><br><span class="line"><span class="meta">@dialogue_1.handle() </span><span class="comment">#出错</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot,event:GroupMessageEvent</span>):</span><br><span class="line">   jsq = zd_1.get(<span class="built_in">str</span>(event.get_message()))</span><br><span class="line">   <span class="keyword">try</span>:</span><br><span class="line">       <span class="keyword">await</span> dialogue_1.send(jsq)</span><br><span class="line">   <span class="keyword">except</span>:</span><br><span class="line">       <span class="built_in">print</span>(<span class="string">&quot;不行喵&quot;</span>)</span><br></pre></td></tr></table></figure></div>
         </div>
         
             <div class="kratos-copyright text-center clearfix">
@@ -340,7 +340,7 @@
                     <a class="tag-none-link" href="/tags/Bot/" rel="tag">Bot</a>, <a class="tag-none-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a>
                 </div>
                 <div class="pull-date">
-                    <time datetime="2022-11-01T01:38:00.848Z" itemprop="dateModified">最后编辑：2022-11-01</time>
+                    <time datetime="2022-11-02T01:52:43.234Z" itemprop="dateModified">最后编辑：2022-11-02</time>
                 </div>
             </div>
         </footer>
@@ -349,7 +349,7 @@
         <nav class="navigation post-navigation clearfix" role="navigation">
             
             <div class="nav-previous clearfix">
-                <a title=" LOVE酱使用手册" href="/2022/10/30/LOVE_HELP/">&lt; 上一篇</a>
+                <a title=" NoneBot设置教学功能" href="/2022/11/01/Nonebot设置教学功能/">&lt; 上一篇</a>
             </div>
             
             
@@ -414,7 +414,7 @@
                 文章
             </span>
             <span class="count">
-                15
+                16
             </span>
         </a>
         <a class="meta-item" href="/categories/">
@@ -441,7 +441,7 @@
                 
   <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
     <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LOVE%E9%85%B1/">LOVE酱</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/">计算机网络技术</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LOVE%E9%85%B1/">LOVE酱</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/">计算机网络技术</a><span class="category-list-count">1</span></li></ul>
   </aside>
 
 
@@ -450,7 +450,7 @@
   <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
     <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
       <div class="tag-clouds">
-        <a href="/tags/Bot/" style="font-size: 0.67em;">Bot</a> <a href="/tags/Hexo/" style="font-size: 0.6em;">Hexo</a> <a href="/tags/JAVA/" style="font-size: 0.67em;">JAVA</a> <a href="/tags/LOVE%E9%85%B1/" style="font-size: 0.6em;">LOVE酱</a> <a href="/tags/Python/" style="font-size: 0.73em;">Python</a> <a href="/tags/Python%E6%A8%A1%E5%9D%97/" style="font-size: 0.6em;">Python模块</a> <a href="/tags/linux/" style="font-size: 0.6em;">linux</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 0.6em;">前端</a> <a href="/tags/%E5%8D%8F%E8%AE%AE/" style="font-size: 0.6em;">协议</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 0.8em;">基础</a> <a href="/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" style="font-size: 0.6em;">文件系统</a>
+        <a href="/tags/Bot/" style="font-size: 0.73em;">Bot</a> <a href="/tags/Hexo/" style="font-size: 0.6em;">Hexo</a> <a href="/tags/JAVA/" style="font-size: 0.67em;">JAVA</a> <a href="/tags/LOVE%E9%85%B1/" style="font-size: 0.6em;">LOVE酱</a> <a href="/tags/Python/" style="font-size: 0.73em;">Python</a> <a href="/tags/Python%E6%A8%A1%E5%9D%97/" style="font-size: 0.6em;">Python模块</a> <a href="/tags/linux/" style="font-size: 0.6em;">linux</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 0.6em;">前端</a> <a href="/tags/%E5%8D%8F%E8%AE%AE/" style="font-size: 0.6em;">协议</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 0.8em;">基础</a> <a href="/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" style="font-size: 0.6em;">文件系统</a>
       </div>
   </aside>
 
@@ -476,6 +476,12 @@
         
           
           
+            <a class="list-group-item" href="/2022/11/01/Nonebot%E8%AE%BE%E7%BD%AE%E6%95%99%E5%AD%A6%E5%8A%9F%E8%83%BD/"><i class="fa  fa-book"></i> NoneBot设置教学功能</a>
+            
+          
+        
+          
+          
             <a class="list-group-item" href="/2022/10/30/LOVE_HELP/"><i class="fa  fa-book"></i> LOVE酱使用手册</a>
             
           
@@ -487,11 +493,7 @@
           
         
           
-          
-            <a class="list-group-item" href="/2022/10/28/7%E5%B1%82/"><i class="fa  fa-book"></i> 网络七层协议OSI</a>
             
-          
-        
           
             
           
