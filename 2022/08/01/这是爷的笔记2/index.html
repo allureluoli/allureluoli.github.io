@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+
+<html lang="zh">
+
+<head>
+  
+  <meta name="baidu-site-verification" content="code-J1Qg17G6wT" />
+  <title>JAVASE_2 - 二月の档案室</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  
+  
+
+    <!-- Site Verification -->
+    <meta name="baidu-site-verification" content="code-J1Qg17G6wT" />
+
+  <link rel="shortcut icon" href="/images/head/allure.jpg" type="image/png" />
+  <meta name="description" content="通过函数访问到Scanner.java  （xxx.java） 通过左侧Structure 查看方法列表  package scanner;  import java.util.Scanner;  public class class5 &amp;#123;     public static void main(String[] args) &amp;#123;         &#x2F;&#x2F;我们可以输入多个数字，并求">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVASE_2">
+<meta property="og:url" content="https://allureluoli.gitee.io/myblog/2022/08/01/%E8%BF%99%E6%98%AF%E7%88%B7%E7%9A%84%E7%AC%94%E8%AE%B02/index.html">
+<meta property="og:site_name" content="二月の档案室">
+<meta property="og:description" content="通过函数访问到Scanner.java  （xxx.java） 通过左侧Structure 查看方法列表  package scanner;  import java.util.Scanner;  public class class5 &amp;#123;     public static void main(String[] args) &amp;#123;         &#x2F;&#x2F;我们可以输入多个数字，并求">
+<meta property="og:locale">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201029230018688.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1N0YXJ0MTIzNDU2Nw==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201130214011215.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1N0YXJ0MTIzNDU2Nw==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="c:/Users/Administrator.DESKTOP-PJMKVVR/AppData/Roaming/Typora/typora-user-images/image-20220505191817653.png">
+<meta property="article:published_time" content="2022-07-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-03-06T09:37:44.910Z">
+<meta property="article:author" content="Allureluoli">
+<meta property="article:tag" content="基础">
+<meta property="article:tag" content="JAVA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20201029230018688.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1N0YXJ0MTIzNDU2Nw==,size_16,color_FFFFFF,t_70#pic_center">
+  <link rel="stylesheet" href="https://lib.baomitu.com/highlight.js/9.15.8/styles/atom-one-dark.min.css" crossorigin>
+  <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css">
+  <link rel="stylesheet" href="/lib/iconfont/iconfont.css">
+  <link rel="stylesheet" href="/lib/fancybox/css/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="https://lib.baomitu.com/justifiedGallery/3.8.1/css/justifiedGallery.min.css">
+  
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2421060_8z08qcz5sq3.css">
+  
+  <link rel="stylesheet" href="/myblog/css/style.css?v=1678280582312">
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="mdui-drawer-body-left">
+  
+  <div id="nexmoe-background">
+    <div class="nexmoe-bg" style="background-image: url(/images/background/black_girl.png)"></div>
+    <div class="nexmoe-small" style="background-image: url(/images/background/black_young_girl.png)"></div>
+    <div class="mdui-appbar mdui-shadow-0">
+      <div class="mdui-toolbar">
+        <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+        <div class="mdui-toolbar-spacer"></div>
+        <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+        <a href="/myblog/" title="Allureluoli" class="mdui-btn mdui-btn-icon"><img src="/images/head/head.jpg" alt="Allureluoli"></a>
+       </div>
+    </div>
+  </div>
+  <div id="nexmoe-header">
+      <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/myblog/" title="Allureluoli">
+            <img src="/images/head/head.jpg" alt="Allureluoli" alt="Allureluoli">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div class="nexmoe-count-item"><span>Articles</span>31 <div class="item-radius"></div><div class="item-radius item-right"></div> </div>
+        <div class="nexmoe-count-item"><span>Tags</span>26<div class="item-radius"></div><div class="item-radius item-right"></div></div>
+        <div class="nexmoe-count-item"><span>Categories</span>14<div class="item-radius"></div><div class="item-radius item-right"></div></div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/myblog/myblog/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-meishi"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/myblog/archives.html" title="文章归档">
+            <i class="mdui-list-item-icon nexmoefont icon-hanbao1"></i>
+            <div class="mdui-list-item-content">
+                文章归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/myblog/about/index.html" title="关于二月">
+            <i class="mdui-list-item-icon nexmoefont icon-jiubei1"></i>
+            <div class="mdui-list-item-content">
+                关于二月
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/myblog/friend/index.html" title="我的朋友">
+            <i class="mdui-list-item-icon nexmoefont icon-cola"></i>
+            <div class="mdui-list-item-content">
+                我的朋友
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/myblog/Download/index.html" title="下载中心">
+            <i class="mdui-list-item-icon nexmoefont icon-tangguo"></i>
+            <div class="mdui-list-item-content">
+                下载中心
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+  
+  
+<!-- 站内搜索 -->
+
+<div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search" >
+        <form id="search-form">
+            <label><input type="text" id="local-search-input" name="q" results="0" placeholder="站内搜索" class="input form-control" autocomplete="off" autocorrect="off"/></label>
+            <!-- 清空/重置搜索框 -->
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+        </form>
+    </div>
+    <div id="local-search-result"></div> <!-- 搜索结果区 -->
+    <!-- <p class='no-result'></p> 无匹配时显示，注意在 CSS 中设置默认隐藏 -->
+</div>
+
+
+  
+  <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="http://wpa.qq.com/msgrd?v=3&uin=3345483363&site=qq&menu=yes" target="_blank" mdui-tooltip="{content: 'QQ'}" style="color: rgb(64, 196, 255);background-color: rgba(64, 196, 255, .1);">
+            <i class="nexmoefont icon-QQ"></i>
+        </a><a class="mdui-ripple" href="mailto:3345483363@qq.com" target="_blank" mdui-tooltip="{content: 'mail'}" style="color: rgb(249,8,8);background-color: rgba(249,8,8,.1);">
+            <i class="nexmoefont icon-mail-fill"></i>
+        </a><a class="mdui-ripple" href="https://blog.csdn.net/qq_3345483363?type=blog" target="_blank" mdui-tooltip="{content: 'CSDN'}" style="color: rgb(199,29,35);background-color: rgba(199,29,35,.1);">
+            <i class="nexmoefont icon-csdn"></i>
+        </a><a class="mdui-ripple" href="https://www.cnblogs.com/allureluoli/" target="_blank" mdui-tooltip="{content: '博客园'}" style="color: rgb(66, 214, 29);background-color: rgba(66, 214, 29, .1);">
+            <i class="nexmoefont icon-bokeyuan"></i>
+        </a><a class="mdui-ripple" href="https://github.com/allureluoli/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="nexmoefont icon-github"></i>
+        </a><a class="mdui-ripple" href="https://gitee.com/allureluoli" target="_blank" mdui-tooltip="{content: 'gitee'}" style="color: rgb(255, 255, 255);background-color: rgb(199,29,35);">
+            <i class="nexmoefont icon-mayun"></i>
+        </a>
+    </div>
+</div>
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Categories</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/myblog/categories/Blog/">Blog</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/myblog/categories/CSS/">CSS</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/myblog/categories/JAVA/">JAVA</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/myblog/categories/LOVE酱/">LOVE酱</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/myblog/categories/Linux/">Linux</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/myblog/categories/Nonebot/">Nonebot</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/myblog/categories/Python/">Python</a>
+          <span class="category-list-count">9</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/myblog/categories/engine/">engine</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/myblog/categories/前端/">前端</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/myblog/categories/寻心/">寻心</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/myblog/categories/感悟/">感悟</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/myblog/categories/网络安全/">网络安全</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/myblog/categories/英语/">英语</a>
+          <span class="category-list-count">4</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/myblog/categories/计算机网络技术/">计算机网络技术</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/myblog/tags/Bot/" style="font-size: 16px;">Bot</a> <a href="/myblog/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/myblog/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/myblog/tags/JAVA/" style="font-size: 12px;">JAVA</a> <a href="/myblog/tags/Json/" style="font-size: 10px;">Json</a> <a href="/myblog/tags/LOVE%E9%85%B1/" style="font-size: 10px;">LOVE酱</a> <a href="/myblog/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/myblog/tags/Python/" style="font-size: 18px;">Python</a> <a href="/myblog/tags/Python%E6%A8%A1%E5%9D%97/" style="font-size: 10px;">Python模块</a> <a href="/myblog/tags/Solarus/" style="font-size: 10px;">Solarus</a> <a href="/myblog/tags/debian/" style="font-size: 10px;">debian</a> <a href="/myblog/tags/engine/" style="font-size: 10px;">engine</a> <a href="/myblog/tags/git/" style="font-size: 10px;">git</a> <a href="/myblog/tags/linux/" style="font-size: 10px;">linux</a> <a href="/myblog/tags/%E5%86%99%E4%BD%9C/" style="font-size: 10px;">写作</a> <a href="/myblog/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 12px;">前端</a> <a href="/myblog/tags/%E5%8D%8F%E8%AE%AE/" style="font-size: 10px;">协议</a> <a href="/myblog/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 20px;">基础</a> <a href="/myblog/tags/%E5%AF%BB%E5%BF%83/" style="font-size: 10px;">寻心</a> <a href="/myblog/tags/%E6%84%9F%E6%82%9F/" style="font-size: 10px;">感悟</a> <a href="/myblog/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">文件系统</a> <a href="/myblog/tags/%E6%97%A5%E8%AE%B0/" style="font-size: 10px;">日记</a> <a href="/myblog/tags/%E6%A6%82%E5%BF%B5/" style="font-size: 10px;">概念</a> <a href="/myblog/tags/%E7%B2%BE%E5%BD%A9%E8%AE%B0%E5%BD%95/" style="font-size: 10px;">精彩记录</a> <a href="/myblog/tags/%E8%8B%B1%E8%AF%AD/" style="font-size: 10px;">英语</a> <a href="/myblog/tags/%E8%AF%AD%E6%B3%95/" style="font-size: 14px;">语法</a>
+    </div>
+    
+  </div>
+
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Archive</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/myblog/archives/2023/">2023</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/myblog/archives/2022/">2022</a><span class="archive-list-count">23</span></li></ul>
+    </div>
+  </div>
+
+
+<style>
+.nexmoe-widget .archive-list-count{
+	position : absolute;
+	right: 15px;
+	top:9px;
+	color: #DDD;
+}
+</style>
+
+  
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2023 Allureluoli
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/tangyuxian/hexo-theme-tangyuxian" target="_blank">Tangyuxian</a><br/>
+        <a href="http://beian.miit.gov.cn" target="_blank">辽ICP备2021002341号</a><br/>
+        
+        <div style="font-size: 12px">
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            本站总访问量  <a id="busuanzi_value_site_pv"></a> 次<br />
+            本站访客数<a id="busuanzi_value_site_uv"></a>人次
+        </div>
+        
+        
+    </div>
+
+</div><!-- .nexmoe-drawer -->
+
+  </div>
+  <div id="nexmoe-content">
+    <div class="nexmoe-primary">
+        <div class="nexmoe-post">
+    
+        <div class="nexmoe-post-cover"
+             style="padding-bottom: 24.305555555555554%;">
+            <img data-src="/images/background/black_girl.png" data-sizes="auto" alt="JAVASE_2" class="lazyload">
+            <h1>JAVASE_2</h1>
+        </div>
+    
+
+        <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2022年08月01日</a>
+    <a><i class="nexmoefont icon-areachart"></i>4.1k 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 18 分钟</a>
+</div>
+
+        <div class="nexmoe-post-right">
+            
+        </div>
+
+        <article>
+            <ol>
+<li>通过函数访问到Scanner.java  （xxx.java）</li>
+<li>通过左侧Structure 查看方法列表</li>
+</ol>
+<pre><code class="java">package scanner;
+
+import java.util.Scanner;
+
+public class class5 &#123;
+    public static void main(String[] args) &#123;
+        //我们可以输入多个数字，并求其总和与平均数，每输入一个数字用回车确认，通过输入非数字结束输入并输出执行结果。
+        Scanner scanner = new Scanner(System.in);
+        //和
+        double sum =0;
+        // 计算输入了多少个数字
+        int m =0;
+        //通过循环判断是否还有输入，并在里面对每一次进行求和统计
+        while (scanner.hasNextDouble())&#123;  //whisle使用上感觉和if差不多，最重要的是理解java的程序结构
+            Double x =scanner.nextDouble(); //这条语句给x进行赋值，x是一个变量
+            System.out.println(&quot;你输入的x为：&quot;+x);//这里可以输出x的值，，而出了这个&#123;&#125;就不可以再输出x的值了
+            m = m +1;//可以写为m++
+            sum = sum + x; //在这里将x的值加入到sum中
+            System.out.println(&quot;你输入了第&quot;+m+&quot;个数据，&quot;+&quot;当前结果为：&quot;+sum);
+        &#125;
+        //System.out.println((double)x);//会导致出现报错，找不到符号，因为离开了上面的语句后x的没有得到赋值了
+        System.out.println(&quot;输入数字的和为&quot;+sum);
+        System.out.println(&quot;一共输入了&quot;+m+&quot;个数字&quot;);
+        System.out.println(m+&quot;个数字的平均值为&quot;+(sum/m));
+
+        scanner.close();
+    &#125;
+
+&#125;
+</code></pre>
+<h2 id="顺序结构"><a href="#顺序结构" class="headerlink" title="顺序结构"></a>顺序结构</h2><ul>
+<li><strong>JAVA的基本结构就是顺序结构，除非特别指明，否则就按照顺序一句一句执行。</strong></li>
+<li>顺序结构是最简单那的算法结构</li>
+<li>语句与语句之间，框与框之间是按照从上到下的顺序进行的，它是由若干个依次执行的处理步骤组成的，它是任何一共算法都离不开的一种基本算法结构。</li>
+</ul>
+<h2 id="if-单选择结构"><a href="#if-单选择结构" class="headerlink" title="if 单选择结构"></a>if 单选择结构</h2><pre><code>package if233;
+
+import java.util.Scanner;   //if 单选择结构，表达式成立为true则输出再end
+
+public class class1 &#123;
+    public static void main(String[] args) &#123;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(&quot;请输入内容:&quot;);
+        String s = scanner.nextLine();
+        //s.equals:判断字符串是否相等
+        if (s.equals(&quot;Hello&quot;));&#123;//判断s和Hello这俩字符串是否相等捏
+        System.out.println(s);
+        &#125; //不成立则直接End然后结束
+        System.out.println(&quot;End&quot;);
+        scanner.close();
+
+    &#125;
+&#125;
+</code></pre>
+<h2 id="if-双选择结构"><a href="#if-双选择结构" class="headerlink" title="if 双选择结构"></a>if 双选择结构</h2><ul>
+<li><p><strong>语法</strong></p>
+</li>
+<li><pre><code class="java">if (布尔表达式)&#123;
+    //如果布尔表达式的值为true
+&#125;else&#123;
+    //如果布尔表达式的值为false
+&#125;
+</code></pre>
+</li>
+<li><p>实例\</p>
+</li>
+</ul>
+<pre><code class="java">
+</code></pre>
+<h2 id="if多选择结构"><a href="#if多选择结构" class="headerlink" title="if多选择结构"></a>if多选择结构</h2><p><strong>语法：</strong></p>
+<pre><code class="java">if(布尔表达式 1)&#123;
+    //如果布尔表达式 1的值为true执行代码
+&#125;else if(布尔表达式 2)&#123;
+    //如果布尔表达式 2的值为true执行代码
+&#125;else if(布尔表达式 3)&#123;
+    //如果布尔表达式 3的值为true执行代码
+&#125;eles&#123;
+    //如果以上布尔表达式都不为true执行代码
+&#125;
+</code></pre>
+<p>//我日昨天的笔记没保存，呜呜呜呜呜呜呜呜呜</p>
+<h1 id="例1"><a href="#例1" class="headerlink" title="例1"></a>例1</h1><pre><code class="java">package if233;
+
+import java.util.Scanner;
+
+public class class2 &#123;
+    public static void main(String[] args) &#123;
+        Scanner scanner = new Scanner(System.in);
+        //考试分数&gt;60就是及格  &lt;60就是不及格
+        System.out.println(&quot;请输入成绩：&quot;);
+        scanner.nextInt();//等待用户输入一个Int
+        int score = scanner.nextInt(); //将输入的给score, score 等于 scanner.next里的int.
+        if (score&gt;60) &#123;//如果score&gt;60则就执行
+            System.out.println(&quot;及格&quot;);
+        &#125;else&#123; //如果不大于就走这个
+            System.out.println(&quot;不及格&quot;);
+        &#125;
+
+    &#125;
+&#125;
+</code></pre>
+<pre><code class="java">package if233;
+
+import java.util.Scanner;
+
+public class class3 &#123;
+    /*
+    if 语句至多有1一个else语句，else语句在所有的else if语句之后。
+    if 语句可以有若干个else if 语句，他们必须在else语句之前。
+    一旦其中一个 else if 语句检测为true,其他的else if 以及 else 语句都将跳过执行。
+     */
+    public static void main(String[] args) &#123;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(&quot;请输入成绩：&quot;);
+        int score = scanner.nextInt();
+        if (score==100)&#123;
+            System.out.println(&quot;恭喜满分！&quot;);
+        &#125;else if (score&gt;=90 &amp;&amp; score&lt;100)&#123;
+            System.out.println(&quot;优秀&quot;);
+        &#125;else if (score&gt;=80 &amp;&amp; score&lt;90)&#123;
+            System.out.println(&quot;良好&quot;);
+        &#125;else if (score&gt;=70 &amp;&amp; score&lt;80)&#123;//会根据语句的先后执行，越靠前优先级越大
+            System.out.println(&quot;不戳&quot;);
+        &#125;else if (score&gt;=60 &amp;&amp; score&lt;=70) &#123;
+            System.out.println(&quot;海星&quot;);
+        &#125;else if (score&gt;=100 ) &#123;
+            System.out.println(&quot;开挂狗给爷爬&quot;);
+        &#125;else&#123;
+            System.out.println(&quot;菜逼&quot;);
+
+
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h1 id="例3"><a href="#例3" class="headerlink" title="例3"></a>例3</h1><pre><code class="java">package if233;
+
+import java.util.Scanner;
+
+public class class4 &#123;
+    public static void main(String[] args) &#123;
+        Scanner scanner = new Scanner(System.in);
+        //考试分数&gt;60就是及格  &lt;60就是不及格
+        System.out.println(&quot;请输入成绩：&quot;);
+        scanner.nextInt();//等待用户输入一个Int
+        int score = scanner.nextInt(); //将输入的给score, score 等于 scanner.next里的int.
+        if (score&gt;60) &#123;//如果score&gt;60则就执行
+            System.out.println(&quot;及格&quot;);
+        &#125;else&#123; //如果不大于就走这个
+            System.out.println(&quot;不及格&quot;);
+        &#125;
+
+    &#125;
+&#125;
+</code></pre>
+<pre><code class="java">package if233;
+
+import java.util.Scanner;
+
+public class class5 &#123;
+    public static void main(String[] args) &#123;
+        //
+        //Scanner scanner = new Scanner(System.in);
+        char grade = &#39;C&#39;;
+        switch (grade)&#123;
+            case &#39;A&#39;:
+            System.out.println(&quot;优秀&quot;);
+            break;
+            case &#39;B&#39;:
+                System.out.println(&quot;良好&quot;);
+                break; //表示可选 ，如果没有break会出现case 穿透现象！如果没有匹配成功会一口气输出到最后。
+            case &#39;C&#39;:
+                System.out.println(&quot;海星&quot;);
+                break;
+            case &#39;D&#39;:
+                System.out.println(&quot;森么彩笔？&quot;);
+                break;
+            default:
+                System.out.println(&quot;请不要搞事嗷！&quot;);
+                break;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<pre><code class="java">package if233;
+
+public class class6 &#123;
+    public static void main(String[] args) &#123;
+        String name = &quot;牛逼&quot;;
+        //JDK7新特性，表达式结果可以是字符串！！！
+        //字符串本质还是数字捏
+        //反编译 java---class(字节码文件)---反编译（IDEA）
+        switch (name)&#123;//将字符串name与各个对比
+            case &quot;牛逼&quot;:
+                System.out.println(&quot;卧槽果然牛逼！&quot;);
+                break;//防止穿透
+            case &quot;笑死&quot;:
+                System.out.println(&quot;笑死我了什么垃圾&quot;);
+                break;
+            default:
+                System.out.println(&quot;呵呵给爷爬！&quot;);
+
+
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<pre><code class="java">package if233;
+
+public class DoWhile1 &#123;
+    public static void main(String[] args) &#123;
+        int i =0;
+        int sum =0;
+        do &#123;
+            sum = sum + i;
+            i ++;
+        &#125;while(i&lt;100);
+        System.out.println(sum);//输出4950
+
+    &#125;
+&#125;
+</code></pre>
+<pre><code class="java">package if233;
+
+public class DoWhile2 &#123;
+    public static void main(String[] args) &#123;
+        int a = 0;
+        while (a&lt;0)&#123;
+            System.out.println(a);
+            a++;
+        &#125;
+        System.out.println(&quot;----------------------&quot;);
+        do &#123;
+            System.out.println(a);
+            a++;
+        &#125;while (a&lt;0);
+    &#125;
+&#125;
+</code></pre>
+<h2 id="Do-while-如上"><a href="#Do-while-如上" class="headerlink" title="Do while 如上"></a>Do while 如上</h2><hr>
+<h1 id="while-循环-和-for-的对比"><a href="#while-循环-和-for-的对比" class="headerlink" title="while 循环 和 for 的对比"></a>while 循环 和 for 的对比</h1><pre><code class="java">package if233;
+
+public class For1 &#123;
+    public static void main(String[] args) &#123;
+        int a = 1;//初始化条件
+        while (a&lt;=100)&#123;//条件判断
+            System.out.println(a);//循环体
+            a+=2;//迭代
+        &#125;
+        System.out.println(&quot;循环结束&quot;);
+        //初始化//条件判断//迭代
+        for(int i=1;i&lt;=100;i++)&#123;
+
+        &#125;
+        System.out.println(&quot;for循环结束&quot;);
+        /*
+        关于for 循环有以下几点说明：
+        最先执行初始化步骤。可以声明一种类型，但可初始化一个或多个循环控制变量，也可以是空语句。
+        然后，检测布尔表达式的值。如果为true，循环体被执行。如果为flase,循环终止，开始执行循环体后面的语句。
+        执行一次循环后，更新循环控制变量（迭代银子控制循环变量的增减）。
+        再次检测布尔表达式。循环执行上面的过程。
+         */
+        //for 语句 死循环写法 for(; ;)&#123;  //因为没有初始值，没有判断，就会不停的跑下去
+        // &#125;
+
+    &#125;
+&#125;
+</code></pre>
+<pre><code class="java">package if233;
+
+public class For2 &#123;
+    public static void main(String[] args) &#123;
+        //练习1：计算0到100之间的奇数和偶数的和
+        int oddSum = 0;
+        int evenSum =0;
+
+        for (int i =0;i &lt;100; i++)&#123;
+            if (i%2!=0)&#123; //奇数
+                oddSum+=i;
+            &#125;else &#123; //偶数
+                evenSum+=i;
+            &#125;
+            System.out.println(oddSum);
+            System.out.println(evenSum);
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h2 id="例："><a href="#例：" class="headerlink" title="例："></a>例：</h2><pre><code class="java">package if233;
+
+public class For3 &#123;
+    public static void main(String[] args) &#123;
+        //练习2：用while 或for循环输出1-1000之间能被5整除的数，并且每行输出3个
+        for (int i = 0; i &lt;= 1000; i++) &#123;
+        if (i%5==0)&#123;
+            System.out.print(i +&quot;\t&quot;);//不换行输出3个
+        &#125;
+            if(i%(5*3)==0)&#123;//如果 i%（5*3）==0的时候/5*3写15也行，写5*3貌似会更快（）
+                //作用是如果输出三个就变成println，起到换行的作用，println和print的区别就是输出了
+                System.out.println();&#125;
+
+            //方法二 System.out.print(\n);输出一个转义字符，\n 用来换行
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<pre><code class="java">package if233;
+
+public class for7 &#123;
+    public static void main(String[]/*这是个数组捏*/args) &#123;
+    int [] numbers = &#123;10,20,30,40,50&#125;;//定义一个数组
+
+        for(int i=0;i&lt;5;i++)
+            System.out.println(numbers[i]);//在只有五个的数组中输出五个，如果输出的数量大于5则会报错
+        //便利数组的元素
+        //每次循环从x中取值
+        for(int x:numbers)&#123;
+            System.out.println(x);
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>//上例为一个数组的测试</p>
+<h2 id="break-continue-用来终止滴捏"><a href="#break-continue-用来终止滴捏" class="headerlink" title="break continue //用来终止滴捏"></a>break continue //用来终止滴捏</h2><ul>
+<li>break在任何循环语句的主体部分，均可用Break控制循环的流程，break用于强行退出循环，不自行循环中小恒徐的语句。（break语句也在switch语句中使用）</li>
+<li>continue 语句用在循环语句体中，用于终止某次循环过程，即跳过循环体中尚未执行的语句，接着进行下一次是否执行循环的判定。</li>
+<li>关于goto关键字 //这是个锚，让你循环停的<ul>
+<li>goto 关键字很早就mao在小恒徐设计语言中出现，尽管ogot仍是java的一个保留字，但未在语言中得到正是使用；Java没有goto.然而，在Break和continue这两个关键字的身上，我们仍能看出一些goto的影子—带标签的break和continue。</li>
+<li>“标签”是指后面跟一个冒号的表示符，例如：label：</li>
+<li>对Java来说唯一用到标签的敌方是在循环语句之前。而在循环之前设置标签的唯一理由是：我们希望在其中嵌套另一个循环，由于break和continue关键字通常只终端当前循环，但弱随同标签使用，它们就会中断到存在标签的地方。</li>
+</ul>
+</li>
+</ul>
+<h2 id="实例-打印三角形"><a href="#实例-打印三角形" class="headerlink" title="实例 打印三角形"></a>实例 打印三角形</h2><pre><code class="java">package if233;
+
+public class Lx1 &#123;
+    public static void main(String[] args) &#123;
+        //打印三角形
+        //老子打印了个山，不管了就这样吧
+        for (int i = 1; i &lt;= 5; i++) &#123;
+            for (int j = 5; j &gt;= i; j--) &#123;
+                System.out.print(&quot; &quot;);
+            &#125;
+            for (int j = 1; j &lt;= i; j++) &#123;
+                System.out.print(&quot;*&quot;);
+                for (int k =0; k &lt; i ; k++) &#123;
+                    System.out.print(&quot;*&quot;);
+
+                &#125;
+
+        &#125;
+        System.out.println(&quot; &quot;);
+
+        &#125;
+
+    &#125;
+&#125;
+</code></pre>
+<h1 id="Debug-程序的断点"><a href="#Debug-程序的断点" class="headerlink" title="Debug 程序的断点"></a>Debug 程序的断点</h1><p>de虫虫~~~~虫虫！！！！！！！！~~~~~~~~~~</p>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><ul>
+<li>System.out.println(),那么它是什么呢？</li>
+<li>System是一个类，out是输出对象，println是一个方法</li>
+<li>意：//调用系统内输出对象,out，里的println方法</li>
+<li>命名规则：驼峰原则</li>
+<li>Java方法是语句的集合，它们在一起执行一个功能。<ul>
+<li>方法是解决一类问题的步骤的有序组合</li>
+<li>方法包含于类或对象中</li>
+<li>方法在程序中被创建，在其他地方被引用</li>
+</ul>
+</li>
+<li>设计方法的原则：方法的本意是功能块，就是实现某个功能的语句块的集合。我们设计方法的时候，最好保持方法的原子性，就是一个方法只完成1个功能，这样利于我们后期的扩展。</li>
+</ul>
+<h1 id="方法的定义"><a href="#方法的定义" class="headerlink" title="方法的定义"></a>方法的定义</h1><ul>
+<li><p>JAVA方法类似于其他语言的函数，是一段用来完成特定功能的代码片段，一般情况下，定义一个方法包含以下语法：</p>
+</li>
+<li><p>方法包含一个方法头和一个方法体。下面是一个方法的所有部分：</p>
+<ul>
+<li><p>修饰符：修饰符，这是可选的，告诉编译器如何调用该方法。定义了该方法的访问类型。</p>
+</li>
+<li><p>返回值类型：方法可能会返回值。returnValueType 是方法返回值的数据类型。有些方法执行所需的操作，但没有返回值。在这种情况下，returnValueType 是关键字void。</p>
+</li>
+<li><p>方法名：是方法的实际名称。方法名和参数表共同构成方法签名。</p>
+</li>
+<li><p>参数类型：参数像一个占位符。当方法被调用时，传递值给参数。这个值被成为实参或变量。参数列表是指方法的参数类型、顺序和参数的个数。 参数是可选的，方法可以不包含任何参数。</p>
+<ul>
+<li><p>形式参数：在方法被调用时用于接收外界输入的数据</p>
+</li>
+<li><p>实参：调用方法时实际传给方法的数据</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>方法体：方法体包含具体的语句，定义该方法的功能。</li>
+<li>例：</li>
+</ul>
+</li>
+</ul>
+<pre><code class="java">修饰符 返回值类型 方法名（参数类型 参数名）&#123;
+    ...
+   方法体
+    ...
+        return 返回值;
+&#125;
+</code></pre>
+<h2 id="形式参数，用来定义作用"><a href="#形式参数，用来定义作用" class="headerlink" title="形式参数，用来定义作用"></a>形式参数，用来定义作用</h2><h2 id="实际参数，用来调用传递给他的参数"><a href="#实际参数，用来调用传递给他的参数" class="headerlink" title="实际参数，用来调用传递给他的参数"></a>实际参数，用来调用传递给他的参数</h2><h3 id="值传递"><a href="#值传递" class="headerlink" title="值传递"></a>值传递</h3><ul>
+<li>值传递：是指在调用函数时，将实际参数复制一份传递到函数中，这样在函数中如果对参数进行修改，就不会影响到实际参数</li>
+</ul>
+<h3 id="引用传递"><a href="#引用传递" class="headerlink" title="引用传递"></a>引用传递</h3><ul>
+<li><p>引用传递：是指在调用函数时，将实际参数的地址传递到函数中，那么在函数中对参数进行修改，将会影响到实际参数</p>
+</li>
+<li><p>引用数据类型分为两个部分，引用变量和对象，这两个部分放在不同的地方，引用变量在栈中，而对象是放在<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%A0%86%E5%86%85%E5%AD%98&spm=1001.2101.3001.7020">堆内存</a>中的，引用变量指向对象。<br>如下图所示，当传递参数之前会将参数进行复制，但是复制的是引用变量，复制后的引用变量还是指向内存中的同一对象，所以引用传递中，函数修改了参数会影响实际参数</p>
+</li>
+</ul>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://img-blog.csdnimg.cn/20201029230018688.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1N0YXJ0MTIzNDU2Nw==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" class="lazyload"></p>
+<p>引用传递是对于引用数据类型而言，例如对于User类姓名的修改，会改变对象的name。</p>
+<h5 id="注意点，引用类型中的String的值是放在常量池中，我们改变副本的值不会影响到原来的值。"><a href="#注意点，引用类型中的String的值是放在常量池中，我们改变副本的值不会影响到原来的值。" class="headerlink" title="注意点，引用类型中的String的值是放在常量池中，我们改变副本的值不会影响到原来的值。"></a><strong>注意点，引用类型中的String的值是放在常量池中，我们改变副本的值不会影响到原来的值。</strong></h5><p><img data-fancybox="gallery" data-sizes="auto" data-src="https://img-blog.csdnimg.cn/20201130214011215.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1N0YXJ0MTIzNDU2Nw==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" class="lazyload"></p>
+<ul>
+<li><ul>
+<li>例如在change放发中改变了副本的值，但是原来的str字符串不会改变。</li>
+</ul>
+</li>
+</ul>
+<h3 id="方法的重装"><a href="#方法的重装" class="headerlink" title="方法的重装"></a>方法的重装</h3><ul>
+<li><p> 在一个类中，有相同的函数名称，但形参不同的函数。</p>
+</li>
+<li><p> 方法的重装的规则：</p>
+</li>
+<li><p>方法名称必须相同</p>
+</li>
+<li><p>参数列表必须不同（个数不同、或类型不同、参数排列顺序不同等。）</p>
+</li>
+<li><p>方法的返回类型可以相同也可以不相同</p>
+</li>
+<li><p>仅仅返回类型不同不足以成为方法的重载</p>
+</li>
+<li><p>实现理论:</p>
+</li>
+<li><p>方法名称相同时，编译器会根据调用方法的参数个数、参数类型等去逐个匹配，以选择对应的方法，如果匹配失败，则编译器报错。</p>
+</li>
+</ul>
+<p>个人理解：相当于重新载入了一个同名的，不同的方法。</p>
+<h3 id="命令行传参"><a href="#命令行传参" class="headerlink" title="命令行传参"></a>命令行传参</h3><p>程序运行的时候，用命令行传递给程序信息</p>
+<p>注意点：1，路径找对，找到包的路径从包外面运行</p>
+<p>注意点：2，实际上是通过定义命令行的参数运行程序</p>
+<h3 id="可变参数"><a href="#可变参数" class="headerlink" title="可变参数"></a>可变参数</h3><ul>
+<li>JKD 1.5 开始，Java支持传递同类型的可变参数给一个方法。</li>
+<li>在方法声明中，在指定参数类型后加一个省略号（…）。</li>
+<li>一个方法中只能指定一个可变参数，它必须是方法的最后一个参数。任何普通的参数必须在它之前声明。</li>
+</ul>
+<pre><code class="java">package Fangfa;
+
+public class Demo04 &#123;
+    public static void main(String[] args) &#123;
+
+    &#125;
+    public static void printMax(double... numbers)&#123;
+        if (numbers.length == 0)&#123;
+            System.out.println(&quot;23333&quot;);
+            return;
+        &#125;
+     //懒得写了捏
+    &#125;
+
+&#125;
+</code></pre>
+<h3 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h3><ul>
+<li>A方法调用A方法！自己调用自己</li>
+<li>利用递归可以用简单的程序解决一些复杂的问题。它通常把一个大型复杂的问题层层华为一个与原问题相似的规模较小的问题来求解，递归策略只需少量的程序就可描述出接替过程所需要的多次重复计算，大大地减少了程序的代码量。递归的能力在于用有限的语句来定义对线的无限集合。</li>
+<li>递归结构包括两个部分：</li>
+<li><ul>
+<li>递归头：什么时候不调用自身方法。如果没有头，将陷入死循环。</li>
+<li>递归体：什么时候需要调用自身方法。</li>
+</ul>
+</li>
+</ul>
+<h2 id="边界条件"><a href="#边界条件" class="headerlink" title="边界条件"></a>边界条件</h2><p>前阶段：</p>
+<p>返回阶段 n*(n-1)</p>
+<p>（递归非常的耗内存）存在大量的函数调用捏</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="C:\Users\Administrator.DESKTOP-PJMKVVR\AppData\Roaming\Typora\typora-user-images\image-20220505191817653.png" alt="image-20220505191817653" class="lazyload"></p>
+<h1 id="栈机制"><a href="#栈机制" class="headerlink" title="栈机制"></a>栈机制</h1>
+        </article>
+
+        
+            
+  <div class="nexmoe-post-copyright">
+    <strong>Author：</strong>Allureluoli<br>
+    
+    <strong>Link：</strong><a href="https://allureluoli.gitee.io/myblog/2022/08/01/%E8%BF%99%E6%98%AF%E7%88%B7%E7%9A%84%E7%AC%94%E8%AE%B02/" title="https:&#x2F;&#x2F;allureluoli.gitee.io&#x2F;myblog&#x2F;2022&#x2F;08&#x2F;01&#x2F;%E8%BF%99%E6%98%AF%E7%88%B7%E7%9A%84%E7%AC%94%E8%AE%B02&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;allureluoli.gitee.io&#x2F;myblog&#x2F;2022&#x2F;08&#x2F;01&#x2F;%E8%BF%99%E6%98%AF%E7%88%B7%E7%9A%84%E7%AC%94%E8%AE%B02&#x2F;</a><br>
+
+    
+      <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+    
+  </div>
+
+
+        
+
+        <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/myblog/categories/JAVA/">JAVA</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/myblog/tags/JAVA/" rel="tag">JAVA</a> <a class="nexmoefont icon-tag-fill -none-link" href="/myblog/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a>
+    
+</div>
+
+    <div class="nexmoe-post-footer">
+        <section class="nexmoe-comment">
+    <div class="valine"></div>
+<script src='https://lib.baomitu.com/valine/1.3.9/Valine.min.js'></script>
+<script>
+    // 使用方法 https://valine.js.org/quickstart.html
+    new Valine({
+        el: '.valine',
+        appId: 'r5zxC0st0DDjPA9auXzMV7HY-gzGzoHsz',
+        appKey: '3bqCsovpyfTPHUzTHovd3V3V'
+    })
+</script>
+</section>
+    </div>
+</div>
+
+
+        <div class="nexmoe-post-right">
+          
+            <div class="nexmoe-fixed">
+              <div class="nexmoe-tool">
+                <a href="#" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+              </div>
+            </div>
+          
+        </div>
+    </div>
+  </div>
+  <div id="nexmoe-pendant">
+    <div class="nexmoe-drawer mdui-drawer nexmoe-pd" id="drawer">
+        
+            <div class="nexmoe-pd-item">
+                <div class="clock">
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="needle" id="hours"></div>
+        <div class="needle" id="minutes"></div>
+        <div class="needle" id="seconds"></div>
+        <div class="clock_logo">
+
+        </div>
+
+    </div>
+<style>
+    .clock {
+        background-color: #ffffff;
+        width: 70vw;
+        height: 70vw;
+        max-width: 70vh;
+        max-height: 70vh;
+        border: solid 2.8vw #242424;
+        position: relative;
+        overflow: hidden;
+        border-radius: 50%;
+        box-sizing: border-box;
+        box-shadow: 0 1.4vw 2.8vw rgba(0, 0, 0, 0.8);
+        zoom:0.2
+    }
+
+    .memory {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform-origin: center;
+    }
+
+    .memory:nth-child(1) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(0deg) translateY(-520%);
+    }
+
+    .memory:nth-child(2) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(6deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(3) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(12deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(4) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(18deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(5) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(24deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(6) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(30deg) translateY(-520%);
+    }
+
+    .memory:nth-child(7) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(36deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(8) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(42deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(9) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(48deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(10) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(54deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(11) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(60deg) translateY(-520%);
+    }
+
+    .memory:nth-child(12) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(66deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(13) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(72deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(14) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(78deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(15) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(84deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(16) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(90deg) translateY(-520%);
+    }
+
+    .memory:nth-child(17) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(96deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(18) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(102deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(19) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(108deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(20) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(114deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(21) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(120deg) translateY(-520%);
+    }
+
+    .memory:nth-child(22) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(126deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(23) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(132deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(24) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(138deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(25) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(144deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(26) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(150deg) translateY(-520%);
+    }
+
+    .memory:nth-child(27) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(156deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(28) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(162deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(29) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(168deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(30) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(174deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(31) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(180deg) translateY(-520%);
+    }
+
+    .memory:nth-child(32) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(186deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(33) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(192deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(34) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(198deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(35) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(204deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(36) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(210deg) translateY(-520%);
+    }
+
+    .memory:nth-child(37) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(216deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(38) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(222deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(39) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(228deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(40) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(234deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(41) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(240deg) translateY(-520%);
+    }
+
+    .memory:nth-child(42) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(246deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(43) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(252deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(44) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(258deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(45) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(264deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(46) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(270deg) translateY(-520%);
+    }
+
+    .memory:nth-child(47) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(276deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(48) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(282deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(49) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(288deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(50) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(294deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(51) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(300deg) translateY(-520%);
+    }
+
+    .memory:nth-child(52) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(306deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(53) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(312deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(54) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(318deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(55) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(324deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(56) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(330deg) translateY(-520%);
+    }
+
+    .memory:nth-child(57) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(336deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(58) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(342deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(59) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(348deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(60) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(354deg) translateY(-1461%);
+    }
+
+    .needle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform-origin: center;
+    }
+
+    .needle#hours {
+        background-color: #1f1f1f;
+        width: 4%;
+        height: 30%;
+        transform-origin: center 75%;
+        transform: translate(-50%, -75%);
+    }
+
+    .needle#hours.moving {
+        transition: transform 150ms ease-out;
+    }
+
+    .needle#hours:after {
+        content: '';
+        background-color: #1f1f1f;
+        width: 4vw;
+        height: 4vw;
+        max-width: 4vh;
+        max-height: 4vh;
+        display: block;
+        position: absolute;
+        top: 75%;
+        left: 50%;
+        box-sizing: border-box;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .needle#minutes {
+        background-color: #1f1f1f;
+        width: 2%;
+        height: 45%;
+        transform-origin: center 75%;
+        transform: translate(-50%, -75%);
+    }
+
+    .needle#minutes.moving {
+        transition: transform 150ms ease-out;
+    }
+
+    .needle#minutes:after {
+        content: '';
+        background-color: #1f1f1f;
+        width: 4vw;
+        height: 4vw;
+        max-width: 4vh;
+        max-height: 4vh;
+        display: block;
+        position: absolute;
+        top: 75%;
+        left: 50%;
+        box-sizing: border-box;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .needle#seconds {
+        background-color: #cb2f2f;
+        width: 1%;
+        height: 50%;
+        transform-origin: center 75%;
+        transform: translate(-50%, -75%);
+    }
+
+    .needle#seconds.moving {
+        transition: transform 150ms ease-out;
+    }
+
+    .needle#seconds:after {
+        content: '';
+        background-color: #cb2f2f;
+        width: 2.5vw;
+        height: 2.5vw;
+        max-width: 2.5vh;
+        max-height: 2.5vh;
+        display: block;
+        position: absolute;
+        top: 75%;
+        left: 50%;
+        box-sizing: border-box;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .clock_logo{
+        width: 10vw;
+        height: 10vw;
+        max-width: 10vh;
+        max-height: 10vh;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        box-sizing: border-box;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+    @media (min-width: 100vh) {
+        .clock {
+            border: solid 2.8vh #242424;
+            box-shadow: 0 1.4vh 2.8vh rgba(0, 0, 0, 0.8);
+        }
+    }
+
+</style>
+
+
+
+
+
+            </div>
+        
+            <div class="nexmoe-pd-item">
+                <div class="qweather" >
+    <div id="he-plugin-standard"></div>
+    <div class="qweather-logo">
+
+    </div>
+
+</div>
+<style>
+    .qweather{
+        position: relative;
+    }
+    .qweather-logo{
+        position: absolute;
+        right: 0;
+        top: -15px;
+        width: 40px;
+        height: 40px;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+</style>
+<script>
+  WIDGET = {
+    "CONFIG": {
+      "layout": "2",
+      "width": "260",
+      "height": "220",
+      "background": "5",
+      "dataColor": "e67249",
+      "borderRadius": "15",
+      "key": "afadb94f9f864cd5878b775ef55fca04"
+    }
+  }
+</script>
+<script src="https://widget.qweather.net/standard/static/js/he-standard-common.js?v=2.0"></script>
+
+            </div>
+        
+</div>
+<style>
+    .nexmoe-pd {
+        left: auto;
+        top: 40px;
+        right: 0;
+    }
+    .nexmoe-pd-item{
+       display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+    }
+</style>
+
+  </div>
+  <script src="https://lib.baomitu.com/lazysizes/5.1.0/lazysizes.min.js"></script>
+<script src="https://lib.baomitu.com/highlight.js/10.0.0/highlight.min.js"></script>
+<script src="https://lib.baomitu.com/mdui/0.4.3/js/mdui.min.js"></script>
+
+<script>
+	hljs.initHighlightingOnLoad();
+</script>
+
+<script src="https://lib.baomitu.com/jquery/3.5.1/jquery.slim.min.js"></script>
+<script src="/lib/fancybox/js/jquery.fancybox.min.js"></script>
+
+
+<script src="/myblog/js/app.js?v=1678280582313"></script>
+
+<script src="https://lib.baomitu.com/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+  
+
+
+
+
+
+<!-- hexo injector body_end start -->
+<script src="/myblog/js/clock.js"></script>
+
+<script src="https://lib.baomitu.com/clipboard.js/2.0.8/clipboard.min.js"></script>
+
+<script src="/myblog/lib/codeBlock/codeBlockFuction.js"></script>
+
+<script src="/myblog/lib/codeBlock/codeLang.js"></script>
+
+<script src="/myblog/lib/codeBlock/codeCopy.js"></script>
+
+<script src="/myblog/lib/codeBlock/codeShrink.js"></script>
+
+<link rel="stylesheet" href="/myblog/lib/codeBlock/matery.css">
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+<script src="/myblog/js/search.js"></script>
+
+<script src="/myblog/js/webapp.js"></script>
+<!-- hexo injector body_end end --><script src="/myblog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":true,"model":{"jsonPath":"/myblog/live2dw/assets/z16.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true},"react":{"opacity":0.7},"dialog":{"enable":true,"hitokoto":true},"log":false});</script></body>
+</html>
+
+<script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/2d3fa691.js","daovoice")</script>
+<script>
+  daovoice('init', {
+    app_id: "2d3fa691"
+  });
+  daovoice('update');
+</script>
+
