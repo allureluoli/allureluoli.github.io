@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nonebot创建聊天教学功能 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,起因  在阅读前辈代码的时候我发现前辈们会专门的分出一个类专门进行数据处理相关的操作，于是我便顺着这个想法改进了我的代码。
+  这使我项目代码的结构更为规整和简化，也提高了代码的可读性，在节省代码量,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Nonebot创建聊天教学功能 - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,起因  在阅读前辈代码的时候我发现前辈们会专门的分出一个类专门进行数据处理相关的操作，于是我便顺着这个想法改进了我的代码。
+  这使我项目代码的结构更为规整和简化，也提高了代码的可读性，在节省代码量,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Nonebot创建聊天教学功能 - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,起因  在阅读前辈代码的时候我发现前辈们会专门的分出一个类专门进行数据处理相关的操作，于是我便顺着这个想法改进了我的代码。
+  这使我项目代码的结构更为规整和简化，也提高了代码的可读性，在节省代码量,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Nonebot创建聊天教学功能</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Nonebot创建聊天教学功能</h1>
+        <div class="stuff">
+            <span>三月 08, 2023</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Json/" rel="tag">Json</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Python/" rel="tag">Python</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>  在阅读前辈代码的时候我发现前辈们会专门的分出一个类专门进行数据处理相关的操作，于是我便顺着这个想法改进了我的代码。</p>
+<p>  这使我项目代码的结构更为规整和简化，也提高了代码的可读性，在节省代码量的同时并没有影响工作效率。</p>
+<h4 id="一、实现简易的教学功能"><a href="#一、实现简易的教学功能" class="headerlink" title="一、实现简易的教学功能"></a>一、实现简易的教学功能</h4><p>构建思路：制造一个词库，无非就是，将获取的消息存入指定的json文件中，在需要响应消息的时候查询是否有相关的消息，如果有则回复。</p>
+<p>实现：在BOT收到 @LOVE酱 教学-XX&#x3D;XX 格式的消息时，会自动的分割消息，将教学内容和需要回复的词分开传参。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> nonebot.adapters.onebot.v11 <span class="keyword">import</span> Event</span><br><span class="line"><span class="keyword">from</span> nonebot.adapters.onebot.v11.bot <span class="keyword">import</span> Bot</span><br><span class="line"><span class="keyword">from</span> nonebot.plugin.on <span class="keyword">import</span> on_command</span><br><span class="line"><span class="keyword">from</span> nonebot.rule <span class="keyword">import</span> to_me</span><br><span class="line"><span class="keyword">from</span> love.db <span class="keyword">import</span> JsonDB <span class="comment">#这一段尤为重要，正是在这一段中引入了我们处理数据库的类</span></span><br><span class="line"></span><br><span class="line">study = on_command(cmd=<span class="string">&#x27;教学-&#x27;</span>, rule=to_me(), priority=<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@study.handle()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot, event: Event</span>):</span><br><span class="line">    QQ = event.get_session_id().split(<span class="string">&#x27;_&#x27;</span>)[<span class="number">2</span>]  <span class="comment"># 获取QQ号</span></span><br><span class="line">    message = <span class="built_in">str</span>(event.get_message()).split(<span class="string">&#x27;-&#x27;</span>)[<span class="number">1</span>].split(<span class="string">&#x27;=&#x27;</span>)  <span class="comment"># 事件消息内容</span></span><br><span class="line">    send = message[<span class="number">0</span>]</span><br><span class="line">    Reply = message[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    Save = JsonDB(QQ=QQ, send=send, Reply=Reply)</span><br><span class="line">    Save.Save()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> study.send(<span class="string">&#x27;教学成功！(请等待主人审核哦~)&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>实现操作json数据的类，起到心脏的作用。</p>
+<p>将消息名作为文件名进行保存，再将消息存入json中，并记录时间和教学者的信息，</p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">JsonDB</span>():</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, QQ, send, Reply</span>):</span><br><span class="line">        self.QQ = QQ</span><br><span class="line">        self.send = send</span><br><span class="line">        self.Reply = Reply</span><br><span class="line"><span class="comment">#初始化</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#保存消息的方法</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">Save</span>(<span class="params">self</span>):</span><br><span class="line">        now = datetime.now()</span><br><span class="line">        data = &#123;</span><br><span class="line">            <span class="string">&quot;教学人&quot;</span>: self.QQ,</span><br><span class="line">            <span class="string">&quot;时间&quot;</span>: now.strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>),</span><br><span class="line">            self.send: self.Reply</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">#构建json消息段</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">f&quot;<span class="subst">&#123;curPathTwo + self.send&#125;</span>.json&quot;</span>, <span class="string">&quot;w&quot;</span>) <span class="keyword">as</span> json_file:</span><br><span class="line">            json.dump(data, json_file)</span><br><span class="line">        <span class="comment">#将消息存入</span></span><br></pre></td></tr></table></figure>
+
+<p>解决了保存，那么如何响应呢。</p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Reply = on_command(cmd=<span class="string">&#x27;&#x27;</span>, rule=to_me(), priority=<span class="number">60</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Reply.handle()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot, event: Event</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(<span class="built_in">str</span>(event.get_message())) &gt;= <span class="number">1</span>:</span><br><span class="line"></span><br><span class="line">        Load = JsonDB(QQ=<span class="string">&#x27;&#x27;</span>, Reply=<span class="string">&#x27;&#x27;</span>, send=event.get_message())</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> Reply.send(Load.Load())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        message = [<span class="string">&quot;你好，这里是LOVE酱，发送 帮助 可以查看我的功能哦！&quot;</span>,</span><br><span class="line">                   <span class="string">&quot;你好呀，我是LOVE酱，一个专为铁锈战争服务的虚拟少女！&quot;</span>,</span><br><span class="line">                   <span class="string">&quot;你好~有什么需要帮助的吗？&quot;</span>]</span><br><span class="line">        rnd = random.Random()</span><br><span class="line">        Num = rnd.randint(<span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span>  Reply.send(message[Num])</span><br></pre></td></tr></table></figure>
+
+<p>上面这段代码的作用是：在被艾特的时候随机响应一段回复词，而检测到字符串的时候便将字符串传参，实例化类并调用我们的写的查询方法，以此得到我们的回复词。</p>
+<p>查询方法的代码如下：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">Load</span>(<span class="params">self</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 从JSON文件中读取数据并解码为Python对象</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">f&quot;<span class="subst">&#123;curPath + self.send&#125;</span>.json&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> json_file:</span><br><span class="line">            data = json.load(json_file)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> data[<span class="string">f&quot;<span class="subst">&#123;self.send&#125;</span>&quot;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;LOVE酱现在还听不懂哦~可以教我吗？&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里用到了一段异常处理：</p>
+<ul>
+<li><p>如果用户访问的文件存在，则会返回json中对应的键的值，也就是之前写入的字符串。</p>
+</li>
+<li><p>如果用户访问的文件并不存在，则说明这个词汇并没有被教学过，同时会引发异常，方法就会返回 “LOVE酱现在还听不懂哦~可以教我吗？” 这段字符串。</p>
+</li>
+</ul>
+<h4 id="二、实现简易的审核功能"><a href="#二、实现简易的审核功能" class="headerlink" title="二、实现简易的审核功能"></a>二、实现简易的审核功能</h4><p>写到这里可能就会有人会问了，教学实现了，要是被教学了奇怪的话怎么办呀？能不能写一个审核机制？</p>
+<p>当然是可以的。</p>
+<p>我实现审核机制的原理是，将新教学的词先暂放到一个文件夹里，这个文件夹称为待审核文件夹，而这个文件夹里面的词汇是待审核词汇。在Master同意某个词汇后，就将词汇转移到过审文件夹中，而我们的响应方法只会去响应过审后文件夹里的词汇。这样，便成功的实现了简易的审核机制。</p>
+<p>代码如下：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Examine = on_command(cmd=<span class="string">&#x27;查看待审核词汇&#x27;</span>, priority=<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Examine.handle()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot, event: Event</span>):</span><br><span class="line">    QQ = event.get_session_id().split(<span class="string">&#x27;_&#x27;</span>)[<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">int</span>(QQ) != <span class="number">3345483363</span>:</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> Examine.send(<span class="string">&quot;你不是LOVE的主人哦~&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line"></span><br><span class="line">        curPath = os.path.abspath(os.path.pardir) + <span class="string">&quot;/LOVE/love/data/Examine/&quot;</span></span><br><span class="line">        listFiles = os.listdir(curPath)  <span class="comment"># 获取文件目录</span></span><br><span class="line">        message = <span class="string">&#x27;&#x27;</span></span><br><span class="line">        QQ = <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(listFiles)):</span><br><span class="line">            Load = JsonDB(QQ=QQ, Reply=<span class="string">&#x27;&#x27;</span>, send=listFiles[i])</span><br><span class="line">            Text = listFiles[i].split(<span class="string">&#x27;.&#x27;</span>)[<span class="number">0</span>] + <span class="string">&#x27;:&#x27;</span> + Load.ExamineLoad()</span><br><span class="line">            message += Text + <span class="string">&#x27;|&#x27;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> Examine.send(<span class="string">f&quot;待审核的词汇如下：<span class="subst">&#123;message&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>以上代码中，我们通过查看待审核文件夹中的文件，将文件名和文件中键对应的值提取出来组成字符串。就可以看到待审核的教学词汇。</p>
+<p>实现移动文件和读取审核文件夹内名称的代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">curPathTwo = <span class="built_in">str</span>(os.path.abspath(os.path.pardir) + <span class="string">&quot;/LOVE/love/data/Examine/&quot;</span>).replace(<span class="string">&#x27;db/&#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">ExamineLoad</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;读取待审核文件夹内的文件名&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">f&quot;<span class="subst">&#123;curPathTwo + self.send&#125;</span>&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> json_file:</span><br><span class="line">            data = json.load(json_file)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> data[<span class="string">f&quot;<span class="subst">&#123;<span class="built_in">str</span>(self.send).split(<span class="string">&#x27;.&#x27;</span>)[<span class="number">0</span>]&#125;</span>&quot;</span>]  <span class="comment"># 将文件名返回</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">MOVE</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;将文件转移实现通过审核&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            shutil.move(curPathTwo + self.send, curPath)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            os.unlink(curPath + self.send)</span><br><span class="line">            shutil.move(curPathTwo + self.send, curPath)  <span class="comment"># 发现文件重复则删除文件</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="实现让用户自行撤回提交错误的词汇的功能"><a href="#实现让用户自行撤回提交错误的词汇的功能" class="headerlink" title="实现让用户自行撤回提交错误的词汇的功能"></a>实现让用户自行撤回提交错误的词汇的功能</h4><p>为了减轻Master的工作量，也为了提高用户体验。</p>
+<p>我们考虑到用户有时候可能打错字，便增加了一个撤回的功能。</p>
+<p>如果没用这个功能，而用户又想要删去这个提交错误的词汇，差不多就只能联系Master了，这样子很不方便。</p>
+<p>而在实现功能中，我们需要考虑一点，那就是，需要实现只有发送这个词汇的人才能撤回这个词汇。</p>
+<p>还记得我们存储数据使用的格式吗？忘了没关系，我们一起看看：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;教学人&quot;</span><span class="punctuation">:</span> self.QQ<span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;时间&quot;</span><span class="punctuation">:</span> now.strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)<span class="punctuation">,</span></span><br><span class="line">    self.send<span class="punctuation">:</span> self.Reply</span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>在我们存储的每一个词汇的json文件里，我们有三个键，教学人、时间、以及接受词。分别对应QQ、时间、回复词。</p>
+<p>而解决用户直接身份甄别的关键就在此处，那就是json中的教学人，只要我们将其于发送消息者的QQ进行对比，就可以看出这个词是不是教学人创建的。</p>
+<p>ps: 有一个BUG可以卡，就是下一个人创建的词会覆盖上一个人的内容。）</p>
+<p>话不多说，上代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">recall = on_command(cmd=<span class="string">&#x27;撤回-&#x27;</span>, rule=to_me(), priority=<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@recall.handle()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot, event: Event</span>):</span><br><span class="line">    QQ = event.get_session_id().split(<span class="string">&#x27;_&#x27;</span>)[<span class="number">2</span>]  <span class="comment"># 获取QQ号</span></span><br><span class="line">    message = <span class="built_in">str</span>(event.get_message()).split(<span class="string">&#x27;-&#x27;</span>)[<span class="number">1</span>]  <span class="comment"># 事件消息内容</span></span><br><span class="line">    send = message</span><br><span class="line"></span><br><span class="line">    REC = JsonDB(QQ=QQ, send=send, Reply=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> recall.send(REC.recall())</span><br></pre></td></tr></table></figure>
+
+<p>然后是在类中实现的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">recall</span>(<span class="params">self</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 从JSON文件中读取数据并解码为Python对象</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">f&quot;<span class="subst">&#123;curPathTwo + self.send&#125;</span>.json&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> json_file:</span><br><span class="line">            data = json.load(json_file)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.QQ == data[<span class="string">&#x27;教学人&#x27;</span>]:</span><br><span class="line">            os.remove(curPathTwo + self.send+<span class="string">&#x27;.json&#x27;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;已成功撤回词汇&#x27;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;您并不是这个词汇的教学人哦~&#x27;</span></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;您并没有提交过这个词汇哦~&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

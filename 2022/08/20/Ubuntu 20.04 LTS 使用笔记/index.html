@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ubuntu 20.04 LTS 使用笔记 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,Ubuntu 20.04 LTS 使用笔记介绍 服务器是在腾讯云购买的2G 1核轻量级服务器，使用SSH远程连接。
+基本命令登录
+登录 su 用户名 （用户名默认为ubuntu） 
+
+输入密码 即可,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Ubuntu 20.04 LTS 使用笔记 - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,Ubuntu 20.04 LTS 使用笔记介绍 服务器是在腾讯云购买的2G 1核轻量级服务器，使用SSH远程连接。
+基本命令登录
+登录 su 用户名 （用户名默认为ubuntu） 
+
+输入密码 即可,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Ubuntu 20.04 LTS 使用笔记 - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,Ubuntu 20.04 LTS 使用笔记介绍 服务器是在腾讯云购买的2G 1核轻量级服务器，使用SSH远程连接。
+基本命令登录
+登录 su 用户名 （用户名默认为ubuntu） 
+
+输入密码 即可,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Ubuntu 20.04 LTS 使用笔记</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Ubuntu 20.04 LTS 使用笔记</h1>
+        <div class="stuff">
+            <span>八月 20, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="Ubuntu-20-04-LTS-使用笔记"><a href="#Ubuntu-20-04-LTS-使用笔记" class="headerlink" title="Ubuntu 20.04 LTS 使用笔记"></a>Ubuntu 20.04 LTS 使用笔记</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p> 服务器是在腾讯云购买的2G 1核轻量级服务器，使用SSH远程连接。</p>
+<h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><ol>
+<li><p>登录 su 用户名 （用户名默认为ubuntu） </p>
+</li>
+<li><p>输入密码 即可进入Home页面（在输入密码的过程中密码是隐藏的)</p>
+</li>
+</ol>
+<h3 id="目录切换"><a href="#目录切换" class="headerlink" title="目录切换"></a>目录切换</h3><ol>
+<li><p>使用CD命令：</p>
+<ul>
+<li><p>cd  目录名	进入指定目录</p>
+</li>
+<li><p>cd - 目录名   返回上一级命令</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="查看文件"><a href="#查看文件" class="headerlink" title="查看文件"></a>查看文件</h3><p>使用命令 ls -a 查看当前目录下的文件</p>
+<p>其中文件有不同的颜色，每个颜色都有独特的意义</p>
+<p>绿色文件：可执行文件，可执行的程序 </p>
+<p>红色文件：压缩文件或者包文件 如 （jar zip 后缀的文件）</p>
+<p>蓝色文件：目录    （一般显示为 .. .）</p>
+<p>白色文件：普通文件，如文本文件，配置文件，源码文件等</p>
+<p>浅蓝色文件：链接文件，主要是使用ln命令建立的文件</p>
+<p>红色闪烁：表示链接的文件有问题</p>
+<p>黄色文件：表示设备文件</p>
+<h3 id="mv-命令"><a href="#mv-命令" class="headerlink" title="mv 命令"></a>mv 命令</h3><p>格式 mv [选项] 源文件或者目录 目标文件或者目录</p>
+<p>移动文件	举例： 将文件 233 移动到 666</p>
+<p>mv 233 666</p>
+<p>重命名文件	举例：将文件233 改名为 2333</p>
+<p>mv 233 2333</p>
+<h3 id="sudo命令"><a href="#sudo命令" class="headerlink" title="sudo命令"></a>sudo命令</h3><p>sudo 命令为是linux系统管理指令，是允许系统管理员让普通用户执行一些或者全部的root<em>命令</em>的一个工具。 –百度百科</p>
+<p>简单来说就是给予其他命令管理员权限，就和windows中的用管理员权限打开是相似的。</p>
+<p>举例 sudo wget -c xxxxxxxxxxxxx</p>
+<h3 id="更新源"><a href="#更新源" class="headerlink" title="更新源"></a>更新源</h3><p>apt-get update</p>
+<h3 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h3><p>apt-get install 软件名</p>
+<p>apt install 软件名</p>
+<p>其中apt 是合并了 apt-get 和 apt-cache 的简化命令</p>
+<p>原理是先搜索再下载安装，搜不到不装</p>
+<p><em><strong>其中使用了非常好用的分段下载llastest,得益于联合文件系统</strong></em></p>
+<h3 id="wget"><a href="#wget" class="headerlink" title="wget"></a>wget</h3><p>Wget 常用于下载</p>
+<p>格式: wget 参数 路径</p>
+<h1 id=""><a href="#" class="headerlink" title=""></a></h1><hr>
+<h2 id="Docker-的基本使用"><a href="#Docker-的基本使用" class="headerlink" title="Docker 的基本使用"></a>Docker 的基本使用</h2><p>Docker 名为容器，是挂载软件，子系统，诸如此类的不二选择。</p>
+<h3 id="基本命令-1"><a href="#基本命令-1" class="headerlink" title="基本命令"></a>基本命令</h3><p>镜像命令<br>docker images 查看镜像<br>docker search +名称 搜索镜像 + ##–filter&#x3D;STARTS&#x3D;数字 收藏数搜索）<br>dockers pull #下载镜像:tag 版本</p>
+<p>docker rmi +docker rmi +id +id +id 删除镜像<br>dockers rmi -f 删除全部 $(docker imgaes -aq)<br>dockers rm (运行的不能删除)+id删除容器<br>dockers rm -f 强制删除全部  $(docker ps -aq)<br>docker ps -a -q|xargs docker rm 删除所有容器</p>
+<h3 id="run-命令"><a href="#run-命令" class="headerlink" title="run 命令"></a>run 命令</h3><p>格式：docker run 参数 参数 参数</p>
+<p>举例：</p>
+<p>sudo docker run -it  -v ~&#x2F;txzz2&#x2F;docker:&#x2F;app&#x2F;data -p 5124:5124 5eaf4cfde9c5</p>
+<p>解剖 sudo 获取权限 </p>
+<p>docker run 为基本 </p>
+<p>-it 为交互式运行 </p>
+<p>-v ~&#x2F;路径  绑定容器数据卷 </p>
+<p>-p 指定容器端口</p>
+<p>后面为镜像名</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
