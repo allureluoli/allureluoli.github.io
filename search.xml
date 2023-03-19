@@ -1566,4 +1566,20 @@ Gitee有一套审查系统，会在网站进行部署/更新的时候，检查�
         <tag>C#</tag>
       </tags>
   </entry>
+  <entry>
+    <title>被if语句给予一点小小震撼</title>
+    <url>/2023/03/19/2023-3-19-%E8%A2%ABif%E8%AF%AD%E5%8F%A5%E7%BB%99%E4%BA%88%E4%B8%80%E7%82%B9%E5%B0%8F%E5%B0%8F%E9%9C%87%E6%92%BC/</url>
+    <content><![CDATA[<p>#被if语句给予一点小小震撼</p>
+<p>为什么是and 而不是or?</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">QQ=<span class="number">1252</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">int</span>(QQ) != <span class="number">3345483363</span> <span class="keyword">or</span> <span class="built_in">int</span>(QQ) != <span class="number">2060598058</span>:</span><br></pre></td></tr></table></figure>
+<p>如果QQ号不等于3345483363或2060598058就是错误的，否则就输出正确的。<br>但是实际情况却是，QQ为任何数字都会错误！…而换成and就能达到我想要的效果，可and不是和吗？<br>or不是两边任何一个返回为真则为真吗，而and不是两边都为真才为真吗？啊啊啊，为森么<br>然后我踏马就想通了，如果QQ不等于前者，就返回一个真了，我需要的是两个其中一个是假则返回假。<br>卧槽</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;错误的&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;正确的&quot;</span>)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
 </search>
