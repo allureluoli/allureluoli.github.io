@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>使用got装饰器制作比赛抽图系统 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,反思说实话，这段代码并不完美，got装饰器有专门的获取消息的方法，而我仍然在使用获取事件消息的方式。
+而这种实现方法最明显的缺陷就是无法在群聊以外的环境中使用。
+阅读了其他人的代码后，我深感自己的代,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="使用got装饰器制作比赛抽图系统 - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,反思说实话，这段代码并不完美，got装饰器有专门的获取消息的方法，而我仍然在使用获取事件消息的方式。
+而这种实现方法最明显的缺陷就是无法在群聊以外的环境中使用。
+阅读了其他人的代码后，我深感自己的代,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="使用got装饰器制作比赛抽图系统 - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,反思说实话，这段代码并不完美，got装饰器有专门的获取消息的方法，而我仍然在使用获取事件消息的方式。
+而这种实现方法最明显的缺陷就是无法在群聊以外的环境中使用。
+阅读了其他人的代码后，我深感自己的代,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">使用got装饰器制作比赛抽图系统</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">使用got装饰器制作比赛抽图系统</h1>
+        <div class="stuff">
+            <span>三月 24, 2023</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Nonebot/" rel="tag">Nonebot</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Python/" rel="tag">Python</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id=""><a href="#" class="headerlink" title=""></a></h3><h3 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h3><p>说实话，这段代码并不完美，got装饰器有专门的获取消息的方法，而我仍然在使用获取事件消息的方式。</p>
+<p>而这种实现方法最明显的缺陷就是无法在群聊以外的环境中使用。</p>
+<p>阅读了其他人的代码后，我深感自己的代码水平还是太低。尽管投机取巧的实现了一些功能，但很明显的存在诸多的缺陷。</p>
+<p>我将在接下来的时间内多多参考佬们的代码，也更多的去理解Python。汲取前人的智慧，追寻前辈的脚步，而不是一直通过自己的方法闭门造车。</p>
+<p>统计一下存在缺陷的功能：</p>
+<p>​	教学系统：大量的使用json文件，占用的资源太多</p>
+<p>​	持续性会话系统：发送了空消息，影响PC用户的使用</p>
+<p>​	比赛系统：代码不完美</p>
+<p>​	抽图系统：代码重复性高，宛若屎山</p>
+<p>​	帮助系统：同上</p>
+<p>总结：菜！</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</span><br><span class="line"><span class="keyword">from</span> nonebot <span class="keyword">import</span> on_command</span><br><span class="line"><span class="keyword">from</span> nonebot.adapters.onebot.v11 <span class="keyword">import</span> MessageSegment, Event</span><br><span class="line"><span class="keyword">from</span> nonebot.matcher <span class="keyword">import</span> Matcher</span><br><span class="line"><span class="keyword">from</span> nonebot.adapters <span class="keyword">import</span> Message</span><br><span class="line"><span class="keyword">from</span> nonebot.params <span class="keyword">import</span> CommandArg</span><br><span class="line"></span><br><span class="line">MatchMap = on_command(<span class="string">&#x27;比赛抽图模式启动&#x27;</span>, priority=<span class="number">50</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@MatchMap.handle()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_first_receive</span>(<span class="params">matcher: Matcher, args: Message = CommandArg(<span class="params"></span>)</span>):</span><br><span class="line">    plain_text = args.extract_plain_text()</span><br><span class="line">    <span class="keyword">if</span> plain_text:</span><br><span class="line">        matcher.set_arg(<span class="string">&quot;Map&quot;</span>, args)</span><br><span class="line">        <span class="comment"># 设置一个got消息</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 这里Ban图</span></span><br><span class="line">MapList = os.listdir(os.getcwd() + <span class="string">&quot;/love/data/images/match/&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@MatchMap.got(<span class="params"><span class="string">&quot;Map&quot;</span>,</span></span></span><br><span class="line"><span class="params"><span class="meta">              prompt=<span class="string">f&quot;当前地图池为<span class="subst">&#123;<span class="built_in">str</span>(MapList).replace(<span class="string">&#x27;.png&#x27;</span>, <span class="string">&#x27;&#x27;</span>)&#125;</span>\nBan图指【BanXXX】\nBan图结束请发送【开始抽图】&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">event: Event</span>):</span><br><span class="line">    <span class="comment"># async def handle_city(Map: Message = Arg(), BanMap: str = ArgPlainText(&quot;Map&quot;)):</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        MapName = <span class="built_in">str</span>(event.get_message()).replace(<span class="string">&#x27;Ban&#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> MapName != <span class="string">&#x27;开始抽图&#x27;</span>:</span><br><span class="line"></span><br><span class="line">            MapList.remove(MapName + <span class="string">&#x27;.png&#x27;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">await</span> MatchMap.reject(<span class="string">&quot;Ban图成功，地图池中还有：&quot;</span> + <span class="built_in">str</span>(MapList).replace(<span class="string">&#x27;.png&#x27;</span>, <span class="string">&#x27;&#x27;</span>))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">await</span> MatchMap.send(<span class="string">&quot;Ban图结束，最终地图池中还有：&quot;</span> + <span class="built_in">str</span>(MapList).replace(<span class="string">&#x27;.png&#x27;</span>, <span class="string">&#x27;&#x27;</span>) + <span class="string">&quot;这些地图&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">await</span> MatchMap.reject(<span class="string">&quot;请检查指令是否正确~&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@MatchMap.got(<span class="params"><span class="string">&quot;Number&quot;</span>, prompt=<span class="string">f&quot;请发送需要抽取地图的数量，如果抽1张图请发送 1 。&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">event: Event</span>):</span><br><span class="line">    Number = <span class="built_in">eval</span>(<span class="built_in">str</span>(event.get_message()))</span><br><span class="line">    output_list = []</span><br><span class="line">    <span class="comment"># 判断数字大于列表索引就重来</span></span><br><span class="line">    <span class="comment"># try:</span></span><br><span class="line">    <span class="keyword">while</span> <span class="built_in">len</span>(output_list) &lt; Number:</span><br><span class="line"></span><br><span class="line">        MapN = random.choice(MapList)  <span class="comment"># 返回列表中的随机项</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> MapN <span class="keyword">not</span> <span class="keyword">in</span> output_list:</span><br><span class="line">            message = MapN</span><br><span class="line"></span><br><span class="line">            path = Path(os.getcwd() + <span class="string">f&quot;/love/data/images/match/<span class="subst">&#123;MapN&#125;</span>&quot;</span>).parent / <span class="string">f&quot;<span class="subst">&#123;MapN&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">            image = MessageSegment.image(path)</span><br><span class="line"></span><br><span class="line">            output_list.append(MapN)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">await</span> MatchMap.send(<span class="string">&quot;呐呐~你抽到的地图为：&quot;</span> + message.replace(<span class="string">&#x27;.png&#x27;</span>, <span class="string">&#x27;&#x27;</span>) + image)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> MatchMap.finish(<span class="string">&quot;抽图结束，祝您比赛愉快&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
