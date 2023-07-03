@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flask[初见] - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,什么是Flask?  Flask是一个使用 Python 编写的轻量级 Web 应用框架。其 WSGI 工具箱采用 Werkzeug ，模板引擎则使用 Jinja2 。Flask使用 BSD 授权。,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Flask[初见] - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,什么是Flask?  Flask是一个使用 Python 编写的轻量级 Web 应用框架。其 WSGI 工具箱采用 Werkzeug ，模板引擎则使用 Jinja2 。Flask使用 BSD 授权。,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Flask[初见] - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,什么是Flask?  Flask是一个使用 Python 编写的轻量级 Web 应用框架。其 WSGI 工具箱采用 Werkzeug ，模板引擎则使用 Jinja2 。Flask使用 BSD 授权。,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Flask[初见]</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Flask[初见]</h1>
+        <div class="stuff">
+            <span>七月 03, 2023</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Flask/" rel="tag">Flask</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Python/" rel="tag">Python</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="什么是Flask"><a href="#什么是Flask" class="headerlink" title="什么是Flask?"></a>什么是Flask?</h1><p>  Flask是一个使用 <a target="_blank" rel="noopener" href="https://baike.baidu.com/item/Python?fromModule=lemma_inlink">Python</a> 编写的轻量级 Web 应用框架。其 <a target="_blank" rel="noopener" href="https://baike.baidu.com/item/WSGI?fromModule=lemma_inlink">WSGI</a> 工具箱采用 Werkzeug ，<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/907667?fromModule=lemma_inlink">模板引擎</a>则使用 Jinja2 。Flask使用 BSD 授权。</p>
+<p>​																																										——百度百科</p>
+<p>如果看文章的你也同我一样，如此小白，便会觉得，听不懂。</p>
+<p>什么是Web应用框架？</p>
+<p>WSGI是什么？</p>
+<p>模板引擎又是什么？</p>
+<p>疑问很多，下面我将通过我的个人理解首先解答第一个问题。</p>
+<h2 id="Web应用框架"><a href="#Web应用框架" class="headerlink" title="Web应用框架"></a>Web应用框架</h2><p>在接触Python之前我便对tomcat , Djongo 等，略有耳闻。这是两种知名的，Web应用框架。在实际操作之前，仅凭想象，或是其他渠道学习，理解总归是差些的。</p>
+<p>Web应用框架，说白了，就是可以通过编写代码，实现一个运行在Web上的应用程序。什么是Web应用程序，即能通过Web访问，也就是HTTP或HTTPS访问使用的应用。</p>
+<p>再通俗点讲，就是实现了网站的网页和网站的部署。实现了html和web服务器的功能。</p>
+<h2 id="瞬间上手Flask"><a href="#瞬间上手Flask" class="headerlink" title="瞬间上手Flask"></a>瞬间上手Flask</h2><p>首先，我们先来安装一下Flask，只需要一条代码即可。（默认你电脑上有Python和pip）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install flask</span><br></pre></td></tr></table></figure>
+
+<p>然后，打开你的IDE，编写一段超级精简的Python代码！</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="comment"># __name__是python的一个内置类属性,它存储模块的名称。 python的模块既可以被调用,也可以独立运行。</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>) </span><span class="comment"># 这是一个装饰器</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 用来装饰函数hello_world，当请求的path 是 / 时，程序用函数hello_world来处理这个请求</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello_world</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Hello World!&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
+
+<p>点击运行，得到以下输出。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)</span><br></pre></td></tr></table></figure>
+
+<p>然后访问其中的地址，即可得到一个网页。</p>
+<p>网页中只有一行字，Hello World。本来这博文也是写给自己看的，就不多赘述了。</p>
+<h2 id="name"><a href="#name" class="headerlink" title="name"></a><strong>name</strong></h2><p>不得不说一下  <code>__name__</code> 这玩意，比较的神奇。</p>
+<p>如果不在本文件运行这个属性，它返回的值是文件名，但当在本文件运行时，它返回的值是 <code>__main__</code>。</p>
+<h2 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h2><p>装饰器以 @ 开头 ，用以装饰后面的函数。</p>
+<h2 id="app-run"><a href="#app-run" class="headerlink" title="app.run"></a>app.run</h2><p>我们可以指定监听的地址和端口，如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="number">1122</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="Flask路由"><a href="#Flask路由" class="headerlink" title="Flask路由"></a>Flask路由</h1><p>在讲解最小的flask应用时，提到了装饰器route，它的作用就是将处理请求的函数绑定到URL上（URL必须以反斜杠开头），这种设计体现了解耦的思想。<br> <img src="http://www.coolpython.net/pictures/flask_tutorial/basic/route-1586299659-0.jpg" alt="img"><br> 不同的请求被路由到不同处理函数上，这个函数称之为视图。路由保存了URL和处理函数之间的映射关系，映射关系的建立是通过route装饰器完成的。</p>
+<p>​																																							  ——COOLPython</p>
+<h2 id="建立映射关系"><a href="#建立映射关系" class="headerlink" title="建立映射关系"></a>建立映射关系</h2><p>通过route装饰器，不同的请求被路由到不同处理函数上。路由保存了URL和处理函数之间的映射关系。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/hello&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;hello&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/books&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">books</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;books&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="变量规则"><a href="#变量规则" class="headerlink" title="变量规则"></a>变量规则</h2><p>实例中，无论是 <code>/hello</code> 还是 <code>/books/</code> 这种URL都是固定的，而在实际使用中，经常会用到不固定的URL。如：</p>
+<blockquote><p>比如&#x2F;book&#x2F;1&#x2F;price 这种restful风格的URL。</p>
+<footer><strong>@COOLPYTHON</strong><cite><a target="_blank" rel="noopener" href="http://www.coolpython.net/flask_tutorial/basic/route.html">www.coolpython.net/flask_tutorial/basic/route.html</a></cite></footer></blockquote>
+
+<p>先不谈什么是restful风格，当务之急是我们需要实现一个动态变化的URL。</p>
+<p>而Flask自带实现方法，允许给URL添加变量部分。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/book/&lt;int:id&gt;/price&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">price</span>(<span class="params"><span class="built_in">id</span></span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">str</span>(<span class="built_in">id</span>)</span><br></pre></td></tr></table></figure>
+
+<p>变量部分的规则为 <a href="converter:variable_name">converter:variable_name</a> ,variable_name将作为参数传递给所绑定的函数，而且可以根据converter转换器对variable_name进行转换。</p>
+<p>converter转换器有下面几种</p>
+<table>
+<thead>
+<tr>
+<th>转换器</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>int</td>
+<td>接受整数</td>
+</tr>
+<tr>
+<td>float</td>
+<td>接受浮点数</td>
+</tr>
+<tr>
+<td>path</td>
+<td>接受带斜线的path</td>
+</tr>
+</tbody></table>
+<p>如果不标注转换器类型，则默认转为字符串，下面是这几种转换器的例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不指定转换器</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/book/&lt;name&gt;/author&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">author</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="keyword">return</span> name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 转换器为int</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/book/&lt;int:id&gt;/price&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">price</span>(<span class="params"><span class="built_in">id</span></span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">str</span>(<span class="built_in">id</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 转换器为float</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/book/price-ge/&lt;float:price&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">books_by_price</span>(<span class="params">price</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">str</span>(price)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 转换器为path</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/book/&lt;path:book_info&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">books_by_path</span>(<span class="params">book_info</span>):</span><br><span class="line">    <span class="keyword">return</span> book_info</span><br></pre></td></tr></table></figure>
+
+<p>​																																							——COOLPYTHON</p>
+<h2 id="感想"><a href="#感想" class="headerlink" title="感想"></a>感想</h2><p>初见，Suki , 结婚！</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

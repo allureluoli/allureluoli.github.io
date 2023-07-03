@@ -239,7 +239,7 @@
     <title>NoneBot设置教学功能</title>
     <url>/2022/11/01/Nonebot%E8%AE%BE%E7%BD%AE%E6%95%99%E5%AD%A6%E5%8A%9F%E8%83%BD/</url>
     <content><![CDATA[<ul>
-<li>话不多说，直接上代码<br>在之前便设置了读取词库的方法，这样以来设计教学功能便简单许多了。<br>原理：<br>  在事件响应的时候获取原消息纯文件，将命令与教学内容分割<br>  将教学内容直接写入文件</li>
+<li>话不多说，直接上代码<br>  在之前便设置了读取词库的方法，这样以来设计教学功能便简单许多了。<br>  原理：<br>  在事件响应的时候获取原消息纯文件，将命令与教学内容分割<br>  将教学内容直接写入文件</li>
 </ul>
 <p>问题：<br>    初步猜测由于异步编程问题，导致机器人必须重启才可以重新读取词库。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">start=on_command(cmd=<span class="string">&#x27;LOVE教学-&#x27;</span>,priority=<span class="number">50</span>)</span><br><span class="line"><span class="meta">@start.handle()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot,event :Event</span>):</span><br><span class="line">   	<span class="keyword">try</span>:</span><br><span class="line">       	teaching=<span class="built_in">open</span>(FilePath(<span class="string">r&#x27;\introduce\cat.ini&#x27;</span>),<span class="string">&#x27;a+&#x27;</span>,encoding=<span class="string">&#x27;UTF-8&#x27;</span>)</span><br><span class="line">       	<span class="comment">#分割消息</span></span><br><span class="line">       	text = <span class="built_in">str</span>(event.get_message()).split(<span class="string">&#x27;-&#x27;</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">       	teaching.write(<span class="built_in">str</span>(<span class="string">&#x27;\n&#x27;</span>+text[<span class="number">1</span>]))</span><br><span class="line">       	teaching.close()</span><br><span class="line">       	<span class="comment">#import os</span></span><br><span class="line">       	<span class="comment">#os.system(&#x27;exit&#x27;,r&#x27;cd C:\Users\33454\Desktop\LOVE&#x27;,&#x27;nb run&#x27;)</span></span><br><span class="line">       	<span class="keyword">await</span> start.send(<span class="string">&#x27;呐呐呐！教学成功~\n(被添加的新回复将在次日审核通过后才可使用哦~)&#x27;</span>)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">       	teaching.close()</span><br><span class="line">       	<span class="keyword">await</span> start.send(<span class="string">&#x27;教学失败，请检查命令格式&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
@@ -446,8 +446,7 @@
   <entry>
     <title>Python多线程学习</title>
     <url>/2022/11/01/Python%20%E5%A4%9A%E7%BA%BF%E7%A8%8B/</url>
-    <content><![CDATA[<p>##认识多线程##</p>
-<blockquote><p> 多线程类似于同时执行多个不同程序，多线程运行有如下优点：</p>
+    <content><![CDATA[<h2 id="认识多线程"><a href="#认识多线程" class="headerlink" title="认识多线程##"></a>认识多线程##</h2><blockquote><p> 多线程类似于同时执行多个不同程序，多线程运行有如下优点：</p>
 <ul>
 <li>使用线程可以把占据长时间的程序中的任务放到后台去处理。</li>
 <li>用户界面可以更加吸引人，比如用户点击了一个按钮去触发某些事件的处理，可以弹出一个进度条来显示处理的进度。</li>
@@ -773,16 +772,14 @@ Gitee有一套审查系统，会在网站进行部署/更新的时候，检查�
   <entry>
     <title>网络安全基础</title>
     <url>/2022/10/28/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/</url>
-    <content><![CDATA[<p>#漏洞</p>
-<p>1.网络协议本身的逻辑漏洞<br>2.通过网络分析工具，窃取<br>3.应用场景中网络协议的不同逻辑错误<br>4.基主机，操作系统，通信层，应用层</p>
+    <content><![CDATA[<h1 id="漏洞"><a href="#漏洞" class="headerlink" title="漏洞"></a>漏洞</h1><p>1.网络协议本身的逻辑漏洞<br>2.通过网络分析工具，窃取<br>3.应用场景中网络协议的不同逻辑错误<br>4.基主机，操作系统，通信层，应用层</p>
 <p>协议：<br>ARP协议：根据IP获取物理地址，无法在对等网络中解析数据包的来源</p>
 <p>ARP欺骗：<br>通过MAC地址与目标IP相关联。以便于攻击者可以接收到与目标的任何？</p>
 <p>2.DNS<br> 可将域名解析为IP<br> 缓存中毒，DNS欺骗</p>
 <p>3.IP协议<br>  根据端到端的设计原则，IP为主机提供一种无连接、不可靠、尽力而为的数据包传输服务。<br>  吧发送的IP包中的源IP地址 改成被新人的友好主机的IP地址，进而实施攻击。</p>
 <p>4.远程桌面协议 RDP<br>  RDP漏洞攻击，不用任何交互绕过认证，直接通过RDP协议进行连接，进而发送恶意代码。</p>
 <p>5.简单邮件传输协议（SMTP）<br>通过电子邮件，发送垃圾软件和电子邮件。执行目录攻击，收集有效电子邮件。<br>根据漏洞进行缓冲区溢出攻击，特洛伊木马攻击和shell脚本攻击等，还可利用电子邮件发送垃圾邮件或恶意软件。</p>
-<p>#软件和硬件的漏洞</p>
-<p>1.软件<br>系统软件<br>应用软件<br>数据库软件</p>
+<h1 id="软件和硬件的漏洞"><a href="#软件和硬件的漏洞" class="headerlink" title="软件和硬件的漏洞"></a>软件和硬件的漏洞</h1><p>1.软件<br>系统软件<br>应用软件<br>数据库软件</p>
 <p>软件错误，软件缺陷，软件失效</p>
 <ol start="2">
 <li>硬件，通过通信线路传输，传输过程中也可能被截取</li>
@@ -1546,20 +1543,19 @@ Gitee有一套审查系统，会在网站进行部署/更新的时候，检查�
   <entry>
     <title>速出文件扩展名</title>
     <url>/2022/10/26/%E9%80%9F%E5%87%BA%E6%96%87%E4%BB%B6%E6%89%A9%E5%B1%95%E5%90%8D/</url>
-    <content><![CDATA[<p>#快速找出文件上传支持的扩展名<br>##1.抓包<br>使用BurpSuite将抓包的上传文件请求导出，存为譬如<strong>fuzz.txt</strong>的文件</p>
+    <content><![CDATA[<h1 id="快速找出文件上传支持的扩展名"><a href="#快速找出文件上传支持的扩展名" class="headerlink" title="快速找出文件上传支持的扩展名"></a>快速找出文件上传支持的扩展名</h1><h2 id="1-抓包"><a href="#1-抓包" class="headerlink" title="1.抓包"></a>1.抓包</h2><p>使用BurpSuite将抓包的上传文件请求导出，存为譬如<strong>fuzz.txt</strong>的文件</p>
 
-<p>##2.修改内容<br>对其中进行<strong>模糊测试</strong>的内容修改</p>
+<h2 id="2-修改内容"><a href="#2-修改内容" class="headerlink" title="2.修改内容"></a>2.修改内容</h2><p>对其中进行<strong>模糊测试</strong>的内容修改</p>
 <p>将其修改为 <strong>FUZZ</strong> 而在其后跑的字典会替换这里的<strong>FUZZ</strong>关键词</p>
 
 
-<p>##3.字典小爆破</p>
-<p>使用一个包含各种后缀名的字典开始跑</p>
+<h2 id="3-字典小爆破"><a href="#3-字典小爆破" class="headerlink" title="3.字典小爆破"></a>3.字典小爆破</h2><p>使用一个包含各种后缀名的字典开始跑</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ffuf -request fuzz.txt -request-proto http -w /opt/SecLists/Fuzzing/extensions-most-common.fuzz.txt</span><br></pre></td></tr></table></figure>
 
 <p>响应结果如图：</p>
 
 <p>主要区别是Size的大小，这里有1115和1110两种。<br>可以看成1110是被允许的文件扩展名。</p>
-<p>##4.优化命令<br>增添 -ms 1110</p>
+<h2 id="4-优化命令"><a href="#4-优化命令" class="headerlink" title="4.优化命令"></a>4.优化命令</h2><p>增添 -ms 1110</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ffuf -request fuzz.txt -request-proto http -w /opt/SecLists/Fuzzing/extensions-most-common.fuzz.txt -ms 1110</span><br></pre></td></tr></table></figure>
 <p>现在仅显示支持的扩展名了</p>
 ]]></content>
@@ -1605,6 +1601,89 @@ Gitee有一套审查系统，会在网站进行部署/更新的时候，检查�
       <tags>
         <tag>Python</tag>
         <tag>Nonebot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Flask[初见]</title>
+    <url>/2023/07/03/2023-7-3-Flask-1/</url>
+    <content><![CDATA[<h1 id="什么是Flask"><a href="#什么是Flask" class="headerlink" title="什么是Flask?"></a>什么是Flask?</h1><p>  Flask是一个使用 <a href="https://baike.baidu.com/item/Python?fromModule=lemma_inlink">Python</a> 编写的轻量级 Web 应用框架。其 <a href="https://baike.baidu.com/item/WSGI?fromModule=lemma_inlink">WSGI</a> 工具箱采用 Werkzeug ，<a href="https://baike.baidu.com/item/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/907667?fromModule=lemma_inlink">模板引擎</a>则使用 Jinja2 。Flask使用 BSD 授权。</p>
+<p>​																																										——百度百科</p>
+<p>如果看文章的你也同我一样，如此小白，便会觉得，听不懂。</p>
+<p>什么是Web应用框架？</p>
+<p>WSGI是什么？</p>
+<p>模板引擎又是什么？</p>
+<p>疑问很多，下面我将通过我的个人理解首先解答第一个问题。</p>
+<h2 id="Web应用框架"><a href="#Web应用框架" class="headerlink" title="Web应用框架"></a>Web应用框架</h2><p>在接触Python之前我便对tomcat , Djongo 等，略有耳闻。这是两种知名的，Web应用框架。在实际操作之前，仅凭想象，或是其他渠道学习，理解总归是差些的。</p>
+<p>Web应用框架，说白了，就是可以通过编写代码，实现一个运行在Web上的应用程序。什么是Web应用程序，即能通过Web访问，也就是HTTP或HTTPS访问使用的应用。</p>
+<p>再通俗点讲，就是实现了网站的网页和网站的部署。实现了html和web服务器的功能。</p>
+<h2 id="瞬间上手Flask"><a href="#瞬间上手Flask" class="headerlink" title="瞬间上手Flask"></a>瞬间上手Flask</h2><p>首先，我们先来安装一下Flask，只需要一条代码即可。（默认你电脑上有Python和pip）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install flask</span><br></pre></td></tr></table></figure>
+
+<p>然后，打开你的IDE，编写一段超级精简的Python代码！</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="comment"># __name__是python的一个内置类属性,它存储模块的名称。 python的模块既可以被调用,也可以独立运行。</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>) </span><span class="comment"># 这是一个装饰器</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 用来装饰函数hello_world，当请求的path 是 / 时，程序用函数hello_world来处理这个请求</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello_world</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Hello World!&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
+
+<p>点击运行，得到以下输出。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">* Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)</span><br></pre></td></tr></table></figure>
+
+<p>然后访问其中的地址，即可得到一个网页。</p>
+<p>网页中只有一行字，Hello World。本来这博文也是写给自己看的，就不多赘述了。</p>
+<h2 id="name"><a href="#name" class="headerlink" title="name"></a><strong>name</strong></h2><p>不得不说一下  <code>__name__</code> 这玩意，比较的神奇。</p>
+<p>如果不在本文件运行这个属性，它返回的值是文件名，但当在本文件运行时，它返回的值是 <code>__main__</code>。</p>
+<h2 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h2><p>装饰器以 @ 开头 ，用以装饰后面的函数。</p>
+<h2 id="app-run"><a href="#app-run" class="headerlink" title="app.run"></a>app.run</h2><p>我们可以指定监听的地址和端口，如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="number">1122</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="Flask路由"><a href="#Flask路由" class="headerlink" title="Flask路由"></a>Flask路由</h1><p>在讲解最小的flask应用时，提到了装饰器route，它的作用就是将处理请求的函数绑定到URL上（URL必须以反斜杠开头），这种设计体现了解耦的思想。<br> <img src="http://www.coolpython.net/pictures/flask_tutorial/basic/route-1586299659-0.jpg" alt="img"><br> 不同的请求被路由到不同处理函数上，这个函数称之为视图。路由保存了URL和处理函数之间的映射关系，映射关系的建立是通过route装饰器完成的。</p>
+<p>​																																							  ——COOLPython</p>
+<h2 id="建立映射关系"><a href="#建立映射关系" class="headerlink" title="建立映射关系"></a>建立映射关系</h2><p>通过route装饰器，不同的请求被路由到不同处理函数上。路由保存了URL和处理函数之间的映射关系。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/hello&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;hello&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/books&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">books</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;books&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="变量规则"><a href="#变量规则" class="headerlink" title="变量规则"></a>变量规则</h2><p>实例中，无论是 <code>/hello</code> 还是 <code>/books/</code> 这种URL都是固定的，而在实际使用中，经常会用到不固定的URL。如：</p>
+<blockquote><p>比如&#x2F;book&#x2F;1&#x2F;price 这种restful风格的URL。</p>
+<footer><strong>@COOLPYTHON</strong><cite><a href="http://www.coolpython.net/flask_tutorial/basic/route.html">www.coolpython.net/flask_tutorial/basic/route.html</a></cite></footer></blockquote>
+
+<p>先不谈什么是restful风格，当务之急是我们需要实现一个动态变化的URL。</p>
+<p>而Flask自带实现方法，允许给URL添加变量部分。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/book/&lt;int:id&gt;/price&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">price</span>(<span class="params"><span class="built_in">id</span></span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">str</span>(<span class="built_in">id</span>)</span><br></pre></td></tr></table></figure>
+
+<p>变量部分的规则为 <a href="converter:variable_name">converter:variable_name</a> ,variable_name将作为参数传递给所绑定的函数，而且可以根据converter转换器对variable_name进行转换。</p>
+<p>converter转换器有下面几种</p>
+<table>
+<thead>
+<tr>
+<th>转换器</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>int</td>
+<td>接受整数</td>
+</tr>
+<tr>
+<td>float</td>
+<td>接受浮点数</td>
+</tr>
+<tr>
+<td>path</td>
+<td>接受带斜线的path</td>
+</tr>
+</tbody></table>
+<p>如果不标注转换器类型，则默认转为字符串，下面是这几种转换器的例子</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 不指定转换器</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/book/&lt;name&gt;/author&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">author</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="keyword">return</span> name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 转换器为int</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/book/&lt;int:id&gt;/price&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">price</span>(<span class="params"><span class="built_in">id</span></span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">str</span>(<span class="built_in">id</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 转换器为float</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/book/price-ge/&lt;float:price&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">books_by_price</span>(<span class="params">price</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">str</span>(price)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 转换器为path</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/book/&lt;path:book_info&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">books_by_path</span>(<span class="params">book_info</span>):</span><br><span class="line">    <span class="keyword">return</span> book_info</span><br></pre></td></tr></table></figure>
+
+<p>​																																							——COOLPYTHON</p>
+<h2 id="感想"><a href="#感想" class="headerlink" title="感想"></a>感想</h2><p>初见，Suki , 结婚！</p>
+]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Flask</tag>
       </tags>
   </entry>
 </search>

@@ -11,9 +11,9 @@
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="二月,"> 
     <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,
-话不多说，直接上代码在之前便设置了读取词库的方法，这样以来设计教学功能便简单许多了。原理：  在事件响应的时候获取原消息纯文件，将命令与教学内容分割  将教学内容直接写入文件
+话不多说，直接上代码  在之前便设置了读取词库的方法，这样以来设计教学功能便简单许多了。  原理：  在事件响应的时候获取原消息纯文件，将命令与教学内容分割  将教学内容直接写入文件
 
-问题：    初步,"> 
+问题：  ,"> 
     <meta name="author" content="Allureluoli"> 
     <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -23,9 +23,9 @@
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:title" content="NoneBot设置教学功能 - 二月の档案室"/>
     <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,
-话不多说，直接上代码在之前便设置了读取词库的方法，这样以来设计教学功能便简单许多了。原理：  在事件响应的时候获取原消息纯文件，将命令与教学内容分割  将教学内容直接写入文件
+话不多说，直接上代码  在之前便设置了读取词库的方法，这样以来设计教学功能便简单许多了。  原理：  在事件响应的时候获取原消息纯文件，将命令与教学内容分割  将教学内容直接写入文件
 
-问题：    初步,"/>
+问题：  ,"/>
     
     
     
@@ -34,9 +34,9 @@
     <meta property="og:type" content="object"/>
     <meta property="og:title" content="NoneBot设置教学功能 - 二月の档案室"/>
     <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,
-话不多说，直接上代码在之前便设置了读取词库的方法，这样以来设计教学功能便简单许多了。原理：  在事件响应的时候获取原消息纯文件，将命令与教学内容分割  将教学内容直接写入文件
+话不多说，直接上代码  在之前便设置了读取词库的方法，这样以来设计教学功能便简单许多了。  原理：  在事件响应的时候获取原消息纯文件，将命令与教学内容分割  将教学内容直接写入文件
 
-问题：    初步,"/>
+问题：  ,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 
@@ -79,7 +79,7 @@
         </div>
         <div class="content markdown">
             <ul>
-<li>话不多说，直接上代码<br>在之前便设置了读取词库的方法，这样以来设计教学功能便简单许多了。<br>原理：<br>  在事件响应的时候获取原消息纯文件，将命令与教学内容分割<br>  将教学内容直接写入文件</li>
+<li>话不多说，直接上代码<br>  在之前便设置了读取词库的方法，这样以来设计教学功能便简单许多了。<br>  原理：<br>  在事件响应的时候获取原消息纯文件，将命令与教学内容分割<br>  将教学内容直接写入文件</li>
 </ul>
 <p>问题：<br>    初步猜测由于异步编程问题，导致机器人必须重启才可以重新读取词库。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">start=on_command(cmd=<span class="string">&#x27;LOVE教学-&#x27;</span>,priority=<span class="number">50</span>)</span><br><span class="line"><span class="meta">@start.handle()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot,event :Event</span>):</span><br><span class="line">   	<span class="keyword">try</span>:</span><br><span class="line">       	teaching=<span class="built_in">open</span>(FilePath(<span class="string">r&#x27;\introduce\cat.ini&#x27;</span>),<span class="string">&#x27;a+&#x27;</span>,encoding=<span class="string">&#x27;UTF-8&#x27;</span>)</span><br><span class="line">       	<span class="comment">#分割消息</span></span><br><span class="line">       	text = <span class="built_in">str</span>(event.get_message()).split(<span class="string">&#x27;-&#x27;</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">       	teaching.write(<span class="built_in">str</span>(<span class="string">&#x27;\n&#x27;</span>+text[<span class="number">1</span>]))</span><br><span class="line">       	teaching.close()</span><br><span class="line">       	<span class="comment">#import os</span></span><br><span class="line">       	<span class="comment">#os.system(&#x27;exit&#x27;,r&#x27;cd C:\Users\33454\Desktop\LOVE&#x27;,&#x27;nb run&#x27;)</span></span><br><span class="line">       	<span class="keyword">await</span> start.send(<span class="string">&#x27;呐呐呐！教学成功~\n(被添加的新回复将在次日审核通过后才可使用哦~)&#x27;</span>)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">       	teaching.close()</span><br><span class="line">       	<span class="keyword">await</span> start.send(<span class="string">&#x27;教学失败，请检查命令格式&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>

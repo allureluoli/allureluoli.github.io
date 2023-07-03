@@ -10,10 +10,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="二月,"> 
-    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,#快速找出文件上传支持的扩展名##1.抓包使用BurpSuite将抓包的上传文件请求导出，存为譬如fuzz.txt的文件
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,快速找出文件上传支持的扩展名1.抓包使用BurpSuite将抓包的上传文件请求导出，存为譬如fuzz.txt的文件
 
-##2.修改内容对其中进行模糊测试的内容修改
-将其修改为 FUZZ 而在其,"> 
+2.修改内容对其中进行模糊测试的内容修改
+将其修改为 FUZZ 而在其后跑的字典,"> 
     <meta name="author" content="Allureluoli"> 
     <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -22,10 +22,10 @@
     
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:title" content="速出文件扩展名 - 二月の档案室"/>
-    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,#快速找出文件上传支持的扩展名##1.抓包使用BurpSuite将抓包的上传文件请求导出，存为譬如fuzz.txt的文件
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,快速找出文件上传支持的扩展名1.抓包使用BurpSuite将抓包的上传文件请求导出，存为譬如fuzz.txt的文件
 
-##2.修改内容对其中进行模糊测试的内容修改
-将其修改为 FUZZ 而在其,"/>
+2.修改内容对其中进行模糊测试的内容修改
+将其修改为 FUZZ 而在其后跑的字典,"/>
     
     
     
@@ -33,10 +33,10 @@
     <meta property="og:site_name" content="二月の档案室"/>
     <meta property="og:type" content="object"/>
     <meta property="og:title" content="速出文件扩展名 - 二月の档案室"/>
-    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,#快速找出文件上传支持的扩展名##1.抓包使用BurpSuite将抓包的上传文件请求导出，存为譬如fuzz.txt的文件
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,快速找出文件上传支持的扩展名1.抓包使用BurpSuite将抓包的上传文件请求导出，存为譬如fuzz.txt的文件
 
-##2.修改内容对其中进行模糊测试的内容修改
-将其修改为 FUZZ 而在其,"/>
+2.修改内容对其中进行模糊测试的内容修改
+将其修改为 FUZZ 而在其后跑的字典,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 
@@ -78,20 +78,19 @@
 
         </div>
         <div class="content markdown">
-            <p>#快速找出文件上传支持的扩展名<br>##1.抓包<br>使用BurpSuite将抓包的上传文件请求导出，存为譬如<strong>fuzz.txt</strong>的文件</p>
+            <h1 id="快速找出文件上传支持的扩展名"><a href="#快速找出文件上传支持的扩展名" class="headerlink" title="快速找出文件上传支持的扩展名"></a>快速找出文件上传支持的扩展名</h1><h2 id="1-抓包"><a href="#1-抓包" class="headerlink" title="1.抓包"></a>1.抓包</h2><p>使用BurpSuite将抓包的上传文件请求导出，存为譬如<strong>fuzz.txt</strong>的文件</p>
 
-<p>##2.修改内容<br>对其中进行<strong>模糊测试</strong>的内容修改</p>
+<h2 id="2-修改内容"><a href="#2-修改内容" class="headerlink" title="2.修改内容"></a>2.修改内容</h2><p>对其中进行<strong>模糊测试</strong>的内容修改</p>
 <p>将其修改为 <strong>FUZZ</strong> 而在其后跑的字典会替换这里的<strong>FUZZ</strong>关键词</p>
 
 
-<p>##3.字典小爆破</p>
-<p>使用一个包含各种后缀名的字典开始跑</p>
+<h2 id="3-字典小爆破"><a href="#3-字典小爆破" class="headerlink" title="3.字典小爆破"></a>3.字典小爆破</h2><p>使用一个包含各种后缀名的字典开始跑</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -request fuzz.txt -request-proto http -w /opt/SecLists/Fuzzing/extensions-most-common.fuzz.txt</span><br></pre></td></tr></table></figure>
 
 <p>响应结果如图：</p>
 
 <p>主要区别是Size的大小，这里有1115和1110两种。<br>可以看成1110是被允许的文件扩展名。</p>
-<p>##4.优化命令<br>增添 -ms 1110</p>
+<h2 id="4-优化命令"><a href="#4-优化命令" class="headerlink" title="4.优化命令"></a>4.优化命令</h2><p>增添 -ms 1110</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -request fuzz.txt -request-proto http -w /opt/SecLists/Fuzzing/extensions-most-common.fuzz.txt -ms 1110</span><br></pre></td></tr></table></figure>
 <p>现在仅显示支持的扩展名了</p>
 
