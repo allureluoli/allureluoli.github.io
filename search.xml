@@ -1686,4 +1686,115 @@ Gitee有一套审查系统，会在网站进行部署/更新的时候，检查�
         <tag>Flask</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Flask[探索]</title>
+    <url>/2023/07/04/2023-7-4-Flask-3/</url>
+    <content><![CDATA[<h1 id="请求对象request"><a href="#请求对象request" class="headerlink" title="请求对象request"></a>请求对象request</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>request是flask框架的全局对象，可以通过它来获得当前进入的请求数据。</p>
+<p>而在多线程环境下，flask可以保证所使用的request对象为当前这个线程所处理的请求。</p>
+<blockquote><p>关于request，最让人感到疑惑的地方在于，明明是一个全局变量，在使用时却提供了当前时刻的请求数据，而且，不同线程之间互不干扰，它是如何设计出来的呢。</p>
+<footer><strong>@COOLPYTHON</strong><cite><a href="http://www.coolpython.net/flask_tutorial/basic/route.html">www.coolpython.net/flask_tutorial/basic/route.html</a></cite></footer></blockquote>
+
+<p>通过request可以获得当前请求的全部信息，例如请求的method,path, url, headers,cookies,请求的参数，请求的body…..</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>服务端代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/users&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">users</span>():</span><br><span class="line">    <span class="built_in">print</span>(request.method)       <span class="comment"># 请求方法</span></span><br><span class="line">    <span class="built_in">print</span>(request.headers)      <span class="comment"># 请求的headers</span></span><br><span class="line">    <span class="built_in">print</span>(request.path)         <span class="comment"># 资源路径</span></span><br><span class="line">    <span class="built_in">print</span>(request.url)          <span class="comment"># 完整的url</span></span><br><span class="line">    <span class="built_in">print</span>(request.remote_addr)  <span class="comment"># 客户端IP</span></span><br><span class="line">    <span class="built_in">print</span>(request.cookies)      <span class="comment"># 请求的cookie</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;ok&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>客户端代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">cookie_dict = &#123;<span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;python&#x27;</span>&#125;</span><br><span class="line">res = requests.get(<span class="string">&#x27;http://127.0.0.1:5000/users&#x27;</span>, cookies=cookie_dict)</span><br></pre></td></tr></table></figure>
+
+<p>使用客户端代码发出请求后，服务端程序会输出如下内容</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">GET              # 请求方法</span><br><span class="line">Content-Type: </span><br><span class="line">Content-Length: </span><br><span class="line">Host: 127.0.0.1:5000</span><br><span class="line">User-Agent: python-requests/2.22.0</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Cookie: name=python</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/users          # 资源路径</span><br><span class="line">http://127.0.0.1:5000/users     # 完整路径</span><br><span class="line">127.0.0.1                       # 客户端ip</span><br><span class="line">&#123;&#x27;name&#x27;: &#x27;python&#x27;&#125;              # 请求的cookie</span><br></pre></td></tr></table></figure>
+
+<blockquote><p>提醒一点，request.remote_addr并不一定能够准确的获得客户端的IP，因为在部署服务时，通常最前端用nginx做转发，这样，你获得其实是nginx的IP地址，而非用户的真实地址，如何准确获得客户端的IP地址，请参考文章<a href="https://www.cnblogs.com/mzhaox/p/11214747.html">https://www.cnblogs.com/mzhaox/p/11214747.html</a></p>
+<footer><strong>@COOLPYTHON</strong><cite><a href="http://www.coolpython.net/flask_tutorial/basic/route.html">www.coolpython.net/flask_tutorial/basic/route.html</a></cite></footer></blockquote>
+
+<h1 id="解析请求数据"><a href="#解析请求数据" class="headerlink" title="解析请求数据"></a>解析请求数据</h1><p>客户端（浏览器）会向服务器提交HTTP请求；然后服务器向客户端返回响应；其中响应包含有关请求的状态信息，还可能包含请求的内容。</p>
+<h2 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h2><p>get请求用于查询数据时，通常会带有参数，参数放在path的后面，中间用问号连接。</p>
+<p>多个请求参数以key&#x3D;value的形式用&amp;连接起来。</p>
+<p>下面是一个带参数的get请求的示例url：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">http://127.0.0.1:5000/users?name=poly&amp;age=14</span><br></pre></td></tr></table></figure>
+
+<p>get请求的参数可以通过request.args 和 request.values 两种方法来获得</p>
+<p>其中request.args 是包含解析过的get参数的MultiDict</p>
+<blockquote><p>MultiDict 是werkzeug提供的一种多key字典，具体可参考 <a href="https://werkzeug.palletsprojects.com/en/0.16.x/datastructures/#werkzeug.datastructures.MultiDict">https://werkzeug.palletsprojects.com/en/0.16.x/datastructures/#werkzeug.datastructures.MultiDict</a> </p>
+<footer><strong>@COOLPYTHON</strong><cite><a href="http://www.coolpython.net/flask_tutorial/basic/route.html">www.coolpython.net/flask_tutorial/basic/route.html</a></cite></footer></blockquote>
+
+<p>使用方法示例</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/users&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">users</span>():</span><br><span class="line">    name = request.args[<span class="string">&#x27;name&#x27;</span>]</span><br><span class="line">    age = request.args[<span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">    <span class="built_in">print</span>(name, age)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;ok&#x27;</span></span><br><span class="line"><span class="comment"># 获取到的参数一律都是字符串类型</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h2><p>post请求用于新增数据，它提交数据的格式有两种：form表单，json数据</p>
+<p>requests.form里存储着post请求提交的form表单数据，下面是解析示例</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/users&#x27;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">users</span>():</span><br><span class="line">    name = request.form[<span class="string">&#x27;name&#x27;</span>]</span><br><span class="line">    age = request.form[<span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">    <span class="built_in">print</span>(name, age)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;ok&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="request-values"><a href="#request-values" class="headerlink" title="request.values"></a>request.values</h3><p>request.args和request.form，其类型都是MultiDict。</p>
+<p>因此，flask又提供了一个request.values，类型为CombinedMultiDict。</p>
+<p>它包含了args和form,这样，在获取数据时，就不必在纠结到底用args还是用form了，request.values使用方法与args,form相同。</p>
+<h3 id="json"><a href="#json" class="headerlink" title="json"></a>json</h3><p>post提交的json数据，应该用get_json()方法来获取</p>
+<p>服务端示例代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/users&#x27;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">users</span>():</span><br><span class="line">    data = request.get_json()</span><br><span class="line">    <span class="built_in">print</span>(data)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;ok&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>客户端示例代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">res = requests.post(<span class="string">&#x27;http://127.0.0.1:5000/users&#x27;</span>, json=&#123;<span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;poly&#x27;</span>, <span class="string">&#x27;age&#x27;</span>: <span class="number">13</span>&#125;)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Flask</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Flask[相识]</title>
+    <url>/2023/07/03/2023-7-3-Flask-2/</url>
+    <content><![CDATA[<h2 id="路由规则管理"><a href="#路由规则管理" class="headerlink" title="路由规则管理"></a>路由规则管理</h2><p>一般情况有两种添加路由规则的方式</p>
+<p>1、使用route添加路由规则</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/add_url&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add_rule</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;add url rule&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>2、使用add_url_rule添加路由规则</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">add_rule</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;add url rule&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.add_url_rule(<span class="string">&#x27;/add_url&#x27;</span>, <span class="string">&#x27;add_rule&#x27;</span>, add_rule)</span><br></pre></td></tr></table></figure>
+
+<p>两种方式的结果是相同的，route装饰器中也是调用了 add_url_rule方法添加路由规则。</p>
+<blockquote><p>更深层的学习可以参考todo。</p>
+<footer><strong>@COOLPYTHON</strong><cite><a href="http://www.coolpython.net/flask_tutorial/basic/route.html">www.coolpython.net/flask_tutorial/basic/route.html</a></cite></footer></blockquote>
+
+<h2 id="设置method"><a href="#设置method" class="headerlink" title="设置method"></a>设置method</h2><p>一个URL可以用多种不同的方法请求，创建路由规则时，我们可以指定这个URL支持哪些请求方法。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/users&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">users</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;ok&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>在route装饰器中设置methods参数来决定支持的请求方法，不设置默认仅支持GET请求。</p>
+<p>users函数既要处理GET请求，又要处理POST请求，那么如何区分它们呢？ 这就要用到请求对象request</p>
+<p>通过获取requst的method属性，即可得到请求的方法。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/users&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">users</span>():</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;GET&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;get&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;post&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;ok&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Flask视图"><a href="#Flask视图" class="headerlink" title="Flask视图"></a>Flask视图</h2><p>到底什么是视图呢？</p>
+<h3 id="视图函数"><a href="#视图函数" class="headerlink" title="视图函数"></a>视图函数</h3><p>通过route装饰器，将url<code>/hello</code>与 函数<code>hello </code>关联在一起，我们称这个函数就是视图函数。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/hello&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;hello&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>一个视图函数用来处理一个请求，最终返回数据。</p>
+<h3 id="视图类"><a href="#视图类" class="headerlink" title="视图类"></a>视图类</h3><p>flask提供了两个两个视图类，我们可以继承这两个类中的一个，实现自己的类视图。</p>
+<ol>
+<li><p>flask.views.View</p>
+<p> 继承flask.views.View，必须实现dispatch_request方法以处理请求，下面是一个简单的示例</p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request</span><br><span class="line"><span class="keyword">from</span> flask.views <span class="keyword">import</span> View</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UserView</span>(<span class="title class_ inherited__">View</span>):</span><br><span class="line">    methods = [<span class="string">&#x27;GET&#x27;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">dispatch_request</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(request.method)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;ok&#x27;</span></span><br><span class="line"></span><br><span class="line">app.add_url_rule(<span class="string">&#x27;/users&#x27;</span>, view_func=UserView.as_view(<span class="string">&#x27;users&#x27;</span>)) <span class="comment">#将函数绑定到Userview</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># userrView类中并没有名为 users 的方法，那么这个字符串参数意义何在呢？</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p> as_view方法返回的是一个View类里的一个方法，类里的方法本质上仍然是函数， methods 规定这个视图类可以处理的请求方法。</p>
+<p> 这样设计，我们可以把处理请求的相关代码抽象成不同的方法写在UserView类里，这样便于管理。</p>
+</li>
+<li><p>flask.views.MethodView</p>
+</li>
+</ol>
+<blockquote><p>View类里，如果一个资源支持多种请求方式，get，post,put,delete等等，那么你不得不在dispatch_request方法里根据request.method对他们进行区分，然后调用不同的处理方法进行响应，对各种请求的路由是由你自己完成的。</p>
+<footer><strong>@COOLPYTHON</strong><cite><a href="http://www.coolpython.net/flask_tutorial/basic/route.html">www.coolpython.net/flask_tutorial/basic/route.html</a></cite></footer></blockquote>
+
+<p>MethodView会自动的为视图类做好路由，不同的请求，会被路由到不同的处理方法上</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request</span><br><span class="line"><span class="keyword">from</span> flask.views <span class="keyword">import</span> MethodView</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UserView</span>(<span class="title class_ inherited__">MethodView</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;收到get请求&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;收到post请求&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.add_url_rule(<span class="string">&#x27;/users&#x27;</span>, view_func=UserView.as_view(<span class="string">&#x27;users&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>此设计与tornado的处理方式相同，MethodView是View的子类，它实现了dispatch_request方法，若请求的get请求，则路由到get方法。</p>
+]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Flask</tag>
+      </tags>
+  </entry>
 </search>

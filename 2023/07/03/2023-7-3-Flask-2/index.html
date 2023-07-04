@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flask[相识] - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,路由规则管理一般情况有两种添加路由规则的方式
+1、使用route添加路由规则
+123@app.route(&amp;#x27;/add_url&amp;#x27;)def add_rule():    return,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Flask[相识] - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,路由规则管理一般情况有两种添加路由规则的方式
+1、使用route添加路由规则
+123@app.route(&amp;#x27;/add_url&amp;#x27;)def add_rule():    return,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Flask[相识] - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,路由规则管理一般情况有两种添加路由规则的方式
+1、使用route添加路由规则
+123@app.route(&amp;#x27;/add_url&amp;#x27;)def add_rule():    return,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Flask[相识]</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Flask[相识]</h1>
+        <div class="stuff">
+            <span>七月 03, 2023</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Flask/" rel="tag">Flask</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Python/" rel="tag">Python</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="路由规则管理"><a href="#路由规则管理" class="headerlink" title="路由规则管理"></a>路由规则管理</h2><p>一般情况有两种添加路由规则的方式</p>
+<p>1、使用route添加路由规则</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/add_url&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add_rule</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;add url rule&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>2、使用add_url_rule添加路由规则</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">add_rule</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;add url rule&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.add_url_rule(<span class="string">&#x27;/add_url&#x27;</span>, <span class="string">&#x27;add_rule&#x27;</span>, add_rule)</span><br></pre></td></tr></table></figure>
+
+<p>两种方式的结果是相同的，route装饰器中也是调用了 add_url_rule方法添加路由规则。</p>
+<blockquote><p>更深层的学习可以参考todo。</p>
+<footer><strong>@COOLPYTHON</strong><cite><a target="_blank" rel="noopener" href="http://www.coolpython.net/flask_tutorial/basic/route.html">www.coolpython.net/flask_tutorial/basic/route.html</a></cite></footer></blockquote>
+
+<h2 id="设置method"><a href="#设置method" class="headerlink" title="设置method"></a>设置method</h2><p>一个URL可以用多种不同的方法请求，创建路由规则时，我们可以指定这个URL支持哪些请求方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/users&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">users</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;ok&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>在route装饰器中设置methods参数来决定支持的请求方法，不设置默认仅支持GET请求。</p>
+<p>users函数既要处理GET请求，又要处理POST请求，那么如何区分它们呢？ 这就要用到请求对象request</p>
+<p>通过获取requst的method属性，即可得到请求的方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/users&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">users</span>():</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;GET&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;get&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;post&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;ok&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Flask视图"><a href="#Flask视图" class="headerlink" title="Flask视图"></a>Flask视图</h2><p>到底什么是视图呢？</p>
+<h3 id="视图函数"><a href="#视图函数" class="headerlink" title="视图函数"></a>视图函数</h3><p>通过route装饰器，将url<code>/hello</code>与 函数<code>hello </code>关联在一起，我们称这个函数就是视图函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/hello&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;hello&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>一个视图函数用来处理一个请求，最终返回数据。</p>
+<h3 id="视图类"><a href="#视图类" class="headerlink" title="视图类"></a>视图类</h3><p>flask提供了两个两个视图类，我们可以继承这两个类中的一个，实现自己的类视图。</p>
+<ol>
+<li><p>flask.views.View</p>
+<p> 继承flask.views.View，必须实现dispatch_request方法以处理请求，下面是一个简单的示例</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request</span><br><span class="line"><span class="keyword">from</span> flask.views <span class="keyword">import</span> View</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UserView</span>(<span class="title class_ inherited__">View</span>):</span><br><span class="line">    methods = [<span class="string">&#x27;GET&#x27;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">dispatch_request</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(request.method)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;ok&#x27;</span></span><br><span class="line"></span><br><span class="line">app.add_url_rule(<span class="string">&#x27;/users&#x27;</span>, view_func=UserView.as_view(<span class="string">&#x27;users&#x27;</span>)) <span class="comment">#将函数绑定到Userview</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># userrView类中并没有名为 users 的方法，那么这个字符串参数意义何在呢？</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p> as_view方法返回的是一个View类里的一个方法，类里的方法本质上仍然是函数， methods 规定这个视图类可以处理的请求方法。</p>
+<p> 这样设计，我们可以把处理请求的相关代码抽象成不同的方法写在UserView类里，这样便于管理。</p>
+</li>
+<li><p>flask.views.MethodView</p>
+</li>
+</ol>
+<blockquote><p>View类里，如果一个资源支持多种请求方式，get，post,put,delete等等，那么你不得不在dispatch_request方法里根据request.method对他们进行区分，然后调用不同的处理方法进行响应，对各种请求的路由是由你自己完成的。</p>
+<footer><strong>@COOLPYTHON</strong><cite><a target="_blank" rel="noopener" href="http://www.coolpython.net/flask_tutorial/basic/route.html">www.coolpython.net/flask_tutorial/basic/route.html</a></cite></footer></blockquote>
+
+<p>MethodView会自动的为视图类做好路由，不同的请求，会被路由到不同的处理方法上</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request</span><br><span class="line"><span class="keyword">from</span> flask.views <span class="keyword">import</span> MethodView</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UserView</span>(<span class="title class_ inherited__">MethodView</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;收到get请求&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;收到post请求&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.add_url_rule(<span class="string">&#x27;/users&#x27;</span>, view_func=UserView.as_view(<span class="string">&#x27;users&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>此设计与tornado的处理方式相同，MethodView是View的子类，它实现了dispatch_request方法，若请求的get请求，则路由到get方法。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

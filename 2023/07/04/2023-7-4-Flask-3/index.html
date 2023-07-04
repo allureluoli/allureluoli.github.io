@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flask[探索] - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,请求对象request介绍request是flask框架的全局对象，可以通过它来获得当前进入的请求数据。
+而在多线程环境下，flask可以保证所使用的request对象为当前这个线程所处理的请求。
+,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Flask[探索] - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,请求对象request介绍request是flask框架的全局对象，可以通过它来获得当前进入的请求数据。
+而在多线程环境下，flask可以保证所使用的request对象为当前这个线程所处理的请求。
+,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Flask[探索] - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,请求对象request介绍request是flask框架的全局对象，可以通过它来获得当前进入的请求数据。
+而在多线程环境下，flask可以保证所使用的request对象为当前这个线程所处理的请求。
+,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Flask[探索]</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Flask[探索]</h1>
+        <div class="stuff">
+            <span>七月 04, 2023</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Flask/" rel="tag">Flask</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Python/" rel="tag">Python</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="请求对象request"><a href="#请求对象request" class="headerlink" title="请求对象request"></a>请求对象request</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>request是flask框架的全局对象，可以通过它来获得当前进入的请求数据。</p>
+<p>而在多线程环境下，flask可以保证所使用的request对象为当前这个线程所处理的请求。</p>
+<blockquote><p>关于request，最让人感到疑惑的地方在于，明明是一个全局变量，在使用时却提供了当前时刻的请求数据，而且，不同线程之间互不干扰，它是如何设计出来的呢。</p>
+<footer><strong>@COOLPYTHON</strong><cite><a target="_blank" rel="noopener" href="http://www.coolpython.net/flask_tutorial/basic/route.html">www.coolpython.net/flask_tutorial/basic/route.html</a></cite></footer></blockquote>
+
+<p>通过request可以获得当前请求的全部信息，例如请求的method,path, url, headers,cookies,请求的参数，请求的body…..</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>服务端代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/users&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">users</span>():</span><br><span class="line">    <span class="built_in">print</span>(request.method)       <span class="comment"># 请求方法</span></span><br><span class="line">    <span class="built_in">print</span>(request.headers)      <span class="comment"># 请求的headers</span></span><br><span class="line">    <span class="built_in">print</span>(request.path)         <span class="comment"># 资源路径</span></span><br><span class="line">    <span class="built_in">print</span>(request.url)          <span class="comment"># 完整的url</span></span><br><span class="line">    <span class="built_in">print</span>(request.remote_addr)  <span class="comment"># 客户端IP</span></span><br><span class="line">    <span class="built_in">print</span>(request.cookies)      <span class="comment"># 请求的cookie</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;ok&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>客户端代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">cookie_dict = &#123;<span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;python&#x27;</span>&#125;</span><br><span class="line">res = requests.get(<span class="string">&#x27;http://127.0.0.1:5000/users&#x27;</span>, cookies=cookie_dict)</span><br></pre></td></tr></table></figure>
+
+<p>使用客户端代码发出请求后，服务端程序会输出如下内容</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">GET              # 请求方法</span><br><span class="line">Content-Type: </span><br><span class="line">Content-Length: </span><br><span class="line">Host: 127.0.0.1:5000</span><br><span class="line">User-Agent: python-requests/2.22.0</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Cookie: name=python</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/users          # 资源路径</span><br><span class="line">http://127.0.0.1:5000/users     # 完整路径</span><br><span class="line">127.0.0.1                       # 客户端ip</span><br><span class="line">&#123;&#x27;name&#x27;: &#x27;python&#x27;&#125;              # 请求的cookie</span><br></pre></td></tr></table></figure>
+
+<blockquote><p>提醒一点，request.remote_addr并不一定能够准确的获得客户端的IP，因为在部署服务时，通常最前端用nginx做转发，这样，你获得其实是nginx的IP地址，而非用户的真实地址，如何准确获得客户端的IP地址，请参考文章<a target="_blank" rel="noopener" href="https://www.cnblogs.com/mzhaox/p/11214747.html">https://www.cnblogs.com/mzhaox/p/11214747.html</a></p>
+<footer><strong>@COOLPYTHON</strong><cite><a target="_blank" rel="noopener" href="http://www.coolpython.net/flask_tutorial/basic/route.html">www.coolpython.net/flask_tutorial/basic/route.html</a></cite></footer></blockquote>
+
+<h1 id="解析请求数据"><a href="#解析请求数据" class="headerlink" title="解析请求数据"></a>解析请求数据</h1><p>客户端（浏览器）会向服务器提交HTTP请求；然后服务器向客户端返回响应；其中响应包含有关请求的状态信息，还可能包含请求的内容。</p>
+<h2 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h2><p>get请求用于查询数据时，通常会带有参数，参数放在path的后面，中间用问号连接。</p>
+<p>多个请求参数以key&#x3D;value的形式用&amp;连接起来。</p>
+<p>下面是一个带参数的get请求的示例url：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:5000/users?name=poly&amp;age=14</span><br></pre></td></tr></table></figure>
+
+<p>get请求的参数可以通过request.args 和 request.values 两种方法来获得</p>
+<p>其中request.args 是包含解析过的get参数的MultiDict</p>
+<blockquote><p>MultiDict 是werkzeug提供的一种多key字典，具体可参考 <a target="_blank" rel="noopener" href="https://werkzeug.palletsprojects.com/en/0.16.x/datastructures/#werkzeug.datastructures.MultiDict">https://werkzeug.palletsprojects.com/en/0.16.x/datastructures/#werkzeug.datastructures.MultiDict</a> </p>
+<footer><strong>@COOLPYTHON</strong><cite><a target="_blank" rel="noopener" href="http://www.coolpython.net/flask_tutorial/basic/route.html">www.coolpython.net/flask_tutorial/basic/route.html</a></cite></footer></blockquote>
+
+<p>使用方法示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/users&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">users</span>():</span><br><span class="line">    name = request.args[<span class="string">&#x27;name&#x27;</span>]</span><br><span class="line">    age = request.args[<span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">    <span class="built_in">print</span>(name, age)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;ok&#x27;</span></span><br><span class="line"><span class="comment"># 获取到的参数一律都是字符串类型</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h2><p>post请求用于新增数据，它提交数据的格式有两种：form表单，json数据</p>
+<p>requests.form里存储着post请求提交的form表单数据，下面是解析示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/users&#x27;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">users</span>():</span><br><span class="line">    name = request.form[<span class="string">&#x27;name&#x27;</span>]</span><br><span class="line">    age = request.form[<span class="string">&#x27;age&#x27;</span>]</span><br><span class="line">    <span class="built_in">print</span>(name, age)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;ok&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="request-values"><a href="#request-values" class="headerlink" title="request.values"></a>request.values</h3><p>request.args和request.form，其类型都是MultiDict。</p>
+<p>因此，flask又提供了一个request.values，类型为CombinedMultiDict。</p>
+<p>它包含了args和form,这样，在获取数据时，就不必在纠结到底用args还是用form了，request.values使用方法与args,form相同。</p>
+<h3 id="json"><a href="#json" class="headerlink" title="json"></a>json</h3><p>post提交的json数据，应该用get_json()方法来获取</p>
+<p>服务端示例代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/users&#x27;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">users</span>():</span><br><span class="line">    data = request.get_json()</span><br><span class="line">    <span class="built_in">print</span>(data)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;ok&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>客户端示例代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">res = requests.post(<span class="string">&#x27;http://127.0.0.1:5000/users&#x27;</span>, json=&#123;<span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;poly&#x27;</span>, <span class="string">&#x27;age&#x27;</span>: <span class="number">13</span>&#125;)</span><br></pre></td></tr></table></figure>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
