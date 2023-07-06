@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flask[接洽] - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,Flask上传文件文件上传功能需要学习的范围：
+
+文件类型，大小限制
+多文件上传
+文件名称安全检查
+
+1.文件大小限制出于资源考虑，需要对用户上传的文件大小进行限制
+flask中的实现代码
+1234,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Flask[接洽] - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,Flask上传文件文件上传功能需要学习的范围：
+
+文件类型，大小限制
+多文件上传
+文件名称安全检查
+
+1.文件大小限制出于资源考虑，需要对用户上传的文件大小进行限制
+flask中的实现代码
+1234,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Flask[接洽] - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,Flask上传文件文件上传功能需要学习的范围：
+
+文件类型，大小限制
+多文件上传
+文件名称安全检查
+
+1.文件大小限制出于资源考虑，需要对用户上传的文件大小进行限制
+flask中的实现代码
+1234,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Flask[接洽]</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Flask[接洽]</h1>
+        <div class="stuff">
+            <span>七月 06, 2023</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Flask/" rel="tag">Flask</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Python/" rel="tag">Python</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="Flask上传文件"><a href="#Flask上传文件" class="headerlink" title="Flask上传文件"></a>Flask上传文件</h1><p>文件上传功能需要学习的范围：</p>
+<ul>
+<li>文件类型，大小限制</li>
+<li>多文件上传</li>
+<li>文件名称安全检查</li>
+</ul>
+<h2 id="1-文件大小限制"><a href="#1-文件大小限制" class="headerlink" title="1.文件大小限制"></a>1.文件大小限制</h2><p>出于资源考虑，需要对用户上传的文件大小进行限制</p>
+<p>flask中的实现代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, Request</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.config[<span class="string">&#x27;MAX_CONTENT_LENGTH&#x27;</span>] = <span class="number">16</span> * <span class="number">1024</span> * <span class="number">1024</span></span><br></pre></td></tr></table></figure>
+
+<p>此代码的作用是阻止超过16M大小的文件上传<br>如果使用nginx为你的flask服务做反向代理，那么nginx也需要进行配置，将nginx client_max_body_size 修改为合适的数值，该值默认是1M</p>
+<h2 id="2-文件类型检查"><a href="#2-文件类型检查" class="headerlink" title="2. 文件类型检查"></a>2. 文件类型检查</h2><p>如果希望用户只上传jpg类型的图片，那么最简单的办法是对用户的文件名称后缀做检查</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ALLOWED_EXTENSIONS = <span class="built_in">set</span>([<span class="string">&#x27;jpg&#x27;</span>])</span><br><span class="line">file = request.files[<span class="string">&#x27;file&#x27;</span>]</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">allowed_file</span>(<span class="params">filename</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;.&#x27;</span> <span class="keyword">in</span> filename <span class="keyword">and</span> \</span><br><span class="line">           filename.rsplit(<span class="string">&#x27;.&#x27;</span>, <span class="number">1</span>)[<span class="number">1</span>] <span class="keyword">in</span> ALLOWED_EXTENSIONS</span><br><span class="line"></span><br><span class="line"><span class="comment"># 判断文件类型是否符合要求</span></span><br><span class="line">file_ok = allowed_file(file.filename)</span><br></pre></td></tr></table></figure>
+
+<p>此方法完全依赖用户上传的文件名称，无法应对简单的修改后缀名实现上传。</p>
+<p>更准确稳妥的方法是通过检查文件内容来判断文件类型：</p>
+<blockquote><p>python中有一个filetype库可以根据文件内容对文件类型进行判断，其原理是读取文件的前262字节的内容，而不同类型的文件拥有独特的文件头，关于文件头可以查阅这篇文章 <a target="_blank" rel="noopener" href="https://blog.csdn.net/xiangshangbashaonian/article/details/80156865">https://blog.csdn.net/xiangshangbashaonian/article/details/80156865</a> ，filetype正是利用了不同文件头的内容不同进而判断一个文件的类型，下面是一段示例代码</p>
+<footer><strong>@COOLPYTHON</strong><cite><a target="_blank" rel="noopener" href="http://www.coolpython.net/flask_tutorial/basic/route.html">www.coolpython.net/flask_tutorial/basic/route.html</a></cite></footer></blockquote>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> filetype</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">kind = filetype.guess(<span class="string">&#x27;1.jpeg&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;File extension: %s&#x27;</span> % kind.extension)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;File MIME type: %s&#x27;</span> % kind.mime)</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-文件上传示例"><a href="#3-文件上传示例" class="headerlink" title="3. 文件上传示例"></a>3. 文件上传示例</h2><p>常规上传操作示例</p>
+<h3 id="upload-html"><a href="#upload-html" class="headerlink" title="upload.html"></a>upload.html</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>上传文件<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;uploadfile&quot;</span> <span class="attr">method</span>=<span class="string">post</span> <span class="attr">enctype</span>=<span class="string">multipart/form-data</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">file</span> <span class="attr">name</span>=<span class="string">file</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">submit</span> <span class="attr">value</span>=<span class="string">Upload</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>处理文件上传的代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ALLOWED_EXTENSIONS = &#123;<span class="string">&#x27;txt&#x27;</span>, <span class="string">&#x27;pdf&#x27;</span>, <span class="string">&#x27;png&#x27;</span>, <span class="string">&#x27;jpg&#x27;</span>, <span class="string">&#x27;jpeg&#x27;</span>, <span class="string">&#x27;gif&#x27;</span>&#125;</span><br><span class="line">UPLOAD_FOLDER = <span class="string">&#x27;./upload&#x27;</span> <span class="comment"># 保存文件的路径，需要手动创建这个文件夹</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">allowed_file</span>(<span class="params">filename</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;.&#x27;</span> <span class="keyword">in</span> filename <span class="keyword">and</span> \</span><br><span class="line">           filename.rsplit(<span class="string">&#x27;.&#x27;</span>, <span class="number">1</span>)[<span class="number">1</span>] <span class="keyword">in</span> ALLOWED_EXTENSIONS</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/uploadfile&#x27;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>, <span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">do_upload</span>():</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">        file = request.files[<span class="string">&#x27;file&#x27;</span>]</span><br><span class="line">        <span class="keyword">if</span> file <span class="keyword">and</span> allowed_file(file.filename):</span><br><span class="line">            filename = secure_filename(file.filename)</span><br><span class="line">            <span class="comment"># filename = file.filename</span></span><br><span class="line">            file.save(os.path.join(UPLOAD_FOLDER, filename))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;upload.html&#x27;</span>) <span class="comment"># 模板文件需要存在template文件夹里</span></span><br></pre></td></tr></table></figure>
+
+<p>启动服务后，在浏览器里输入 <a target="_blank" rel="noopener" href="http://127.0.0.1:5000/uploadfile">http://127.0.0.1:5000/uploadfile</a> ,然后选择一个文件并点击upload按钮，就完成一次上传，你可以在项目的upload文件夹中找到你上传的文件</p>
+<h2 id="4-文件名称安全检查"><a href="#4-文件名称安全检查" class="headerlink" title="4. 文件名称安全检查"></a>4. 文件名称安全检查</h2><blockquote><p>黑客们会通过修改上传文件的名称来达到修改文件存储位置的目的，如此一来就可以覆盖掉你服务器上的一个文件，这是十分危险的事情。</p>
+<p>使用页面的表单进行文件上传，你在服务端获得文件名字就是你上传的文件名字，但黑客可以直接向你的服务器发送文件上传的请求，进而绕过网页提交，这时，他就可以修改上传文件的名字了。</p>
+<footer><strong>@COOLPYTHON</strong><cite><a target="_blank" rel="noopener" href="http://www.coolpython.net/flask_tutorial/basic/route.html">www.coolpython.net/flask_tutorial/basic/route.html</a></cite></footer></blockquote>
+
+<p>使用requests上传文件并制定文件名称</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">url = <span class="string">&#x27;http://127.0.0.1:5000/uploadfile&#x27;</span></span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;1.jpeg&quot;</span>, <span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line">files = &#123;<span class="string">&#x27;file&#x27;</span>: (<span class="string">&#x27;../new_name.jpg&#x27;</span>, file)&#125;</span><br><span class="line">response = requests.post(url, files=files)</span><br><span class="line">file.close()</span><br></pre></td></tr></table></figure>
+
+<p>接下来，你需要修改第3节中的do_upload函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/uploadfile&#x27;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>, <span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">do_upload</span>():</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">        file = request.files[<span class="string">&#x27;file&#x27;</span>]</span><br><span class="line">        <span class="keyword">if</span> file <span class="keyword">and</span> allowed_file(file.filename):</span><br><span class="line">            <span class="comment"># filename = secure_filename(file.filename)</span></span><br><span class="line">            filename = file.filename</span><br><span class="line">            file.save(os.path.join(UPLOAD_FOLDER, filename))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;upload.html&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>将原本使用secure_filename函数对文件名称做处理，改为直接使用file.filename</p>
+<p>执行上传脚本发现，结果是存储到了upload的上一层文件夹中</p>
+<p> <code>files = &#123;&#39;file&#39;: (&#39;../new_name.jpg&#39;, file)&#125;</code></p>
+<p>原因为不使用secure_filename函数，filename的值就是上传脚本里设置的值 “..&#x2F;new_name.jpg”</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">os.path.join(UPLOAD_FOLDER, filename)</span><br></pre></td></tr></table></figure>
+
+<p>使用join函数得到的结果就是”.&#x2F;upload&#x2F;..&#x2F;new_name.jpg”,连续两个点表示跳跃到上一层目录，因此，文件就保存到了upload的上一层目录。</p>
+<p>因此直接使用filename存在一定的缺陷，而使用secure_filename函数处理文件名称，则可以获得安全的文件名称。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(secure_filename(<span class="string">&#x27;../new_name.jpg&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-flask多文件上传"><a href="#5-flask多文件上传" class="headerlink" title="5. flask多文件上传"></a>5. flask多文件上传</h2><p>多文件上传，仅需要在form表单里增加一个file标签即可</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;uploadfile&quot;</span> <span class="attr">method</span>=<span class="string">post</span> <span class="attr">enctype</span>=<span class="string">multipart/form-data</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">file</span> <span class="attr">name</span>=<span class="string">file</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">file</span> <span class="attr">name</span>=<span class="string">file</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">submit</span> <span class="attr">value</span>=<span class="string">Upload</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>服务端的处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file_lst = request.files.getlist(<span class="string">&#x27;file&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>file_lst 存储的是上传的所有文件数据，剩下的，仅需要写一个for循环即可处理</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
