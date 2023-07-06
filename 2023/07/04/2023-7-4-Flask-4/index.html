@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flask[寻觅] - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,模板作用
+HTML代码复用
+网页内容动态显示
+
+使用模板技术，可以将那些可共用的代码放在基础模板里，其他的网页可以继承这个基础模板，也可以用include的方式加载进来。
+@COOLPYTHONww,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Flask[寻觅] - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,模板作用
+HTML代码复用
+网页内容动态显示
+
+使用模板技术，可以将那些可共用的代码放在基础模板里，其他的网页可以继承这个基础模板，也可以用include的方式加载进来。
+@COOLPYTHONww,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Flask[寻觅] - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,模板作用
+HTML代码复用
+网页内容动态显示
+
+使用模板技术，可以将那些可共用的代码放在基础模板里，其他的网页可以继承这个基础模板，也可以用include的方式加载进来。
+@COOLPYTHONww,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Flask[寻觅]</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Flask[寻觅]</h1>
+        <div class="stuff">
+            <span>七月 04, 2023</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Flask/" rel="tag">Flask</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Python/" rel="tag">Python</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h1><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><ol>
+<li>HTML代码复用</li>
+<li>网页内容动态显示</li>
+</ol>
+<blockquote><p>使用模板技术，可以将那些可共用的代码放在基础模板里，其他的网页可以继承这个基础模板，也可以用include的方式加载进来。</p>
+<footer><strong>@COOLPYTHON</strong><cite><a target="_blank" rel="noopener" href="http://www.coolpython.net/flask_tutorial/basic/route.html">www.coolpython.net/flask_tutorial/basic/route.html</a></cite></footer></blockquote>
+
+<h3 id="Jinja2"><a href="#Jinja2" class="headerlink" title="Jinja2"></a>Jinja2</h3><p>使用Jinja2模板引擎，通过render_template函数返回一个html文件</p>
+<p>这些html文件默认存储在项目根目录下的tempates文件夹中，这个目录是可以自定义的，创建Flask对象时，通过template_folder来设置。</p>
+<blockquote><p>使用ajax技术，前端页面通过ajax向后端发送请求，后端返回用户的具体信息。使用模板，则可以不必使用ajax在前端请求数据，在使用render_template返回html时，会将用户的信息一起返回，由模板引擎根据用户的信息对html进行渲染，以达到相同的效果。</p>
+<footer><strong>@COOLPYTHON</strong><cite><a target="_blank" rel="noopener" href="http://www.coolpython.net/flask_tutorial/basic/route.html">www.coolpython.net/flask_tutorial/basic/route.html</a></cite></footer></blockquote>
+
+<h2 id="后端数据展示"><a href="#后端数据展示" class="headerlink" title="后端数据展示"></a>后端数据展示</h2><p>后端的数据放到前端展示，下面是项目的结构示意</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">flask_demo/</span><br><span class="line">├── __init__.py</span><br><span class="line">├── app.py</span><br><span class="line">└── templates</span><br><span class="line">    └── welcome.html</span><br></pre></td></tr></table></figure>
+
+<p>app.py 的内容</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/welcome&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">welcome</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;welcome.html&#x27;</span>, name=<span class="string">&#x27;小明&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.run(port=<span class="number">5500</span>)</span><br></pre></td></tr></table></figure>
+
+<p>welcome.html的内容</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>北京欢迎你<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>北京欢迎你,<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="响应对象"><a href="#响应对象" class="headerlink" title="响应对象"></a>响应对象</h2><p>是几个常见的视图返回数据的方式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, jsonify, render_template, Response</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/text&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_text</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;返回文本&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/dict&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_dict</span>():</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&#x27;state&#x27;</span>: <span class="number">0</span>&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/json&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_json</span>():</span><br><span class="line">    <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;state&#x27;</span>: <span class="number">0</span>&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/html&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_html</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/response&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_resonponse</span>():</span><br><span class="line">    <span class="keyword">return</span> Response(<span class="string">&#x27;Not Found&#x27;</span>, status=<span class="number">404</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(port=<span class="number">5566</span>)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>get_text 返回一个字符串</li>
+<li>get_dict 返回一个字典</li>
+<li>get_json 返回一个json格式的字符串</li>
+<li>get_html 返回一个模板</li>
+<li>get_resonponse 返回一个Response对象</li>
+</ol>
+<blockquote><p>使用谷歌浏览器来查看这几个http响应的类型，1， 4， 5 的Content-Type 是  text&#x2F;html，2，3的Content-Type  是application&#x2F;json。这说明，flask会根据视图函数的返回值类型，来决定最终的Content-Type。</p>
+<footer><strong>@COOLPYTHON</strong><cite><a target="_blank" rel="noopener" href="http://www.coolpython.net/flask_tutorial/basic/route.html">www.coolpython.net/flask_tutorial/basic/route.html</a></cite></footer></blockquote>
+
+<h3 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h3><p>Response是Flask中默认使用的响应对象</p>
+<p>默认情况下设置为具有HTML mimetype。通常情况下，你不必自己创建这个对象，因为flask.flask.make_response会帮你处理这个问题。</p>
+<p>如果你想替换所使用的响应对象，你可以将其子类化，并将 flask.flask.response_class设置为你的子类。</p>
+<h2 id="1-make-response"><a href="#1-make-response" class="headerlink" title="1. make_response"></a>1. make_response</h2><p>视图函数的返回值，最终会传递给make_response方法，在该方法中，对返回值的类型进行判断，并根据返回值的不同做相应的处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">make_response</span>(<span class="params">self, rv</span>):</span><br><span class="line">    status = headers = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># unpack tuple returns</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(rv, <span class="built_in">tuple</span>):</span><br><span class="line">        len_rv = <span class="built_in">len</span>(rv)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># a 3-tuple is unpacked directly</span></span><br><span class="line">        <span class="keyword">if</span> len_rv == <span class="number">3</span>:</span><br><span class="line">            rv, status, headers = rv</span><br><span class="line">        <span class="comment"># decide if a 2-tuple has status or headers</span></span><br><span class="line">        <span class="keyword">elif</span> len_rv == <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">isinstance</span>(rv[<span class="number">1</span>], (Headers, <span class="built_in">dict</span>, <span class="built_in">tuple</span>, <span class="built_in">list</span>)):</span><br><span class="line">                rv, headers = rv</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                rv, status = rv</span><br><span class="line">        <span class="comment"># other sized tuples are not allowed</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> TypeError(</span><br><span class="line">                <span class="string">&quot;The view function did not return a valid response tuple.&quot;</span></span><br><span class="line">                <span class="string">&quot; The tuple must have the form (body, status, headers),&quot;</span></span><br><span class="line">                <span class="string">&quot; (body, status), or (body, headers).&quot;</span></span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">    <span class="comment"># the body must not be None</span></span><br><span class="line">    <span class="keyword">if</span> rv <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">raise</span> TypeError(</span><br><span class="line">            <span class="string">&quot;The view function did not return a valid response. The&quot;</span></span><br><span class="line">            <span class="string">&quot; function either returned None or ended without a return&quot;</span></span><br><span class="line">            <span class="string">&quot; statement.&quot;</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="comment"># make sure the body is an instance of the response class</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> <span class="built_in">isinstance</span>(rv, self.response_class):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(rv, (text_type, <span class="built_in">bytes</span>, <span class="built_in">bytearray</span>)):</span><br><span class="line">            <span class="comment"># let the response class set the status and headers instead of</span></span><br><span class="line">            <span class="comment"># waiting to do it manually, so that the class can handle any</span></span><br><span class="line">            <span class="comment"># special logic</span></span><br><span class="line">            rv = self.response_class(rv, status=status, headers=headers)</span><br><span class="line">            status = headers = <span class="literal">None</span></span><br><span class="line">        <span class="keyword">elif</span> <span class="built_in">isinstance</span>(rv, <span class="built_in">dict</span>):</span><br><span class="line">            rv = jsonify(rv)</span><br><span class="line">        <span class="keyword">elif</span> <span class="built_in">isinstance</span>(rv, BaseResponse) <span class="keyword">or</span> <span class="built_in">callable</span>(rv):</span><br><span class="line">            <span class="comment"># evaluate a WSGI callable, or coerce a different response</span></span><br><span class="line">            <span class="comment"># class to the correct type</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                rv = self.response_class.force_type(rv, request.environ)</span><br><span class="line">            <span class="keyword">except</span> TypeError <span class="keyword">as</span> e:</span><br><span class="line">                new_error = TypeError(</span><br><span class="line">                    <span class="string">&quot;&#123;e&#125;\nThe view function did not return a valid&quot;</span></span><br><span class="line">                    <span class="string">&quot; response. The return type must be a string, dict, tuple,&quot;</span></span><br><span class="line">                    <span class="string">&quot; Response instance, or WSGI callable, but it was a&quot;</span></span><br><span class="line">                    <span class="string">&quot; &#123;rv.__class__.__name__&#125;.&quot;</span>.<span class="built_in">format</span>(e=e, rv=rv)</span><br><span class="line">                )</span><br><span class="line">                reraise(TypeError, new_error, sys.exc_info()[<span class="number">2</span>])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> TypeError(</span><br><span class="line">                <span class="string">&quot;The view function did not return a valid&quot;</span></span><br><span class="line">                <span class="string">&quot; response. The return type must be a string, dict, tuple,&quot;</span></span><br><span class="line">                <span class="string">&quot; Response instance, or WSGI callable, but it was a&quot;</span></span><br><span class="line">                <span class="string">&quot; &#123;rv.__class__.__name__&#125;.&quot;</span>.<span class="built_in">format</span>(rv=rv)</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">    <span class="comment"># prefer the status if it was provided</span></span><br><span class="line">    <span class="keyword">if</span> status <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(status, (text_type, <span class="built_in">bytes</span>, <span class="built_in">bytearray</span>)):</span><br><span class="line">            rv.status = status</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            rv.status_code = status</span><br><span class="line"></span><br><span class="line">    <span class="comment"># extend existing headers with provided headers</span></span><br><span class="line">    <span class="keyword">if</span> headers:</span><br><span class="line">        rv.headers.extend(headers)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> rv</span><br></pre></td></tr></table></figure>
+
+<p>从上面的代码中可以看到，当视图返回一个字典时，flask会自动使用jsonify进行转换。通常情况下，我们不会在视图中直接返回Response对象，因为make_response会帮我们将返回值封装成Response。但如果你自己相对返回值进行特殊处理，那么直接返回Response对象是可行的，就像get_resonponse函数那样操作。</p>
+<p>↑ 以上均复制自COOLPYTHON</p>
+<h2 id="2-利用Response返回图片"><a href="#2-利用Response返回图片" class="headerlink" title="2. 利用Response返回图片"></a>2. 利用Response返回图片</h2><p>直接构造Response对象可以为接口返回图片数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/image&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">image</span>():</span><br><span class="line">    f = <span class="built_in">open</span>(<span class="string">&quot;static/public/pic/coolpython.png&quot;</span>, <span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line">    resp = Response(f.read(), mimetype=<span class="string">&quot;image/jpeg&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> resp</span><br></pre></td></tr></table></figure>
+
+<p>若不直接创建Response对象，那么你就无法设置mimetype首部</p>
+<h2 id="3-自定义Response"><a href="#3-自定义Response" class="headerlink" title="3. 自定义Response"></a>3. 自定义Response</h2><p>也可自定义Response类，进行个性化的处理，但这个类必须继承Response</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ImageResponse</span>(<span class="title class_ inherited__">Response</span>):</span><br><span class="line">    default_mimetype = <span class="string">&#x27;image/jpeg&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/image&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">image</span>():</span><br><span class="line">    f = <span class="built_in">open</span>(<span class="string">&quot;static/public/pic/coolpython.png&quot;</span>, <span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line">    resp = ImageResponse(f.read())</span><br><span class="line">    <span class="keyword">return</span> resp</span><br></pre></td></tr></table></figure>
+
+<p>上面定义的ImageResponse类里，default_mimetype 就是image&#x2F;jpeg， 因此在视图中创建ImageResponse对象时无需再设置mimetype。</p>
+<h2 id="4-替换response-class"><a href="#4-替换response-class" class="headerlink" title="4. 替换response_class"></a>4. 替换response_class</h2><p>flask对象有一个response_class属性，默认是Response，可以将其替换成自定义的响应类。</p>
+<p>假设需要实现一个图片服务，返回的数据都是图片，mimetype都是image&#x2F;jpeg，那么可以这样做</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ImageResponse</span>(<span class="title class_ inherited__">Response</span>):</span><br><span class="line">    default_mimetype = <span class="string">&#x27;image/jpeg&#x27;</span></span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.response_class = ImageResponse</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/image&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">image</span>():</span><br><span class="line">    f = <span class="built_in">open</span>(<span class="string">&quot;static/public/pic/coolpython.png&quot;</span>, <span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> f.read()</span><br></pre></td></tr></table></figure>
+
+<p>在image函数，直接返回从图片中读取的数据返回，这些数据最终会被ImageResponse类处理。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
