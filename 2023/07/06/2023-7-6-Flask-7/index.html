@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flask[邂逅] - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,flask 下载文件flask提供了两个可进行下载的函数：send_from_directory 和 send_file
+send_from_directorysend_from_directory,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Flask[邂逅] - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,flask 下载文件flask提供了两个可进行下载的函数：send_from_directory 和 send_file
+send_from_directorysend_from_directory,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Flask[邂逅] - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,flask 下载文件flask提供了两个可进行下载的函数：send_from_directory 和 send_file
+send_from_directorysend_from_directory,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Flask[邂逅]</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Flask[邂逅]</h1>
+        <div class="stuff">
+            <span>七月 06, 2023</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Flask/" rel="tag">Flask</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Python/" rel="tag">Python</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="flask-下载文件"><a href="#flask-下载文件" class="headerlink" title="flask 下载文件"></a>flask 下载文件</h1><p>flask提供了两个可进行下载的函数：send_from_directory 和 send_file</p>
+<h2 id="send-from-directory"><a href="#send-from-directory" class="headerlink" title="send_from_directory"></a>send_from_directory</h2><p>send_from_directory函数内部调用了send_file，可以认为，真正执行下载操作的其实是send_file，那么send_from_directory存在的意义是什么呢？</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">send_from_directory</span>(<span class="params">directory, filename, **options</span>):</span><br><span class="line">    filename = safe_join(directory, filename)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.isabs(filename):</span><br><span class="line">        filename = os.path.join(current_app.root_path, filename)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.isfile(filename):</span><br><span class="line">            <span class="keyword">raise</span> NotFound()</span><br><span class="line">    <span class="keyword">except</span> (TypeError, ValueError):</span><br><span class="line">        <span class="keyword">raise</span> BadRequest()</span><br><span class="line">    options.setdefault(<span class="string">&#x27;conditional&#x27;</span>, <span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">return</span> send_file(filename, **options)</span><br></pre></td></tr></table></figure>
+
+<p>上面为send_from_directory函数的全部代码，在调用send_file函数之前，它做的最重要的事情就是获得一个安全的filename。</p>
+<blockquote><p>下载文件的名字，为用户发请求时传给后端的，如果直接使用客户端发送的文件名字，则存在安全隐患。</p>
+<p>关于这个安全隐患，其本质都是利用地址拼接这个动作修改实际操作文件的地址，为了防止黑客恶意下载，函数第一行代码便是使用safe_join函数，防止黑客通过修改filename的值达到下载关键文件的目的。</p>
+<p>因此，实际生产环境下，推荐使用send_from_directory函数</p>
+<footer><strong>@COOLPYTHON</strong><cite><a target="_blank" rel="noopener" href="http://www.coolpython.net/flask_tutorial/basic/route.html">www.coolpython.net/flask_tutorial/basic/route.html</a></cite></footer></blockquote>
+
+<h2 id="send-file"><a href="#send-file" class="headerlink" title="send_file"></a>send_file</h2><p>使用send_file例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> send_from_directory, send_file</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/download&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">download</span>():</span><br><span class="line">    <span class="keyword">return</span> send_file(<span class="string">&#x27;./data/3.xlsx&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.run(debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>send_file函数会调用guess_type函数获取文件的类型，设置响应头里的content-type。</p>
+<p>在浏览器里打开 <a target="_blank" rel="noopener" href="http://127.0.0.1:5000/download">http://127.0.0.1:5000/download</a> 这个url，会直接进行下载，但下载的文件名字并不是所期望的3.xlsx，浏览器在保存时用的名字是download.xlsx。 </p>
+<p>如果希望浏览器下载保存文件时使用的名字是3.xlsx,则需要将参数as_attachment设置为True。</p>
+<p>秘密藏在响应头的首部中，由于设置了as_attachment为True，flask会添加Content-Disposition</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Disposition: attachment; filename=3.xlsx</span><br></pre></td></tr></table></figure>
+
+<p>这样，浏览器便明白文件名是什么。</p>
+<p>如果希望浏览器以其他的名字保存该文件，则可以单独设置attachment_filename 参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/download&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">download</span>():</span><br><span class="line">    <span class="keyword">return</span> send_file(<span class="string">&#x27;./data/3.xlsx&#x27;</span>,</span><br><span class="line">                     as_attachment=<span class="literal">True</span>,</span><br><span class="line">                     attachment_filename=<span class="string">&#x27;test.xlsx&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这样，浏览器就会使用test.xlsx来保存文件。</p>
+<h2 id="处理下载文件中出现中文的乱码问题"><a href="#处理下载文件中出现中文的乱码问题" class="headerlink" title="处理下载文件中出现中文的乱码问题"></a>处理下载文件中出现中文的乱码问题</h2><p>当attachment_filename参数设置为中文文件名时，flask会报错误</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UnicodeEncodeError: &#x27;latin-1&#x27; codec can&#x27;t encode characters in position 43-44: ordinal not in range(256)</span><br></pre></td></tr></table></figure>
+
+<p>引发这个问题的原因，可以一直追溯到http协议，按照协议规定，HTTP Header 中的文本数据必须是 ASCII 编码的，为了解决header出现其他编码的问题，浏览器各显神通，这里的原理与历史可以参考这篇文章<br> <a target="_blank" rel="noopener" href="https://blog.csdn.net/u011090495/article/details/18815777">https://blog.csdn.net/u011090495/article/details/18815777</a></p>
+<p>我这里直接给出解决办法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/download&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">download</span>():</span><br><span class="line">    filename = quote(<span class="string">&quot;测试表格.xlsx&quot;</span>)</span><br><span class="line">    rv = send_file(<span class="string">&#x27;./data/3.xlsx&#x27;</span>,</span><br><span class="line">                     as_attachment=<span class="literal">True</span>,</span><br><span class="line">                     attachment_filename=filename)</span><br><span class="line"></span><br><span class="line">    rv.headers[<span class="string">&#x27;Content-Disposition&#x27;</span>] += <span class="string">&quot;; filename*=utf-8&#x27;&#x27;&#123;&#125;&quot;</span>.<span class="built_in">format</span>(filename)</span><br><span class="line">    <span class="keyword">return</span> rv</span><br></pre></td></tr></table></figure>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

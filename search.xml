@@ -1976,4 +1976,45 @@ Gitee有一套审查系统，会在网站进行部署/更新的时候，检查�
         <tag>Flask</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Flask[邂逅]</title>
+    <url>/2023/07/06/2023-7-6-Flask-7/</url>
+    <content><![CDATA[<h1 id="flask-下载文件"><a href="#flask-下载文件" class="headerlink" title="flask 下载文件"></a>flask 下载文件</h1><p>flask提供了两个可进行下载的函数：send_from_directory 和 send_file</p>
+<h2 id="send-from-directory"><a href="#send-from-directory" class="headerlink" title="send_from_directory"></a>send_from_directory</h2><p>send_from_directory函数内部调用了send_file，可以认为，真正执行下载操作的其实是send_file，那么send_from_directory存在的意义是什么呢？</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">send_from_directory</span>(<span class="params">directory, filename, **options</span>):</span><br><span class="line">    filename = safe_join(directory, filename)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.isabs(filename):</span><br><span class="line">        filename = os.path.join(current_app.root_path, filename)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.isfile(filename):</span><br><span class="line">            <span class="keyword">raise</span> NotFound()</span><br><span class="line">    <span class="keyword">except</span> (TypeError, ValueError):</span><br><span class="line">        <span class="keyword">raise</span> BadRequest()</span><br><span class="line">    options.setdefault(<span class="string">&#x27;conditional&#x27;</span>, <span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">return</span> send_file(filename, **options)</span><br></pre></td></tr></table></figure>
+
+<p>上面为send_from_directory函数的全部代码，在调用send_file函数之前，它做的最重要的事情就是获得一个安全的filename。</p>
+<blockquote><p>下载文件的名字，为用户发请求时传给后端的，如果直接使用客户端发送的文件名字，则存在安全隐患。</p>
+<p>关于这个安全隐患，其本质都是利用地址拼接这个动作修改实际操作文件的地址，为了防止黑客恶意下载，函数第一行代码便是使用safe_join函数，防止黑客通过修改filename的值达到下载关键文件的目的。</p>
+<p>因此，实际生产环境下，推荐使用send_from_directory函数</p>
+<footer><strong>@COOLPYTHON</strong><cite><a href="http://www.coolpython.net/flask_tutorial/basic/route.html">www.coolpython.net/flask_tutorial/basic/route.html</a></cite></footer></blockquote>
+
+<h2 id="send-file"><a href="#send-file" class="headerlink" title="send_file"></a>send_file</h2><p>使用send_file例子</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> send_from_directory, send_file</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/download&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">download</span>():</span><br><span class="line">    <span class="keyword">return</span> send_file(<span class="string">&#x27;./data/3.xlsx&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.run(debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>send_file函数会调用guess_type函数获取文件的类型，设置响应头里的content-type。</p>
+<p>在浏览器里打开 <a href="http://127.0.0.1:5000/download">http://127.0.0.1:5000/download</a> 这个url，会直接进行下载，但下载的文件名字并不是所期望的3.xlsx，浏览器在保存时用的名字是download.xlsx。 </p>
+<p>如果希望浏览器下载保存文件时使用的名字是3.xlsx,则需要将参数as_attachment设置为True。</p>
+<p>秘密藏在响应头的首部中，由于设置了as_attachment为True，flask会添加Content-Disposition</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Content-Disposition: attachment; filename=3.xlsx</span><br></pre></td></tr></table></figure>
+
+<p>这样，浏览器便明白文件名是什么。</p>
+<p>如果希望浏览器以其他的名字保存该文件，则可以单独设置attachment_filename 参数</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/download&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">download</span>():</span><br><span class="line">    <span class="keyword">return</span> send_file(<span class="string">&#x27;./data/3.xlsx&#x27;</span>,</span><br><span class="line">                     as_attachment=<span class="literal">True</span>,</span><br><span class="line">                     attachment_filename=<span class="string">&#x27;test.xlsx&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这样，浏览器就会使用test.xlsx来保存文件。</p>
+<h2 id="处理下载文件中出现中文的乱码问题"><a href="#处理下载文件中出现中文的乱码问题" class="headerlink" title="处理下载文件中出现中文的乱码问题"></a>处理下载文件中出现中文的乱码问题</h2><p>当attachment_filename参数设置为中文文件名时，flask会报错误</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">UnicodeEncodeError: &#x27;latin-1&#x27; codec can&#x27;t encode characters in position 43-44: ordinal not in range(256)</span><br></pre></td></tr></table></figure>
+
+<p>引发这个问题的原因，可以一直追溯到http协议，按照协议规定，HTTP Header 中的文本数据必须是 ASCII 编码的，为了解决header出现其他编码的问题，浏览器各显神通，这里的原理与历史可以参考这篇文章<br> <a href="https://blog.csdn.net/u011090495/article/details/18815777">https://blog.csdn.net/u011090495/article/details/18815777</a></p>
+<p>我这里直接给出解决办法</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/download&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">download</span>():</span><br><span class="line">    filename = quote(<span class="string">&quot;测试表格.xlsx&quot;</span>)</span><br><span class="line">    rv = send_file(<span class="string">&#x27;./data/3.xlsx&#x27;</span>,</span><br><span class="line">                     as_attachment=<span class="literal">True</span>,</span><br><span class="line">                     attachment_filename=filename)</span><br><span class="line"></span><br><span class="line">    rv.headers[<span class="string">&#x27;Content-Disposition&#x27;</span>] += <span class="string">&quot;; filename*=utf-8&#x27;&#x27;&#123;&#125;&quot;</span>.<span class="built_in">format</span>(filename)</span><br><span class="line">    <span class="keyword">return</span> rv</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Flask</tag>
+      </tags>
+  </entry>
 </search>
