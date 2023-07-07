@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flask[结交] - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,flask的 errorhandler装饰器实现应用错误处理flask提供了一个专门用来处理应用错误的装饰器errorhandler。 使用此装饰器，可以轻松的实现对系统错误异常的捕捉和处理。
+er,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Flask[结交] - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,flask的 errorhandler装饰器实现应用错误处理flask提供了一个专门用来处理应用错误的装饰器errorhandler。 使用此装饰器，可以轻松的实现对系统错误异常的捕捉和处理。
+er,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Flask[结交] - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,flask的 errorhandler装饰器实现应用错误处理flask提供了一个专门用来处理应用错误的装饰器errorhandler。 使用此装饰器，可以轻松的实现对系统错误异常的捕捉和处理。
+er,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Flask[结交]</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Flask[结交]</h1>
+        <div class="stuff">
+            <span>七月 07, 2023</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Flask/" rel="tag">Flask</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Python/" rel="tag">Python</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="flask的-errorhandler装饰器实现应用错误处理"><a href="#flask的-errorhandler装饰器实现应用错误处理" class="headerlink" title="flask的 errorhandler装饰器实现应用错误处理"></a>flask的 errorhandler装饰器实现应用错误处理</h1><p>flask提供了一个专门用来处理应用错误的装饰器errorhandler。 使用此装饰器，可以轻松的实现对系统错误异常的捕捉和处理。</p>
+<p>errorhandler可以传入http code,例如404，500。这是比较常见的请求错误，如果能够为这种错误提供专门的页面，无疑会提高用户的体验。除了http code， 也可以传入异常类，捕捉特定的异常。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="number">0</span>/<span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;index&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">user</span>():</span><br><span class="line">    <span class="keyword">raise</span> ValueError</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;user&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.errorhandler(<span class="params"><span class="number">404</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">error</span>(<span class="params">e</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;捕捉到404&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;error&#x27;</span>, <span class="number">404</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.errorhandler(<span class="params">ZeroDivisionError</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">catch_except</span>(<span class="params">e</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;捕捉到异常&#x27;</span>+ <span class="built_in">str</span>(e), <span class="number">500</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.errorhandler(<span class="params">Exception</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">catch_all_except</span>(<span class="params">e</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;捕捉任意异常&#x27;</span>+ <span class="built_in">str</span>(e), <span class="number">500</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
+
+<blockquote><p>可以捕捉特定的异常，做特定的处理，也可以捕捉任意异常，只需要传入参数Exception即可。</p>
+<p>如果某个特定异常被抛出后，有专门处理的函数，那么优先由这个函数进行处理。</p>
+<p>例如视图函数index抛出ZeroDivisionError，那么优先由catch_except函数进行处理，如果没有专门的处理函数，则由catch_all_except进行处理。</p>
+<p>如果错误发生在蓝图里，则优先由在蓝图里注册的错误处理器进行处理，404错误不在其中，因为404错误发生的更早，蓝图里检测不到。</p>
+<footer><strong>@COOLPYTHON</strong><cite><a target="_blank" rel="noopener" href="http://www.coolpython.net/flask_tutorial/basic/flask-errorhandler.html">www.coolpython.net/flask_tutorial/basic/flask-errorhandler.html</a></cite></footer></blockquote>
+
+<h1 id="flask-web开发中使用cookie"><a href="#flask-web开发中使用cookie" class="headerlink" title="flask web开发中使用cookie"></a>flask web开发中使用cookie</h1><p>在web编程中，cookie和session的区别与联系并不容易弄懂。cookie与session是一项只和终端用户联系紧密的技术。</p>
+<h2 id="1-http协议无状态"><a href="#1-http协议无状态" class="headerlink" title="1. http协议无状态"></a>1. http协议无状态</h2><p>首先，http协议是一个无状态的协议。所谓的无状态是指协议对于事务处理没有记忆能力，服务器不知道客户端是什么状态，这意味着每个请求都是独立的。</p>
+<p>无状态就会产生一些问题。假设你编写了一个网站，想要记录一下用户第一次访问你网站的时间，当用户下一次访问时，你在页面里显示他第一次登录的时间。</p>
+<p>看起来似乎很简单，但现在要再追加一个条件，用户不会在网站上注册，下一次访问的时候也不会登录，就变难了。这个事情的难点在于，我们无法知道用户是否是第一次来访问你的网站。换一个角度看，用户发起的请求里，有没有什么数据是可以唯一代表这个用户的。</p>
+<p>这就是对http协议无状态的理解，不知道用户的状态，每一次请求对于你来说都是独立的，全新的，当连续收到3个请求时，我们无法知道这3个请求是一个人发了3次还是3个人各自发了一次。</p>
+<h2 id="2-cookie的作用"><a href="#2-cookie的作用" class="headerlink" title="2. cookie的作用"></a>2. cookie的作用</h2><p>cookie技术可以解决以上的问题。</p>
+<p>cookie是在服务端生成的，发送给客户端（浏览器），浏览器会保存cookie数据，等客户端再发起请求时，会在请求头里带上cookie信息。</p>
+<p>服务端收到请求后，可以从请求头里拿到cookie， cookie里的信息就可以帮助服务端做一些重要的事情。</p>
+<h2 id="2-1-怎么判断用户是第一次访问"><a href="#2-1-怎么判断用户是第一次访问" class="headerlink" title="2.1 怎么判断用户是第一次访问"></a>2.1 怎么判断用户是第一次访问</h2><p>很简单，服务端收到请求后，从请求头里尝试获取cookie，如果有，说明不是第一次来，如果没有，那就是第一次来。</p>
+<p>我们先考虑第一次来的情况，既然是第一次，服务端需要获取当前时间，在响应头的cookie里设置这个时间，这样就把第一次访问网站的时间发送给了用户。</p>
+<h2 id="2-2-cookie信息的保存与使用"><a href="#2-2-cookie信息的保存与使用" class="headerlink" title="2.2 cookie信息的保存与使用"></a>2.2 cookie信息的保存与使用</h2><p>浏览器收到服务端的response后，会把cookie信息保存起来，保存的动作，你感知不到，浏览器自己完成，不过你可以查看。</p>
+<p>最关键的步骤来了，当你再一次访问服务时，浏览器发送请求时会自动的把cookie信息带上，这个动作你也感知不到，浏览器自己完成。</p>
+<h2 id="2-3-服务端收到cookie"><a href="#2-3-服务端收到cookie" class="headerlink" title="2.3 服务端收到cookie"></a>2.3 服务端收到cookie</h2><p>假设存在cookie，说明不是第一次访问（手动清除的情况除外）。从请求头里拿到cookie，得到的内容是这个用户第一次访问服务时的时间，服务端可以在返回的数据里加上这个时间，告诉用户第一次访问网站的时间。</p>
+<p>http协议的无状态特性严重的影响了web服务功能的开发，很多的请求和响应是需要承上启下的，为此，发展出来了cookie和session。</p>
+<h2 id="3-flask-cookie-实践"><a href="#3-flask-cookie-实践" class="headerlink" title="3. flask cookie 实践"></a>3. flask cookie 实践</h2><p>下面使用flask框架实现第一节里的功能</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, make_response, request</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="comment"># 尝试获取 first_access cookie</span></span><br><span class="line">    first_access = request.cookies.get(<span class="string">&#x27;first_access&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> first_access <span class="keyword">is</span> <span class="literal">None</span>:        <span class="comment"># 没有first_access cookie， 是第一次来</span></span><br><span class="line">        first_access = datetime.now().strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)</span><br><span class="line">        res = make_response(<span class="string">&#x27;hello world&#x27;</span>)</span><br><span class="line">        res.set_cookie(<span class="string">&#x27;first_access&#x27;</span>, first_access)        <span class="comment"># 在响应头里设置cookie</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    <span class="keyword">else</span>:       <span class="comment"># 不是第一次来</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;你第一次访问这个网页的时间是: <span class="subst">&#123;first_access&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
+
+<p>启动服务后，在浏览器里访问 <a target="_blank" rel="noopener" href="http://127.0.0.1:5000/">http://127.0.0.1:5000/</a> ， 页面里显示的是 “hello world”， 通过浏览器的开发者功能可以查看到服务端响应头信息<br> <img src="http://www.coolpython.net/pictures/flask_tutorial/basic/flask-web-cookie-1631107263-0.jpg" alt="img"></p>
+<p>服务端就是通过Set-Cookie首部来传输cookie信息的，浏览器收到数据后，就会将其保存下来。</p>
+<p>接下来，你再次在浏览器里访问<a target="_blank" rel="noopener" href="http://127.0.0.1:5000/%EF%BC%8C%E9%A1%B5%E9%9D%A2%E9%87%8C%E6%98%BE%E7%A4%BA%E7%9A%84%E5%86%85%E5%AE%B9%E6%98%AF">http://127.0.0.1:5000/，页面里显示的内容是</a> “你第一次访问这个网页的时间是: 2021-09-03 11:31:00”，通过浏览器的开发者工具可以查看到http请求的首部信息<br> <img src="http://www.coolpython.net/pictures/flask_tutorial/basic/flask-web-cookie-1631107263-1.jpg" alt="img"></p>
+<p>可以看到，cookie里有first_access， 服务端就是根据这里的信息才知道你第一次访问的时间。</p>
+<h2 id="4-遗留问题"><a href="#4-遗留问题" class="headerlink" title="4. 遗留问题"></a>4. 遗留问题</h2><p>本文的重点是讲述cookie的作用并使用flask框架实现一个简单的web服务实现显示用户第一次访问时间的功能，由于篇幅有限，还有一些遗留问题需等到后续的文章进行讲解：</p>
+<ol>
+<li>如果关闭浏览器，再次打开浏览器，就不能显示我第一次访问的时间了，这个问题涉及到cookie的过期时间问题</li>
+<li>cookie里的信息都是明文保存的，这很危险，这个问题涉及到cookie加密</li>
+<li>cookie与session有什么区别呢？</li>
+</ol>
+<p><code>本文均摘自COOLPYTHON，略有修改。</code></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

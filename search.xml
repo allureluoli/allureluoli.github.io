@@ -2017,4 +2017,121 @@ Gitee有一套审查系统，会在网站进行部署/更新的时候，检查�
         <tag>Flask</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Flask[认同]</title>
+    <url>/2023/07/07/2023-7-7-Flask-8/</url>
+    <content><![CDATA[<h1 id="使用蓝图-blueprint"><a href="#使用蓝图-blueprint" class="headerlink" title="使用蓝图 blueprint"></a>使用蓝图 blueprint</h1><h2 id="1-一个最小的应用"><a href="#1-一个最小的应用" class="headerlink" title="1. 一个最小的应用"></a>1. 一个最小的应用</h2><p>蓝图(blueprint)技术，可以实现flask应用的模块划分。</p>
+<p>在组织flask代码时，有<strong>功能式架构</strong>和<strong>分区式架构</strong>两种模式，使用蓝图，可以让项目架构更有层次，模块划分更便捷..</p>
+<p>下面这个示例非常的小巧，但是能提供的内容非常的少。</p>
+<p>在实际开发大型的flask应用时，我们会需要划分许多模块，提供很多的功能 。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello_world</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Hello World!&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(port=<span class="number">5678</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-一个稍大点的flask应用"><a href="#2-一个稍大点的flask应用" class="headerlink" title="2. 一个稍大点的flask应用"></a>2. 一个稍大点的flask应用</h2><p>下面的flask应用里，有一个user模块专门提供和用户有关的功能。</p>
+<p>例如用户注册，登录，登出，修改密码。</p>
+<p>还有一个admin模块，用来做后台管理。</p>
+<p>这个示例展示了如何在一个脚本里编写所有的模块，但这些视图函数并没有具体的实现。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello_world</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Hello World!&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># user模块</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user/register&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">register</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;register&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user/login&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;login&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user/modify_password&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">modify_password</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;modify_password&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># admin模块</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/admin/alluser&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">alluser</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;alluser&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/admin/deluser&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">deluser</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;deluser&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(port=<span class="number">5678</span>)</span><br></pre></td></tr></table></figure>
+
+<p>和最小的flask应用相比，这个应用多了两个模块，5个视图函数，但还是非常小。</p>
+<p>在实践项目中，子模块和视图函数会更多。因此，我们应该尽量避免将这些都写在同一个脚本中。</p>
+<p>否则，这个脚本会非常的大，难以维护。</p>
+<h2 id="3-BluePrint-蓝图技术"><a href="#3-BluePrint-蓝图技术" class="headerlink" title="3. BluePrint 蓝图技术"></a>3. BluePrint 蓝图技术</h2><p>蓝图技术，可以帮助你实现flask应用的模块划分。如果不划分模块或者模块划分不合理，会带来很多麻烦。</p>
+<p>第2小节的应用划分出两个模块，划分后，项目结构不再是一个单一的脚本，一个模块拥有一个属于自己的文件目录，与之相关的代码都将写在这里，项目结构如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">blue-example/</span><br><span class="line">├── admin</span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   └── views.py</span><br><span class="line">├── app.py</span><br><span class="line">└── user</span><br><span class="line">    ├── __init__.py</span><br><span class="line">    └── views.py</span><br></pre></td></tr></table></figure>
+
+<p>以下展示脚本内容</p>
+<h3 id="3-1-app-py"><a href="#3-1-app-py" class="headerlink" title="3.1 app.py"></a>3.1 app.py</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello_world</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Hello World!&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> admin <span class="keyword">import</span> admin_blue</span><br><span class="line"><span class="keyword">from</span> user <span class="keyword">import</span> user_blue</span><br><span class="line"></span><br><span class="line">app.register_blueprint(admin_blue)</span><br><span class="line">app.register_blueprint(user_blue)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(port=<span class="number">5678</span>)</span><br></pre></td></tr></table></figure>
+
+<p>app.py 代码干净整洁</p>
+<h3 id="3-2-user模块"><a href="#3-2-user模块" class="headerlink" title="3.2 user模块"></a>3.2 user模块</h3><p><strong>user&#x2F;<strong>init</strong>.py</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Blueprint</span><br><span class="line"></span><br><span class="line">user_blue = Blueprint(<span class="string">&#x27;user&#x27;</span>, __name__, url_prefix=<span class="string">&#x27;/user&#x27;</span>)</span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> views</span><br></pre></td></tr></table></figure>
+
+<p><strong>user&#x2F;views.py</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> user <span class="keyword">import</span> user_blue</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># user模块</span></span><br><span class="line"><span class="keyword">from</span> user <span class="keyword">import</span> user_blue</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># user模块</span></span><br><span class="line"><span class="meta">@user_blue.route(<span class="params"><span class="string">&#x27;/register&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">register</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;register&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@user_blue.route(<span class="params"><span class="string">&#x27;/login&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;login&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@user_blue.route(<span class="params"><span class="string">&#x27;/modify_password&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">modify_password</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;modify_password&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-admin"><a href="#3-3-admin" class="headerlink" title="3.3 admin"></a>3.3 admin</h3><p><strong>admin&#x2F;<strong>init</strong>.py</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Blueprint</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">admin_blue = Blueprint(<span class="string">&#x27;admin&#x27;</span>, __name__, url_prefix=<span class="string">&#x27;/admin&#x27;</span>)</span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> views</span><br></pre></td></tr></table></figure>
+
+<p><strong>admin&#x2F;views.py</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> admin <span class="keyword">import</span> admin_blue</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># admin模块</span></span><br><span class="line"><span class="meta">@admin_blue.route(<span class="params"><span class="string">&#x27;/alluser&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">alluser</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;alluser&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@admin_blue.route(<span class="params"><span class="string">&#x27;/deluser&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">deluser</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;deluser&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>第3小节的项目代码，多了一些模块的划分和文件目录。</p>
+<p>看上去，比第2小节的代码变复杂了些，但这种“复杂”是值得的， 能得到整个项目清晰的结构，很好的控制了单个脚本的代码规模。</p>
+<h2 id="4-两种代码组织形式"><a href="#4-两种代码组织形式" class="headerlink" title="4. 两种代码组织形式"></a>4. 两种代码组织形式</h2><p>蓝图在组织flask代码时，有两种形式</p>
+<ol>
+<li>功能式架构</li>
+<li>分区式架构</li>
+</ol>
+<p>前面所展示的就是功能式架构，一个功能，一个模块组织成一个蓝图，他们共用相同的静态资源，静态资源放在static目录下。</p>
+<p>本文所举实例太简单，因此没有创建静态资源，功能式架构类似于下面的结构</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">__init__.py</span><br><span class="line">static/</span><br><span class="line">templates/</span><br><span class="line">    home/</span><br><span class="line">    control_panel/</span><br><span class="line">    admin/</span><br><span class="line">views/</span><br><span class="line">    __init__.py</span><br><span class="line">    home.py</span><br><span class="line">    control_panel.py</span><br><span class="line">    admin.py</span><br><span class="line">models.py</span><br></pre></td></tr></table></figure>
+
+<p>home, control_panel,admin 都是蓝图，他们共用static和 templates。</p>
+<p>分区式架构，适用于子模块有特殊需要的情况，在创建蓝图构造Blueprint对象时，可以指定static和templates。</p>
+<p>结构示例：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">yourapp/</span><br><span class="line">    __init__.py</span><br><span class="line">    admin/</span><br><span class="line">        __init__.py</span><br><span class="line">        views.py</span><br><span class="line">        static/</span><br><span class="line">        templates/</span><br><span class="line">    home/</span><br><span class="line">        __init__.py</span><br><span class="line">        views.py</span><br><span class="line">        static/</span><br><span class="line">        templates/</span><br><span class="line">    control_panel/</span><br><span class="line">        __init__.py</span><br><span class="line">        views.py</span><br><span class="line">        static/</span><br><span class="line">        templates/</span><br><span class="line">    models.py</span><br></pre></td></tr></table></figure>
+
+<blockquote><p>试想，如果admin, home， control_panel有各自不同的页面样式和风格，那么他们就需要不同的静态资源，css,  javascript,每个模块拥有各自的静态资源就是一个合理的选择。这样组织，还有一个好处，一个模块，或者说一个蓝图拥有自身全部的资源，包括static和templates，那么它可以很容易从一个项目里拆分出来放在另一个项目中使用。</p>
+<p>具体使用哪种组织架构，并没有强制要求，完全是开发人员随心所欲的，重要的是从项目管理的角度出发，哪一种更利于你所项目的管理，就用哪一种。</p>
+<footer><strong>@COOLPYTHON</strong><cite><a href="http://www.coolpython.net/flask_tutorial/basic/flask-blueprint.html">www.coolpython.net/flask_tutorial/basic/flask-blueprint.html</a></cite></footer></blockquote>
+
+]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Flask</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Flask[结交]</title>
+    <url>/2023/07/07/2023-7-7-Flask-9/</url>
+    <content><![CDATA[<h1 id="flask的-errorhandler装饰器实现应用错误处理"><a href="#flask的-errorhandler装饰器实现应用错误处理" class="headerlink" title="flask的 errorhandler装饰器实现应用错误处理"></a>flask的 errorhandler装饰器实现应用错误处理</h1><p>flask提供了一个专门用来处理应用错误的装饰器errorhandler。 使用此装饰器，可以轻松的实现对系统错误异常的捕捉和处理。</p>
+<p>errorhandler可以传入http code,例如404，500。这是比较常见的请求错误，如果能够为这种错误提供专门的页面，无疑会提高用户的体验。除了http code， 也可以传入异常类，捕捉特定的异常。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="number">0</span>/<span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;index&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">user</span>():</span><br><span class="line">    <span class="keyword">raise</span> ValueError</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;user&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.errorhandler(<span class="params"><span class="number">404</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">error</span>(<span class="params">e</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;捕捉到404&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;error&#x27;</span>, <span class="number">404</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.errorhandler(<span class="params">ZeroDivisionError</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">catch_except</span>(<span class="params">e</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;捕捉到异常&#x27;</span>+ <span class="built_in">str</span>(e), <span class="number">500</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.errorhandler(<span class="params">Exception</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">catch_all_except</span>(<span class="params">e</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;捕捉任意异常&#x27;</span>+ <span class="built_in">str</span>(e), <span class="number">500</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
+
+<blockquote><p>可以捕捉特定的异常，做特定的处理，也可以捕捉任意异常，只需要传入参数Exception即可。</p>
+<p>如果某个特定异常被抛出后，有专门处理的函数，那么优先由这个函数进行处理。</p>
+<p>例如视图函数index抛出ZeroDivisionError，那么优先由catch_except函数进行处理，如果没有专门的处理函数，则由catch_all_except进行处理。</p>
+<p>如果错误发生在蓝图里，则优先由在蓝图里注册的错误处理器进行处理，404错误不在其中，因为404错误发生的更早，蓝图里检测不到。</p>
+<footer><strong>@COOLPYTHON</strong><cite><a href="http://www.coolpython.net/flask_tutorial/basic/flask-errorhandler.html">www.coolpython.net/flask_tutorial/basic/flask-errorhandler.html</a></cite></footer></blockquote>
+
+<h1 id="flask-web开发中使用cookie"><a href="#flask-web开发中使用cookie" class="headerlink" title="flask web开发中使用cookie"></a>flask web开发中使用cookie</h1><p>在web编程中，cookie和session的区别与联系并不容易弄懂。cookie与session是一项只和终端用户联系紧密的技术。</p>
+<h2 id="1-http协议无状态"><a href="#1-http协议无状态" class="headerlink" title="1. http协议无状态"></a>1. http协议无状态</h2><p>首先，http协议是一个无状态的协议。所谓的无状态是指协议对于事务处理没有记忆能力，服务器不知道客户端是什么状态，这意味着每个请求都是独立的。</p>
+<p>无状态就会产生一些问题。假设你编写了一个网站，想要记录一下用户第一次访问你网站的时间，当用户下一次访问时，你在页面里显示他第一次登录的时间。</p>
+<p>看起来似乎很简单，但现在要再追加一个条件，用户不会在网站上注册，下一次访问的时候也不会登录，就变难了。这个事情的难点在于，我们无法知道用户是否是第一次来访问你的网站。换一个角度看，用户发起的请求里，有没有什么数据是可以唯一代表这个用户的。</p>
+<p>这就是对http协议无状态的理解，不知道用户的状态，每一次请求对于你来说都是独立的，全新的，当连续收到3个请求时，我们无法知道这3个请求是一个人发了3次还是3个人各自发了一次。</p>
+<h2 id="2-cookie的作用"><a href="#2-cookie的作用" class="headerlink" title="2. cookie的作用"></a>2. cookie的作用</h2><p>cookie技术可以解决以上的问题。</p>
+<p>cookie是在服务端生成的，发送给客户端（浏览器），浏览器会保存cookie数据，等客户端再发起请求时，会在请求头里带上cookie信息。</p>
+<p>服务端收到请求后，可以从请求头里拿到cookie， cookie里的信息就可以帮助服务端做一些重要的事情。</p>
+<h2 id="2-1-怎么判断用户是第一次访问"><a href="#2-1-怎么判断用户是第一次访问" class="headerlink" title="2.1 怎么判断用户是第一次访问"></a>2.1 怎么判断用户是第一次访问</h2><p>很简单，服务端收到请求后，从请求头里尝试获取cookie，如果有，说明不是第一次来，如果没有，那就是第一次来。</p>
+<p>我们先考虑第一次来的情况，既然是第一次，服务端需要获取当前时间，在响应头的cookie里设置这个时间，这样就把第一次访问网站的时间发送给了用户。</p>
+<h2 id="2-2-cookie信息的保存与使用"><a href="#2-2-cookie信息的保存与使用" class="headerlink" title="2.2 cookie信息的保存与使用"></a>2.2 cookie信息的保存与使用</h2><p>浏览器收到服务端的response后，会把cookie信息保存起来，保存的动作，你感知不到，浏览器自己完成，不过你可以查看。</p>
+<p>最关键的步骤来了，当你再一次访问服务时，浏览器发送请求时会自动的把cookie信息带上，这个动作你也感知不到，浏览器自己完成。</p>
+<h2 id="2-3-服务端收到cookie"><a href="#2-3-服务端收到cookie" class="headerlink" title="2.3 服务端收到cookie"></a>2.3 服务端收到cookie</h2><p>假设存在cookie，说明不是第一次访问（手动清除的情况除外）。从请求头里拿到cookie，得到的内容是这个用户第一次访问服务时的时间，服务端可以在返回的数据里加上这个时间，告诉用户第一次访问网站的时间。</p>
+<p>http协议的无状态特性严重的影响了web服务功能的开发，很多的请求和响应是需要承上启下的，为此，发展出来了cookie和session。</p>
+<h2 id="3-flask-cookie-实践"><a href="#3-flask-cookie-实践" class="headerlink" title="3. flask cookie 实践"></a>3. flask cookie 实践</h2><p>下面使用flask框架实现第一节里的功能</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, make_response, request</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="comment"># 尝试获取 first_access cookie</span></span><br><span class="line">    first_access = request.cookies.get(<span class="string">&#x27;first_access&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> first_access <span class="keyword">is</span> <span class="literal">None</span>:        <span class="comment"># 没有first_access cookie， 是第一次来</span></span><br><span class="line">        first_access = datetime.now().strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)</span><br><span class="line">        res = make_response(<span class="string">&#x27;hello world&#x27;</span>)</span><br><span class="line">        res.set_cookie(<span class="string">&#x27;first_access&#x27;</span>, first_access)        <span class="comment"># 在响应头里设置cookie</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    <span class="keyword">else</span>:       <span class="comment"># 不是第一次来</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;你第一次访问这个网页的时间是: <span class="subst">&#123;first_access&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
+
+<p>启动服务后，在浏览器里访问 <a href="http://127.0.0.1:5000/">http://127.0.0.1:5000/</a> ， 页面里显示的是 “hello world”， 通过浏览器的开发者功能可以查看到服务端响应头信息<br> <img src="http://www.coolpython.net/pictures/flask_tutorial/basic/flask-web-cookie-1631107263-0.jpg" alt="img"></p>
+<p>服务端就是通过Set-Cookie首部来传输cookie信息的，浏览器收到数据后，就会将其保存下来。</p>
+<p>接下来，你再次在浏览器里访问<a href="http://127.0.0.1:5000/%EF%BC%8C%E9%A1%B5%E9%9D%A2%E9%87%8C%E6%98%BE%E7%A4%BA%E7%9A%84%E5%86%85%E5%AE%B9%E6%98%AF">http://127.0.0.1:5000/，页面里显示的内容是</a> “你第一次访问这个网页的时间是: 2021-09-03 11:31:00”，通过浏览器的开发者工具可以查看到http请求的首部信息<br> <img src="http://www.coolpython.net/pictures/flask_tutorial/basic/flask-web-cookie-1631107263-1.jpg" alt="img"></p>
+<p>可以看到，cookie里有first_access， 服务端就是根据这里的信息才知道你第一次访问的时间。</p>
+<h2 id="4-遗留问题"><a href="#4-遗留问题" class="headerlink" title="4. 遗留问题"></a>4. 遗留问题</h2><p>本文的重点是讲述cookie的作用并使用flask框架实现一个简单的web服务实现显示用户第一次访问时间的功能，由于篇幅有限，还有一些遗留问题需等到后续的文章进行讲解：</p>
+<ol>
+<li>如果关闭浏览器，再次打开浏览器，就不能显示我第一次访问的时间了，这个问题涉及到cookie的过期时间问题</li>
+<li>cookie里的信息都是明文保存的，这很危险，这个问题涉及到cookie加密</li>
+<li>cookie与session有什么区别呢？</li>
+</ol>
+<p><code>本文均摘自COOLPYTHON，略有修改。</code></p>
+]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Flask</tag>
+      </tags>
+  </entry>
 </search>

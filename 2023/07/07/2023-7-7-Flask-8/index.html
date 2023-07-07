@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flask[认同] - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,使用蓝图 blueprint1. 一个最小的应用蓝图(blueprint)技术，可以实现flask应用的模块划分。
+在组织flask代码时，有功能式架构和分区式架构两种模式，使用蓝图，可以让项目架构,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Flask[认同] - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,使用蓝图 blueprint1. 一个最小的应用蓝图(blueprint)技术，可以实现flask应用的模块划分。
+在组织flask代码时，有功能式架构和分区式架构两种模式，使用蓝图，可以让项目架构,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Flask[认同] - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,使用蓝图 blueprint1. 一个最小的应用蓝图(blueprint)技术，可以实现flask应用的模块划分。
+在组织flask代码时，有功能式架构和分区式架构两种模式，使用蓝图，可以让项目架构,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Flask[认同]</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Flask[认同]</h1>
+        <div class="stuff">
+            <span>七月 07, 2023</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Flask/" rel="tag">Flask</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Python/" rel="tag">Python</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="使用蓝图-blueprint"><a href="#使用蓝图-blueprint" class="headerlink" title="使用蓝图 blueprint"></a>使用蓝图 blueprint</h1><h2 id="1-一个最小的应用"><a href="#1-一个最小的应用" class="headerlink" title="1. 一个最小的应用"></a>1. 一个最小的应用</h2><p>蓝图(blueprint)技术，可以实现flask应用的模块划分。</p>
+<p>在组织flask代码时，有<strong>功能式架构</strong>和<strong>分区式架构</strong>两种模式，使用蓝图，可以让项目架构更有层次，模块划分更便捷..</p>
+<p>下面这个示例非常的小巧，但是能提供的内容非常的少。</p>
+<p>在实际开发大型的flask应用时，我们会需要划分许多模块，提供很多的功能 。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello_world</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Hello World!&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(port=<span class="number">5678</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-一个稍大点的flask应用"><a href="#2-一个稍大点的flask应用" class="headerlink" title="2. 一个稍大点的flask应用"></a>2. 一个稍大点的flask应用</h2><p>下面的flask应用里，有一个user模块专门提供和用户有关的功能。</p>
+<p>例如用户注册，登录，登出，修改密码。</p>
+<p>还有一个admin模块，用来做后台管理。</p>
+<p>这个示例展示了如何在一个脚本里编写所有的模块，但这些视图函数并没有具体的实现。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello_world</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Hello World!&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># user模块</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user/register&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">register</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;register&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user/login&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;login&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user/modify_password&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">modify_password</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;modify_password&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># admin模块</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/admin/alluser&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">alluser</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;alluser&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/admin/deluser&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">deluser</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;deluser&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(port=<span class="number">5678</span>)</span><br></pre></td></tr></table></figure>
+
+<p>和最小的flask应用相比，这个应用多了两个模块，5个视图函数，但还是非常小。</p>
+<p>在实践项目中，子模块和视图函数会更多。因此，我们应该尽量避免将这些都写在同一个脚本中。</p>
+<p>否则，这个脚本会非常的大，难以维护。</p>
+<h2 id="3-BluePrint-蓝图技术"><a href="#3-BluePrint-蓝图技术" class="headerlink" title="3. BluePrint 蓝图技术"></a>3. BluePrint 蓝图技术</h2><p>蓝图技术，可以帮助你实现flask应用的模块划分。如果不划分模块或者模块划分不合理，会带来很多麻烦。</p>
+<p>第2小节的应用划分出两个模块，划分后，项目结构不再是一个单一的脚本，一个模块拥有一个属于自己的文件目录，与之相关的代码都将写在这里，项目结构如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">blue-example/</span><br><span class="line">├── admin</span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   └── views.py</span><br><span class="line">├── app.py</span><br><span class="line">└── user</span><br><span class="line">    ├── __init__.py</span><br><span class="line">    └── views.py</span><br></pre></td></tr></table></figure>
+
+<p>以下展示脚本内容</p>
+<h3 id="3-1-app-py"><a href="#3-1-app-py" class="headerlink" title="3.1 app.py"></a>3.1 app.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello_world</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Hello World!&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> admin <span class="keyword">import</span> admin_blue</span><br><span class="line"><span class="keyword">from</span> user <span class="keyword">import</span> user_blue</span><br><span class="line"></span><br><span class="line">app.register_blueprint(admin_blue)</span><br><span class="line">app.register_blueprint(user_blue)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(port=<span class="number">5678</span>)</span><br></pre></td></tr></table></figure>
+
+<p>app.py 代码干净整洁</p>
+<h3 id="3-2-user模块"><a href="#3-2-user模块" class="headerlink" title="3.2 user模块"></a>3.2 user模块</h3><p><strong>user&#x2F;<strong>init</strong>.py</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Blueprint</span><br><span class="line"></span><br><span class="line">user_blue = Blueprint(<span class="string">&#x27;user&#x27;</span>, __name__, url_prefix=<span class="string">&#x27;/user&#x27;</span>)</span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> views</span><br></pre></td></tr></table></figure>
+
+<p><strong>user&#x2F;views.py</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> user <span class="keyword">import</span> user_blue</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># user模块</span></span><br><span class="line"><span class="keyword">from</span> user <span class="keyword">import</span> user_blue</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># user模块</span></span><br><span class="line"><span class="meta">@user_blue.route(<span class="params"><span class="string">&#x27;/register&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">register</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;register&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@user_blue.route(<span class="params"><span class="string">&#x27;/login&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;login&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@user_blue.route(<span class="params"><span class="string">&#x27;/modify_password&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">modify_password</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;modify_password&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-admin"><a href="#3-3-admin" class="headerlink" title="3.3 admin"></a>3.3 admin</h3><p><strong>admin&#x2F;<strong>init</strong>.py</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Blueprint</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">admin_blue = Blueprint(<span class="string">&#x27;admin&#x27;</span>, __name__, url_prefix=<span class="string">&#x27;/admin&#x27;</span>)</span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> views</span><br></pre></td></tr></table></figure>
+
+<p><strong>admin&#x2F;views.py</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> admin <span class="keyword">import</span> admin_blue</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># admin模块</span></span><br><span class="line"><span class="meta">@admin_blue.route(<span class="params"><span class="string">&#x27;/alluser&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">alluser</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;alluser&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@admin_blue.route(<span class="params"><span class="string">&#x27;/deluser&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">deluser</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;deluser&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>第3小节的项目代码，多了一些模块的划分和文件目录。</p>
+<p>看上去，比第2小节的代码变复杂了些，但这种“复杂”是值得的， 能得到整个项目清晰的结构，很好的控制了单个脚本的代码规模。</p>
+<h2 id="4-两种代码组织形式"><a href="#4-两种代码组织形式" class="headerlink" title="4. 两种代码组织形式"></a>4. 两种代码组织形式</h2><p>蓝图在组织flask代码时，有两种形式</p>
+<ol>
+<li>功能式架构</li>
+<li>分区式架构</li>
+</ol>
+<p>前面所展示的就是功能式架构，一个功能，一个模块组织成一个蓝图，他们共用相同的静态资源，静态资源放在static目录下。</p>
+<p>本文所举实例太简单，因此没有创建静态资源，功能式架构类似于下面的结构</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">__init__.py</span><br><span class="line">static/</span><br><span class="line">templates/</span><br><span class="line">    home/</span><br><span class="line">    control_panel/</span><br><span class="line">    admin/</span><br><span class="line">views/</span><br><span class="line">    __init__.py</span><br><span class="line">    home.py</span><br><span class="line">    control_panel.py</span><br><span class="line">    admin.py</span><br><span class="line">models.py</span><br></pre></td></tr></table></figure>
+
+<p>home, control_panel,admin 都是蓝图，他们共用static和 templates。</p>
+<p>分区式架构，适用于子模块有特殊需要的情况，在创建蓝图构造Blueprint对象时，可以指定static和templates。</p>
+<p>结构示例：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">yourapp/</span><br><span class="line">    __init__.py</span><br><span class="line">    admin/</span><br><span class="line">        __init__.py</span><br><span class="line">        views.py</span><br><span class="line">        static/</span><br><span class="line">        templates/</span><br><span class="line">    home/</span><br><span class="line">        __init__.py</span><br><span class="line">        views.py</span><br><span class="line">        static/</span><br><span class="line">        templates/</span><br><span class="line">    control_panel/</span><br><span class="line">        __init__.py</span><br><span class="line">        views.py</span><br><span class="line">        static/</span><br><span class="line">        templates/</span><br><span class="line">    models.py</span><br></pre></td></tr></table></figure>
+
+<blockquote><p>试想，如果admin, home， control_panel有各自不同的页面样式和风格，那么他们就需要不同的静态资源，css,  javascript,每个模块拥有各自的静态资源就是一个合理的选择。这样组织，还有一个好处，一个模块，或者说一个蓝图拥有自身全部的资源，包括static和templates，那么它可以很容易从一个项目里拆分出来放在另一个项目中使用。</p>
+<p>具体使用哪种组织架构，并没有强制要求，完全是开发人员随心所欲的，重要的是从项目管理的角度出发，哪一种更利于你所项目的管理，就用哪一种。</p>
+<footer><strong>@COOLPYTHON</strong><cite><a target="_blank" rel="noopener" href="http://www.coolpython.net/flask_tutorial/basic/flask-blueprint.html">www.coolpython.net/flask_tutorial/basic/flask-blueprint.html</a></cite></footer></blockquote>
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
