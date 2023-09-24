@@ -1,0 +1,256 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Android项目文件目录分析 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,相信对第一次接触安卓开发的人来说，安卓应用的项目结构很令人疑惑。
+  刚巧，我也是，才下载了 Android Studio不久。看了不少的安卓教程，然后创建了一个示例项目准备摸索摸索。我去，怎么这么,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Android项目文件目录分析 - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,相信对第一次接触安卓开发的人来说，安卓应用的项目结构很令人疑惑。
+  刚巧，我也是，才下载了 Android Studio不久。看了不少的安卓教程，然后创建了一个示例项目准备摸索摸索。我去，怎么这么,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Android项目文件目录分析 - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,相信对第一次接触安卓开发的人来说，安卓应用的项目结构很令人疑惑。
+  刚巧，我也是，才下载了 Android Studio不久。看了不少的安卓教程，然后创建了一个示例项目准备摸索摸索。我去，怎么这么,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Android项目文件目录分析</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Android项目文件目录分析</h1>
+        <div class="stuff">
+            <span>八月 27, 2023</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Android/" rel="tag">Android</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>相信对第一次接触安卓开发的人来说，安卓应用的项目结构很令人疑惑。</p>
+<p>  刚巧，我也是，才下载了 <code>Android Studio</code>不久。看了不少的安卓教程，然后创建了一个示例项目准备摸索摸索。我去，怎么这么多代码，这么多文件，瞬间傻眼了。</p>
+<p>  不再傻眼，也为了更多和我一样的小白开发者不再傻眼，跟着我的视角，我们一起走进这个安卓App，看看它到底是个什么构造。</p>
+<p>  首先复制项目路径，打开文件管理器，进入我们的安卓项目文件夹。</p>
+<img src="http://171.38.91.172:4666/MOON/blog%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90/%E8%B7%AF%E5%BE%84.png" class="">
+
+<img src="http://171.38.91.172:4666/MOON/blog%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90/%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95.png" class="">
+
+<p>  来到这个页面后，我们看到前缀没有 <code>.</code> 的正常目录有 <code>app</code> 和 <code>gradle</code> 两个文件夹。能走到这一步的同学，必然是创建了项目了，也就安装好了<code>gradle</code>了，所以不再赘述，我们进入<code>app</code>文件夹。</p>
+<img src="http://171.38.91.172:4666/MOON/blog%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90/app%E7%9B%AE%E5%BD%95.png" class="">
+
+<p>  在此之前我已经编译过一次app，因此目录下有</p>
+<ul>
+<li><p><code>build</code> ：存放着构建后的内容</p>
+</li>
+<li><p><code>libs</code> : 存放着引用的外部库（因为没有使用里面试试空的）</p>
+</li>
+<li><p><code>src</code> : 源代码文件夹。</p>
+<p>三个文件夹。</p>
+</li>
+</ul>
+<p>因此，我们进入 <code>src</code> 这个文件夹。</p>
+<img src="http://171.38.91.172:4666/MOON/blog%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90/src%E7%9B%AE%E5%BD%95.png" class="">
+
+<p>  <code>src</code> 目录下，有三个文件夹：</p>
+<ul>
+<li><code>androidText</code> ：存放着Instrumented测试代码。Instrumented测试与单元测试不同，它们可以运行在整个Android应用或框架上，并可以访问Android系统服务和API。 </li>
+<li><code>main</code>：存放着主程序。</li>
+<li><code>test</code>：存放着单元测试代码。单元测试是软件开发中的一种实践，用于确保代码的各个单元按照预期工作。</li>
+</ul>
+<p>  很显然我们当务之急需要的是去了解<code>main</code>文件夹中的内容。</p>
+<hr>
+<p>  访问进去，有两个文件夹和一个<code>AndroidManifest.xml</code>文件。</p>
+<p><code>AndroidManifest.xml</code>：在Android程序中，所有的Activity都需要在<code>AndroidManifest.xml</code>中声明，才能够被用户通过INTENT找到。除了Activity以外，服务（Service）、广播接收者（BroadcastReceiver）、ContentProvider都需要在<code>AndroidManifest.xml</code>中声明。</p>
+<p>关于这两个文件夹：java |  res</p>
+<ul>
+<li>java：存放着java代码。（我选择了java项目示例，我选择在深度学习过java开发安卓后再转koutlin）</li>
+<li>res : 存放着各种资源文件。（稍后将一一的解释。）</li>
+</ul>
+<hr>
+<p>  下面我将列举一下示例项目中已存在的文件</p>
+<p>  <code>java\com\example\magichome</code> 在这个路径下有：<code>data</code>,<code>ui</code>,两个文件夹。</p>
+<p>  <code>data</code>文件夹中包含一个<code>model</code>文件夹,还有:</p>
+<ol>
+<li><p><code>LoginDataSource.java</code>：该类用于处理用户登录和注销的操作。</p>
+</li>
+<li><p>&#96;&#96;LoginRepository.java&#96;：用于处理用户登录和注销的操作，并维护一个内存中的登录状态和用户凭证信息缓存。</p>
+</li>
+<li><p><code>Result.java</code>：用于封装处理结果，包括成功的结果和错误的结果。</p>
+</li>
+</ol>
+<p>  总共三个文件。</p>
+<p><code>model文件夹</code>：</p>
+<ul>
+<li><code>LoggedInUser.java</code>：一个数据类，主要用于存储已登录用户的用户信息。这个类是从<code>LoginRepository</code>中获取的。</li>
+</ul>
+<hr>
+<p><code>  ui</code>文件夹中包含一个<code>login</code>文件夹，其中包含:</p>
+<ol>
+<li><code>LoggedInUserView.java</code>：主要用于将已登录用户的详细信息暴露给用户界面（UI）。</li>
+<li><code>LoginActivity.java</code>：实现一个登录活动的 Android 应用程序的一部分。该活动使用数据绑定和<code>ViewModel </code>来管理用户输入和登录状态。</li>
+<li><code>LoginFormState.java</code>：主要用于表示登录表单的数据验证状态。</li>
+<li><code>LoginResult.java</code>：主要用于封装登录操作的结果。</li>
+<li><code>LoginViewModel.java</code></li>
+<li><code>LoginViewModelFactory.java</code>：创建并返回一个特定的ViewModel。</li>
+</ol>
+<p>  总共六个文件。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
