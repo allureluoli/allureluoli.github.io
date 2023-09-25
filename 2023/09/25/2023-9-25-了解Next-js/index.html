@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2023-9-25-了解Next.js - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,Next.jsNext.js 是什么？
+
+官方：Next.js is a flexible React framework that gives you building blocks to cre,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2023-9-25-了解Next.js - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,Next.jsNext.js 是什么？
+
+官方：Next.js is a flexible React framework that gives you building blocks to cre,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2023-9-25-了解Next.js - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,Next.jsNext.js 是什么？
+
+官方：Next.js is a flexible React framework that gives you building blocks to cre,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2023-9-25-了解Next.js</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2023-9-25-了解Next.js</h1>
+        <div class="stuff">
+            <span>九月 25, 2023</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Next-js/" rel="tag">Next.js</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="Next-js"><a href="#Next-js" class="headerlink" title="Next.js"></a>Next.js</h3><p>Next.js 是什么？</p>
+<ul>
+<li>官方：Next.js is a flexible React framework that gives you building blocks to create fast web applications.<ul>
+<li>翻译：Next.js 是一个灵活的React框架，它为我们提供快速构建web应用程序的构建块。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Building-Blocks-of-a-Web-Application"><a href="#Building-Blocks-of-a-Web-Application" class="headerlink" title="Building Blocks of a Web Application"></a>Building Blocks of a Web Application</h3><p>— 改编自 Next.js 官网</p>
+<p>也就是web应用构建块。这仍然是个比较抽象的概念，我们需要知道，什么是web应用构建块。</p>
+<p>构建web应用程序时，我们需要考虑以下几点：</p>
+<pre><code>- 用户界面：提供应用程序，使用户与之交互。
+- 路由：用户在应用程序不同部分之间导航。
+- 数据获取：数据位于何处以及如何获取。
+- 渲染：何时何地渲染静态或动态内容。
+- 集成：使用的第三方服务（CMS、身份验证、支付等）以及如何连接它们。
+- 基础架构：部署、存储和运行应用程序代码（Serverless、CDN、Edge等）的地方。
+- 性能：如何为最终用户优化应用程序。
+- 可扩展性：应用程序如何随着团队、数据和流量的增长而进行调整。
+- 开发经验：团队构建和维护应用程序的经验。
+</code></pre>
+<p> 对于应用程序的每个部分，需要决定是自己构建解决方案，还是使用库和框架等其他工具。 </p>
+<p>综上所述，用户界面、路由、数据获取、渲染…等，这些点，其实都算是一个个的构建块。而以上所有内容，我们都可以使用Next.js 实现。至于这些到底是什么，我们将一一细究。</p>
+<p><strong>那么</strong></p>
+<h3 id="React-是啥？"><a href="#React-是啥？" class="headerlink" title="React 是啥？"></a>React 是啥？</h3><p>官方说了： <a target="_blank" rel="noopener" href="https://react.dev/learn">React</a> is a JavaScript <strong>library</strong> for building interactive <strong>user interfaces</strong>. </p>
+<p>翻译： React是一个用于构建交互式用户界面的JavaScript库。 </p>
+<ul>
+<li><p>什么是用户界面：使用代码呈现给用户看的界面，就是用户界面。而一般用户界面有两种：CLI 和 GUI（命令行界面和图形化界面），而我们浏览器为我们提供的 WEB 界面，正是一种GUI界面。</p>
+</li>
+<li><p>Next.js 官方的解释是这样的：By user interfaces, we mean the elements that users see and interact with on-screen.</p>
+<ul>
+<li>翻译：所谓用户界面，我们指的是用户在屏幕上看到并与之交互的元素。</li>
+</ul>
+</li>
+</ul>
+<p>什么是库？</p>
+<ul>
+<li>官方：By library, we mean React provides helpful functions to build UI, but leaves it up to the developer where to use those functions in their  application.<ul>
+<li>所谓库，我们的意思是React提供了有用的函数来构建UI，但将这些函数在应用程序中的使用交予开发人员。</li>
+</ul>
+</li>
+</ul>
+<img class="">
+
+<p>有了库，我们可以直接引用已经开发好的函数来构建应用程序，这可以大幅度加快我们的开发效率。我们不必在开发时深究底层，什么功能都要自己从零开始写，也就是俗称的”造轮子“。引用前人的智慧，这亦是一种智慧。</p>
+<p>官方原文：</p>
+<ul>
+<li>Part of React’s success is that it is relatively unopinionated about the other aspects of building applications. This has resulted in a flourishing ecosystem of third-party tools and solutions.<ul>
+<li>React的成功部分在于，它对构建应用程序的其他方面相对不持偏见。这使得第三方工具和解决方案的生态系统蓬勃发展。</li>
+</ul>
+</li>
+<li>It also means, however, that building a complete React application from the ground up requires some effort. Developers need to spend time configuring tools and reinventing solutions for common application requirements.<ul>
+<li>然而，这也意味着，从头开始构建一个完整的React应用程序需要付出一些努力。开发人员需要花费时间配置工具，并根据常见的应用程序需求重新设计解决方案。</li>
+</ul>
+</li>
+</ul>
+<p>也就是说，这门技术海纳百川，非常强大，几乎啥都能干。这也意味着，想要开发一个React应用程序，就需要明白一个应用程序项目的各个关节，因为它非常的全面，而且是较为独立的一个技术栈，所以需要投入较多的精力去学习。</p>
+<p>话说回来</p>
+<h3 id="什么是Next-js-？"><a href="#什么是Next-js-？" class="headerlink" title="什么是Next.js ？"></a>什么是Next.js ？</h3><p>官方：Next.js is a React framework that gives you building blocks to create web applications.</p>
+<ul>
+<li>翻译： Next.js是一个React框架，它为您提供创建web应用程序的构建块。</li>
+</ul>
+<p>官方：By framework, we mean Next.js handles the tooling and configuration needed for React, and provides additional structure, features, and optimizations for your application.</p>
+<ul>
+<li>翻译： 所谓框架，我们的意思是Next.js处理React所需的工具和配置，并为您的应用程序提供额外的结构、功能和优化。</li>
+</ul>
+<p>官方：You can use React to build your UI, then incrementally adopt Next.js features to solve common application requirements such as routing, data fetching, integrations - all while improving the developer and end-user experience.</p>
+<ul>
+<li>翻译：您可以使用React构建UI，然后逐步采用Next.js功能来解决常见的应用程序需求，如路由、数据获取、集成，同时改善开发人员和最终用户体验。</li>
+</ul>
+<p>官方：Whether you’re an individual developer or part of a larger team, you can leverage React and Next.js to build fully interactive, highly dynamic, and performant web applications.</p>
+<ul>
+<li>翻译：无论您是个人开发人员还是更大团队的一员，都可以利用React和Next.js构建完全交互式、高度动态和高性能的web应用程序。</li>
+</ul>
+<p>React是一个强大的js库，而Next.js 是一个React的框架，它为React而生！这就是Next.js，既然已经知道吾之真名了，那就！步入正题！向着开发，前进！</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Next-js"><span class="toc-number">1.</span> <span class="toc-text">Next.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Building-Blocks-of-a-Web-Application"><span class="toc-number">2.</span> <span class="toc-text">Building Blocks of a Web Application</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#React-%E6%98%AF%E5%95%A5%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">React 是啥？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFNext-js-%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">什么是Next.js ？</span></a></li></ol>
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

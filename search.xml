@@ -2805,4 +2805,89 @@ RELAY-RU 是由 Vulkan (RMT) 搭建的 俄区非官方 RELAY (ID: V) : </p>
         <tag>教程</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2023-9-25-了解Next.js</title>
+    <url>/2023/09/25/2023-9-25-%E4%BA%86%E8%A7%A3Next-js/</url>
+    <content><![CDATA[<h3 id="Next-js"><a href="#Next-js" class="headerlink" title="Next.js"></a>Next.js</h3><p>Next.js 是什么？</p>
+<ul>
+<li>官方：Next.js is a flexible React framework that gives you building blocks to create fast web applications.<ul>
+<li>翻译：Next.js 是一个灵活的React框架，它为我们提供快速构建web应用程序的构建块。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Building-Blocks-of-a-Web-Application"><a href="#Building-Blocks-of-a-Web-Application" class="headerlink" title="Building Blocks of a Web Application"></a>Building Blocks of a Web Application</h3><p>— 改编自 Next.js 官网</p>
+<p>也就是web应用构建块。这仍然是个比较抽象的概念，我们需要知道，什么是web应用构建块。</p>
+<p>构建web应用程序时，我们需要考虑以下几点：</p>
+<pre><code>- 用户界面：提供应用程序，使用户与之交互。
+- 路由：用户在应用程序不同部分之间导航。
+- 数据获取：数据位于何处以及如何获取。
+- 渲染：何时何地渲染静态或动态内容。
+- 集成：使用的第三方服务（CMS、身份验证、支付等）以及如何连接它们。
+- 基础架构：部署、存储和运行应用程序代码（Serverless、CDN、Edge等）的地方。
+- 性能：如何为最终用户优化应用程序。
+- 可扩展性：应用程序如何随着团队、数据和流量的增长而进行调整。
+- 开发经验：团队构建和维护应用程序的经验。
+</code></pre>
+<p> 对于应用程序的每个部分，需要决定是自己构建解决方案，还是使用库和框架等其他工具。 </p>
+<p>综上所述，用户界面、路由、数据获取、渲染…等，这些点，其实都算是一个个的构建块。而以上所有内容，我们都可以使用Next.js 实现。至于这些到底是什么，我们将一一细究。</p>
+<p><strong>那么</strong></p>
+<h3 id="React-是啥？"><a href="#React-是啥？" class="headerlink" title="React 是啥？"></a>React 是啥？</h3><p>官方说了： <a href="https://react.dev/learn">React</a> is a JavaScript <strong>library</strong> for building interactive <strong>user interfaces</strong>. </p>
+<p>翻译： React是一个用于构建交互式用户界面的JavaScript库。 </p>
+<ul>
+<li><p>什么是用户界面：使用代码呈现给用户看的界面，就是用户界面。而一般用户界面有两种：CLI 和 GUI（命令行界面和图形化界面），而我们浏览器为我们提供的 WEB 界面，正是一种GUI界面。</p>
+</li>
+<li><p>Next.js 官方的解释是这样的：By user interfaces, we mean the elements that users see and interact with on-screen.</p>
+<ul>
+<li>翻译：所谓用户界面，我们指的是用户在屏幕上看到并与之交互的元素。</li>
+</ul>
+</li>
+</ul>
+<p>什么是库？</p>
+<ul>
+<li>官方：By library, we mean React provides helpful functions to build UI, but leaves it up to the developer where to use those functions in their  application.<ul>
+<li>所谓库，我们的意思是React提供了有用的函数来构建UI，但将这些函数在应用程序中的使用交予开发人员。</li>
+</ul>
+</li>
+</ul>
+<img class="">
+
+<p>有了库，我们可以直接引用已经开发好的函数来构建应用程序，这可以大幅度加快我们的开发效率。我们不必在开发时深究底层，什么功能都要自己从零开始写，也就是俗称的”造轮子“。引用前人的智慧，这亦是一种智慧。</p>
+<p>官方原文：</p>
+<ul>
+<li>Part of React’s success is that it is relatively unopinionated about the other aspects of building applications. This has resulted in a flourishing ecosystem of third-party tools and solutions.<ul>
+<li>React的成功部分在于，它对构建应用程序的其他方面相对不持偏见。这使得第三方工具和解决方案的生态系统蓬勃发展。</li>
+</ul>
+</li>
+<li>It also means, however, that building a complete React application from the ground up requires some effort. Developers need to spend time configuring tools and reinventing solutions for common application requirements.<ul>
+<li>然而，这也意味着，从头开始构建一个完整的React应用程序需要付出一些努力。开发人员需要花费时间配置工具，并根据常见的应用程序需求重新设计解决方案。</li>
+</ul>
+</li>
+</ul>
+<p>也就是说，这门技术海纳百川，非常强大，几乎啥都能干。这也意味着，想要开发一个React应用程序，就需要明白一个应用程序项目的各个关节，因为它非常的全面，而且是较为独立的一个技术栈，所以需要投入较多的精力去学习。</p>
+<p>话说回来</p>
+<h3 id="什么是Next-js-？"><a href="#什么是Next-js-？" class="headerlink" title="什么是Next.js ？"></a>什么是Next.js ？</h3><p>官方：Next.js is a React framework that gives you building blocks to create web applications.</p>
+<ul>
+<li>翻译： Next.js是一个React框架，它为您提供创建web应用程序的构建块。</li>
+</ul>
+<p>官方：By framework, we mean Next.js handles the tooling and configuration needed for React, and provides additional structure, features, and optimizations for your application.</p>
+<ul>
+<li>翻译： 所谓框架，我们的意思是Next.js处理React所需的工具和配置，并为您的应用程序提供额外的结构、功能和优化。</li>
+</ul>
+<p>官方：You can use React to build your UI, then incrementally adopt Next.js features to solve common application requirements such as routing, data fetching, integrations - all while improving the developer and end-user experience.</p>
+<ul>
+<li>翻译：您可以使用React构建UI，然后逐步采用Next.js功能来解决常见的应用程序需求，如路由、数据获取、集成，同时改善开发人员和最终用户体验。</li>
+</ul>
+<p>官方：Whether you’re an individual developer or part of a larger team, you can leverage React and Next.js to build fully interactive, highly dynamic, and performant web applications.</p>
+<ul>
+<li>翻译：无论您是个人开发人员还是更大团队的一员，都可以利用React和Next.js构建完全交互式、高度动态和高性能的web应用程序。</li>
+</ul>
+<p>React是一个强大的js库，而Next.js 是一个React的框架，它为React而生！这就是Next.js，既然已经知道吾之真名了，那就！步入正题！向着开发，前进！</p>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>Next.js</tag>
+      </tags>
+  </entry>
 </search>
