@@ -2892,4 +2892,85 @@ RELAY-RU 是由 Vulkan (RMT) 搭建的 俄区非官方 RELAY (ID: V) : </p>
         <tag>Flask</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2023-9-25-Next学习手册（二）- React</title>
+    <url>/2023/09/25/2023-9-25-Next%E5%AD%A6%E4%B9%A0%E6%89%8B%E5%86%8C%EF%BC%88%E4%BA%8C%EF%BC%89-%20React/</url>
+    <content><![CDATA[<h3 id="使用unpkg"><a href="#使用unpkg" class="headerlink" title="使用unpkg"></a>使用unpkg</h3><p>当我们使用React进行开发时，首要做的应该是先引用这个库。就像Python开发要先pip导入包一样，这个同理。</p>
+<p>我们想在项目中引用React这个库时，无外乎有两种方式，一种是直接下载下React库的文件来，部署在本地，然后引用本地文件。另一种就是通过<code>&lt;script src=url...</code>的方式，从网络中的资源进行引用。</p>
+<p>而在网络中引用的方式很多，其中unpkg就是其中一种。</p>
+<h4 id="什么是unpkg"><a href="#什么是unpkg" class="headerlink" title="什么是unpkg?"></a>什么是unpkg?</h4><p>官方：unpkg is a fast, global content delivery network for everything on <a href="https://www.npmjs.com/">npm</a>. Use it to quickly and easily load any file from any package using a URL like:</p>
+<ul>
+<li>翻译：unpkg是一个快速的全球内容交付网络，适用于npm上的所有内容。使用它可以使用以下URL快速轻松地从任何包加载任何文件</li>
+</ul>
+<p>格式：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">unpkg.com/:package@:version/:file</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>我们将使用unpkg导入 react 和 react-dom 两个库</p>
+<ul>
+<li><strong>react</strong> ：React的核心库。</li>
+<li><strong>react-dom</strong> ：提供了特定于dom的方法，以此能够将react与dom一起使用。</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	&lt;! -- 使用unpkg --&gt;</span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/react@17/umd/react.development.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/react-dom@17/umd/react-dom.development.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> app = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;app&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>直接使用react-DOM中的<code>ReactDOM.render</code>()方法来告诉react在<code>id=app</code>元素中呈现<code>&lt;h1&gt;</code>，而不必使用纯JavaScript操作DOM。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/react@17/umd/react.development.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/react-dom@17/umd/react-dom.development.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> app = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;app&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">      <span class="title class_">ReactDOM</span>.<span class="title function_">render</span>(<span class="language-xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Develop. Preview. Ship. 🚀<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>, app);</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>按理说这么写没错对吧？</p>
+<p>运行一下，好，一片空白！</p>
+<p>按下 F12 我们看到一个孤零零的报错。</p>
+<img src="http://171.38.91.172:4666/MOON/blog%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90/error.png" class="">
+
+<p>这是一个语法错误，原因很简单，官方的解释一目了然。</p>
+<ul>
+<li>This is because <code>&lt;h1&gt;...&lt;/h1&gt;</code> is not valid Javascript. This piece of code is JSX.<ul>
+<li>翻译： 这是因为 <code>&lt;h1&gt;...&lt;/h1&gt;</code>不是有效的Javascript。这段代码是JSX。</li>
+</ul>
+</li>
+</ul>
+<h3 id="什么是JSX"><a href="#什么是JSX" class="headerlink" title="什么是JSX?"></a>什么是JSX?</h3><ul>
+<li><p>官方：JSX is a syntax extension for JavaScript that allows you to describe your UI in a familiar HTML-like syntax. The nice thing about JSX is that apart from following three JSX rules, you don’t need to learn any new symbols or syntax outside of HTML and JavaScript.</p>
+<ul>
+<li>翻译： JSX是JavaScript的语法扩展，允许用熟悉的类似HTML的语法描述UI。JSX的好处在于，除了遵循三条JSX规则外，不需要学习HTML和JavaScript之外的任何新符号或语法。</li>
+</ul>
+</li>
+<li><p>官方：Note that browsers don’t understand JSX out of the box, so you’ll need a JavaScript compiler, such as a Babel, to transform your JSX code into regular JavaScript.</p>
+<ul>
+<li>请注意，浏览器无法开箱即用地理解JSX，因此您需要一个JavaScript编译器，如Babel，来将您的JSX代码转换为常规JavaScript。</li>
+</ul>
+</li>
+</ul>
+<p>也就是说，浏览器并不理解这个名为 JSX的代码。但只要搭配个解释器，JSX代码也可以被转译为常规JavaScript代码，就可以运行了。</p>
+<h3 id="将Babel添加进项目"><a href="#将Babel添加进项目" class="headerlink" title="将Babel添加进项目"></a>将Babel添加进项目</h3><p>将这个 <code>script</code>写入 <code>index.html</code>文件中即可。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/@babel/standalone/babel.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>同时，把<code>&lt;scritp&gt;</code>标签中的类型改了<code>type=text/jsx</code>，以此通知Babel需要转换哪些代码。</p>
+<p>代码总览：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/react@17/umd/react.development.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/react-dom@17/umd/react-dom.development.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Babel Script --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/@babel/standalone/babel.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/jsx&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> app = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;app&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">      <span class="title class_">ReactDOM</span>.<span class="title function_">render</span>(<span class="language-xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Develop. Preview. Ship. 🚀<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>, app);</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>那么我们 run 一下！</p>
+<img src="http://171.38.91.172:4666/MOON/blog%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90/page_image_1.png" class="">
+
+<p>毫无问题！</p>
+<p>将React的脚本代码和普通的纯JavaScript进行对比，可以看出简洁了许多。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/jsx&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">const</span> app = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;app&quot;</span>)</span></span><br><span class="line"><span class="language-javascript">  <span class="title class_">ReactDOM</span>.<span class="title function_">render</span>(<span class="language-xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Develop. Preview. Ship. 🚀<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>, app)</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">const</span> app = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;app&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">const</span> header = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;h1&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">const</span> headerContent = <span class="variable language_">document</span>.<span class="title function_">createTextNode</span>(<span class="string">&#x27;Develop. Preview. Ship. 🚀&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">  header.<span class="title function_">appendChild</span>(headerContent);</span></span><br><span class="line"><span class="language-javascript">  app.<span class="title function_">appendChild</span>(header);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>官方：And this is exactly what React does, it’s a library that contains reusable snippets of code that perform tasks on your behalf - in this case, updating the UI.</p>
+<pre><code>- 翻译：这正是React所做的，它是一个库，包含可重复使用的代码片段，可以代表您执行任务——在本例中，更新UI。
+</code></pre>
+<p>官方：Note: You don’t need to know exactly how React updates the UI to start using it, but if you’d like to learn more, take a look at the UI trees and the react-dom&#x2F;server sections in the React Documentation.</p>
+<ul>
+<li>注意：您不需要确切知道React是如何更新UI来开始使用它的，但如果您想了解更多信息，请查看React文档中的UI树和<code>React dom/server</code>部分。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>Next.js</tag>
+        <tag>React</tag>
+        <tag>jsx</tag>
+      </tags>
+  </entry>
 </search>
