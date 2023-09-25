@@ -81,7 +81,11 @@
             <p>#被if语句给予一点小小震撼</p>
 <p>为什么是and 而不是or?</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">QQ=<span class="number">1252</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">int</span>(QQ) != <span class="number">3345483363</span> <span class="keyword">or</span> <span class="built_in">int</span>(QQ) != <span class="number">2060598058</span>:</span><br></pre></td></tr></table></figure>
-<p>如果QQ号不等于3345483363或2060598058就是错误的，否则就输出正确的。<br>但是实际情况却是，QQ为任何数字都会错误！…而换成and就能达到我想要的效果，可and不是和吗？<br>or不是两边任何一个返回为真则为真吗，而and不是两边都为真才为真吗？啊啊啊，为森么<br>然后我踏马就想通了，如果QQ不等于前者，就返回一个真了，我需要的是两个其中一个是假则返回假。<br>卧槽</p>
+<p>如果QQ号不等于3345483363或2060598058就是错误的，否则就输出正确的。
+但是实际情况却是，QQ为任何数字都会错误！…而换成and就能达到我想要的效果，可and不是和吗？ 
+or不是两边任何一个返回为真则为真吗，而and不是两边都为真才为真吗？啊啊啊，为森么
+然后我踏马就想通了，如果QQ不等于前者，就返回一个真了，我需要的是两个其中一个是假则返回假。
+卧槽</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;错误的&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;正确的&quot;</span>)</span><br></pre></td></tr></table></figure>
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">

@@ -73,10 +73,22 @@
 
 
 
-<h2 id="C-的集成环境-《Code-blocks》"><a href="#C-的集成环境-《Code-blocks》" class="headerlink" title="C++的集成环境  《Code blocks》"></a>C++的集成环境  《Code blocks》</h2><h3 id="codeblocks可以使用MINGW作为编译器-下载地址：https-sourceforge-net-projects-mingw-w64-MinGW内置了python-java-等-各种语言的编译器，以及调试器，只需要配置到codeblocks之中使用即可"><a href="#codeblocks可以使用MINGW作为编译器-下载地址：https-sourceforge-net-projects-mingw-w64-MinGW内置了python-java-等-各种语言的编译器，以及调试器，只需要配置到codeblocks之中使用即可" class="headerlink" title="codeblocks可以使用MINGW作为编译器  下载地址：https://sourceforge.net/projects/mingw-w64/   MinGW内置了python java 等..各种语言的编译器，以及调试器，只需要配置到codeblocks之中使用即可,"></a>codeblocks可以使用MINGW作为编译器  下载地址：<a target="_blank" rel="noopener" href="https://sourceforge.net/projects/mingw-w64/">https://sourceforge.net/projects/mingw-w64/</a>   MinGW内置了python java 等..各种语言的编译器，以及调试器，只需要配置到codeblocks之中使用即可,</h3><p>c++的难点：多维数组<br>7月24日<br> 例：</p>
+<h2 id="C-的集成环境-《Code-blocks》"><a href="#C-的集成环境-《Code-blocks》" class="headerlink" title="C++的集成环境  《Code blocks》"></a>C++的集成环境  《Code blocks》</h2><h3 id="codeblocks可以使用MINGW作为编译器-下载地址：https-sourceforge-net-projects-mingw-w64-MinGW内置了python-java-等-各种语言的编译器，以及调试器，只需要配置到codeblocks之中使用即可"><a href="#codeblocks可以使用MINGW作为编译器-下载地址：https-sourceforge-net-projects-mingw-w64-MinGW内置了python-java-等-各种语言的编译器，以及调试器，只需要配置到codeblocks之中使用即可" class="headerlink" title="codeblocks可以使用MINGW作为编译器  下载地址：https:&#x2F;&#x2F;sourceforge.net&#x2F;projects&#x2F;mingw-w64&#x2F;   MinGW内置了python java 等..各种语言的编译器，以及调试器，只需要配置到codeblocks之中使用即可,"></a>codeblocks可以使用MINGW作为编译器  下载地址：https:&#x2F;&#x2F;sourceforge.net&#x2F;projects&#x2F;mingw-w64&#x2F;   MinGW内置了python java 等..各种语言的编译器，以及调试器，只需要配置到codeblocks之中使用即可,</h3><p>c++的难点：多维数组
+7月24日
+ 例：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">string letters[<span class="number">2</span>][<span class="number">2</span>][<span class="number">2</span>] = &#123;</span><br><span class="line">&#123;</span><br><span class="line">&#123; <span class="string">&quot;A&quot;</span>, <span class="string">&quot;B&quot;</span> &#125;,</span><br><span class="line">&#123; <span class="string">&quot;C&quot;</span>, <span class="string">&quot;D&quot;</span> &#125;</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">&#123; <span class="string">&quot;E&quot;</span>, <span class="string">&quot;F&quot;</span> &#125;,</span><br><span class="line">&#123; <span class="string">&quot;G&quot;</span>, <span class="string">&quot;H&quot;</span> &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<p>[]的数量代表着这个数组是几维<br> []内部代表着维度的数量，由大块向小块去看<br> 怎么叫做由大块向小块去看?<br> 此代码中，ABCD是一个大块，是第一维的<br> AB和CD又被分为二维的两个小块<br> A和B，又被第三维再分<br> 如此理解数组的概念<br> 此外，数组还有一条特殊的性质，叫做空间的连续性<br> 举例：[0][0][2]可以得到C 原因是，数组超出了原本的空间，但是由于空间是一条带状的连续的，可以访问到其他空间里面的元素。<br> 不仅如此，如果超出空间的部分是一片空白的内存，只要不超出太多也是可以访问的，因为系统给程序分配的内存往往比实际上大很多。<br> 而通过空间连续去修改内存也是病毒的特征之一。</p>
+<p>[]的数量代表着这个数组是几维
+ []内部代表着维度的数量，由大块向小块去看
+ 怎么叫做由大块向小块去看?
+ 此代码中，ABCD是一个大块，是第一维的
+ AB和CD又被分为二维的两个小块
+ A和B，又被第三维再分
+ 如此理解数组的概念
+ 此外，数组还有一条特殊的性质，叫做空间的连续性
+ 举例：[0][0][2]可以得到C 原因是，数组超出了原本的空间，但是由于空间是一条带状的连续的，可以访问到其他空间里面的元素。
+ 不仅如此，如果超出空间的部分是一片空白的内存，只要不超出太多也是可以访问的，因为系统给程序分配的内存往往比实际上大很多。
+ 而通过空间连续去修改内存也是病毒的特征之一。</p>
 <h5 id="C-学习的第三天，7-25-关于面向对象（OOP）"><a href="#C-学习的第三天，7-25-关于面向对象（OOP）" class="headerlink" title="C++学习的第三天，7.25      关于面向对象（OOP）"></a>C++学习的第三天，7.25      关于面向对象（OOP）</h5><p>首先我们需要清楚类是什么            class MyClass {       &#x2F;&#x2F; The class     public:             &#x2F;&#x2F; Access specifier       int myNum;        &#x2F;&#x2F; Attribute (int variable)       string myString;  &#x2F;&#x2F; Attribute (string variable)    };          这是我们创建的一个类，类内部拥有自己的属性，以及访问说明符（public）     MyClass myObj;      而类可以以这种形式给对象使用，在这里myObj就是我们的对象，这个对象属于这个分类。     而分类后，对象可以使用自己分类的属性了，并且可以为自己的各项属性赋值。</p>
 <h6 id="C-学习的第四天-7-26-对此前笔记的整理"><a href="#C-学习的第四天-7-26-对此前笔记的整理" class="headerlink" title="C++学习的第四天 7.26 对此前笔记的整理"></a>C++学习的第四天 7.26 对此前笔记的整理</h6><p>#include <iostream>  &#x2F;&#x2F;而这里，是C++头文件，头文件中包含了大量的信息，   using namespace std;  &#x2F;&#x2F; main() 是程序开始执行的地方   int main()  &#x2F;&#x2F;每个程序都从这里开始执行，这里是主程序，每个程序最主要的部分。  {     cout &lt;&lt; “Hello World”; &#x2F;&#x2F; 输出 Hello World     return 0;      &#x2F;&#x2F;返回一个0的值，在这里起到终止函数的作用                       &#x2F;&#x2F;花括号内，是运行的函数体，   }       如何去跑一段C++代码？   答案是，先编译，再运行！   我们在编写的文件为cpp文件，首先将cpp文件进行构建为exe文件，再进行运行。</p>
 

@@ -90,7 +90,7 @@
 <p>使用客户端代码发出请求后，服务端程序会输出如下内容</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">GET              # 请求方法</span><br><span class="line">Content-Type: </span><br><span class="line">Content-Length: </span><br><span class="line">Host: 127.0.0.1:5000</span><br><span class="line">User-Agent: python-requests/2.22.0</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Cookie: name=python</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/users          # 资源路径</span><br><span class="line">http://127.0.0.1:5000/users     # 完整路径</span><br><span class="line">127.0.0.1                       # 客户端ip</span><br><span class="line">&#123;&#x27;name&#x27;: &#x27;python&#x27;&#125;              # 请求的cookie</span><br></pre></td></tr></table></figure>
 
-<blockquote><p>提醒一点，request.remote_addr并不一定能够准确的获得客户端的IP，因为在部署服务时，通常最前端用nginx做转发，这样，你获得其实是nginx的IP地址，而非用户的真实地址，如何准确获得客户端的IP地址，请参考文章<a target="_blank" rel="noopener" href="https://www.cnblogs.com/mzhaox/p/11214747.html">https://www.cnblogs.com/mzhaox/p/11214747.html</a></p>
+<blockquote><p>提醒一点，request.remote_addr并不一定能够准确的获得客户端的IP，因为在部署服务时，通常最前端用nginx做转发，这样，你获得其实是nginx的IP地址，而非用户的真实地址，如何准确获得客户端的IP地址，请参考文章https:&#x2F;&#x2F;www.cnblogs.com&#x2F;mzhaox&#x2F;p&#x2F;11214747.html</p>
 <footer><strong>@COOLPYTHON</strong><cite><a target="_blank" rel="noopener" href="http://www.coolpython.net/flask_tutorial/basic/route.html">www.coolpython.net/flask_tutorial/basic/route.html</a></cite></footer></blockquote>
 
 <h1 id="解析请求数据"><a href="#解析请求数据" class="headerlink" title="解析请求数据"></a>解析请求数据</h1><p>客户端（浏览器）会向服务器提交HTTP请求；然后服务器向客户端返回响应；其中响应包含有关请求的状态信息，还可能包含请求的内容。</p>
@@ -101,7 +101,7 @@
 
 <p>get请求的参数可以通过request.args 和 request.values 两种方法来获得</p>
 <p>其中request.args 是包含解析过的get参数的MultiDict</p>
-<blockquote><p>MultiDict 是werkzeug提供的一种多key字典，具体可参考 <a target="_blank" rel="noopener" href="https://werkzeug.palletsprojects.com/en/0.16.x/datastructures/#werkzeug.datastructures.MultiDict">https://werkzeug.palletsprojects.com/en/0.16.x/datastructures/#werkzeug.datastructures.MultiDict</a> </p>
+<blockquote><p>MultiDict 是werkzeug提供的一种多key字典，具体可参考 https:&#x2F;&#x2F;werkzeug.palletsprojects.com&#x2F;en&#x2F;0.16.x&#x2F;datastructures&#x2F;#werkzeug.datastructures.MultiDict </p>
 <footer><strong>@COOLPYTHON</strong><cite><a target="_blank" rel="noopener" href="http://www.coolpython.net/flask_tutorial/basic/route.html">www.coolpython.net/flask_tutorial/basic/route.html</a></cite></footer></blockquote>
 
 <p>使用方法示例</p>

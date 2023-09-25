@@ -100,7 +100,9 @@
 
 
 
-<h1 id="Flask路由"><a href="#Flask路由" class="headerlink" title="Flask路由"></a>Flask路由</h1><p>在讲解最小的flask应用时，提到了装饰器route，它的作用就是将处理请求的函数绑定到URL上（URL必须以反斜杠开头），这种设计体现了解耦的思想。<br> <img src="http://www.coolpython.net/pictures/flask_tutorial/basic/route-1586299659-0.jpg" alt="img"><br> 不同的请求被路由到不同处理函数上，这个函数称之为视图。路由保存了URL和处理函数之间的映射关系，映射关系的建立是通过route装饰器完成的。</p>
+<h1 id="Flask路由"><a href="#Flask路由" class="headerlink" title="Flask路由"></a>Flask路由</h1><p>在讲解最小的flask应用时，提到了装饰器route，它的作用就是将处理请求的函数绑定到URL上（URL必须以反斜杠开头），这种设计体现了解耦的思想。
+ <img src="http://www.coolpython.net/pictures/flask_tutorial/basic/route-1586299659-0.jpg" alt="img">
+ 不同的请求被路由到不同处理函数上，这个函数称之为视图。路由保存了URL和处理函数之间的映射关系，映射关系的建立是通过route装饰器完成的。</p>
 <p>​																																							  ——COOLPython</p>
 <h2 id="建立映射关系"><a href="#建立映射关系" class="headerlink" title="建立映射关系"></a>建立映射关系</h2><p>通过route装饰器，不同的请求被路由到不同处理函数上。路由保存了URL和处理函数之间的映射关系。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/hello&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;hello&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/books&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">books</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;books&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
@@ -115,26 +117,11 @@
 
 <p>变量部分的规则为 <a href="converter:variable_name">converter:variable_name</a> ,variable_name将作为参数传递给所绑定的函数，而且可以根据converter转换器对variable_name进行转换。</p>
 <p>converter转换器有下面几种</p>
-<table>
-<thead>
-<tr>
-<th>转换器</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>int</td>
-<td>接受整数</td>
-</tr>
-<tr>
-<td>float</td>
-<td>接受浮点数</td>
-</tr>
-<tr>
-<td>path</td>
-<td>接受带斜线的path</td>
-</tr>
-</tbody></table>
+<p>| 转换器 | 说明             |
+| —— | —————- |
+| int    | 接受整数         |
+| float  | 接受浮点数       |
+| path   | 接受带斜线的path |</p>
 <p>如果不标注转换器类型，则默认转为字符串，下面是这几种转换器的例子</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不指定转换器</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/book/&lt;name&gt;/author&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">author</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="keyword">return</span> name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 转换器为int</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/book/&lt;int:id&gt;/price&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">price</span>(<span class="params"><span class="built_in">id</span></span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">str</span>(<span class="built_in">id</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 转换器为float</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/book/price-ge/&lt;float:price&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">books_by_price</span>(<span class="params">price</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">str</span>(price)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 转换器为path</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/book/&lt;path:book_info&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">books_by_path</span>(<span class="params">book_info</span>):</span><br><span class="line">    <span class="keyword">return</span> book_info</span><br></pre></td></tr></table></figure>
 
