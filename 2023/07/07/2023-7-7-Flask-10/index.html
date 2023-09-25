@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flask[携行] - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,flask 设置cookie过期时间如果不设置cookie的过期时间，则默认关闭浏览器时cookie过期。
+flask设置过期时间，遵循下面的三条规则：
+
+max_age: 规定多少秒以后过期
+ex,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Flask[携行] - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,flask 设置cookie过期时间如果不设置cookie的过期时间，则默认关闭浏览器时cookie过期。
+flask设置过期时间，遵循下面的三条规则：
+
+max_age: 规定多少秒以后过期
+ex,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Flask[携行] - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,flask 设置cookie过期时间如果不设置cookie的过期时间，则默认关闭浏览器时cookie过期。
+flask设置过期时间，遵循下面的三条规则：
+
+max_age: 规定多少秒以后过期
+ex,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Flask[携行]</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Flask[携行]</h1>
+        <div class="stuff">
+            <span>七月 07, 2023</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Flask/" rel="tag">Flask</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Python/" rel="tag">Python</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="flask-设置cookie过期时间"><a href="#flask-设置cookie过期时间" class="headerlink" title="flask 设置cookie过期时间"></a>flask 设置cookie过期时间</h1><p>如果不设置cookie的过期时间，则默认关闭浏览器时cookie过期。</p>
+<p>flask设置过期时间，遵循下面的三条规则：</p>
+<ol>
+<li>max_age: 规定多少秒以后过期</li>
+<li>expires：datatime类型，使用此参数，需参照格林尼治时间，即北京时间-8个小时</li>
+<li>如果max_age和expires都设置，则以max_age为主</li>
+</ol>
+<p>设置了cookie过期时间，即便浏览器都关闭了，只要没有cookie还在有效期内，再次打开浏览器，cookie依然有效。</p>
+<p>如果超过了cookie的过期时间，即便浏览器没有关闭，cookie也会失效。</p>
+<p>只要设置了cookie的过期时间，是否失效就已经和浏览器是否关闭无关。</p>
+<h2 id="1-通过max-age设置cookie有效期"><a href="#1-通过max-age设置cookie有效期" class="headerlink" title="1. 通过max_age设置cookie有效期"></a>1. 通过max_age设置cookie有效期</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, make_response, request</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="comment"># 尝试获取 first_access cookie</span></span><br><span class="line">    first_access = request.cookies.get(<span class="string">&#x27;first_access&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> first_access <span class="keyword">is</span> <span class="literal">None</span>:        <span class="comment"># 没有first_access cookie， 是第一次来</span></span><br><span class="line">        first_access = datetime.now().strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)</span><br><span class="line">        res = make_response(<span class="string">&#x27;hello world&#x27;</span>)</span><br><span class="line">        res.set_cookie(<span class="string">&#x27;first_access&#x27;</span>, first_access, max_age=<span class="number">60</span>)        <span class="comment"># 在响应头里设置cookie</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    <span class="keyword">else</span>:       <span class="comment"># 不是第一次来</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;你第一次访问这个网页的时间是: <span class="subst">&#123;first_access&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
+
+<p>设置了cookie的过期时间是60秒，那么一分钟以后，再次访问时，页面里显示的内容就是hello world， 服务以为我是第一次来，原因是cookie已经失效，能够记录我第一次来访问的信息已经不存在了。</p>
+<h2 id="2-通过expires-设置过期时间"><a href="#2-通过expires-设置过期时间" class="headerlink" title="2. 通过expires 设置过期时间"></a>2. 通过expires 设置过期时间</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, make_response, request</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="comment"># 尝试获取 first_access cookie</span></span><br><span class="line">    first_access = request.cookies.get(<span class="string">&#x27;first_access&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> first_access <span class="keyword">is</span> <span class="literal">None</span>:        <span class="comment"># 没有first_access cookie， 是第一次来</span></span><br><span class="line">        first_access = datetime.now().strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)</span><br><span class="line">        res = make_response(<span class="string">&#x27;hello world&#x27;</span>)</span><br><span class="line">        expires_time = datetime(year=<span class="number">2021</span>, month=<span class="number">9</span>, day=<span class="number">7</span>, hour=<span class="number">18</span>)</span><br><span class="line">        res.set_cookie(<span class="string">&#x27;first_access&#x27;</span>, first_access, expires=expires_time)        <span class="comment"># 在响应头里设置cookie</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    <span class="keyword">else</span>:       <span class="comment"># 不是第一次来</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;你第一次访问这个网页的时间是: <span class="subst">&#123;first_access&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
+
+<p>我设置cookie的过期时间是9月7日的18点，但通过浏览器查看cookie信息，显示过期时间是9月8日的凌晨2点，相差了8个小时，这是因为浏览器里会主动加8个小时，想要和我们的北京时间保持一致，在设置的时候就要减去8个小时。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expires_time = datetime(year=<span class="number">2021</span>, month=<span class="number">9</span>, day=<span class="number">7</span>, hour=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<p>现在的cookie过期时间是9月7日下午18点。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#flask-%E8%AE%BE%E7%BD%AEcookie%E8%BF%87%E6%9C%9F%E6%97%B6%E9%97%B4"><span class="toc-number">1.</span> <span class="toc-text">flask 设置cookie过期时间</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E9%80%9A%E8%BF%87max-age%E8%AE%BE%E7%BD%AEcookie%E6%9C%89%E6%95%88%E6%9C%9F"><span class="toc-number">1.1.</span> <span class="toc-text">1. 通过max_age设置cookie有效期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%80%9A%E8%BF%87expires-%E8%AE%BE%E7%BD%AE%E8%BF%87%E6%9C%9F%E6%97%B6%E9%97%B4"><span class="toc-number">1.2.</span> <span class="toc-text">2. 通过expires 设置过期时间</span></a></li></ol></li></ol>
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

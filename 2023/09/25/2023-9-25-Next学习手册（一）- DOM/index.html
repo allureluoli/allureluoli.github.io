@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Next学习手册（一）DOM - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,React工作原理当浏览器试图访问一个网页时，会得到诸如下图一样的响应内容：
+
+
+然后浏览器将通过此响应内容，构造 DOM (文档对象模型)。
+然后才是我们所看到的UI界面。
+什么是DOM?对于什么,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Next学习手册（一）DOM - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,React工作原理当浏览器试图访问一个网页时，会得到诸如下图一样的响应内容：
+
+
+然后浏览器将通过此响应内容，构造 DOM (文档对象模型)。
+然后才是我们所看到的UI界面。
+什么是DOM?对于什么,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Next学习手册（一）DOM - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,React工作原理当浏览器试图访问一个网页时，会得到诸如下图一样的响应内容：
+
+
+然后浏览器将通过此响应内容，构造 DOM (文档对象模型)。
+然后才是我们所看到的UI界面。
+什么是DOM?对于什么,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Next学习手册（一）DOM</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Next学习手册（一）DOM</h1>
+        <div class="stuff">
+            <span>九月 25, 2023</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Next-js/" rel="tag">Next.js</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/React/" rel="tag">React</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="React工作原理"><a href="#React工作原理" class="headerlink" title="React工作原理"></a>React工作原理</h3><p>当浏览器试图访问一个网页时，会得到诸如下图一样的响应内容：</p>
+<img src="http://171.38.91.172:4666/MOON/blog%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90/html-to-dom.png" class="">
+
+<p>然后浏览器将通过此响应内容，构造 DOM (文档对象模型)。</p>
+<p>然后才是我们所看到的UI界面。</p>
+<h3 id="什么是DOM"><a href="#什么是DOM" class="headerlink" title="什么是DOM?"></a>什么是DOM?</h3><p>对于什么是DOM，<code>Next.js</code> 官方给出了如下解释。</p>
+<p>The DOM is an object representation of the HTML elements. It acts as a  bridge between your code and the user interface, and has a tree-like  structure with parent and child relationships.</p>
+<p>翻译：DOM是HTML元素的对象表示。它充当代码和用户界面之间的桥梁，并具有具有父子关系的树状结构。</p>
+<p>这意味着我们可以通过DOM界面以及程序来监听用户事件，并通过修改元素来操作DOM。</p>
+<h4 id="示例一："><a href="#示例一：" class="headerlink" title="示例一："></a>示例一：</h4><p>  假设我们有一个HTML文件，内容如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这个HTML中，我们给<code>&lt;div&gt;</code>加了一个唯一的id，为了方便针对。并且为了在HTML中编写javascript代码，添加了标记。</p>
+<p>现在通过一个DOM方法，<code>getElementByID()</code>来根据<code>id</code>选择<code>&lt;div&gt;</code>标签。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> app = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;app&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后继续使用DOM方法创建一个新的元素。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="comment">// 根据id 选择div标签</span></span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> app = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;app&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="comment">// 声明一个新的 h1 元素</span></span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> header = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;h1&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="comment">// 声明新的文本内容</span></span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> headerContent = <span class="variable language_">document</span>.<span class="title function_">createTextNode</span>(</span></span><br><span class="line"><span class="language-javascript">        <span class="string">&#x27;Develop. Preview. Ship. 🚀&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">      );</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="comment">// 将刚才声明的文本内容添加给 h1 元素</span></span></span><br><span class="line"><span class="language-javascript">      header.<span class="title function_">appendChild</span>(headerContent);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="comment">// 将刚才声明的 h1 元素 放置在 div中</span></span></span><br><span class="line"><span class="language-javascript">      app.<span class="title function_">appendChild</span>(header);</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>接着我们可以看到如下页面：</p>
+<img src="http://171.38.91.172:4666/MOON/blog%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90/page_image_1.png" class="">
+
+<h3 id="HTML-AND-DOM"><a href="#HTML-AND-DOM" class="headerlink" title="HTML AND DOM"></a>HTML AND DOM</h3><p>通过查看页面DOM元素，我们会看到页面中包含<code>&lt;h1&gt;</code>元素，这与我们的源代码不同。</p>
+<img src="http://171.38.91.172:4666/MOON/blog%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90/source-code.png" class="">
+
+<p>原因就是，HTML表示的是初始页面内容，而DOM表示修改后的页面内容。之所以呈现不同，就是因为我们看到的页面已经被编写的javascript 代码修改过了。</p>
+<p>使用简单的javascript代码来更新DOM非常强大，但代码很冗长。我们使用了如下7行代码来更新了一个<code>&lt;h1&gt;</code>元素及其内容。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">const</span> app = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;app&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">const</span> header = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;h1&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">const</span> headerContent = <span class="variable language_">document</span>.<span class="title function_">createTextNode</span>(<span class="string">&#x27;Develop. Preview. Ship. 🚀&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">  header.<span class="title function_">appendChild</span>(headerContent);</span></span><br><span class="line"><span class="language-javascript">  app.<span class="title function_">appendChild</span>(header);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>随着应用体积增长，使用这种方法编写应用会越来越难。但开发者通过编写指令，描述想现实的内容，让计算机知道该如何更新DOM，这是很不错的。</p>
+<h3 id="命令式编程和声明式编程"><a href="#命令式编程和声明式编程" class="headerlink" title="命令式编程和声明式编程"></a>命令式编程和声明式编程</h3><p>上面的代码是命令式编程的例子，我们编写如何更新用户界面的步骤。但涉及到构建用户界面时，声明式编程是首选的，因为这可以加快开发过程。</p>
+<p>In other words, <strong>imperative programming</strong> is like giving a chef step-by-step instructions on how to make a pizza. <strong>Declarative programming</strong> is like ordering a pizza without being concerned about the steps it takes to make the pizza. 🍕	— Next.js</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#React%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">React工作原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFDOM"><span class="toc-number">2.</span> <span class="toc-text">什么是DOM?</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E4%B8%80%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">示例一：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML-AND-DOM"><span class="toc-number">3.</span> <span class="toc-text">HTML AND DOM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%92%8C%E5%A3%B0%E6%98%8E%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">命令式编程和声明式编程</span></a></li></ol>
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

@@ -557,9 +557,11 @@
 <h2 id="3-flask-cookie-实践"><a href="#3-flask-cookie-实践" class="headerlink" title="3. flask cookie 实践"></a>3. flask cookie 实践</h2><p>下面使用flask框架实现第一节里的功能</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, make_response, request</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="comment"># 尝试获取 first_access cookie</span></span><br><span class="line">    first_access = request.cookies.get(<span class="string">&#x27;first_access&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> first_access <span class="keyword">is</span> <span class="literal">None</span>:        <span class="comment"># 没有first_access cookie， 是第一次来</span></span><br><span class="line">        first_access = datetime.now().strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)</span><br><span class="line">        res = make_response(<span class="string">&#x27;hello world&#x27;</span>)</span><br><span class="line">        res.set_cookie(<span class="string">&#x27;first_access&#x27;</span>, first_access)        <span class="comment"># 在响应头里设置cookie</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    <span class="keyword">else</span>:       <span class="comment"># 不是第一次来</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;你第一次访问这个网页的时间是: <span class="subst">&#123;first_access&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
 
-<p>启动服务后，在浏览器里访问 <a href="http://127.0.0.1:5000/">http://127.0.0.1:5000/</a> ， 页面里显示的是 “hello world”， 通过浏览器的开发者功能可以查看到服务端响应头信息<br> <img src="http://www.coolpython.net/pictures/flask_tutorial/basic/flask-web-cookie-1631107263-0.jpg" alt="img"></p>
-<p>服务端就是通过Set-Cookie首部来传输cookie信息的，浏览器收到数据后，就会将其保存下来。</p>
-<p>接下来，你再次在浏览器里访问<a href="http://127.0.0.1:5000/%EF%BC%8C%E9%A1%B5%E9%9D%A2%E9%87%8C%E6%98%BE%E7%A4%BA%E7%9A%84%E5%86%85%E5%AE%B9%E6%98%AF">http://127.0.0.1:5000/，页面里显示的内容是</a> “你第一次访问这个网页的时间是: 2021-09-03 11:31:00”，通过浏览器的开发者工具可以查看到http请求的首部信息<br> <img src="http://www.coolpython.net/pictures/flask_tutorial/basic/flask-web-cookie-1631107263-1.jpg" alt="img"></p>
+<p>启动服务后，在浏览器里访问 http:&#x2F;&#x2F;127.0.0.1:5000&#x2F; ， 页面里显示的是 “hello world”， 通过浏览器的开发者功能可以查看到服务端响应头信息
+ <img src="http://www.coolpython.net/pictures/flask_tutorial/basic/flask-web-cookie-1631107263-0.jpg" alt="img"></p>
+<p>服务端就是通过<strong>Set-Cookie</strong>首部来传输cookie信息的，浏览器收到数据后，就会将其保存下来。</p>
+<p>接下来，你再次在浏览器里访问http:&#x2F;&#x2F;127.0.0.1:5000&#x2F;，页面里显示的内容是 “你第一次访问这个网页的时间是: 2021-09-03 11:31:00”，通过浏览器的开发者工具可以查看到http请求的首部信息
+ <img src="http://www.coolpython.net/pictures/flask_tutorial/basic/flask-web-cookie-1631107263-1.jpg" alt="img"></p>
 <p>可以看到，cookie里有first_access， 服务端就是根据这里的信息才知道你第一次访问的时间。</p>
 <h2 id="4-遗留问题"><a href="#4-遗留问题" class="headerlink" title="4. 遗留问题"></a>4. 遗留问题</h2><p>本文的重点是讲述cookie的作用并使用flask框架实现一个简单的web服务实现显示用户第一次访问时间的功能，由于篇幅有限，还有一些遗留问题需等到后续的文章进行讲解：</p>
 <ol>
@@ -645,194 +647,41 @@
       </tags>
   </entry>
   <entry>
-    <title>网络七层协议OSI</title>
-    <url>/2022/10/31/7%E5%B1%82/</url>
-    <content><![CDATA[<h2 id="物理层（或称物理层，Physical-Layer）"><a href="#物理层（或称物理层，Physical-Layer）" class="headerlink" title="物理层（或称物理层，Physical Layer）"></a>物理层（或称物理层，Physical Layer）</h2><p>  是计算机网络OSI模型中最低的一层。物理层规定:为传输数据所需要的物理链路创建、维持、拆除，而提供具有机械的，电子的，功能的和规范的特性。简单的说，物理层确保原始的数据可在各种物理媒体上传输。局域网与广域网皆属第1、2层。物理层是OSI的第一层，它虽然处于最底层，却是整个开放系统的基础。物理层为设备之间的数据通信提供传输媒体及互连设备，为数据传输提供可靠的环境。如果您想要用尽量少的词来记住这个第一层，那就是“信号和介质”。OSI采纳了各种现成的协议，其中有RS-232、RS-449、X.21、V.35、ISDN、以及FDDI、IEEE802.3、IEEE802.4、和IEEE802.5的物理层协议。 </p>
-<p>##数据链路层<br>  定义了在单个链路上如何传输数据。这些协议与被讨论的各种介质有关。示例：ATM，FDDI等。数据链路层必须具备一系列相应的功能，主要有：如何将数据组合成数据块，在数据链路层中称这种数据块为帧，帧是数据链路层的传送单位；如何控制帧在物理信道上的传输，包括如何处理传输差错，如何调节发送速率以使与接收方相匹配；以及在两个网络实体之间提供数据链路通路的建立、维持和释放的管理。<br>物理链路（物理线路）：是由传输介质与设备组成的。原始的物理传输线路是指没有采用高层差错控制的基本的物理传输介质与设备。<br>数据链路（逻辑线路）：在一条物理线路之上，通过一些规程或协议来控制这些数据的传输，以保证被传输数据的正确性。实现这些规程或协议的硬件和软件加到物理线路，这样就构成了数据链路，从数据发送点到数据接收点所经过的传输途径。当采用复用技术时，一条物理链路上可以有多条数据链路。</p>
-<p>##网络层<br>  是OSI参考模型中的第三层，介于传输层和数据链路层之间，它在数据链路层提供的两个相邻端点之间的数据帧的传送功能上，进一步管理网络中的数据通信，将数据设法从源端经过若干个中间节点传送到目的端，从而向传输层提供最基本的端到端的数据传送服务。主要内容有：虚电路分组交换和数据报分组交换、路由选择算法、阻塞控制方法、X.25协议、综合业务数据网（ISDN）、异步传输模式（ATM）及网际互连原理与实现。</p>
-<p>##传输<br>  层是整个网络体系结构中的关键层次之一，主要负责向两个主机中进程之间的通信提供服务。由于一个主机同时运行多个进程，因此运输层具有复用和分用功能。传输层在终端用户之间提供透明的数据传输，向上层提供可靠的数据传输服务。传输层在给定的链路上通过流量控制、分段&#x2F;重组和差错控制来保证数据传输的可靠性。传输层的一些协议是面向链接的，这就意味着传输层能保持对分段的跟踪，并且重传那些失败的分段。</p>
-<p>##会话层,表示层,应用层<br>  构成开放系统的高3层，面对应用进程提供分布处理，对话管理,信息表示,恢复最后的差错等. 会话层同样要担负应用进程服务要求，而运输层不能完成的那部分工作,给运输层功能差距以弥补.主要的功能是对话管理，数据流同步和重新同步。要完成这些功能,需要由大量的服务单元功能组合,已经制定的功能单元已有几十种.。如果您想要用尽量少的词来记住这第5层，那就是“对话和交谈”。</p>
-<p>##表示层<br>  位于OSI分层结构的第六层，它的主要作用之一是为异种机通信提供一种公共语言，以便能进行互操作。这种类型的服务之所以需要，是因为不同的计算机体系结构使用的数据表示法不同。与第五层提供透明的数据运输不同，表示层是处理所有与数据表示及运输有关的问题，包括转换、加密和压缩。每台计算机可能有它自己的表示数据的内部方法，例如，ASCII码与EBCDIC码，所以需要表示层协定来保证不同的计算机可以彼此理解。</p>
-<p>##网络七层协议（Open System Interconnection）<br>  简称OSI，是一个开放性的通行系统互连参考模型，他是一个定义的非常好的协议规范。OSI模型有7层结构，每层都可以有几个子层。 OSI的7层从上到下分别是 7 应用层 6 表示层 5 会话层 4 传输层 3 网络层 2 数据链路层 1 物理层 其中高层，即7、6、5、4层定义了应用程序的功能，下面3层，即3、2、1层主要面向通过网络的端到端的数据流。</p>
+    <title>速出文件扩展名</title>
+    <url>/2022/10/26/2022-10-26-%E9%80%9F%E5%87%BA%E6%96%87%E4%BB%B6%E6%89%A9%E5%B1%95%E5%90%8D/</url>
+    <content><![CDATA[<h1 id="快速找出文件上传支持的扩展名"><a href="#快速找出文件上传支持的扩展名" class="headerlink" title="快速找出文件上传支持的扩展名"></a>快速找出文件上传支持的扩展名</h1><h2 id="1-抓包"><a href="#1-抓包" class="headerlink" title="1.抓包"></a>1.抓包</h2><p>使用BurpSuite将抓包的上传文件请求导出，存为譬如<strong>fuzz.txt</strong>的文件</p>
+
+<h2 id="2-修改内容"><a href="#2-修改内容" class="headerlink" title="2.修改内容"></a>2.修改内容</h2><p>对其中进行<strong>模糊测试</strong>的内容修改</p>
+<p>将其修改为 <strong>FUZZ</strong> 而在其后跑的字典会替换这里的<strong>FUZZ</strong>关键词</p>
+
+
+<h2 id="3-字典小爆破"><a href="#3-字典小爆破" class="headerlink" title="3.字典小爆破"></a>3.字典小爆破</h2><p>使用一个包含各种后缀名的字典开始跑</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ffuf -request fuzz.txt -request-proto http -w /opt/SecLists/Fuzzing/extensions-most-common.fuzz.txt</span><br></pre></td></tr></table></figure>
+
+<p>响应结果如图：</p>
+
+<p>主要区别是Size的大小，这里有1115和1110两种。
+可以看成1110是被允许的文件扩展名。</p>
+<h2 id="4-优化命令"><a href="#4-优化命令" class="headerlink" title="4.优化命令"></a>4.优化命令</h2><p>增添 -ms 1110</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ffuf -request fuzz.txt -request-proto http -w /opt/SecLists/Fuzzing/extensions-most-common.fuzz.txt -ms 1110</span><br></pre></td></tr></table></figure>
+<p>现在仅显示支持的扩展名了</p>
 ]]></content>
       <categories>
-        <category>计算机网络技术</category>
+        <category>网络安全</category>
       </categories>
       <tags>
-        <tag>基础</tag>
-        <tag>协议</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>安卓 XML 文件 分析</title>
-    <url>/2023/08/28/Android%20XML%20File%20Analysis/</url>
-    <content><![CDATA[<h1 id="安卓-XML-文件-分析"><a href="#安卓-XML-文件-分析" class="headerlink" title="安卓 XML 文件 分析"></a>安卓 XML 文件 分析</h1><p>本文以深度分析安卓的XML文件为主，了解XML文件的作用，以便于更好的理解开发的各个概念。</p>
-<p>学而不思则罔，思而不学则殆。</p>
-<p>要学习，先思考。</p>
-<p>首先定义三个问题：</p>
-<ol>
-<li>为什么要用到XML？</li>
-<li>XML文件是如何被引用的？</li>
-<li>XML的各个元素在java文件中又是如何表示的？</li>
-</ol>
-<h2 id="问题解答环节-（一）"><a href="#问题解答环节-（一）" class="headerlink" title="问题解答环节 （一）"></a>问题解答环节 （一）</h2><h3 id="问题一：为什么要用到XML？"><a href="#问题一：为什么要用到XML？" class="headerlink" title="问题一：为什么要用到XML？"></a>问题一：为什么要用到XML？</h3><p>答：主要出于以下几个原因</p>
-<ul>
-<li><p>方便定义用户界面</p>
-<ul>
-<li>XML非常的适合描述界面的视图元素，这使得开发人员能够以声明的形式定义界面元素，而不必在代码中直接构建和布局。</li>
-</ul>
-</li>
-<li><p>方便逻辑与布局分离</p>
-<ul>
-<li>XML文件描绘布局，java或kotlin文件实现逻辑，就这么简单。</li>
-</ul>
-</li>
-<li><p>代码简化</p>
-<ul>
-<li>代码分开写，看起来更简单。</li>
-</ul>
-</li>
-<li><p>支持可扩展性</p>
-<ul>
-<li>XML被设计为可扩展的标记语言</li>
-</ul>
-</li>
-<li><p>与安卓API集成</p>
-<ul>
-<li>可以通过使用XML布局文件和Android的API，开发人员可以轻松地创建动态的用户界面，响应用户的操作。（似懂非懂）</li>
-</ul>
-</li>
-</ul>
-<h3 id="问题二：XML代码是如何被引用的？"><a href="#问题二：XML代码是如何被引用的？" class="headerlink" title="问题二：XML代码是如何被引用的？"></a>问题二：XML代码是如何被引用的？</h3><p>首先，看代码。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.example.demoproject1.databinding.FragmentFirstBinding;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> androidx.annotation.NonNull;</span><br><span class="line"><span class="keyword">import</span> androidx.fragment.app.Fragment;</span><br><span class="line"><span class="keyword">import</span> androidx.navigation.fragment.NavHostFragment;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onViewCreated</span><span class="params">(<span class="meta">@NonNull</span> View view, Bundle savedInstanceState)</span> &#123;</span><br><span class="line">        <span class="comment">// 实现xml导航</span></span><br><span class="line">        <span class="built_in">super</span>.onViewCreated(view, savedInstanceState);</span><br><span class="line"></span><br><span class="line">        binding.buttonFirst.setOnClickListener(<span class="keyword">new</span> <span class="title class_">View</span>.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onClick</span><span class="params">(View view)</span> &#123;</span><br><span class="line">                NavHostFragment.findNavController(FirstFragment.<span class="built_in">this</span>)</span><br><span class="line">                        .navigate(R.id.action_FirstFragment_to_SecondFragment);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>上图代码中 <code>R.id.action_FirstFragment_to_SecondFragment</code> 这行代码，可以直接访问到<code>nav_graph.xml</code></p>
-<p>文件。</p>
-<p>实质: <code>action</code>  作用: First Fragment to Second Fragment</p>
-<p>解释: 将 第一片 Fragment导航到了 第二片 Fragment</p>
-<p>通过<code>NavHostFragment.findNavController()</code>这个方法,实现了Fragment之间的导航管理.</p>
-<p>看到这里,还没明白?没关系,来看看<code>nav_graph.xml</code>这个文件的内容.</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">navigation</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:app</span>=<span class="string">&quot;http://schemas.android.com/apk/res-auto&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">&quot;http://schemas.android.com/tools&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">&quot;@+id/nav_graph&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:startDestination</span>=<span class="string">&quot;@id/FirstFragment&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">fragment</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">&quot;@+id/FirstFragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">&quot;com.example.demoproject1.FirstFragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:label</span>=<span class="string">&quot;@string/first_fragment_label&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">tools:layout</span>=<span class="string">&quot;@layout/fragment_first&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/action_FirstFragment_to_SecondFragment&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:destination</span>=<span class="string">&quot;@id/SecondFragment&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">fragment</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">fragment</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">&quot;@+id/SecondFragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">&quot;com.example.demoproject1.SecondFragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:label</span>=<span class="string">&quot;@string/second_fragment_label&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">tools:layout</span>=<span class="string">&quot;@layout/fragment_second&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/action_SecondFragment_to_FirstFragment&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:destination</span>=<span class="string">&quot;@id/FirstFragment&quot;</span> /&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--我们可以看到这里有一个action标签 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">fragment</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">navigation</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>也就是说,我们通过 <code>R.id</code>可以直接引用到此<code>id</code>,访问到其下的<code>action_SecondFragment_to_FirstFragment</code>这段内容,也就没有那么难理解了吧.</p>
-<p>而<code>NavHostFragment</code>的<code>findNavController</code>方法,直译为<strong>寻找导航控制器</strong>.</p>
-<p>实际上是在告诉系统：“请在 <code>FirstFragment</code> 的上下文中找到与之关联的 <code>NavController</code>”。通过传入 <code>FirstFragment.this</code> 作为参数，为系统提供了找到正确 <code>NavController</code> 的必要上下文信息。</p>
-<p>navigate的本质:<code>navigate()</code>方法是Android Navigation组件中的一个方法，用于执行导航动作。该方法接受一个导航动作的ID作为参数，并触发与该动作关联的导航。</p>
-<p>而在XML文件中 <code>app:destination=&quot;@id/FirstFragment&quot; </code>这行代码的作用不可小觑.</p>
-<p>上文很重要的一句话是: <strong>并出发与该动作关联的导航</strong>.</p>
-<p>而<code>app:destination=&quot;@id/FirstFragment&quot; </code>,所提供的,就是关联!</p>
-<ul>
-<li><p>在导航XML中，<code>app:destination=&quot;@id/FirstFragment&quot;</code>的作用是指定一个目标页面的标识符，该标识符与FirstFragment类相关联。</p>
-<p>具体来说，<code>@id/FirstFragment</code>是一个资源标识符，它指定了目标页面的名称。在这种情况下，目标页面被指定为FirstFragment类，这意味着当应用程序需要跳转到FirstFragment时，可以参考这个标识符来找到正确的目标页面。</p>
-</li>
-</ul>
-<p><code>fragment_first.xml </code>中的代码:</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">androidx.constraintlayout.widget.ConstraintLayout</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:app</span>=<span class="string">&quot;http://schemas.android.com/apk/res-auto&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">&quot;http://schemas.android.com/tools&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">tools:context</span>=<span class="string">&quot;.FirstFragment&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">&quot;@+id/textview_first&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">&quot;wrap_content&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">&quot;wrap_content&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">&quot;@string/hello_first_fragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_constraintBottom_toTopOf</span>=<span class="string">&quot;@id/button_first&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_constraintEnd_toEndOf</span>=<span class="string">&quot;parent&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_constraintStart_toStartOf</span>=<span class="string">&quot;parent&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_constraintTop_toTopOf</span>=<span class="string">&quot;parent&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">Button</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">&quot;@+id/button_first&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">&quot;wrap_content&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">&quot;wrap_content&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">&quot;@string/next&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_constraintBottom_toBottomOf</span>=<span class="string">&quot;parent&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_constraintEnd_toEndOf</span>=<span class="string">&quot;parent&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_constraintStart_toStartOf</span>=<span class="string">&quot;parent&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_constraintTop_toBottomOf</span>=<span class="string">&quot;@id/textview_first&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">androidx.constraintlayout.widget.ConstraintLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>总结:</p>
-<ul>
-<li>理解了XML文件</li>
-<li><code>findNavController()</code>方法</li>
-<li><code>navigate()</code>方法</li>
-<li><code>R.id</code>印象加深</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-        <tag>xml</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Android项目文件目录分析</title>
-    <url>/2023/08/27/Android%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E5%88%86%E6%9E%90/</url>
-    <content><![CDATA[<p>相信对第一次接触安卓开发的人来说，安卓应用的项目结构很令人疑惑。</p>
-<p>  刚巧，我也是，才下载了 <code>Android Studio</code>不久。看了不少的安卓教程，然后创建了一个示例项目准备摸索摸索。我去，怎么这么多代码，这么多文件，瞬间傻眼了。</p>
-<p>  不再傻眼，也为了更多和我一样的小白开发者不再傻眼，跟着我的视角，我们一起走进这个安卓App，看看它到底是个什么构造。</p>
-<p>  首先复制项目路径，打开文件管理器，进入我们的安卓项目文件夹。</p>
-<img src="http://171.38.91.172:4666/MOON/blog%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90/%E8%B7%AF%E5%BE%84.png" class="">
-
-<img src="http://171.38.91.172:4666/MOON/blog%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90/%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95.png" class="">
-
-<p>  来到这个页面后，我们看到前缀没有 <code>.</code> 的正常目录有 <code>app</code> 和 <code>gradle</code> 两个文件夹。能走到这一步的同学，必然是创建了项目了，也就安装好了<code>gradle</code>了，所以不再赘述，我们进入<code>app</code>文件夹。</p>
-<img src="http://171.38.91.172:4666/MOON/blog%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90/app%E7%9B%AE%E5%BD%95.png" class="">
-
-<p>  在此之前我已经编译过一次app，因此目录下有</p>
-<ul>
-<li><p><code>build</code> ：存放着构建后的内容</p>
-</li>
-<li><p><code>libs</code> : 存放着引用的外部库（因为没有使用里面试试空的）</p>
-</li>
-<li><p><code>src</code> : 源代码文件夹。</p>
-<p>三个文件夹。</p>
-</li>
-</ul>
-<p>因此，我们进入 <code>src</code> 这个文件夹。</p>
-<img src="http://171.38.91.172:4666/MOON/blog%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90/src%E7%9B%AE%E5%BD%95.png" class="">
-
-<p>  <code>src</code> 目录下，有三个文件夹：</p>
-<ul>
-<li><code>androidText</code> ：存放着Instrumented测试代码。Instrumented测试与单元测试不同，它们可以运行在整个Android应用或框架上，并可以访问Android系统服务和API。 </li>
-<li><code>main</code>：存放着主程序。</li>
-<li><code>test</code>：存放着单元测试代码。单元测试是软件开发中的一种实践，用于确保代码的各个单元按照预期工作。</li>
-</ul>
-<p>  很显然我们当务之急需要的是去了解<code>main</code>文件夹中的内容。</p>
-<hr>
-<p>  访问进去，有两个文件夹和一个<code>AndroidManifest.xml</code>文件。</p>
-<p><code>AndroidManifest.xml</code>：在Android程序中，所有的Activity都需要在<code>AndroidManifest.xml</code>中声明，才能够被用户通过INTENT找到。除了Activity以外，服务（Service）、广播接收者（BroadcastReceiver）、ContentProvider都需要在<code>AndroidManifest.xml</code>中声明。</p>
-<p>关于这两个文件夹：java |  res</p>
-<ul>
-<li>java：存放着java代码。（我选择了java项目示例，我选择在深度学习过java开发安卓后再转koutlin）</li>
-<li>res : 存放着各种资源文件。（稍后将一一的解释。）</li>
-</ul>
-<hr>
-<p>  下面我将列举一下示例项目中已存在的文件</p>
-<p>  <code>java\com\example\magichome</code> 在这个路径下有：<code>data</code>,<code>ui</code>,两个文件夹。</p>
-<p>  <code>data</code>文件夹中包含一个<code>model</code>文件夹,还有:</p>
-<ol>
-<li><p><code>LoginDataSource.java</code>：该类用于处理用户登录和注销的操作。</p>
-</li>
-<li><p>&#96;&#96;LoginRepository.java&#96;：用于处理用户登录和注销的操作，并维护一个内存中的登录状态和用户凭证信息缓存。</p>
-</li>
-<li><p><code>Result.java</code>：用于封装处理结果，包括成功的结果和错误的结果。</p>
-</li>
-</ol>
-<p>  总共三个文件。</p>
-<p><code>model文件夹</code>：</p>
-<ul>
-<li><code>LoggedInUser.java</code>：一个数据类，主要用于存储已登录用户的用户信息。这个类是从<code>LoginRepository</code>中获取的。</li>
-</ul>
-<hr>
-<p><code>  ui</code>文件夹中包含一个<code>login</code>文件夹，其中包含:</p>
-<ol>
-<li><code>LoggedInUserView.java</code>：主要用于将已登录用户的详细信息暴露给用户界面（UI）。</li>
-<li><code>LoginActivity.java</code>：实现一个登录活动的 Android 应用程序的一部分。该活动使用数据绑定和<code>ViewModel </code>来管理用户输入和登录状态。</li>
-<li><code>LoginFormState.java</code>：主要用于表示登录表单的数据验证状态。</li>
-<li><code>LoginResult.java</code>：主要用于封装登录操作的结果。</li>
-<li><code>LoginViewModel.java</code></li>
-<li><code>LoginViewModelFactory.java</code>：创建并返回一个特定的ViewModel。</li>
-</ol>
-<p>  总共六个文件。</p>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
+        <tag>文件系统</tag>
       </tags>
   </entry>
   <entry>
     <title>HTML</title>
-    <url>/2022/10/26/HTML/</url>
-    <content><![CDATA[<h1 id="html"><a href="#html" class="headerlink" title="html"></a>html</h1>]]></content>
+    <url>/2022/10/26/2022-10-26-HTML/</url>
+    <content><![CDATA[<h1 id="html"><a href="#html" class="headerlink" title="html"></a>html</h1><p>然后忘了要写什么了。</p>
+]]></content>
   </entry>
   <entry>
     <title>CSS</title>
-    <url>/2022/10/26/CSS/</url>
+    <url>/2022/10/26/2022-10-26-CSS/</url>
     <content><![CDATA[<h1 id="什么是-CSS"><a href="#什么是-CSS" class="headerlink" title="什么是 CSS?"></a>什么是 CSS?</h1><ul>
 <li><p>CSS 指层叠样式表 (Cascading Style Sheets)</p>
 </li>
@@ -858,221 +707,50 @@
       </tags>
   </entry>
   <entry>
-    <title>LOVE酱使用手册</title>
-    <url>/2022/10/30/LOVE_HELP/</url>
-    <content><![CDATA[<ul>
-<li><p>LOVE酱的使用文档</p>
-</li>
-<li><p>基础功能</p>
-</li>
-<li><p>聊天系统</p>
-</li>
-<li><p>教程系统</p>
-</li>
-<li><p>查询系统</p>
-</li>
-<li><p>约战系统</p>
-</li>
-<li><p>音乐系统</p>
-</li>
-<li><p>色图系统</p>
-</li>
-</ul>
+    <title>网络安全基础</title>
+    <url>/2022/10/28/2022-10-28-%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/</url>
+    <content><![CDATA[<h1 id="漏洞"><a href="#漏洞" class="headerlink" title="漏洞"></a>漏洞</h1><p>1.网络协议本身的逻辑漏洞
+2.通过网络分析工具，窃取
+3.应用场景中网络协议的不同逻辑错误
+4.基主机，操作系统，通信层，应用层</p>
+<p>协议：
+ARP协议：根据IP获取物理地址，无法在对等网络中解析数据包的来源</p>
+<p>ARP欺骗：
+通过MAC地址与目标IP相关联。以便于攻击者可以接收到与目标的任何？</p>
+<p>2.DNS
+ 可将域名解析为IP
+ 缓存中毒，DNS欺骗</p>
+<p>3.IP协议
+  根据端到端的设计原则，IP为主机提供一种无连接、不可靠、尽力而为的数据包传输服务。
+  吧发送的IP包中的源IP地址 改成被新人的友好主机的IP地址，进而实施攻击。</p>
+<p>4.远程桌面协议 RDP
+  RDP漏洞攻击，不用任何交互绕过认证，直接通过RDP协议进行连接，进而发送恶意代码。</p>
+<p>5.简单邮件传输协议（SMTP）
+通过电子邮件，发送垃圾软件和电子邮件。执行目录攻击，收集有效电子邮件。
+根据漏洞进行缓冲区溢出攻击，特洛伊木马攻击和shell脚本攻击等，还可利用电子邮件发送垃圾邮件或恶意软件。</p>
+<h1 id="软件和硬件的漏洞"><a href="#软件和硬件的漏洞" class="headerlink" title="软件和硬件的漏洞"></a>软件和硬件的漏洞</h1><p>1.软件
+系统软件
+应用软件
+数据库软件</p>
+<p>软件错误，软件缺陷，软件失效</p>
+<ol start="2">
+<li>硬件，通过通信线路传输，传输过程中也可能被截取</li>
+<li>电磁波辐射中的信息也可能被接受
+4.水电，空调，中断，会影响系统运行</li>
+</ol>
 ]]></content>
       <categories>
-        <category>LOVE酱</category>
-      </categories>
-      <tags>
-        <tag>Bot</tag>
-        <tag>LOVE酱</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Nonebot创建聊天教学功能</title>
-    <url>/2023/03/08/Nonebot%E5%88%9B%E5%BB%BA%E8%81%8A%E5%A4%A9%E6%95%99%E5%AD%A6%E5%8A%9F%E8%83%BD/</url>
-    <content><![CDATA[<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>  在阅读前辈代码的时候我发现前辈们会专门的分出一个类专门进行数据处理相关的操作，于是我便顺着这个想法改进了我的代码。</p>
-<p>  这使我项目代码的结构更为规整和简化，也提高了代码的可读性，在节省代码量的同时并没有影响工作效率。</p>
-<h4 id="一、实现简易的教学功能"><a href="#一、实现简易的教学功能" class="headerlink" title="一、实现简易的教学功能"></a>一、实现简易的教学功能</h4><p>构建思路：制造一个词库，无非就是，将获取的消息存入指定的json文件中，在需要响应消息的时候查询是否有相关的消息，如果有则回复。</p>
-<p>实现：在BOT收到 @LOVE酱 教学-XX&#x3D;XX 格式的消息时，会自动的分割消息，将教学内容和需要回复的词分开传参。</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> nonebot.adapters.onebot.v11 <span class="keyword">import</span> Event</span><br><span class="line"><span class="keyword">from</span> nonebot.adapters.onebot.v11.bot <span class="keyword">import</span> Bot</span><br><span class="line"><span class="keyword">from</span> nonebot.plugin.on <span class="keyword">import</span> on_command</span><br><span class="line"><span class="keyword">from</span> nonebot.rule <span class="keyword">import</span> to_me</span><br><span class="line"><span class="keyword">from</span> love.db <span class="keyword">import</span> JsonDB <span class="comment">#这一段尤为重要，正是在这一段中引入了我们处理数据库的类</span></span><br><span class="line"></span><br><span class="line">study = on_command(cmd=<span class="string">&#x27;教学-&#x27;</span>, rule=to_me(), priority=<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@study.handle()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot, event: Event</span>):</span><br><span class="line">    QQ = event.get_session_id().split(<span class="string">&#x27;_&#x27;</span>)[<span class="number">2</span>]  <span class="comment"># 获取QQ号</span></span><br><span class="line">    message = <span class="built_in">str</span>(event.get_message()).split(<span class="string">&#x27;-&#x27;</span>)[<span class="number">1</span>].split(<span class="string">&#x27;=&#x27;</span>)  <span class="comment"># 事件消息内容</span></span><br><span class="line">    send = message[<span class="number">0</span>]</span><br><span class="line">    Reply = message[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    Save = JsonDB(QQ=QQ, send=send, Reply=Reply)</span><br><span class="line">    Save.Save()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> study.send(<span class="string">&#x27;教学成功！(请等待主人审核哦~)&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>实现操作json数据的类，起到心脏的作用。</p>
-<p>将消息名作为文件名进行保存，再将消息存入json中，并记录时间和教学者的信息，</p>
-<p>代码如下：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">JsonDB</span>():</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, QQ, send, Reply</span>):</span><br><span class="line">        self.QQ = QQ</span><br><span class="line">        self.send = send</span><br><span class="line">        self.Reply = Reply</span><br><span class="line"><span class="comment">#初始化</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#保存消息的方法</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">Save</span>(<span class="params">self</span>):</span><br><span class="line">        now = datetime.now()</span><br><span class="line">        data = &#123;</span><br><span class="line">            <span class="string">&quot;教学人&quot;</span>: self.QQ,</span><br><span class="line">            <span class="string">&quot;时间&quot;</span>: now.strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>),</span><br><span class="line">            self.send: self.Reply</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">#构建json消息段</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">f&quot;<span class="subst">&#123;curPathTwo + self.send&#125;</span>.json&quot;</span>, <span class="string">&quot;w&quot;</span>) <span class="keyword">as</span> json_file:</span><br><span class="line">            json.dump(data, json_file)</span><br><span class="line">        <span class="comment">#将消息存入</span></span><br></pre></td></tr></table></figure>
-
-<p>解决了保存，那么如何响应呢。</p>
-<p>代码如下：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Reply = on_command(cmd=<span class="string">&#x27;&#x27;</span>, rule=to_me(), priority=<span class="number">60</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Reply.handle()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot, event: Event</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(<span class="built_in">str</span>(event.get_message())) &gt;= <span class="number">1</span>:</span><br><span class="line"></span><br><span class="line">        Load = JsonDB(QQ=<span class="string">&#x27;&#x27;</span>, Reply=<span class="string">&#x27;&#x27;</span>, send=event.get_message())</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> Reply.send(Load.Load())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        message = [<span class="string">&quot;你好，这里是LOVE酱，发送 帮助 可以查看我的功能哦！&quot;</span>,</span><br><span class="line">                   <span class="string">&quot;你好呀，我是LOVE酱，一个专为铁锈战争服务的虚拟少女！&quot;</span>,</span><br><span class="line">                   <span class="string">&quot;你好~有什么需要帮助的吗？&quot;</span>]</span><br><span class="line">        rnd = random.Random()</span><br><span class="line">        Num = rnd.randint(<span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span>  Reply.send(message[Num])</span><br></pre></td></tr></table></figure>
-
-<p>上面这段代码的作用是：在被艾特的时候随机响应一段回复词，而检测到字符串的时候便将字符串传参，实例化类并调用我们的写的查询方法，以此得到我们的回复词。</p>
-<p>查询方法的代码如下：</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">Load</span>(<span class="params">self</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 从JSON文件中读取数据并解码为Python对象</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">f&quot;<span class="subst">&#123;curPath + self.send&#125;</span>.json&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> json_file:</span><br><span class="line">            data = json.load(json_file)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> data[<span class="string">f&quot;<span class="subst">&#123;self.send&#125;</span>&quot;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;LOVE酱现在还听不懂哦~可以教我吗？&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>这里用到了一段异常处理：</p>
-<ul>
-<li><p>如果用户访问的文件存在，则会返回json中对应的键的值，也就是之前写入的字符串。</p>
-</li>
-<li><p>如果用户访问的文件并不存在，则说明这个词汇并没有被教学过，同时会引发异常，方法就会返回 “LOVE酱现在还听不懂哦~可以教我吗？” 这段字符串。</p>
-</li>
-</ul>
-<h4 id="二、实现简易的审核功能"><a href="#二、实现简易的审核功能" class="headerlink" title="二、实现简易的审核功能"></a>二、实现简易的审核功能</h4><p>写到这里可能就会有人会问了，教学实现了，要是被教学了奇怪的话怎么办呀？能不能写一个审核机制？</p>
-<p>当然是可以的。</p>
-<p>我实现审核机制的原理是，将新教学的词先暂放到一个文件夹里，这个文件夹称为待审核文件夹，而这个文件夹里面的词汇是待审核词汇。在Master同意某个词汇后，就将词汇转移到过审文件夹中，而我们的响应方法只会去响应过审后文件夹里的词汇。这样，便成功的实现了简易的审核机制。</p>
-<p>代码如下：</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">Examine = on_command(cmd=<span class="string">&#x27;查看待审核词汇&#x27;</span>, priority=<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Examine.handle()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot, event: Event</span>):</span><br><span class="line">    QQ = event.get_session_id().split(<span class="string">&#x27;_&#x27;</span>)[<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">int</span>(QQ) != <span class="number">3345483363</span>:</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> Examine.send(<span class="string">&quot;你不是LOVE的主人哦~&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line"></span><br><span class="line">        curPath = os.path.abspath(os.path.pardir) + <span class="string">&quot;/LOVE/love/data/Examine/&quot;</span></span><br><span class="line">        listFiles = os.listdir(curPath)  <span class="comment"># 获取文件目录</span></span><br><span class="line">        message = <span class="string">&#x27;&#x27;</span></span><br><span class="line">        QQ = <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(listFiles)):</span><br><span class="line">            Load = JsonDB(QQ=QQ, Reply=<span class="string">&#x27;&#x27;</span>, send=listFiles[i])</span><br><span class="line">            Text = listFiles[i].split(<span class="string">&#x27;.&#x27;</span>)[<span class="number">0</span>] + <span class="string">&#x27;:&#x27;</span> + Load.ExamineLoad()</span><br><span class="line">            message += Text + <span class="string">&#x27;|&#x27;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> Examine.send(<span class="string">f&quot;待审核的词汇如下：<span class="subst">&#123;message&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>以上代码中，我们通过查看待审核文件夹中的文件，将文件名和文件中键对应的值提取出来组成字符串。就可以看到待审核的教学词汇。</p>
-<p>实现移动文件和读取审核文件夹内名称的代码如下：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">curPathTwo = <span class="built_in">str</span>(os.path.abspath(os.path.pardir) + <span class="string">&quot;/LOVE/love/data/Examine/&quot;</span>).replace(<span class="string">&#x27;db/&#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">ExamineLoad</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;读取待审核文件夹内的文件名&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">f&quot;<span class="subst">&#123;curPathTwo + self.send&#125;</span>&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> json_file:</span><br><span class="line">            data = json.load(json_file)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> data[<span class="string">f&quot;<span class="subst">&#123;<span class="built_in">str</span>(self.send).split(<span class="string">&#x27;.&#x27;</span>)[<span class="number">0</span>]&#125;</span>&quot;</span>]  <span class="comment"># 将文件名返回</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">MOVE</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;将文件转移实现通过审核&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            shutil.move(curPathTwo + self.send, curPath)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            os.unlink(curPath + self.send)</span><br><span class="line">            shutil.move(curPathTwo + self.send, curPath)  <span class="comment"># 发现文件重复则删除文件</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="实现让用户自行撤回提交错误的词汇的功能"><a href="#实现让用户自行撤回提交错误的词汇的功能" class="headerlink" title="实现让用户自行撤回提交错误的词汇的功能"></a>实现让用户自行撤回提交错误的词汇的功能</h4><p>为了减轻Master的工作量，也为了提高用户体验。</p>
-<p>我们考虑到用户有时候可能打错字，便增加了一个撤回的功能。</p>
-<p>如果没用这个功能，而用户又想要删去这个提交错误的词汇，差不多就只能联系Master了，这样子很不方便。</p>
-<p>而在实现功能中，我们需要考虑一点，那就是，需要实现只有发送这个词汇的人才能撤回这个词汇。</p>
-<p>还记得我们存储数据使用的格式吗？忘了没关系，我们一起看看：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;教学人&quot;</span><span class="punctuation">:</span> self.QQ<span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;时间&quot;</span><span class="punctuation">:</span> now.strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)<span class="punctuation">,</span></span><br><span class="line">    self.send<span class="punctuation">:</span> self.Reply</span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>在我们存储的每一个词汇的json文件里，我们有三个键，教学人、时间、以及接受词。分别对应QQ、时间、回复词。</p>
-<p>而解决用户直接身份甄别的关键就在此处，那就是json中的教学人，只要我们将其于发送消息者的QQ进行对比，就可以看出这个词是不是教学人创建的。</p>
-<p>ps: 有一个BUG可以卡，就是下一个人创建的词会覆盖上一个人的内容。）</p>
-<p>话不多说，上代码：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">recall = on_command(cmd=<span class="string">&#x27;撤回-&#x27;</span>, rule=to_me(), priority=<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@recall.handle()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot, event: Event</span>):</span><br><span class="line">    QQ = event.get_session_id().split(<span class="string">&#x27;_&#x27;</span>)[<span class="number">2</span>]  <span class="comment"># 获取QQ号</span></span><br><span class="line">    message = <span class="built_in">str</span>(event.get_message()).split(<span class="string">&#x27;-&#x27;</span>)[<span class="number">1</span>]  <span class="comment"># 事件消息内容</span></span><br><span class="line">    send = message</span><br><span class="line"></span><br><span class="line">    REC = JsonDB(QQ=QQ, send=send, Reply=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> recall.send(REC.recall())</span><br></pre></td></tr></table></figure>
-
-<p>然后是在类中实现的代码：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">recall</span>(<span class="params">self</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 从JSON文件中读取数据并解码为Python对象</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">f&quot;<span class="subst">&#123;curPathTwo + self.send&#125;</span>.json&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> json_file:</span><br><span class="line">            data = json.load(json_file)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.QQ == data[<span class="string">&#x27;教学人&#x27;</span>]:</span><br><span class="line">            os.remove(curPathTwo + self.send+<span class="string">&#x27;.json&#x27;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;已成功撤回词汇&#x27;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;您并不是这个词汇的教学人哦~&#x27;</span></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;您并没有提交过这个词汇哦~&#x27;</span></span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>Json</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>NoneBot设置教学功能</title>
-    <url>/2022/11/01/Nonebot%E8%AE%BE%E7%BD%AE%E6%95%99%E5%AD%A6%E5%8A%9F%E8%83%BD/</url>
-    <content><![CDATA[<ul>
-<li>话不多说，直接上代码<br>  在之前便设置了读取词库的方法，这样以来设计教学功能便简单许多了。<br>  原理：<br>  在事件响应的时候获取原消息纯文件，将命令与教学内容分割<br>  将教学内容直接写入文件</li>
-</ul>
-<p>问题：<br>    初步猜测由于异步编程问题，导致机器人必须重启才可以重新读取词库。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">start=on_command(cmd=<span class="string">&#x27;LOVE教学-&#x27;</span>,priority=<span class="number">50</span>)</span><br><span class="line"><span class="meta">@start.handle()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot,event :Event</span>):</span><br><span class="line">   	<span class="keyword">try</span>:</span><br><span class="line">       	teaching=<span class="built_in">open</span>(FilePath(<span class="string">r&#x27;\introduce\cat.ini&#x27;</span>),<span class="string">&#x27;a+&#x27;</span>,encoding=<span class="string">&#x27;UTF-8&#x27;</span>)</span><br><span class="line">       	<span class="comment">#分割消息</span></span><br><span class="line">       	text = <span class="built_in">str</span>(event.get_message()).split(<span class="string">&#x27;-&#x27;</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">       	teaching.write(<span class="built_in">str</span>(<span class="string">&#x27;\n&#x27;</span>+text[<span class="number">1</span>]))</span><br><span class="line">       	teaching.close()</span><br><span class="line">       	<span class="comment">#import os</span></span><br><span class="line">       	<span class="comment">#os.system(&#x27;exit&#x27;,r&#x27;cd C:\Users\33454\Desktop\LOVE&#x27;,&#x27;nb run&#x27;)</span></span><br><span class="line">       	<span class="keyword">await</span> start.send(<span class="string">&#x27;呐呐呐！教学成功~\n(被添加的新回复将在次日审核通过后才可使用哦~)&#x27;</span>)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">       	teaching.close()</span><br><span class="line">       	<span class="keyword">await</span> start.send(<span class="string">&#x27;教学失败，请检查命令格式&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Python</category>
+        <category>网络安全</category>
       </categories>
       <tags>
         <tag>基础</tag>
-        <tag>Bot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>NoneBot读取猫猫词库方法</title>
-    <url>/2022/11/01/Nonebot%E8%AF%BB%E5%8F%96%E7%8C%AB%E7%8C%AB%E8%AF%8D%E5%BA%93%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<p>#话不多说，直接上代码#<br>##读取文件的方法##<br>为了保证Bot的可移植性，将词库文件存在机器人插件目录中，同时使用此函数读取根目录路径，与之相对路径合并，生成绝对路径，保证文件的可读性。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getRootPath</span>():</span><br><span class="line">   	<span class="comment"># 获取文件目录</span></span><br><span class="line">   	curPath = os.path.abspath(os.path.dirname(__file__))</span><br><span class="line">   	<span class="comment"># 获取项目根路径，内容为当前项目的名字</span></span><br><span class="line">   	rootPath = curPath[:curPath.find(<span class="string">&#x27;love2&#x27;</span>) + <span class="built_in">len</span>(<span class="string">&#x27;love2&#x27;</span>)]</span><br><span class="line">   	<span class="keyword">return</span> rootPath</span><br><span class="line">FilePath_1=<span class="built_in">str</span>(getRootPath())</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(FilePath_1)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">FilePath</span>(<span class="params">FilePath_2</span>):<span class="comment">#拼接捏</span></span><br><span class="line">   	FilePath_2=FilePath_1+FilePath_2</span><br><span class="line">   	<span class="keyword">return</span> FilePath_2</span><br></pre></td></tr></table></figure>
-
-<p>##将文件生成字典##<br>主要分为三个步骤：<br>1.读取文件生成列表<br>2.读取每个列表利用分割符将每个列表再分成两个列表<br>3.遍历列表，将每两个列表生成一个字典</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">i = <span class="number">0</span></span><br><span class="line">FG_2 = []</span><br><span class="line">Fi_1 = <span class="built_in">open</span>(FilePath(<span class="string">r&#x27;\introduce\cat.ini&#x27;</span>))</span><br><span class="line"><span class="comment">#第一步</span></span><br><span class="line">Fi_2 = Fi_1.readlines()</span><br><span class="line"><span class="comment">#第二步</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(Fi_2)):</span><br><span class="line">   	FG_1 = Fi_2[i].split(<span class="string">&quot;=&quot;</span>)</span><br><span class="line">   	FG_2.append(FG_1[<span class="number">0</span>])</span><br><span class="line">   	FG_2.append(FG_1[<span class="number">1</span>])</span><br><span class="line">   	i = i + <span class="number">1</span></span><br><span class="line"><span class="comment">#第三步</span></span><br><span class="line">zd_1 = &#123;&#125;</span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> i&lt;=<span class="number">175</span>:</span><br><span class="line">   	i = i + <span class="number">2</span></span><br><span class="line">   	zd_1[FG_2[i]]=FG_2[i+<span class="number">1</span>]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>##无限响应器-处理所有的消息##<br>读取词库最大的问题在于，如何将每个消息文本都拿去和字典尝试。<br>经过尝试我找到了如此办法。</p>
-<ul>
-<li>将on_message的消息反应设置为空，并降低事件响应器优先级。</li>
-<li>（降低优先级是为了防止将其他正常的事件响应器盖过）<br>为什么使用字典：<br>因为字典读取失败会返回 None,是不会发出任何消息的。<br>一旦Key找到了对应的键，消息就会返回出来。<br>基于此机制，代码获得实现，<br>原理并不复杂，但很好的避免了大量的使用代码设置回复语的代码厄余问题。<br>上代码：（这里的异常处理是多余的,,小声bb）</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">dialogue_1 = on_message(priority=<span class="number">100</span>)<span class="comment">#这里优先级的大小是数值越大便越小</span></span><br><span class="line"><span class="meta">@dialogue_1.handle() </span><span class="comment">#出错</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot,event:GroupMessageEvent</span>):</span><br><span class="line">   jsq = zd_1.get(<span class="built_in">str</span>(event.get_message()))</span><br><span class="line">   <span class="keyword">try</span>:</span><br><span class="line">       <span class="keyword">await</span> dialogue_1.send(jsq)</span><br><span class="line">   <span class="keyword">except</span>:</span><br><span class="line">       <span class="built_in">print</span>(<span class="string">&quot;不行喵&quot;</span>)</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>基础</tag>
-        <tag>Bot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 模块重载</title>
-    <url>/2022/11/03/Python%20reload()%20%E5%87%BD%E6%95%B0%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<ul>
-<li>Python 模块重载 更好的调用函数的方法</li>
-<li>前言<br>  反复的去定义一个重复的代码会极大的降低我们的代码质量和工作效率，而Python本身模块目录结构的调用方式是有限的，在此之前先解释一下什么是Python包。</li>
-</ul>
-<blockquote><p>Python中的包<br>包是一个分层次的文件目录结构，它定义了一个由模块及子包，和子包下的子包等组成的 Python 的应用环境。</p>
-<footer><strong>@菜鸟教程</strong><cite><a href="https://www.runoob.com/python3/python3-basic-syntax.html">www.runoob.com/python3/python3-basic-syntax.html</a></cite></footer></blockquote>
-
-<p>而包自身的调用方式是由主到次的，也就是主模块可以调用(from import)所有子模块，而子模块只能调用自己下层的子模块，而当我们需要子模块去调用上层封装的函数或者类的时候，这就体现的极为不方便。<br>好在，Python为我们提供的一个函数 – reload() 函数</p>
-<ul>
-<li><p>使用第一步<br>  from importlib import reload<br>  将这个模块导入<br>  切记不要导成from imp import reload这样的形式<br>  imp中的reload是一个古老的且已经弃用的函数</p>
-</li>
-<li><p>函数说明<br>  reload的中文翻译为：重读  而它的用法也正如其名<br>  reload()的主要用途便是在子模块中加载先前已经加载过的模块。<br>  也因此，必须模块已经加载过才可以使用reload()进行重载。<br>  如果你使用reload()去重载一个子模块中的模块，或者说未载入过的模块，那很显然是不行的。加载子模块的函数请使用常规的导入方法。<br>  重载的形式就像是复制了代码段，将代码重新的在函数内执行一遍。</p>
-</li>
-<li><p>函数用法<br>  非常的简单，直接填写模块名<br>  例:<br>  reloda(funciton)<br><br>  reloda(xxx)<br>  ps:中间的模块名并非是字符串的形式，请勿加引号或者双引号</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>基础</tag>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python 复习笔记（三）</title>
-    <url>/2022/10/31/Python%20%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/</url>
-    <content><![CDATA[<p>##声明<br>  Python 中的变量不需要特意声明类型，只需要在使用前提前赋值。而变量所指向的内存中对象的类型会自动的根据变量所赋值的类型去自动声明。</p>
-<p>  等号（&#x3D;）用来给变量赋值。</p>
-<p>##多变量赋值<br>  Python中可以同时给多个变量赋值同一个数，也可以给同时给多个不同的变量赋不同的值。<br>  如下：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">a = b = c = <span class="number">1</span></span><br><span class="line">a,b,c=<span class="number">1</span>,<span class="number">2</span>,<span class="string">&quot;三&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<ul>
-<li>基本数据类型</li>
-</ul>
-<p>Python3 中有六个标准的数据类型：</p>
-<pre><code>-    Number（数字）
--    String（字符串）
--    List（列表）
--    Tuple（元组）
--    Set（集合）
--    Dictionary（字典）
-</code></pre>
-<p>其中，可分为不可变数据和可变数据:</p>
-<ul>
-<li><p>不可变数据（3 个）：Number（数字）、String（字符串）、Tuple（元组）；</p>
-</li>
-<li><p>可变数据（3 个）：List（列表）、Dictionary（字典）、Set（集合）。</p>
-</li>
-</ul>
-<hr>
-<ul>
-<li><p><strong>Number（数字）</strong><br>int：整数<br>float：浮点数<br>bool：布尔值<br>complex：复数</p>
-</li>
-<li><p><strong>String（字符串）</strong></p>
-</li>
-<li><p><strong>List（列表）</strong></p>
-</li>
-<li><p><strong>Set（集合）</strong></p>
-</li>
-<li><p><strong>Dictionary（字典）</strong></p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>基础</tag>
-        <tag>Python</tag>
+        <tag>概念</tag>
       </tags>
   </entry>
   <entry>
     <title>Python 复习笔记（一）</title>
-    <url>/2022/10/29/Python%20%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<p>#一、了解python</p>
-<p>Python 是一个高层次的结合了解释性、编译性、互动性和面向对象的脚本语言。</p>
+    <url>/2022/10/29/2022-10-29-Python%20%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<h1 id="一、了解python"><a href="#一、了解python" class="headerlink" title="一、了解python"></a>一、了解python</h1><p>Python 是一个高层次的结合了解释性、编译性、互动性和面向对象的脚本语言。</p>
 <p>Python 的设计具有很强的可读性，相比其他语言经常使用英文关键字，其他语言的一些标点符号，它具有比其他语言更有特色语法结构。</p>
 <ul>
 <li><p><strong>菜鸟教程的解释</strong>：</p>
@@ -1130,28 +808,62 @@
       </tags>
   </entry>
   <entry>
+    <title>LOVE酱使用手册</title>
+    <url>/2022/10/30/2022-10-30-LOVE_HELP/</url>
+    <content><![CDATA[<ul>
+<li><p>LOVE酱的使用文档</p>
+</li>
+<li><p>基础功能</p>
+</li>
+<li><p>聊天系统</p>
+</li>
+<li><p>教程系统</p>
+</li>
+<li><p>查询系统</p>
+</li>
+<li><p>约战系统</p>
+</li>
+<li><p>音乐系统</p>
+</li>
+<li><p>色图系统</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>LOVE酱</category>
+      </categories>
+      <tags>
+        <tag>Bot</tag>
+        <tag>LOVE酱</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python 复习笔记（二）</title>
-    <url>/2022/10/30/Python%20%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
-    <content><![CDATA[<p>##简介<br>本章主要简述了Python代码的写法和结构</p>
-<h2 id="缩进"><a href="#缩进" class="headerlink" title="缩进"></a>缩进</h2><blockquote><p> Python最具特色的就是使用缩进来表示代码块，不需要使用大括号 {} 。<br>缩进的空格数是可变的，但是同一个代码块的语句必须包含相同的缩进空格数。</p>
+    <url>/2022/10/30/2022-10-30-Python%20%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本章主要简述了Python代码的写法和结构</p>
+<h2 id="缩进"><a href="#缩进" class="headerlink" title="缩进"></a>缩进</h2><blockquote><p> Python最具特色的就是使用缩进来表示代码块，不需要使用大括号 {} 。
+缩进的空格数是可变的，但是同一个代码块的语句必须包含相同的缩进空格数。</p>
 <footer><strong>@菜鸟教程</strong><cite><a href="https://www.runoob.com/python3/python3-basic-syntax.html">www.runoob.com/python3/python3-basic-syntax.html</a></cite></footer></blockquote>
 
 <p>  Python利用缩进来区分了代码块，在一段代码中，同一空格数的代码会被分为同一代码块中。</p>
-<p>##多行语句<br>  在Python中，我们可以将一段很长的代码利用反斜杠分为多行语句，这不会影响解释器的阅读。</p>
+<h2 id="多行语句"><a href="#多行语句" class="headerlink" title="多行语句"></a>多行语句</h2><p>  在Python中，我们可以将一段很长的代码利用反斜杠分为多行语句，这不会影响解释器的阅读。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">total = item_one + \</span><br><span class="line">       item_two + \</span><br><span class="line">       item_three</span><br></pre></td></tr></table></figure>
 
 <p>  而如果语句被抱在例如 [], {}, 或 () 的这些括号中，则不需要使用\。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">otal = [<span class="string">&#x27;item_one&#x27;</span>, <span class="string">&#x27;item_two&#x27;</span>, <span class="string">&#x27;item_three&#x27;</span>,</span><br><span class="line">       <span class="string">&#x27;item_four&#x27;</span>, <span class="string">&#x27;item_five&#x27;</span>]</span><br></pre></td></tr></table></figure>
 
-<p>##空行<br>懒得写了</p>
-<blockquote><p>函数之间或类的方法之间用空行分隔，表示一段新的代码的开始。类和函数入口之间也用一行空行分隔，以突出函数入口的开始。<br>空行与代码缩进不同，空行并不是 Python 语法的一部分。书写时不插入空行，Python 解释器运行也不会出错。但是空行的作用在于分隔两段不同功能或含义的代码，便于日后代码的维护或重构。<br><strong>记住：空行也是程序代码的一部分。</strong></p>
+<h2 id="空行"><a href="#空行" class="headerlink" title="空行"></a>空行</h2><p>懒得写了</p>
+<blockquote><p>函数之间或类的方法之间用空行分隔，表示一段新的代码的开始。类和函数入口之间也用一行空行分隔，以突出函数入口的开始。
+空行与代码缩进不同，空行并不是 Python 语法的一部分。书写时不插入空行，Python 解释器运行也不会出错。但是空行的作用在于分隔两段不同功能或含义的代码，便于日后代码的维护或重构。
+<strong>记住：空行也是程序代码的一部分。</strong></p>
 <footer><strong>@菜鸟教程</strong><cite><a href="https://www.runoob.com/python3/python3-basic-syntax.html">www.runoob.com/python3/python3-basic-syntax.html</a></cite></footer></blockquote>
 
-<p>##代码分隔符 ;<br>  在同一行中，我们也可以写多段代码，只需使用 ; 隔开即可。</p>
+<h2 id="代码分隔符"><a href="#代码分隔符" class="headerlink" title="代码分隔符 ;"></a>代码分隔符 ;</h2><p>  在同一行中，我们也可以写多段代码，只需使用 ; 隔开即可。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;二月&quot;</span>);<span class="built_in">print</span>(<span class="string">&quot;NB&quot;</span>);<span class="built_in">print</span>(<span class="string">&quot;666~&quot;</span>)</span><br></pre></td></tr></table></figure>
 
-<p>##代码组<br>  缩进相同的一个语句构成一个代码块，缩进相同的多个语句构成一个代码组。</p>
-<blockquote><p>像if、while、def和class这样的复合语句，首行以关键字开始，以冒号( : )结束，该行之后的一行或多行代码构成代码组。<br>我们将首行及后面的代码组称为一个子句(clause)。</p>
+<h2 id="代码组"><a href="#代码组" class="headerlink" title="代码组"></a>代码组</h2><p>  缩进相同的一个语句构成一个代码块，缩进相同的多个语句构成一个代码组。</p>
+<blockquote><p>像if、while、def和class这样的复合语句，首行以关键字开始，以冒号( : )结束，该行之后的一行或多行代码构成代码组。
+我们将首行及后面的代码组称为一个子句(clause)。</p>
 <footer><strong>@菜鸟教程</strong><cite><a href="https://www.runoob.com/python3/python3-basic-syntax.html">www.runoob.com/python3/python3-basic-syntax.html</a></cite></footer></blockquote>]]></content>
       <categories>
         <category>Python</category>
@@ -1162,20 +874,177 @@
       </tags>
   </entry>
   <entry>
+    <title>网络七层协议OSI</title>
+    <url>/2022/10/31/2022-10-31-7%E5%B1%82/</url>
+    <content><![CDATA[<h2 id="物理层（或称物理层，Physical-Layer）"><a href="#物理层（或称物理层，Physical-Layer）" class="headerlink" title="物理层（或称物理层，Physical Layer）"></a>物理层（或称物理层，Physical Layer）</h2><p>  是计算机网络OSI模型中最低的一层。物理层规定:为传输数据所需要的物理链路创建、维持、拆除，而提供具有机械的，电子的，功能的和规范的特性。简单的说，物理层确保原始的数据可在各种物理媒体上传输。局域网与广域网皆属第1、2层。物理层是OSI的第一层，它虽然处于最底层，却是整个开放系统的基础。物理层为设备之间的数据通信提供传输媒体及互连设备，为数据传输提供可靠的环境。如果您想要用尽量少的词来记住这个第一层，那就是“信号和介质”。OSI采纳了各种现成的协议，其中有RS-232、RS-449、X.21、V.35、ISDN、以及FDDI、IEEE802.3、IEEE802.4、和IEEE802.5的物理层协议。 </p>
+<p>##数据链路层
+  定义了在单个链路上如何传输数据。这些协议与被讨论的各种介质有关。示例：ATM，FDDI等。数据链路层必须具备一系列相应的功能，主要有：如何将数据组合成数据块，在数据链路层中称这种数据块为帧，帧是数据链路层的传送单位；如何控制帧在物理信道上的传输，包括如何处理传输差错，如何调节发送速率以使与接收方相匹配；以及在两个网络实体之间提供数据链路通路的建立、维持和释放的管理。
+物理链路（物理线路）：是由传输介质与设备组成的。原始的物理传输线路是指没有采用高层差错控制的基本的物理传输介质与设备。
+数据链路（逻辑线路）：在一条物理线路之上，通过一些规程或协议来控制这些数据的传输，以保证被传输数据的正确性。实现这些规程或协议的硬件和软件加到物理线路，这样就构成了数据链路，从数据发送点到数据接收点所经过的传输途径。当采用复用技术时，一条物理链路上可以有多条数据链路。</p>
+<p>##网络层
+  是OSI参考模型中的第三层，介于传输层和数据链路层之间，它在数据链路层提供的两个相邻端点之间的数据帧的传送功能上，进一步管理网络中的数据通信，将数据设法从源端经过若干个中间节点传送到目的端，从而向传输层提供最基本的端到端的数据传送服务。主要内容有：虚电路分组交换和数据报分组交换、路由选择算法、阻塞控制方法、X.25协议、综合业务数据网（ISDN）、异步传输模式（ATM）及网际互连原理与实现。</p>
+<p>##传输
+  层是整个网络体系结构中的关键层次之一，主要负责向两个主机中进程之间的通信提供服务。由于一个主机同时运行多个进程，因此运输层具有复用和分用功能。传输层在终端用户之间提供透明的数据传输，向上层提供可靠的数据传输服务。传输层在给定的链路上通过流量控制、分段&#x2F;重组和差错控制来保证数据传输的可靠性。传输层的一些协议是面向链接的，这就意味着传输层能保持对分段的跟踪，并且重传那些失败的分段。</p>
+<p>##会话层,表示层,应用层
+  构成开放系统的高3层，面对应用进程提供分布处理，对话管理,信息表示,恢复最后的差错等. 会话层同样要担负应用进程服务要求，而运输层不能完成的那部分工作,给运输层功能差距以弥补.主要的功能是对话管理，数据流同步和重新同步。要完成这些功能,需要由大量的服务单元功能组合,已经制定的功能单元已有几十种.。如果您想要用尽量少的词来记住这第5层，那就是“对话和交谈”。</p>
+<p>##表示层
+  位于OSI分层结构的第六层，它的主要作用之一是为异种机通信提供一种公共语言，以便能进行互操作。这种类型的服务之所以需要，是因为不同的计算机体系结构使用的数据表示法不同。与第五层提供透明的数据运输不同，表示层是处理所有与数据表示及运输有关的问题，包括转换、加密和压缩。每台计算机可能有它自己的表示数据的内部方法，例如，ASCII码与EBCDIC码，所以需要表示层协定来保证不同的计算机可以彼此理解。</p>
+<p>##网络七层协议（Open System Interconnection）
+  简称OSI，是一个开放性的通行系统互连参考模型，他是一个定义的非常好的协议规范。OSI模型有7层结构，每层都可以有几个子层。 OSI的7层从上到下分别是 7 应用层 6 表示层 5 会话层 4 传输层 3 网络层 2 数据链路层 1 物理层 其中高层，即7、6、5、4层定义了应用程序的功能，下面3层，即3、2、1层主要面向通过网络的端到端的数据流。</p>
+]]></content>
+      <categories>
+        <category>计算机网络技术</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>协议</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>NoneBot设置教学功能</title>
+    <url>/2022/11/01/2022-11-1-Nonebot%E8%AE%BE%E7%BD%AE%E6%95%99%E5%AD%A6%E5%8A%9F%E8%83%BD/</url>
+    <content><![CDATA[<ul>
+<li>话不多说，直接上代码
+  在之前便设置了读取词库的方法，这样以来设计教学功能便简单许多了。
+  原理：
+  在事件响应的时候获取原消息纯文件，将命令与教学内容分割
+  将教学内容直接写入文件</li>
+</ul>
+<p>问题：
+    初步猜测由于异步编程问题，导致机器人必须重启才可以重新读取词库。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">start=on_command(cmd=<span class="string">&#x27;LOVE教学-&#x27;</span>,priority=<span class="number">50</span>)</span><br><span class="line"><span class="meta">@start.handle()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot,event :Event</span>):</span><br><span class="line">   	<span class="keyword">try</span>:</span><br><span class="line">       	teaching=<span class="built_in">open</span>(FilePath(<span class="string">r&#x27;\introduce\cat.ini&#x27;</span>),<span class="string">&#x27;a+&#x27;</span>,encoding=<span class="string">&#x27;UTF-8&#x27;</span>)</span><br><span class="line">       	<span class="comment">#分割消息</span></span><br><span class="line">       	text = <span class="built_in">str</span>(event.get_message()).split(<span class="string">&#x27;-&#x27;</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">       	teaching.write(<span class="built_in">str</span>(<span class="string">&#x27;\n&#x27;</span>+text[<span class="number">1</span>]))</span><br><span class="line">       	teaching.close()</span><br><span class="line">       	<span class="comment">#import os</span></span><br><span class="line">       	<span class="comment">#os.system(&#x27;exit&#x27;,r&#x27;cd C:\Users\33454\Desktop\LOVE&#x27;,&#x27;nb run&#x27;)</span></span><br><span class="line">       	<span class="keyword">await</span> start.send(<span class="string">&#x27;呐呐呐！教学成功~\n(被添加的新回复将在次日审核通过后才可使用哦~)&#x27;</span>)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">       	teaching.close()</span><br><span class="line">       	<span class="keyword">await</span> start.send(<span class="string">&#x27;教学失败，请检查命令格式&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>Bot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 复习笔记（三）</title>
+    <url>/2022/10/31/2022-10-31-Python%20%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/</url>
+    <content><![CDATA[<h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><p>  Python 中的变量不需要特意声明类型，只需要在使用前提前赋值。而变量所指向的内存中对象的类型会自动的根据变量所赋值的类型去自动声明。</p>
+<p>  等号（&#x3D;）用来给变量赋值。</p>
+<h2 id="多变量赋值"><a href="#多变量赋值" class="headerlink" title="多变量赋值"></a>多变量赋值</h2><p>  Python中可以同时给多个变量赋值同一个数，也可以给同时给多个不同的变量赋不同的值。
+  如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">a = b = c = <span class="number">1</span></span><br><span class="line">a,b,c=<span class="number">1</span>,<span class="number">2</span>,<span class="string">&quot;三&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>基本数据类型</li>
+</ul>
+<p>Python3 中有六个标准的数据类型：</p>
+<pre><code>-    Number（数字）
+-    String（字符串）
+-    List（列表）
+-    Tuple（元组）
+-    Set（集合）
+-    Dictionary（字典）
+</code></pre>
+<p>其中，可分为不可变数据和可变数据:</p>
+<ul>
+<li><p>不可变数据（3 个）：Number（数字）、String（字符串）、Tuple（元组）；</p>
+</li>
+<li><p>可变数据（3 个）：List（列表）、Dictionary（字典）、Set（集合）。</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p><strong>Number（数字）</strong>
+int：整数
+float：浮点数
+bool：布尔值
+complex：复数</p>
+</li>
+<li><p><strong>String（字符串）</strong></p>
+</li>
+<li><p><strong>List（列表）</strong></p>
+</li>
+<li><p><strong>Set（集合）</strong></p>
+</li>
+<li><p><strong>Dictionary（字典）</strong></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>NoneBot读取猫猫词库方法</title>
+    <url>/2022/11/01/2022-11-1-Nonebot%E8%AF%BB%E5%8F%96%E7%8C%AB%E7%8C%AB%E8%AF%8D%E5%BA%93%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p>#话不多说，直接上代码#
+##读取文件的方法##
+为了保证Bot的可移植性，将词库文件存在机器人插件目录中，同时使用此函数读取根目录路径，与之相对路径合并，生成绝对路径，保证文件的可读性。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getRootPath</span>():</span><br><span class="line">   	<span class="comment"># 获取文件目录</span></span><br><span class="line">   	curPath = os.path.abspath(os.path.dirname(__file__))</span><br><span class="line">   	<span class="comment"># 获取项目根路径，内容为当前项目的名字</span></span><br><span class="line">   	rootPath = curPath[:curPath.find(<span class="string">&#x27;love2&#x27;</span>) + <span class="built_in">len</span>(<span class="string">&#x27;love2&#x27;</span>)]</span><br><span class="line">   	<span class="keyword">return</span> rootPath</span><br><span class="line">FilePath_1=<span class="built_in">str</span>(getRootPath())</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(FilePath_1)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">FilePath</span>(<span class="params">FilePath_2</span>):<span class="comment">#拼接捏</span></span><br><span class="line">   	FilePath_2=FilePath_1+FilePath_2</span><br><span class="line">   	<span class="keyword">return</span> FilePath_2</span><br></pre></td></tr></table></figure>
+
+<p>##将文件生成字典##
+主要分为三个步骤：
+1.读取文件生成列表
+2.读取每个列表利用分割符将每个列表再分成两个列表
+3.遍历列表，将每两个列表生成一个字典</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">i = <span class="number">0</span></span><br><span class="line">FG_2 = []</span><br><span class="line">Fi_1 = <span class="built_in">open</span>(FilePath(<span class="string">r&#x27;\introduce\cat.ini&#x27;</span>))</span><br><span class="line"><span class="comment">#第一步</span></span><br><span class="line">Fi_2 = Fi_1.readlines()</span><br><span class="line"><span class="comment">#第二步</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(Fi_2)):</span><br><span class="line">   	FG_1 = Fi_2[i].split(<span class="string">&quot;=&quot;</span>)</span><br><span class="line">   	FG_2.append(FG_1[<span class="number">0</span>])</span><br><span class="line">   	FG_2.append(FG_1[<span class="number">1</span>])</span><br><span class="line">   	i = i + <span class="number">1</span></span><br><span class="line"><span class="comment">#第三步</span></span><br><span class="line">zd_1 = &#123;&#125;</span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> i&lt;=<span class="number">175</span>:</span><br><span class="line">   	i = i + <span class="number">2</span></span><br><span class="line">   	zd_1[FG_2[i]]=FG_2[i+<span class="number">1</span>]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>##无限响应器-处理所有的消息##
+读取词库最大的问题在于，如何将每个消息文本都拿去和字典尝试。
+经过尝试我找到了如此办法。</p>
+<ul>
+<li>将on_message的消息反应设置为空，并降低事件响应器优先级。</li>
+<li>（降低优先级是为了防止将其他正常的事件响应器盖过）
+为什么使用字典：
+因为字典读取失败会返回 None,是不会发出任何消息的。
+一旦Key找到了对应的键，消息就会返回出来。
+基于此机制，代码获得实现，
+原理并不复杂，但很好的避免了大量的使用代码设置回复语的代码厄余问题。
+上代码：（这里的异常处理是多余的,,小声bb）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">dialogue_1 = on_message(priority=<span class="number">100</span>)<span class="comment">#这里优先级的大小是数值越大便越小</span></span><br><span class="line"><span class="meta">@dialogue_1.handle() </span><span class="comment">#出错</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot,event:GroupMessageEvent</span>):</span><br><span class="line">   jsq = zd_1.get(<span class="built_in">str</span>(event.get_message()))</span><br><span class="line">   <span class="keyword">try</span>:</span><br><span class="line">       <span class="keyword">await</span> dialogue_1.send(jsq)</span><br><span class="line">   <span class="keyword">except</span>:</span><br><span class="line">       <span class="built_in">print</span>(<span class="string">&quot;不行喵&quot;</span>)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>Bot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python多线程学习</title>
-    <url>/2022/11/01/Python%20%E5%A4%9A%E7%BA%BF%E7%A8%8B/</url>
+    <url>/2022/11/01/2022-11-1-Python%20%E5%A4%9A%E7%BA%BF%E7%A8%8B/</url>
     <content><![CDATA[<h2 id="认识多线程"><a href="#认识多线程" class="headerlink" title="认识多线程##"></a>认识多线程##</h2><blockquote><p> 多线程类似于同时执行多个不同程序，多线程运行有如下优点：</p>
 <ul>
 <li>使用线程可以把占据长时间的程序中的任务放到后台去处理。</li>
 <li>用户界面可以更加吸引人，比如用户点击了一个按钮去触发某些事件的处理，可以弹出一个进度条来显示处理的进度。</li>
 <li>程序的运行速度可能加快。</li>
-<li>在一些等待的任务实现上如用户输入、文件读写和网络收发数据等，线程就比较有用了。在这种情况下我们可以释放一些珍贵的资源如内存占用等等。<br>每个独立的线程有一个程序运行的入口、顺序执行序列和程序的出口。但是线程不能够独立执行，必须依存在应用程序中，由应用程序提供多个线程执行控制。</li>
+<li>在一些等待的任务实现上如用户输入、文件读写和网络收发数据等，线程就比较有用了。在这种情况下我们可以释放一些珍贵的资源如内存占用等等。
+每个独立的线程有一个程序运行的入口、顺序执行序列和程序的出口。但是线程不能够独立执行，必须依存在应用程序中，由应用程序提供多个线程执行控制。</li>
 </ul>
 <p>每个线程都有他自己的一组CPU寄存器，称为线程的上下文，该上下文反映了线程上次运行该线程的CPU寄存器的状态。</p>
 <p>指令指针和堆栈指针寄存器是线程上下文中两个最重要的寄存器，线程总是在进程得到上下文中运行的，这些地址都用于标志拥有线程的进程地址空间中的内存。 </p>
 <footer><strong>@菜鸟教程</strong><cite><a href="https://www.runoob.com/python3/python3-basic-syntax.html">www.runoob.com/python3/python3-basic-syntax.html</a></cite></footer></blockquote>
 
-<p>总结：<br>  一、<br>    1.线程无法独立执行<br>    2.线程需要入口，执行序列，以及出口。<br>    3.线程需要主程序来控制。<br>  二、<br>    1.线程有独立的寄存器，称为上下文，反应了线程在CPU寄存器的状态。<br>    2.上下文中包含指令和指针（两个重要的寄存器）。<br>    3.线程在上下文中运行，内存地址都用于标志拥有线程的进程地址空间中的内存。<br>  三、<br>    1.线程可以被抢占，即中断<br>    2.其他线程运行时，线程可以暂搁（睡眠）——线程的退让<br>  四、<br>    线程可以分为：<br>    - 内核线程<br>    - 用户线程<br>    Python3线程最常用的两个模块为：<br>    - _thread<br>    - threading</p>
+<p>总结：
+  一、
+    1.线程无法独立执行
+    2.线程需要入口，执行序列，以及出口。
+    3.线程需要主程序来控制。
+  二、
+    1.线程有独立的寄存器，称为上下文，反应了线程在CPU寄存器的状态。
+    2.上下文中包含指令和指针（两个重要的寄存器）。
+    3.线程在上下文中运行，内存地址都用于标志拥有线程的进程地址空间中的内存。 
+  三、
+    1.线程可以被抢占，即中断
+    2.其他线程运行时，线程可以暂搁（睡眠）——线程的退让
+  四、
+    线程可以分为：
+    - 内核线程
+    - 用户线程
+    Python3线程最常用的两个模块为：
+    - _thread
+    - threading</p>
 <p>thread 模块已被废弃。用户可以使用 threading 模块代替。所以，在 Python3 中不能再使用”thread” 模块。为了兼容性，Python3 将 thread 重命名为 “_thread”。</p>
 <ul>
 <li>Pyton线程学习</li>
@@ -1220,16 +1089,82 @@
       </tags>
   </entry>
   <entry>
+    <title>使用Docker多开RW-HPS</title>
+    <url>/2022/11/17/2022-11-17-%E4%BD%BF%E7%94%A8docker%E5%A4%9A%E5%BC%80RW-HPS/</url>
+    <content><![CDATA[<p>准备工作：</p>
+<p>一台Linux服务器
+安装docker</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">docker pull [最新版的docker镜像]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>1.由于Dr没有在1.0.0.x版本的docker镜像中准备res资源，我们需要进入docker后手动准备</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">wget -c 下载链接</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>2.删除多余的sh脚本和jar，换成最新版的core和jar,并安装vim
+ps: pull来的docker内部预置好了对RW-HPS兼容性最好的JAVA 11 JKD</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">rm -rf 你要删的文件</span><br><span class="line"></span><br><span class="line">apt update</span><br><span class="line"></span><br><span class="line">apt install sudo</span><br><span class="line"></span><br><span class="line">apt install vim</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>3.准备完成，退出镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">ctrl + p + q</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>4.查看容器ID，进行构建</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">docker ps</span><br><span class="line"></span><br><span class="line">docker commit -a [作者信息] [容器id] [镜像名]:[TAG]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>5.打包完成，指定端口启动</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">docker run --name 容器名称 -d -p 端口:端口 -v ~/rw-hps-data:/app/data [你的镜像ID]:[TAG]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>6.进入容器，修改配置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">docker exec -it [容器名称] bash</span><br><span class="line"></span><br><span class="line">cd data</span><br><span class="line"></span><br><span class="line">sudo vim Config.json</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>7.卸载多余组件，启动</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">sudo dpkg --purge vim vim-common vim-addon-manager</span><br><span class="line"></span><br><span class="line">java -jar [你的jar包]	</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>ps:实际命令中所有[]都是不需要写的，仅在文中起到提示作用。</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Linux</tag>
+        <tag>debian</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python 模块重载</title>
-    <url>/2023/03/06/Python%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<p>在使用Nonebot框架进行的开发中，我接触到了许多新的概念，也了解了更多知识。<br>大概有，如下：</p>
+    <url>/2022/11/03/2022-11-3-Python%20reload()%20%E5%87%BD%E6%95%B0%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<ul>
+<li>Python 模块重载 更好的调用函数的方法</li>
+<li>前言
+  反复的去定义一个重复的代码会极大的降低我们的代码质量和工作效率，而Python本身模块目录结构的调用方式是有限的，在此之前先解释一下什么是Python包。</li>
+</ul>
+<blockquote><p>Python中的包
+包是一个分层次的文件目录结构，它定义了一个由模块及子包，和子包下的子包等组成的 Python 的应用环境。</p>
+<footer><strong>@菜鸟教程</strong><cite><a href="https://www.runoob.com/python3/python3-basic-syntax.html">www.runoob.com/python3/python3-basic-syntax.html</a></cite></footer></blockquote>
+
+<p>而包自身的调用方式是由主到次的，也就是主模块可以调用(from import)所有子模块，而子模块只能调用自己下层的子模块，而当我们需要子模块去调用上层封装的函数或者类的时候，这就体现的极为不方便。
+好在，Python为我们提供的一个函数 – reload() 函数</p>
 <ul>
-<li>async 异步语句</li>
-<li>python程序模块化的更深概念</li>
-<li>线程的阻塞</li>
-<li>装饰器</li>
-<li>json数据的处理</li>
-<li>类的实际使用</li>
+<li><p>使用第一步
+  from importlib import reload
+  将这个模块导入
+  切记不要导成from imp import reload这样的形式
+  imp中的reload是一个古老的且已经弃用的函数</p>
+</li>
+<li><p>函数说明
+  reload的中文翻译为：重读  而它的用法也正如其名
+  reload()的主要用途便是在子模块中加载先前已经加载过的模块。
+  也因此，必须模块已经加载过才可以使用reload()进行重载。
+  如果你使用reload()去重载一个子模块中的模块，或者说未载入过的模块，那很显然是不行的。加载子模块的函数请使用常规的导入方法。
+  重载的形式就像是复制了代码段，将代码重新的在函数内执行一遍。</p>
+</li>
+<li><p>函数用法
+  非常的简单，直接填写模块名
+  例:
+  reloda(funciton)
+<br>  reloda(xxx)
+  ps:中间的模块名并非是字符串的形式，请勿加引号或者双引号</p>
+</li>
 </ul>
 ]]></content>
       <categories>
@@ -1241,14 +1176,225 @@
       </tags>
   </entry>
   <entry>
+    <title>英语的介词</title>
+    <url>/2022/11/06/2022-11-6-%E8%8B%B1%E8%AF%AD%E4%BB%8B%E8%AF%8D%E8%AE%AD%E7%BB%83/</url>
+    <content><![CDATA[<p>in，on，with，by，for，at，about，under，of</p>
+<p>【介词】
+介词是一种虚词，不能单独作为句子成分，通常用在名词或代词之前。
+常用的英语介词有：in，on，with，by，for，at，about，under，of等。</p>
+<p>表示在某时间时，常用at，on，in等介词。at用来表示在某一段时刻，如at six：在6点钟。
+on用来表示在星期几或是某日，如：on Monday：在星期一。
+in用来表示一天中的早中晚、月份、季节或年份。如：in Spring在春天。</p>
+<p>during，for，over，within，throughout，from和to等介词表示期间。
+before，after，since，until，till，between，up to等，也有时间概念。</p>
+<p>在表示方位时，常用at，in，on，to，for，above，over，below，under，
+in front of，in the front of，beside，behind等。</p>
+<p>英语介词还可以表示进行，在作为表语时，at、on、under等可以表示正在进行的动作。
+如：she is at work.她正在工作。</p>
+<p>介词也可以表示原因，常用for等。在表示方法、手段的介词常用by，with，through等。
+表示数量的时候常用介词有about，around，over等。</p>
+]]></content>
+      <categories>
+        <category>英语</category>
+      </categories>
+      <tags>
+        <tag>语法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>英语单词的构成</title>
+    <url>/2022/11/06/2022-11-6-%E8%8B%B1%E8%AF%AD%E7%9A%84%E5%8D%95%E8%AF%8D%E6%9E%84%E6%88%90/</url>
+    <content><![CDATA[<p>【构词法】 
+—转化法
+动词转化为名词
+名词转化为动词
+形容词转化为动词
+形容词转化为名词
+形容词转化为副词
+个别词分场合转化为名词
+—合成法
+合成名词
+合成形容词
+合成动词
+合成副词
+合成代词
+合成介词
+—派生法
+前缀-单词的意义
+形容词的后缀
+名词的后缀
+动词的后缀
+副词的后缀
+数词的后缀
+—其他
+拼缀法
+缩略法
+逆向构词法
+拟声法
+类比法
+截短构词法
+词根词缀构词法</p>
+]]></content>
+      <categories>
+        <category>英语</category>
+      </categories>
+      <tags>
+        <tag>语法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>英语的语型</title>
+    <url>/2022/11/06/2022-11-6-%E8%8B%B1%E8%AF%AD%E7%9A%84%E5%8F%A5%E5%9E%8B/</url>
+    <content><![CDATA[<p>一、句型1： Subject (主语) ＋ Verb (谓语)</p>
+<p>二、句型2：Subject (主语) ＋ Link. V(系动词) ＋ Predicate(表语)</p>
+<p>三、句型3：Subject(主语) ＋ Verb (谓语) ＋ Object (宾语)</p>
+<p>四、句型4： Subject(主语)＋Verb(谓语)＋ Indirect object(间接宾语)＋Direct object (直接宾语)</p>
+<p>五、句型5： Subject(主语)＋Verb (动词)＋Object (宾语)＋Complement(补语)</p>
+<p>【主语】</p>
+<p>主语是谓语的陈述对象，如“我写字”中的“我”就是主语，它做出“写”这个动作，“写”则是谓语，用来陈述主语的动作，
+而“字”是接受谓语“写”这个动作的对象，它因此被称为宾语，有的语法书也称它为“客体”或“受体”。
+主语是句子中的陈述对象，与英语语法也有相似之处。常常由名词、 代词、或 名词性短语充当。
+形容词、动词、 谓语性短语和 主谓短语也可充当主语。 句子成分划分时，主语符号为双横线。</p>
+<p>【谓语】</p>
+<p>谓语(Predicate)是对主语动作状态或特征的陈述或说明，指出”做什么(what to do)” , “是什么(what is this)”。
+谓语动词的位置一般在主语之后，经常用动词和形容词搭配来充当谓语动词。
+在英语中，动词按作用和功能主要分为两大类，一类是谓语动词，另一类是非谓语动词。</p>
+<p>【宾语】</p>
+<p>宾语，也称受词，是指一个动作（动词）的接受者。
+宾语分为直接宾语和间接宾语两大类，其中直接宾语指动作的直接对象，间接宾语说明动作的非直接，但受动作影响的对象。
+一般而言，及物动词后面最少要有一个宾语，而该宾语通常为直接宾语，
+有些及物动词要求两个宾语，则这两个宾语通常一个为直接宾语，另一个为间接宾语。</p>
+<p>【句型一】
+这种句型中的动词大多是不及物动词，所谓不及物动词，就是这种动词后不可以直接接宾语。
+常见的动词如：work, sing, swim, fish, jump, arrive, come, die, disappear, cry, happen等。</p>
+<p>如：</p>
+<ol>
+<li><p>Li Ming works very hard.李明学习很努力。</p>
+</li>
+<li><p>The accident happened yesterday afternoon.事故是昨天下午发生的。</p>
+</li>
+</ol>
+<p>3）Spring is coming.</p>
+<ol start="4">
+<li>We have lived in the city for ten years.</li>
+</ol>
+<p>【句型二】
+这种句型主要用来表示主语的特点、身份等。其系动词一般可分为下列两类：</p>
+<p>(1)表示状态。这样的词有：be, look, seem, smell, taste, sound, keep等。如：</p>
+<ol>
+<li><p>This kind of food tastes delicious.这种食物吃起来很可口。</p>
+</li>
+<li><p>He looked worried just now.刚才他看上去有些焦急。</p>
+</li>
+</ol>
+<p>(2)表示变化。这类系动词有：become, turn, get, grow, go等。如：</p>
+<ol>
+<li><p>Spring comes. It is getting warmer and warmer.春天到了，天气变得越来越暖和。</p>
+</li>
+<li><p>The tree has grown much taller than before.这棵树比以前长得高多了。</p>
+</li>
+</ol>
+<p>【句型三】
+这种句型中的动词一般为及物动词, 所谓及物动词，就是这种动词后可以直接接宾语，
+其宾语通常由名词、代词、动词不定式、动名词或从句等来充当。</p>
+<p>例：</p>
+<ol>
+<li><p>He took his bag and left.（名词） 他拿着书包离开了。</p>
+</li>
+<li><p>Li Lei always helps me when I have difficulties. (代词)当我遇到困难时，李雷总能给我帮助。</p>
+</li>
+<li><p>She plans to travel in the coming May Day.（不定式）她打算在即将到来的“五一”外出旅游。</p>
+</li>
+<li><p>I don?t know what I should do next. (从句)我不知道下一步该干什么。</p>
+</li>
+</ol>
+<p>注意：英语中的许多动词既是及物动词，又是不及物动词。</p>
+<p>【句型四】</p>
+<p>这种句型中，直接宾语为主要宾语，表示动作是对谁做的或为谁做的，在句中不可或缺，常常由表示“物”的名词来充当；
+间接宾语也被称之为第二宾语，去掉之后，对整个句子的影响不大，多由指“人”的名词或代词承担。
+引导这类双宾语的&#96;常见动词有：buy, pass, lend, give, tell, teach, show, bring, send等。</p>
+<p>如：</p>
+<ol>
+<li>Her father bought her a dictionary as a birthday present.她爸爸给她买了一本词典作为生日礼物。</li>
+</ol>
+<p>2）The old man always tells the children stories about the heroes in the Long March.</p>
+<p>老人经常给孩子们讲述长征途中那些英雄的故事。 上述句子还可以表达为：</p>
+<p>1）Her father bought a dictionary for her as a birthday present.</p>
+<p>2）The old man always tells stories about the heroes to the children in the Long March.</p>
+<p>【句型五】
+这种句型中的“宾语 ＋ 补语”统称为“复合宾语”。宾语补足语的主要作用或者是补充、说明宾语的特点、身份等；
+或者表示让宾语去完成的动作等。担任补语的常常是名词、形容词、副词、介词短语、分词、动词不定式等。</p>
+<p>如：</p>
+<p>1）You should keep the room clean and tidy. 你应该让屋子保持干净整洁。（形容词）</p>
+<ol start="2">
+<li><p>We made him our monitor.(名词)我们选他当班长。</p>
+</li>
+<li><p>His father told him not to play in the street.(不定式)他父亲告诉他不要在街上玩。</p>
+</li>
+</ol>
+<p>4）My father likes to watch the boys playing basketball.(现在分词)</p>
+<ol start="5">
+<li>Yesterday I had a picture taken with two Americans.(过去分词)</li>
+</ol>
+<p>● 常见的动词有: tell, ask, advise, help, want, would like, order, force, allow等。</p>
+<p>● 注意：动词have, make, let, see, hear, notice, feel, watch等后面所接的动词不定式作宾补时，不带to。如：</p>
+<ol>
+<li><p>The boss made him do the work all day.老板让他整天做那项工作。</p>
+</li>
+<li><p>I heard her sing in the next room all the time last night.昨天晚上我听见她在隔壁唱了一个晚上。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>英语</category>
+      </categories>
+      <tags>
+        <tag>语法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>英语小作文</title>
+    <url>/2022/11/07/2022-11-7-%E5%B0%8F%E4%BD%9C%E6%96%87/</url>
+    <content><![CDATA[<p>由于本人之前英语极差，所以此次小作文是本人第一次尝试英语写作。</p>
+<p>This is book title will say light or dark.</p>
+<p>All this because by my fast subdorsal 3000 English word.</p>
+<p>One</p>
+<p>“Blake … Blake..” A very weaking voice said.
+Silent S city,clear night sky under a white hair young girl lying in the blood pool.
+Her double eyes slightly tremble, like having seen tremendous terror.
+“If can again attack,I certain win….”
+Scene transformation in eyes front of us ,last is new
+Sky.
+That is bloody red sky. 
+“girl, I am god.”
+“Do you yearn force?”
+“yes”
+“Then I will achieve your went.”
+boom!!!
+···emmmmm
+lan得写了</p>
+<p>aaaaaaaaaaa~</p>
+<p>QAQ</p>
+]]></content>
+      <categories>
+        <category>英语</category>
+      </categories>
+      <tags>
+        <tag>英语</tag>
+        <tag>写作</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Solarus</title>
-    <url>/2022/11/13/Solarus/</url>
+    <url>/2022/11/13/2022-11-13-Solarus/</url>
     <content><![CDATA[<p><img src="https://solarus-games.org/data/en/entities/book-chapter/tutorial/solarus-official-guide/01-basics/01-introduction/engine-logo.png" alt="Solarus"></p>
 <p>官方的介绍是这样的</p>
 <blockquote><p>Solarus is a free and open-source game engine, licensed under GPL v3. It is written from scratch in C++ and uses SDL2. Consequently, it is compatible with a large set of platforms. You can explore the source code if you’re curious.</p>
 <footer><strong>@Solarus</strong><cite><a href="https://solarus-games.org/en/development/tutorials/solarus-official-guide/basics/introduction">solarus-games.org/en/development/tutorials/solarus-official-guide/basics/introduction</a></cite></footer></blockquote>
 
-<p>根据我的理解则是：<br>  Solarus是一个开源的，受保护的，功能强大的自由软件-2DRPG动作游戏引擎。<br>  他的底层由C++编写，这为游戏的运行效率打下了很好的基础。而在开发游戏的过程一般只需要用到LUA就可以做绝大多数事情，而引擎的内容对普通开发者来说不用去动。</p>
+<p>根据我的理解则是：
+  Solarus是一个开源的，受保护的，功能强大的自由软件-2DRPG动作游戏引擎。
+  他的底层由C++编写，这为游戏的运行效率打下了很好的基础。而在开发游戏的过程一般只需要用到LUA就可以做绝大多数事情，而引擎的内容对普通开发者来说不用去动。</p>
 ]]></content>
       <categories>
         <category>engine</category>
@@ -1260,7 +1406,7 @@
   </entry>
   <entry>
     <title>Ubuntu 20.04 LTS 使用笔记</title>
-    <url>/2022/08/20/Ubuntu%2020.04%20LTS%20%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/</url>
+    <url>/2022/08/20/2022-8-20-Ubuntu%2020.04%20LTS%20%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h1 id="Ubuntu-20-04-LTS-使用笔记"><a href="#Ubuntu-20-04-LTS-使用笔记" class="headerlink" title="Ubuntu 20.04 LTS 使用笔记"></a>Ubuntu 20.04 LTS 使用笔记</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p> 服务器是在腾讯云购买的2G 1核轻量级服务器，使用SSH远程连接。</p>
 <h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><ol>
 <li><p>登录 su 用户名 （用户名默认为ubuntu） </p>
@@ -1305,8 +1451,15 @@
 <p>格式: wget 参数 路径</p>
 <h1 id=""><a href="#" class="headerlink" title=""></a></h1><hr>
 <h2 id="Docker-的基本使用"><a href="#Docker-的基本使用" class="headerlink" title="Docker 的基本使用"></a>Docker 的基本使用</h2><p>Docker 名为容器，是挂载软件，子系统，诸如此类的不二选择。</p>
-<h3 id="基本命令-1"><a href="#基本命令-1" class="headerlink" title="基本命令"></a>基本命令</h3><p>镜像命令<br>docker images 查看镜像<br>docker search +名称 搜索镜像 + ##–filter&#x3D;STARTS&#x3D;数字 收藏数搜索）<br>dockers pull #下载镜像:tag 版本</p>
-<p>docker rmi +docker rmi +id +id +id 删除镜像<br>dockers rmi -f 删除全部 $(docker imgaes -aq)<br>dockers rm (运行的不能删除)+id删除容器<br>dockers rm -f 强制删除全部  $(docker ps -aq)<br>docker ps -a -q|xargs docker rm 删除所有容器</p>
+<h3 id="基本命令-1"><a href="#基本命令-1" class="headerlink" title="基本命令"></a>基本命令</h3><p>镜像命令
+docker images 查看镜像
+docker search +名称 搜索镜像 + ##–filter&#x3D;STARTS&#x3D;数字 收藏数搜索）
+dockers pull #下载镜像:tag 版本</p>
+<p>docker rmi +docker rmi +id +id +id 删除镜像
+dockers rmi -f 删除全部 $(docker imgaes -aq) 
+dockers rm (运行的不能删除)+id删除容器
+dockers rm -f 强制删除全部  $(docker ps -aq)
+docker ps -a -q|xargs docker rm 删除所有容器</p>
 <h3 id="run-命令"><a href="#run-命令" class="headerlink" title="run 命令"></a>run 命令</h3><p>格式：docker run 参数 参数 参数</p>
 <p>举例：</p>
 <p>sudo docker run -it  -v ~&#x2F;txzz2&#x2F;docker:&#x2F;app&#x2F;data -p 5124:5124 5eaf4cfde9c5</p>
@@ -1326,321 +1479,25 @@
       </tags>
   </entry>
   <entry>
-    <title>gs被二月斯诺克 86：32</title>
-    <url>/2023/01/12/gs%E8%A2%AB%E4%BA%8C%E6%9C%88%E5%90%8A%E6%89%93/</url>
-    <content><![CDATA[<p>gs被二月斯诺克 86：32<br>gs被二月斯诺克 86：32<br>gs被二月斯诺克 86：32<br>重要的事情说三遍</p>
-]]></content>
-      <tags>
-        <tag>精彩记录</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>你说的对</title>
-    <url>/2023/01/11/nonebot/</url>
-    <content><![CDATA[<p>你说的对，但是《NoneBot2》是由NoneBot团队自主研发的一款全新开放世界冒险游戏。游戏发生在一个被称作「QQ」的幻想世界，在这里，被神选中的人将被授予「go-cqhttp」，导引OneBotv11之力。你将扮演一位名为「插件开发者」的神秘角色，在自由的旅行中邂逅ModuleNotFoundError: No module named ‘nonebot.adapters.onebot’、ImportError: cannot import name ‘State’ from ‘nonebot.params’，和他们一起breaking change，找回失散的插件——同时，逐步发掘「NoneBot2 是一个跨平台的 Python 聊天机器人框架」的真相。</p>
-]]></content>
-      <categories>
-        <category>Nonebot</category>
-      </categories>
-      <tags>
-        <tag>Bot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>抛心之人的寻心之词</title>
-    <url>/2023/01/03/%E4%BD%9C%E8%AF%8D/</url>
-    <content><![CDATA[<h2 id="曾几何时，我伤透了心我以为，是感情导致我的失败我试图冷漠无情藐视一切的情感，自认为这会使我更强而实际上就如同人失去了血肉一样将骨骸裸露只让我变得更脆弱"><a href="#曾几何时，我伤透了心我以为，是感情导致我的失败我试图冷漠无情藐视一切的情感，自认为这会使我更强而实际上就如同人失去了血肉一样将骨骸裸露只让我变得更脆弱" class="headerlink" title="曾几何时，我伤透了心我以为，是感情导致我的失败我试图冷漠无情藐视一切的情感，自认为这会使我更强而实际上就如同人失去了血肉一样将骨骸裸露只让我变得更脆弱"></a>曾几何时，我伤透了心<br>我以为，是感情导致我的失败<br>我试图冷漠无情<br>藐视一切的情感，自认为这会使我更强<br>而实际上<br>就如同人失去了血肉一样<br>将骨骸裸露<br>只让我变得更脆弱</h2><h2 id="我不再感情用事纠结利益的得失我希望能堕入黑暗在万劫不复的深渊中重生得到的仅仅是绝望"><a href="#我不再感情用事纠结利益的得失我希望能堕入黑暗在万劫不复的深渊中重生得到的仅仅是绝望" class="headerlink" title="我不再感情用事纠结利益的得失我希望能堕入黑暗在万劫不复的深渊中重生得到的仅仅是绝望"></a>我不再感情用事<br>纠结利益的得失<br>我希望能堕入黑暗<br>在万劫不复的深渊中重生<br>得到的仅仅是绝望</h2><h2 id="我希望我能重新追逐光血肉生长长出心脏我明白，血肉生长的同时弱点会伴随而生但即便如此我至少是个人而不是骸骨"><a href="#我希望我能重新追逐光血肉生长长出心脏我明白，血肉生长的同时弱点会伴随而生但即便如此我至少是个人而不是骸骨" class="headerlink" title="我希望我能重新追逐光血肉生长长出心脏我明白，血肉生长的同时弱点会伴随而生但即便如此我至少是个人而不是骸骨"></a>我希望我能重新追逐光<br>血肉生长<br>长出心脏<br>我明白，血肉生长的同时<br>弱点会伴随而生<br>但即便如此<br>我至少是个人<br>而不是骸骨</h2><p>题：抛心之人的寻心之词<br>2023.1.3</p>
-]]></content>
-      <categories>
-        <category>寻心</category>
-      </categories>
-      <tags>
-        <tag>日记</tag>
-        <tag>寻心</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用Docker多开RW-HPS</title>
-    <url>/2022/11/17/%E4%BD%BF%E7%94%A8docker%E5%A4%9A%E5%BC%80RW-HPS/</url>
-    <content><![CDATA[<p>准备工作：</p>
-<p>一台Linux服务器<br>安装docker</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">docker pull [最新版的docker镜像]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>1.由于Dr没有在1.0.0.x版本的docker镜像中准备res资源，我们需要进入docker后手动准备</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">wget -c 下载链接</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>2.删除多余的sh脚本和jar，换成最新版的core和jar,并安装vim<br>ps: pull来的docker内部预置好了对RW-HPS兼容性最好的JAVA 11 JKD</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">rm -rf 你要删的文件</span><br><span class="line"></span><br><span class="line">apt update</span><br><span class="line"></span><br><span class="line">apt install sudo</span><br><span class="line"></span><br><span class="line">apt install vim</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>3.准备完成，退出镜像</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">ctrl + p + q</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>4.查看容器ID，进行构建</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">docker ps</span><br><span class="line"></span><br><span class="line">docker commit -a [作者信息] [容器id] [镜像名]:[TAG]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>5.打包完成，指定端口启动</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">docker run --name 容器名称 -d -p 端口:端口 -v ~/rw-hps-data:/app/data [你的镜像ID]:[TAG]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>6.进入容器，修改配置</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">docker exec -it [容器名称] bash</span><br><span class="line"></span><br><span class="line">cd data</span><br><span class="line"></span><br><span class="line">sudo vim Config.json</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>7.卸载多余组件，启动</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">sudo dpkg --purge vim vim-common vim-addon-manager</span><br><span class="line"></span><br><span class="line">java -jar [你的jar包]	</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<p>ps:实际命令中所有[]都是不需要写的，仅在文中起到提示作用。</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>Linux</tag>
-        <tag>debian</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于Gitee搭建Page的一些注意事项</title>
-    <url>/2023/03/06/%E5%85%B3%E4%BA%8EGitee%E6%90%AD%E5%BB%BAHexo%E7%9A%84%E9%9A%8F%E7%AC%94/</url>
-    <content><![CDATA[<h1 id="关于Gitee搭建Page的一些注意事项"><a href="#关于Gitee搭建Page的一些注意事项" class="headerlink" title="关于Gitee搭建Page的一些注意事项"></a>关于Gitee搭建Page的一些注意事项</h1><p>此文章专门为从Github使用者转国内Gitee开源平台的人而写，作者纯小白，如有误区欢迎指正。<br>此前我的个人博客部署在Github，但因地域问题国内访问速度太过尴尬，在发现国内开源社区后我便探寻有无类似的功能，答案是有的。但在探寻的过程中我发现一些差异，与国外的Github并不是完全一样，也因此踩了不少坑。故写下此文章，希望能帮到有类似情况的人，也便于我进行记忆。<br>整个步骤一共分为三步：<br>        0. 实名认证（国内政策需要）<br>        1. 建立代码仓：我们需要代码仓储存我们静态网站的源代码文件<br>        2. 开源代码仓：Gitee已停止对闭源代码仓提供Page服务<br>        3. 在PUSH完成后在Page服务页面进行选择更新<br> 看似几乎没有区别，仅仅多了第0步和第3步，其实每一步的背后都有着存在的意义。<br> 主要踩坑还是第三步，因为github的Page页面是实时的更新的，会自动的读取代码仓中的内容。而Gitee必须选择手动提交，以至于我因为用惯了Github，便在测试的时候反复刷新页面和Push代码，一直没找到问题。</p>
-<h2 id="关于误区"><a href="#关于误区" class="headerlink" title="关于误区"></a>关于误区</h2><p>网上的几乎都是以自己名字当作代码仓运行GiteePage的教程，甚至有的教程说不可以在其他名称的仓库搭建hexo架构的博客。后者简直是误人子弟，我这个博客便是最好的证明。<br> 只需要解决其中一个小细节即可，那就是修改 _config.yml 之中的文件</p>
-<pre><code class="yml">    index_generator:
-  path: &#39;myblog&#39;
-  per_page: 10
-  order_by: -date
-
-
-
-
-&amp;ensp修改path的字符串为仓库名称即可，实际上path指向的是网站开始的目录。
-
-
----
-
-经过实践证明以上纯几把扯淡！！！！！！！！！！！
-
-##最后一点
-Gitee有一套审查系统，会在网站进行部署/更新的时候，检查网页中是否含有敏感内容，若是出现则无法通过审核会自动的终止部署。
-
-
-
-
-
-
-
-</code></pre>
-]]></content>
-      <categories>
-        <category>Blog</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前后端数据交流的实现方法</title>
-    <url>/2023/02/20/%E5%89%8D%E5%90%8E%E7%AB%AF%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93/</url>
-    <content><![CDATA[<p>前后端数据交流的实现方法</p>
-<p>【关于笨蛋想出来的跨域请求的前后端方法】<br>这种方法比较笨，理解起来也不太容易。<br>第一步：<br>先通过web服务器部署一个前端页面。<br>可以使用apache,nginx，此类通用服务器，或者tomcat ,tornado，这类服务器，也可以手动用socket部署。<br>使用socket部署也很简单，只要监听请求，就将页面数据发送过去就可以了。<br>ps:第一步是为了将页面呈现出来，实现外部的访问，也就是我们的前端。<br>第二步：<br>使用编程语言写一个程序，监听一个端口，将此端口受到的数据进行处理。<br>而第一步部署的页面的表单，向此端口进行发送。<br>ps:思考一下，后端将数据发送回来，前端的程序又该如何写呢。这时候我产生了一些想法，前端只需要根据后端传来的数据判断，返回不同的页面就可以了。<br>ps:预防中间人攻击，TLS证书对双方传输的数据进行加密，这样被抓到数据包也无法将其破解。<br>ps:这种方法叫做跨域请求，因为端口不同的问题，会影响数据的传输。</p>
-<p>【关于Djongo和正常的前后端方法】<br>这个方法的实现原理比方法一简单一些，但是更抽象一些。<br>这个方法就是通过web服务器框架直接进行前后端分离。<br>例如，Djongo，flask。<br>web服务器本身会监听一个端口，而传输数据则只需要传输到自己监听的端口就可以？<br>ps:众所周知Djongo是一个MVC架构的框架，但是因为使用了http协议，比起应用程序，要多一层浏览器的交互，这一层还是比较难理解的。<br>ps:实际上Djongo是通过内部的API和MongoDB进行交互的，表单将通过令牌验证后将数据发送到我们在Django中定义的视图。<br>ps:实际上Djongo等服务器的职能于方法一相同的，而仿写这个职能也很简单，只需要将数据发送给自身端口进行处理即可。<br>ps:实现方法：当端口接到http访问请求，呈现页面。接到数据请求，进行数据处理。</p>
-<p>【关于CGI】<br>CGI：网关接口，可以直接编译并运行程序，将程序输出的内容呈现为页面。<br>猜测：网关接口的主要用途在于一个服务器支持多种编程语言写的web程序，并且减少端口资源的使用。</p>
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>基础</tag>
-        <tag>Python</tag>
-        <tag>前端</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>英语小作文</title>
-    <url>/2022/11/07/%E5%B0%8F%E4%BD%9C%E6%96%87/</url>
-    <content><![CDATA[<p>由于本人之前英语极差，所以此次小作文是本人第一次尝试英语写作。</p>
-<p>This is book title will say light or dark.</p>
-<p>All this because by my fast subdorsal 3000 English word.</p>
-<p>One</p>
-<p>“Blake … Blake..” A very weaking voice said.<br>Silent S city,clear night sky under a white hair young girl lying in the blood pool.<br>Her double eyes slightly tremble, like having seen tremendous terror.<br>“If can again attack,I certain win….”<br>Scene transformation in eyes front of us ,last is new<br>Sky.<br>That is bloody red sky.<br>“girl, I am god.”<br>“Do you yearn force?”<br>“yes”<br>“Then I will achieve your went.”<br>boom!!!<br>···emmmmm<br>lan得写了</p>
-<p>aaaaaaaaaaa~</p>
-<p>QAQ</p>
-]]></content>
-      <categories>
-        <category>英语</category>
-      </categories>
-      <tags>
-        <tag>英语</tag>
-        <tag>写作</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>一场记忆还算清楚的梦境</title>
-    <url>/2023/03/11/%E6%A2%A6%E5%A2%83-2023-3-11/</url>
-    <content><![CDATA[<p>忘记了是什么原因，也许是受人指使。我来到了一个酷似刑房的地方，这个刑房架在高空中，我必须踩着纤细木条移动，就像在走独木桥一样。我跳上的绞肉机上方的木条，从断头台走过到了另一端，面前只剩下了几个更为纤细和脆弱的木条在眼前。我明白，我必须踩着木条移动过去。眼前纤细的木条飘在空中我没有半分的惊诧。我义无反顾的走了上去，快速的到了最纤细的那根上，也是最后的一根，眼前没有了道路，脚下是深渊。而木条在我踩上去顷刻之间便如被咬碎的花生糖一般变成碎片，虽然花生糖这个形容并不恰当，但我感觉这些最贴合的【口感】。紧接着，我向下坠落而去，坠下深渊。下方是数不清的触手，神秘莫幻的色彩，以及我无法形容出来的，潜藏在阴影之中的生物。但我没有完全的坠下去，我落到了深渊中心的木条上，我紧紧的抱着木条，而木条的两端似乎和这个世界的天空有绳索相连，就这样我抱着木条缓缓地向下，越来越接近怪物。终于我直视了一眼天空，却只看到早已经被如海葵般舞动的触手遮挡了起来。触手是黑暗主色调的，却又掺杂着一丝光亮的彩色。全程中毫无恐惧之意，似乎一切都理所当然。而到达深渊底部后的一些记忆全部都缺失，我不明白发生了什么。今天的故事，就此收尾。</p>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-      <tags>
-        <tag>故事</tag>
-        <tag>梦境</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>网络安全基础</title>
-    <url>/2022/10/28/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/</url>
-    <content><![CDATA[<h1 id="漏洞"><a href="#漏洞" class="headerlink" title="漏洞"></a>漏洞</h1><p>1.网络协议本身的逻辑漏洞<br>2.通过网络分析工具，窃取<br>3.应用场景中网络协议的不同逻辑错误<br>4.基主机，操作系统，通信层，应用层</p>
-<p>协议：<br>ARP协议：根据IP获取物理地址，无法在对等网络中解析数据包的来源</p>
-<p>ARP欺骗：<br>通过MAC地址与目标IP相关联。以便于攻击者可以接收到与目标的任何？</p>
-<p>2.DNS<br> 可将域名解析为IP<br> 缓存中毒，DNS欺骗</p>
-<p>3.IP协议<br>  根据端到端的设计原则，IP为主机提供一种无连接、不可靠、尽力而为的数据包传输服务。<br>  吧发送的IP包中的源IP地址 改成被新人的友好主机的IP地址，进而实施攻击。</p>
-<p>4.远程桌面协议 RDP<br>  RDP漏洞攻击，不用任何交互绕过认证，直接通过RDP协议进行连接，进而发送恶意代码。</p>
-<p>5.简单邮件传输协议（SMTP）<br>通过电子邮件，发送垃圾软件和电子邮件。执行目录攻击，收集有效电子邮件。<br>根据漏洞进行缓冲区溢出攻击，特洛伊木马攻击和shell脚本攻击等，还可利用电子邮件发送垃圾邮件或恶意软件。</p>
-<h1 id="软件和硬件的漏洞"><a href="#软件和硬件的漏洞" class="headerlink" title="软件和硬件的漏洞"></a>软件和硬件的漏洞</h1><p>1.软件<br>系统软件<br>应用软件<br>数据库软件</p>
-<p>软件错误，软件缺陷，软件失效</p>
-<ol start="2">
-<li>硬件，通过通信线路传输，传输过程中也可能被截取</li>
-<li>电磁波辐射中的信息也可能被接受<br>4.水电，空调，中断，会影响系统运行</li>
-</ol>
-]]></content>
-      <categories>
-        <category>网络安全</category>
-      </categories>
-      <tags>
-        <tag>基础</tag>
-        <tag>概念</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>英语的介词</title>
-    <url>/2022/11/06/%E8%8B%B1%E8%AF%AD%E4%BB%8B%E8%AF%8D%E8%AE%AD%E7%BB%83/</url>
-    <content><![CDATA[<p>in，on，with，by，for，at，about，under，of</p>
-<p>【介词】<br>介词是一种虚词，不能单独作为句子成分，通常用在名词或代词之前。<br>常用的英语介词有：in，on，with，by，for，at，about，under，of等。</p>
-<p>表示在某时间时，常用at，on，in等介词。at用来表示在某一段时刻，如at six：在6点钟。<br>on用来表示在星期几或是某日，如：on Monday：在星期一。<br>in用来表示一天中的早中晚、月份、季节或年份。如：in Spring在春天。</p>
-<p>during，for，over，within，throughout，from和to等介词表示期间。<br>before，after，since，until，till，between，up to等，也有时间概念。</p>
-<p>在表示方位时，常用at，in，on，to，for，above，over，below，under，<br>in front of，in the front of，beside，behind等。</p>
-<p>英语介词还可以表示进行，在作为表语时，at、on、under等可以表示正在进行的动作。<br>如：she is at work.她正在工作。</p>
-<p>介词也可以表示原因，常用for等。在表示方法、手段的介词常用by，with，through等。<br>表示数量的时候常用介词有about，around，over等。</p>
-]]></content>
-      <categories>
-        <category>英语</category>
-      </categories>
-      <tags>
-        <tag>语法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>英语单词的构成</title>
-    <url>/2022/11/06/%E8%8B%B1%E8%AF%AD%E7%9A%84%E5%8D%95%E8%AF%8D%E6%9E%84%E6%88%90/</url>
-    <content><![CDATA[<p>【构词法】<br>—转化法<br>动词转化为名词<br>名词转化为动词<br>形容词转化为动词<br>形容词转化为名词<br>形容词转化为副词<br>个别词分场合转化为名词<br>—合成法<br>合成名词<br>合成形容词<br>合成动词<br>合成副词<br>合成代词<br>合成介词<br>—派生法<br>前缀-单词的意义<br>形容词的后缀<br>名词的后缀<br>动词的后缀<br>副词的后缀<br>数词的后缀<br>—其他<br>拼缀法<br>缩略法<br>逆向构词法<br>拟声法<br>类比法<br>截短构词法<br>词根词缀构词法</p>
-]]></content>
-      <categories>
-        <category>英语</category>
-      </categories>
-      <tags>
-        <tag>语法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>英语的语型</title>
-    <url>/2022/11/06/%E8%8B%B1%E8%AF%AD%E7%9A%84%E5%8F%A5%E5%9E%8B/</url>
-    <content><![CDATA[<p>一、句型1： Subject (主语) ＋ Verb (谓语)</p>
-<p>二、句型2：Subject (主语) ＋ Link. V(系动词) ＋ Predicate(表语)</p>
-<p>三、句型3：Subject(主语) ＋ Verb (谓语) ＋ Object (宾语)</p>
-<p>四、句型4： Subject(主语)＋Verb(谓语)＋ Indirect object(间接宾语)＋Direct object (直接宾语)</p>
-<p>五、句型5： Subject(主语)＋Verb (动词)＋Object (宾语)＋Complement(补语)</p>
-<p>【主语】</p>
-<p>主语是谓语的陈述对象，如“我写字”中的“我”就是主语，它做出“写”这个动作，“写”则是谓语，用来陈述主语的动作，<br>而“字”是接受谓语“写”这个动作的对象，它因此被称为宾语，有的语法书也称它为“客体”或“受体”。<br>主语是句子中的陈述对象，与英语语法也有相似之处。常常由名词、 代词、或 名词性短语充当。<br>形容词、动词、 谓语性短语和 主谓短语也可充当主语。 句子成分划分时，主语符号为双横线。</p>
-<p>【谓语】</p>
-<p>谓语(Predicate)是对主语动作状态或特征的陈述或说明，指出”做什么(what to do)” , “是什么(what is this)”。<br>谓语动词的位置一般在主语之后，经常用动词和形容词搭配来充当谓语动词。<br>在英语中，动词按作用和功能主要分为两大类，一类是谓语动词，另一类是非谓语动词。</p>
-<p>【宾语】</p>
-<p>宾语，也称受词，是指一个动作（动词）的接受者。<br>宾语分为直接宾语和间接宾语两大类，其中直接宾语指动作的直接对象，间接宾语说明动作的非直接，但受动作影响的对象。<br>一般而言，及物动词后面最少要有一个宾语，而该宾语通常为直接宾语，<br>有些及物动词要求两个宾语，则这两个宾语通常一个为直接宾语，另一个为间接宾语。</p>
-<p>【句型一】<br>这种句型中的动词大多是不及物动词，所谓不及物动词，就是这种动词后不可以直接接宾语。<br>常见的动词如：work, sing, swim, fish, jump, arrive, come, die, disappear, cry, happen等。</p>
-<p>如：</p>
-<ol>
-<li><p>Li Ming works very hard.李明学习很努力。</p>
-</li>
-<li><p>The accident happened yesterday afternoon.事故是昨天下午发生的。</p>
-</li>
-</ol>
-<p>3）Spring is coming.</p>
-<ol start="4">
-<li>We have lived in the city for ten years.</li>
-</ol>
-<p>【句型二】<br>这种句型主要用来表示主语的特点、身份等。其系动词一般可分为下列两类：</p>
-<p>(1)表示状态。这样的词有：be, look, seem, smell, taste, sound, keep等。如：</p>
-<ol>
-<li><p>This kind of food tastes delicious.这种食物吃起来很可口。</p>
-</li>
-<li><p>He looked worried just now.刚才他看上去有些焦急。</p>
-</li>
-</ol>
-<p>(2)表示变化。这类系动词有：become, turn, get, grow, go等。如：</p>
-<ol>
-<li><p>Spring comes. It is getting warmer and warmer.春天到了，天气变得越来越暖和。</p>
-</li>
-<li><p>The tree has grown much taller than before.这棵树比以前长得高多了。</p>
-</li>
-</ol>
-<p>【句型三】<br>这种句型中的动词一般为及物动词, 所谓及物动词，就是这种动词后可以直接接宾语，<br>其宾语通常由名词、代词、动词不定式、动名词或从句等来充当。</p>
-<p>例：</p>
-<ol>
-<li><p>He took his bag and left.（名词） 他拿着书包离开了。</p>
-</li>
-<li><p>Li Lei always helps me when I have difficulties. (代词)当我遇到困难时，李雷总能给我帮助。</p>
-</li>
-<li><p>She plans to travel in the coming May Day.（不定式）她打算在即将到来的“五一”外出旅游。</p>
-</li>
-<li><p>I don?t know what I should do next. (从句)我不知道下一步该干什么。</p>
-</li>
-</ol>
-<p>注意：英语中的许多动词既是及物动词，又是不及物动词。</p>
-<p>【句型四】</p>
-<p>这种句型中，直接宾语为主要宾语，表示动作是对谁做的或为谁做的，在句中不可或缺，常常由表示“物”的名词来充当；<br>间接宾语也被称之为第二宾语，去掉之后，对整个句子的影响不大，多由指“人”的名词或代词承担。<br>引导这类双宾语的&#96;常见动词有：buy, pass, lend, give, tell, teach, show, bring, send等。</p>
-<p>如：</p>
-<ol>
-<li>Her father bought her a dictionary as a birthday present.她爸爸给她买了一本词典作为生日礼物。</li>
-</ol>
-<p>2）The old man always tells the children stories about the heroes in the Long March.</p>
-<p>老人经常给孩子们讲述长征途中那些英雄的故事。 上述句子还可以表达为：</p>
-<p>1）Her father bought a dictionary for her as a birthday present.</p>
-<p>2）The old man always tells stories about the heroes to the children in the Long March.</p>
-<p>【句型五】<br>这种句型中的“宾语 ＋ 补语”统称为“复合宾语”。宾语补足语的主要作用或者是补充、说明宾语的特点、身份等；<br>或者表示让宾语去完成的动作等。担任补语的常常是名词、形容词、副词、介词短语、分词、动词不定式等。</p>
-<p>如：</p>
-<p>1）You should keep the room clean and tidy. 你应该让屋子保持干净整洁。（形容词）</p>
-<ol start="2">
-<li><p>We made him our monitor.(名词)我们选他当班长。</p>
-</li>
-<li><p>His father told him not to play in the street.(不定式)他父亲告诉他不要在街上玩。</p>
-</li>
-</ol>
-<p>4）My father likes to watch the boys playing basketball.(现在分词)</p>
-<ol start="5">
-<li>Yesterday I had a picture taken with two Americans.(过去分词)</li>
-</ol>
-<p>● 常见的动词有: tell, ask, advise, help, want, would like, order, force, allow等。</p>
-<p>● 注意：动词have, make, let, see, hear, notice, feel, watch等后面所接的动词不定式作宾补时，不带to。如：</p>
-<ol>
-<li><p>The boss made him do the work all day.老板让他整天做那项工作。</p>
-</li>
-<li><p>I heard her sing in the next room all the time last night.昨天晚上我听见她在隔壁唱了一个晚上。</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>英语</category>
-      </categories>
-      <tags>
-        <tag>语法</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JAVASE _1</title>
-    <url>/2022/07/20/%E8%BF%99%E6%98%AF%E7%88%B7%E7%9A%84%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<p>C语言<br>贴近硬件，运行快，效率高<br>操作系统，编译器，数据库，网络系统  【非常严格】<br>指针和内存管理</p>
-<p>1982 C++	【非常复杂的特性】【需要非常多的底层知识】<br>面向对象<br>兼容C<br>图形领域，游戏</p>
-<p>JAVA<br>语法像C<br>没有指针<br>没有内存管理<br>真正的可移植性，到处运行（）<br>面向对象<br>类型安全<br>高质量类库<br>层叫 	C++ –</p>
+    <url>/2022/07/20/2022-7-20-%E8%BF%99%E6%98%AF%E7%88%B7%E7%9A%84%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>C语言
+贴近硬件，运行快，效率高
+操作系统，编译器，数据库，网络系统  【非常严格】
+指针和内存管理</p>
+<p>1982 C++	【非常复杂的特性】【需要非常多的底层知识】
+面向对象
+兼容C
+图形领域，游戏</p>
+<p>JAVA
+语法像C
+没有指针
+没有内存管理
+真正的可移植性，到处运行（）
+面向对象
+类型安全
+高质量类库
+层叫 	C++ –</p>
 <p>JAVA初生</p>
 <p>图形界面程序 Applet</p>
 <p>Java 2 桌面 J2SE</p>
@@ -1722,7 +1579,7 @@ Gitee有一套审查系统，会在网站进行部署/更新的时候，检查�
 <p>唔，以后池沼开发一个自己的编译器，这个用着真不舒服。。</p>
 <hr>
 <p>解决问题的网址</p>
-<p><a href="https://blog.csdn.net/White_Idiot/article/details/54670243">https://blog.csdn.net/White_Idiot/article/details/54670243</a></p>
+<p>https:&#x2F;&#x2F;blog.csdn.net&#x2F;White_Idiot&#x2F;article&#x2F;details&#x2F;54670243</p>
 <p>同时学到了一条新命令</p>
 <p>javac -encoding “UTF-8” FirstSample.java</p>
 <p>通过指定编码的方式运行javac</p>
@@ -1786,80 +1643,17 @@ Gitee有一套审查系统，会在网站进行部署/更新的时候，检查�
 <h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><p>&#x2F;&#x2F; 单行注释</p>
 <p>&#x2F;*   *&#x2F; 多行注释</p>
 <hr>
-<h3 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h3><table>
-<thead>
-<tr>
-<th align="center">abstract</th>
-<th>assert</th>
-<th>bollean</th>
-<th>break</th>
-<th>byte</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">case</td>
-<td>catch</td>
-<td>char</td>
-<td>calss</td>
-<td>conse</td>
-</tr>
-<tr>
-<td align="center">continue</td>
-<td>default</td>
-<td>do</td>
-<td>double</td>
-<td>else</td>
-</tr>
-<tr>
-<td align="center">enum</td>
-<td>extends</td>
-<td>final</td>
-<td>finally</td>
-<td>float</td>
-</tr>
-<tr>
-<td align="center">for</td>
-<td>goto</td>
-<td>if</td>
-<td>implements</td>
-<td>import</td>
-</tr>
-<tr>
-<td align="center">instanceof</td>
-<td>int</td>
-<td>interface</td>
-<td>long</td>
-<td>native</td>
-</tr>
-<tr>
-<td align="center">new</td>
-<td>package</td>
-<td>private</td>
-<td>protected</td>
-<td>public</td>
-</tr>
-<tr>
-<td align="center">return</td>
-<td>strictfp</td>
-<td>short</td>
-<td>static</td>
-<td>super</td>
-</tr>
-<tr>
-<td align="center">switch</td>
-<td>synchronized</td>
-<td>this</td>
-<td>throw</td>
-<td>throws</td>
-</tr>
-<tr>
-<td align="center">transient</td>
-<td>try</td>
-<td>void</td>
-<td>volatile</td>
-<td>while</td>
-</tr>
-</tbody></table>
+<h3 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h3><p>| abstract | assert  | bollean | break   | byte  |
+| :——: | ——- | ——- | ——- | —– |
+| case     | catch   | char    | calss   | conse |
+| continue | default | do      | double  | else  |
+| enum     | extends | final   | finally | float |
+|  for                | goto     |if|implements|import|
+| instanceof  |int|interface|long|native|
+| new             |package|private|protected|public|
+| return|strictfp|short|static|super|
+| switch|synchronized|this|throw|throws|
+| transient|try|void|volatile|while|</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">calss1</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">qwq</span> <span class="operator">=</span><span class="string">&quot;233&quot;</span>; <span class="comment">//qwq为标识符，以小写字母开头</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">QAQ</span> <span class="operator">=</span> <span class="string">&quot;233&quot;</span>;<span class="comment">//大写字母</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">$qwq</span> <span class="operator">=</span> <span class="string">&quot;233&quot;</span>;<span class="comment">//美元符号</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">_QWQ</span> <span class="operator">=</span> <span class="string">&quot;233&quot;</span>;<span class="comment">//下划线</span></span><br><span class="line">        String 傻逼 = <span class="string">&quot;233&quot;</span>;<span class="comment">//中文命名</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//标识符是大小写敏感得</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="JAVA-数据类型"><a href="#JAVA-数据类型" class="headerlink" title="JAVA 数据类型"></a>JAVA 数据类型</h2><h3 id="JAVA为强类型语言"><a href="#JAVA为强类型语言" class="headerlink" title="JAVA为强类型语言"></a>JAVA为强类型语言</h3><ul>
@@ -2018,8 +1812,33 @@ Gitee有一套审查系统，会在网站进行部署/更新的时候，检查�
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> base2;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> allure</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 1.8</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">doc</span> &#123;</span><br><span class="line">    String name;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**   //** +回车就星了</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> name</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">test</span><span class="params">(String name)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>关于DIEA右键的翻译</p>
-<p>Find Usages             | 搜索用法<br>Analyze 					|分析<br>Refactor					|重新构建<br>——					<br>Bookmarks			   |书签<br>——<br>Browse type Hierarchy|浏览类型层次结构<br>Reformat Code 			 |格式化代码<br>Optimize Imports		  |优化包引用<br>Delete 							 |删除<br>Override File Type		 |覆盖文件类型<br>——<br>Build Module 			     |构建模块<br>——<br>Open in Right Split         |从右边打开<br>Open in							|打开</p>
-<p>——<br>Local History					|历史记录<br>Repair IDE						 |修复IDE<br>Reload from Disk			 |从磁盘重新加载<br>——<br>Compare With    			   |与…比较<br>Compart File with Editor  |将文件与编辑器比较<br>——<br>Diagrams							 |图表<br>——<br>Convert java File to Kotlin File|将Java文件转换为Kotlin文件</p>
+<p>Find Usages             | 搜索用法 
+Analyze 					|分析
+Refactor					|重新构建
+——					
+Bookmarks			   |书签
+——
+Browse type Hierarchy|浏览类型层次结构
+Reformat Code 			 |格式化代码
+Optimize Imports		  |优化包引用
+Delete 							 |删除
+Override File Type		 |覆盖文件类型
+——
+Build Module 			     |构建模块 
+——
+Open in Right Split         |从右边打开
+Open in							|打开</p>
+<p>——
+Local History					|历史记录
+Repair IDE						 |修复IDE
+Reload from Disk			 |从磁盘重新加载
+——
+Compare With    			   |与…比较
+Compart File with Editor  |将文件与编辑器比较
+——
+Diagrams							 |图表
+——
+Convert java File to Kotlin File|将Java文件转换为Kotlin文件</p>
 <h2 id="javadoc的CMD命令"><a href="#javadoc的CMD命令" class="headerlink" title="javadoc的CMD命令"></a>javadoc的CMD命令</h2><p>javadoc -encoding UFT-8 -charset UTF-8 xx.java</p>
 <p>​				-编码  参数  -字符 参数  xxx.java</p>
 <h2 id="使用IDEA生成javadoc"><a href="#使用IDEA生成javadoc" class="headerlink" title="使用IDEA生成javadoc"></a>使用IDEA生成javadoc</h2><ol>
@@ -2085,7 +1904,7 @@ Gitee有一套审查系统，会在网站进行部署/更新的时候，检查�
   </entry>
   <entry>
     <title>JAVASE_2</title>
-    <url>/2022/08/01/%E8%BF%99%E6%98%AF%E7%88%B7%E7%9A%84%E7%AC%94%E8%AE%B02/</url>
+    <url>/2022/08/01/2022-8-1-%E8%BF%99%E6%98%AF%E7%88%B7%E7%9A%84%E7%AC%94%E8%AE%B02/</url>
     <content><![CDATA[<ol>
 <li>通过函数访问到Scanner.java  （xxx.java）</li>
 <li>通过左侧Structure 查看方法列表</li>
@@ -2200,7 +2019,8 @@ Gitee有一套审查系统，会在网站进行部署/更新的时候，检查�
 <h3 id="引用传递"><a href="#引用传递" class="headerlink" title="引用传递"></a>引用传递</h3><ul>
 <li><p>引用传递：是指在调用函数时，将实际参数的地址传递到函数中，那么在函数中对参数进行修改，将会影响到实际参数</p>
 </li>
-<li><p>引用数据类型分为两个部分，引用变量和对象，这两个部分放在不同的地方，引用变量在栈中，而对象是放在<a href="https://so.csdn.net/so/search?q=%E5%A0%86%E5%86%85%E5%AD%98&spm=1001.2101.3001.7020">堆内存</a>中的，引用变量指向对象。<br>如下图所示，当传递参数之前会将参数进行复制，但是复制的是引用变量，复制后的引用变量还是指向内存中的同一对象，所以引用传递中，函数修改了参数会影响实际参数</p>
+<li><p>引用数据类型分为两个部分，引用变量和对象，这两个部分放在不同的地方，引用变量在栈中，而对象是放在<a href="https://so.csdn.net/so/search?q=%E5%A0%86%E5%86%85%E5%AD%98&spm=1001.2101.3001.7020">堆内存</a>中的，引用变量指向对象。
+如下图所示，当传递参数之前会将参数进行复制，但是复制的是引用变量，复制后的引用变量还是指向内存中的同一对象，所以引用传递中，函数修改了参数会影响实际参数</p>
 </li>
 </ul>
 <p><img src="https://img-blog.csdnimg.cn/20201029230018688.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1N0YXJ0MTIzNDU2Nw==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
@@ -2265,9 +2085,27 @@ Gitee有一套审查系统，会在网站进行部署/更新的时候，检查�
       </tags>
   </entry>
   <entry>
+    <title>你说的对</title>
+    <url>/2023/01/11/2023-1-11-nonebot/</url>
+    <content><![CDATA[<p>你说的对，但是《NoneBot2》是由NoneBot团队自主研发的一款全新开放世界冒险游戏。游戏发生在一个被称作「QQ」的幻想世界，在这里，被神选中的人将被授予「go-cqhttp」，导引OneBotv11之力。你将扮演一位名为「插件开发者」的神秘角色，在自由的旅行中邂逅ModuleNotFoundError: No module named ‘nonebot.adapters.onebot’、ImportError: cannot import name ‘State’ from ‘nonebot.params’，和他们一起breaking change，找回失散的插件——同时，逐步发掘「NoneBot2 是一个跨平台的 Python 聊天机器人框架」的真相。</p>
+]]></content>
+      <categories>
+        <category>Nonebot</category>
+      </categories>
+      <tags>
+        <tag>Bot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>这段时间的所感所想</title>
-    <url>/2023/01/23/%E8%BF%99%E6%AE%B5%E6%97%B6%E9%97%B4%E7%9A%84%E6%89%80%E6%84%9F%E6%89%80%E6%83%B3/</url>
-    <content><![CDATA[<p>  导航制作一事任重而道远，暂时技术力不足以复刻bootstarp5的完美响应式布局部署内容，但PC端勉强看的过去固将计划延后。<br>  由于域名备案一事的问题，CDN的添加也暂缓。国外免费域名freenom不支持代理服务器连接有点生草，我以前是怎么登的？（大雾）<br>  但是没有CDN就意味着真实IP的暴露，我可不想服务器每天被打爆几个端口，所以网址暂不公开。<br>  再统计一下最近的计划中的项目，&#x3D;&#x3D;挖的坑是真多。<br>  首先是打算基于龙卷风实现的铁锈战争服务器，服务器是战网的基础。为什么要用Python写呢，因为最近很久我没办法重拾其他语言，如果可以的话我想用C++实现。这款应用主要是写网络层的东西，但是我唯一能参考的代码是Dr用Kotlin写的那玩意，我根据IDEA读了很久的代码，根据项目结构倒是推断出了其中实现原理的一部分，但是&#x3D;&#x3D;，我特喵真的不太懂这项目具体咋实现的，我无法推断自己的理解是否有误。简单来说我目前就是个有源码读也不一定能仿写成功的废材。也许我该多试试Debug吧，但是gradle那玩意真的很烦啊，为什么相同的源码会别人可以我却构建失败啊。&#x3D;&#x3D;真搞不懂java和kotlin!<br>  还有就是LOVE酱的开发，一款基于Nonebot框架实现的机器人。之前倒是写出个雏形来了，但是数据库以及AI模型还有RW接口我都一直在搁置，还有许诺群友写的小游戏写了一半又封存了。<br>  最后是答应文游圈群友打算实现的SLG游戏&#x3D;&#x3D;，不过我才新建文件夹呢，具体怎么实现八字没一撇。</p>
+    <url>/2023/01/23/2023-1-23-%E8%BF%99%E6%AE%B5%E6%97%B6%E9%97%B4%E7%9A%84%E6%89%80%E6%84%9F%E6%89%80%E6%83%B3/</url>
+    <content><![CDATA[<p>  导航制作一事任重而道远，暂时技术力不足以复刻bootstarp5的完美响应式布局部署内容，但PC端勉强看的过去固将计划延后。
+  由于域名备案一事的问题，CDN的添加也暂缓。国外免费域名freenom不支持代理服务器连接有点生草，我以前是怎么登的？（大雾）
+  但是没有CDN就意味着真实IP的暴露，我可不想服务器每天被打爆几个端口，所以网址暂不公开。
+  再统计一下最近的计划中的项目，&#x3D;&#x3D;挖的坑是真多。
+  首先是打算基于龙卷风实现的铁锈战争服务器，服务器是战网的基础。为什么要用Python写呢，因为最近很久我没办法重拾其他语言，如果可以的话我想用C++实现。这款应用主要是写网络层的东西，但是我唯一能参考的代码是Dr用Kotlin写的那玩意，我根据IDEA读了很久的代码，根据项目结构倒是推断出了其中实现原理的一部分，但是&#x3D;&#x3D;，我特喵真的不太懂这项目具体咋实现的，我无法推断自己的理解是否有误。简单来说我目前就是个有源码读也不一定能仿写成功的废材。也许我该多试试Debug吧，但是gradle那玩意真的很烦啊，为什么相同的源码会别人可以我却构建失败啊。&#x3D;&#x3D;真搞不懂java和kotlin!
+  还有就是LOVE酱的开发，一款基于Nonebot框架实现的机器人。之前倒是写出个雏形来了，但是数据库以及AI模型还有RW接口我都一直在搁置，还有许诺群友写的小游戏写了一半又封存了。
+  最后是答应文游圈群友打算实现的SLG游戏&#x3D;&#x3D;，不过我才新建文件夹呢，具体怎么实现八字没一撇。</p>
 ]]></content>
       <categories>
         <category>感悟</category>
@@ -2277,31 +2115,694 @@ Gitee有一套审查系统，会在网站进行部署/更新的时候，检查�
       </tags>
   </entry>
   <entry>
-    <title>速出文件扩展名</title>
-    <url>/2022/10/26/%E9%80%9F%E5%87%BA%E6%96%87%E4%BB%B6%E6%89%A9%E5%B1%95%E5%90%8D/</url>
-    <content><![CDATA[<h1 id="快速找出文件上传支持的扩展名"><a href="#快速找出文件上传支持的扩展名" class="headerlink" title="快速找出文件上传支持的扩展名"></a>快速找出文件上传支持的扩展名</h1><h2 id="1-抓包"><a href="#1-抓包" class="headerlink" title="1.抓包"></a>1.抓包</h2><p>使用BurpSuite将抓包的上传文件请求导出，存为譬如<strong>fuzz.txt</strong>的文件</p>
-
-
-<p>图片记得修！</p>
-<h2 id="2-修改内容"><a href="#2-修改内容" class="headerlink" title="2.修改内容"></a>2.修改内容</h2><p>对其中进行<strong>模糊测试</strong>的内容修改</p>
-<p>将其修改为 <strong>FUZZ</strong> 而在其后跑的字典会替换这里的<strong>FUZZ</strong>关键词</p>
-
-
-<h2 id="3-字典小爆破"><a href="#3-字典小爆破" class="headerlink" title="3.字典小爆破"></a>3.字典小爆破</h2><p>使用一个包含各种后缀名的字典开始跑</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ffuf -request fuzz.txt -request-proto http -w /opt/SecLists/Fuzzing/extensions-most-common.fuzz.txt</span><br></pre></td></tr></table></figure>
-
-<p>响应结果如图：</p>
-
-<p>主要区别是Size的大小，这里有1115和1110两种。<br>可以看成1110是被允许的文件扩展名。</p>
-<h2 id="4-优化命令"><a href="#4-优化命令" class="headerlink" title="4.优化命令"></a>4.优化命令</h2><p>增添 -ms 1110</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ffuf -request fuzz.txt -request-proto http -w /opt/SecLists/Fuzzing/extensions-most-common.fuzz.txt -ms 1110</span><br></pre></td></tr></table></figure>
-<p>现在仅显示支持的扩展名了</p>
+    <title>gs被二月斯诺克 86：32</title>
+    <url>/2023/01/12/2023-1-12-gs%E8%A2%AB%E4%BA%8C%E6%9C%88%E5%90%8A%E6%89%93/</url>
+    <content><![CDATA[<p>gs被二月斯诺克 86：32
+gs被二月斯诺克 86：32
+gs被二月斯诺克 86：32
+重要的事情说三遍</p>
+]]></content>
+      <tags>
+        <tag>精彩记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前后端数据交流的实现方法</title>
+    <url>/2023/02/20/2023-2-20-%E5%89%8D%E5%90%8E%E7%AB%AF%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93/</url>
+    <content><![CDATA[<p>前后端数据交流的实现方法</p>
+<p>【关于笨蛋想出来的跨域请求的前后端方法】
+这种方法比较笨，理解起来也不太容易。
+第一步：
+先通过web服务器部署一个前端页面。
+可以使用apache,nginx，此类通用服务器，或者tomcat ,tornado，这类服务器，也可以手动用socket部署。
+使用socket部署也很简单，只要监听请求，就将页面数据发送过去就可以了。
+ps:第一步是为了将页面呈现出来，实现外部的访问，也就是我们的前端。
+第二步：
+使用编程语言写一个程序，监听一个端口，将此端口受到的数据进行处理。
+而第一步部署的页面的表单，向此端口进行发送。
+ps:思考一下，后端将数据发送回来，前端的程序又该如何写呢。这时候我产生了一些想法，前端只需要根据后端传来的数据判断，返回不同的页面就可以了。
+ps:预防中间人攻击，TLS证书对双方传输的数据进行加密，这样被抓到数据包也无法将其破解。
+ps:这种方法叫做跨域请求，因为端口不同的问题，会影响数据的传输。</p>
+<p>【关于Djongo和正常的前后端方法】
+这个方法的实现原理比方法一简单一些，但是更抽象一些。
+这个方法就是通过web服务器框架直接进行前后端分离。
+例如，Djongo，flask。
+web服务器本身会监听一个端口，而传输数据则只需要传输到自己监听的端口就可以？
+ps:众所周知Djongo是一个MVC架构的框架，但是因为使用了http协议，比起应用程序，要多一层浏览器的交互，这一层还是比较难理解的。
+ps:实际上Djongo是通过内部的API和MongoDB进行交互的，表单将通过令牌验证后将数据发送到我们在Django中定义的视图。
+ps:实际上Djongo等服务器的职能于方法一相同的，而仿写这个职能也很简单，只需要将数据发送给自身端口进行处理即可。
+ps:实现方法：当端口接到http访问请求，呈现页面。接到数据请求，进行数据处理。</p>
+<p>【关于CGI】
+CGI：网关接口，可以直接编译并运行程序，将程序输出的内容呈现为页面。
+猜测：网关接口的主要用途在于一个服务器支持多种编程语言写的web程序，并且减少端口资源的使用。</p>
 ]]></content>
       <categories>
-        <category>网络安全</category>
+        <category>前端</category>
       </categories>
       <tags>
-        <tag>文件系统</tag>
+        <tag>基础</tag>
+        <tag>Python</tag>
+        <tag>前端</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>一场记忆还算清楚的梦境</title>
+    <url>/2023/03/11/2023-3-11-%E6%A2%A6%E5%A2%83/</url>
+    <content><![CDATA[<p>忘记了是什么原因，也许是受人指使。我来到了一个酷似刑房的地方，这个刑房架在高空中，我必须踩着纤细木条移动，就像在走独木桥一样。我跳上的绞肉机上方的木条，从断头台走过到了另一端，面前只剩下了几个更为纤细和脆弱的木条在眼前。我明白，我必须踩着木条移动过去。眼前纤细的木条飘在空中我没有半分的惊诧。我义无反顾的走了上去，快速的到了最纤细的那根上，也是最后的一根，眼前没有了道路，脚下是深渊。而木条在我踩上去顷刻之间便如被咬碎的花生糖一般变成碎片，虽然花生糖这个形容并不恰当，但我感觉这些最贴合的【口感】。紧接着，我向下坠落而去，坠下深渊。下方是数不清的触手，神秘莫幻的色彩，以及我无法形容出来的，潜藏在阴影之中的生物。但我没有完全的坠下去，我落到了深渊中心的木条上，我紧紧的抱着木条，而木条的两端似乎和这个世界的天空有绳索相连，就这样我抱着木条缓缓地向下，越来越接近怪物。终于我直视了一眼天空，却只看到早已经被如海葵般舞动的触手遮挡了起来。触手是黑暗主色调的，却又掺杂着一丝光亮的彩色。全程中毫无恐惧之意，似乎一切都理所当然。而到达深渊底部后的一些记忆全部都缺失，我不明白发生了什么。今天的故事，就此收尾。</p>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>故事</tag>
+        <tag>梦境</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>抛心之人的寻心之词</title>
+    <url>/2023/01/03/2023-1-3-%E4%BD%9C%E8%AF%8D/</url>
+    <content><![CDATA[<h2 id="曾几何时，我伤透了心我以为，是感情导致我的失败我试图冷漠无情藐视一切的情感，自认为这会使我更强而实际上就如同人失去了血肉一样将骨骸裸露只让我变得更脆弱"><a href="#曾几何时，我伤透了心我以为，是感情导致我的失败我试图冷漠无情藐视一切的情感，自认为这会使我更强而实际上就如同人失去了血肉一样将骨骸裸露只让我变得更脆弱" class="headerlink" title="曾几何时，我伤透了心
+我以为，是感情导致我的失败
+我试图冷漠无情
+藐视一切的情感，自认为这会使我更强
+而实际上
+就如同人失去了血肉一样
+将骨骸裸露
+只让我变得更脆弱"></a>曾几何时，我伤透了心
+我以为，是感情导致我的失败
+我试图冷漠无情
+藐视一切的情感，自认为这会使我更强
+而实际上
+就如同人失去了血肉一样
+将骨骸裸露
+只让我变得更脆弱</h2><h2 id="我不再感情用事纠结利益的得失我希望能堕入黑暗在万劫不复的深渊中重生得到的仅仅是绝望"><a href="#我不再感情用事纠结利益的得失我希望能堕入黑暗在万劫不复的深渊中重生得到的仅仅是绝望" class="headerlink" title="我不再感情用事
+纠结利益的得失
+我希望能堕入黑暗
+在万劫不复的深渊中重生
+得到的仅仅是绝望"></a>我不再感情用事
+纠结利益的得失
+我希望能堕入黑暗
+在万劫不复的深渊中重生
+得到的仅仅是绝望</h2><h2 id="我希望我能重新追逐光血肉生长长出心脏我明白，血肉生长的同时弱点会伴随而生但即便如此我至少是个人而不是骸骨"><a href="#我希望我能重新追逐光血肉生长长出心脏我明白，血肉生长的同时弱点会伴随而生但即便如此我至少是个人而不是骸骨" class="headerlink" title="我希望我能重新追逐光
+血肉生长
+长出心脏
+我明白，血肉生长的同时
+弱点会伴随而生
+但即便如此
+我至少是个人
+而不是骸骨"></a>我希望我能重新追逐光
+血肉生长
+长出心脏
+我明白，血肉生长的同时
+弱点会伴随而生
+但即便如此
+我至少是个人
+而不是骸骨</h2><p>题：抛心之人的寻心之词
+2023.1.3</p>
+]]></content>
+      <categories>
+        <category>寻心</category>
+      </categories>
+      <tags>
+        <tag>日记</tag>
+        <tag>寻心</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>饺子店的童话</title>
+    <url>/2023/03/14/2023-3-14-%E9%A5%BA%E5%AD%90%E5%BA%97%E7%9A%84%E7%AB%A5%E8%AF%9D/</url>
+    <content><![CDATA[<p>从前有一家饺子店，饺子物美价廉，但在噪杂的城市中并不显眼，生意平平。有一天，老板娘抱怨道：“只靠卖饺子，什么时候才能赚够买房的钱啊？”老板顿了顿，说道：“只要一直卖下去，好好的包饺子，肯定能赚够的。“虽后看了看店铺里冷清的现状，自言自语般的说道：”能卖一百万份饺子，就好了。”</p>
+<p>有一天，店里来了个奇怪的客人。穿着黑色的西装，戴着礼帽，像是从电影里走出来似的。最奇怪的一点是，无论老板怎么看他，都无法看清他的脸，简直是活见鬼了。老板强装淡定，认为自己一定是老花眼了，笑着问道：“个人，来吃饺子吗？”</p>
+<p>“不错不错，但我要的量有点大，不知道你们这小店吃不吃得下。”西装男以一副奇怪沙哑的嗓音开口，向着饺子店的老板说道。</p>
+<p>“放心放心，我们店虽小，但我们可勤快了，不知道客人您要多少饺子。”老板心中一喜，连忙答应下来，询问道。</p>
+<p>“这张支票你先拿着，明天开始我每天都来吃饺子，你包够够我吃的即可。”西装男丢出一张支票，支票像变魔术似的，顺着风飘进了老板的口袋。</p>
+<p>饺子铺老板拿出支票一看，顿时吓了一跳，上面竟然有一大串的零。“个，拾，佰，仟，万，拾万，佰万，竟然有五…”老板激动的差点喊出来，看了一眼店铺里还在吃饭的食客，发现没有人注意到自己后，将支票收了起来，拿起毛巾擦了擦头上因为激动流出来的汗水。</p>
+<p>“老婆，帮我看着点店，我出去办点事。”老板对厨房里忙活的妻子吩咐道，听到妻子嗯了一声后，急匆匆的打D来到了银行。</p>
+<p>“先生，请问有什么需要帮助的吗？”</p>
+<p>“我要兑支票。”</p>
+<p>手续办的很快，在兑现完成后银行的工作人员给他推荐了一堆的投资和理财的业务，还有种种福利之类的，听的老板晕头转向。待到出了银行大门才回过神来，赶紧看了一眼自己的手机银行，一查，真的多了五百万，自己从未有过这么多钱！这一切让老板有些精神恍惚。久违的打了个平时不肯轻易坐的出租车回到了饺子店。</p>
+<p>老板强忍着，没有告诉妻子这个消息，担心钱财外露遭到觊觎。并且西装男的请求还没有完成，让老板心里有些没底，什么叫包够够他吃的饺子，老板猜想肯定没有那么简单，便决定今晚多包50笼饺子。心想：“这下肯定够吃的了吧。”</p>
+<p>未完待续…</p>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>童话</tag>
+        <tag>故事</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 模块重载</title>
+    <url>/2023/03/06/2023-3-6%20234624-Python%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<p>在使用Nonebot框架进行的开发中，我接触到了许多新的概念，也了解了更多知识。
+大概有，如下：</p>
+<ul>
+<li>async 异步语句</li>
+<li>python程序模块化的更深概念</li>
+<li>线程的阻塞</li>
+<li>装饰器</li>
+<li>json数据的处理</li>
+<li>类的实际使用</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于Gitee搭建Page的一些注意事项</title>
+    <url>/2023/03/06/2023-3-6-%E5%85%B3%E4%BA%8EGitee%E6%90%AD%E5%BB%BAHexo%E7%9A%84%E9%9A%8F%E7%AC%94/</url>
+    <content><![CDATA[<h1 id="关于Gitee搭建Page的一些注意事项"><a href="#关于Gitee搭建Page的一些注意事项" class="headerlink" title="关于Gitee搭建Page的一些注意事项"></a>关于Gitee搭建Page的一些注意事项</h1><p>此文章专门为从Github使用者转国内Gitee开源平台的人而写，作者纯小白，如有误区欢迎指正。
+此前我的个人博客部署在Github，但因地域问题国内访问速度太过尴尬，在发现国内开源社区后我便探寻有无类似的功能，答案是有的。但在探寻的过程中我发现一些差异，与国外的Github并不是完全一样，也因此踩了不少坑。故写下此文章，希望能帮到有类似情况的人，也便于我进行记忆。
+整个步骤一共分为三步：
+        0. 实名认证（国内政策需要）
+        1. 建立代码仓：我们需要代码仓储存我们静态网站的源代码文件
+        2. 开源代码仓：Gitee已停止对闭源代码仓提供Page服务
+        3. 在PUSH完成后在Page服务页面进行选择更新
+ 看似几乎没有区别，仅仅多了第0步和第3步，其实每一步的背后都有着存在的意义。
+ 主要踩坑还是第三步，因为github的Page页面是实时的更新的，会自动的读取代码仓中的内容。而Gitee必须选择手动提交，以至于我因为用惯了Github，便在测试的时候反复刷新页面和Push代码，一直没找到问题。</p>
+<h2 id="关于误区"><a href="#关于误区" class="headerlink" title="关于误区"></a>关于误区</h2><p>网上的几乎都是以自己名字当作代码仓运行GiteePage的教程，甚至有的教程说不可以在其他名称的仓库搭建hexo架构的博客。后者简直是误人子弟，我这个博客便是最好的证明。
+ 只需要解决其中一个小细节即可，那就是修改 _config.yml 之中的文件</p>
+<pre><code class="yml">    index_generator:
+  path: &#39;myblog&#39;
+  per_page: 10
+  order_by: -date
+
+
+
+
+&amp;ensp修改path的字符串为仓库名称即可，实际上path指向的是网站开始的目录。
+
+
+---
+
+经过实践证明以上纯几把扯淡！！！！！！！！！！！
+
+##最后一点
+Gitee有一套审查系统，会在网站进行部署/更新的时候，检查网页中是否含有敏感内容，若是出现则无法通过审核会自动的终止部署。
+
+
+
+
+
+
+
+</code></pre>
+]]></content>
+      <categories>
+        <category>Blog</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Flask[携行]</title>
+    <url>/2023/07/07/2023-7-7-Flask-10/</url>
+    <content><![CDATA[<h1 id="flask-设置cookie过期时间"><a href="#flask-设置cookie过期时间" class="headerlink" title="flask 设置cookie过期时间"></a>flask 设置cookie过期时间</h1><p>如果不设置cookie的过期时间，则默认关闭浏览器时cookie过期。</p>
+<p>flask设置过期时间，遵循下面的三条规则：</p>
+<ol>
+<li>max_age: 规定多少秒以后过期</li>
+<li>expires：datatime类型，使用此参数，需参照格林尼治时间，即北京时间-8个小时</li>
+<li>如果max_age和expires都设置，则以max_age为主</li>
+</ol>
+<p>设置了cookie过期时间，即便浏览器都关闭了，只要没有cookie还在有效期内，再次打开浏览器，cookie依然有效。</p>
+<p>如果超过了cookie的过期时间，即便浏览器没有关闭，cookie也会失效。</p>
+<p>只要设置了cookie的过期时间，是否失效就已经和浏览器是否关闭无关。</p>
+<h2 id="1-通过max-age设置cookie有效期"><a href="#1-通过max-age设置cookie有效期" class="headerlink" title="1. 通过max_age设置cookie有效期"></a>1. 通过max_age设置cookie有效期</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, make_response, request</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="comment"># 尝试获取 first_access cookie</span></span><br><span class="line">    first_access = request.cookies.get(<span class="string">&#x27;first_access&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> first_access <span class="keyword">is</span> <span class="literal">None</span>:        <span class="comment"># 没有first_access cookie， 是第一次来</span></span><br><span class="line">        first_access = datetime.now().strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)</span><br><span class="line">        res = make_response(<span class="string">&#x27;hello world&#x27;</span>)</span><br><span class="line">        res.set_cookie(<span class="string">&#x27;first_access&#x27;</span>, first_access, max_age=<span class="number">60</span>)        <span class="comment"># 在响应头里设置cookie</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    <span class="keyword">else</span>:       <span class="comment"># 不是第一次来</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;你第一次访问这个网页的时间是: <span class="subst">&#123;first_access&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
+
+<p>设置了cookie的过期时间是60秒，那么一分钟以后，再次访问时，页面里显示的内容就是hello world， 服务以为我是第一次来，原因是cookie已经失效，能够记录我第一次来访问的信息已经不存在了。</p>
+<h2 id="2-通过expires-设置过期时间"><a href="#2-通过expires-设置过期时间" class="headerlink" title="2. 通过expires 设置过期时间"></a>2. 通过expires 设置过期时间</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, make_response, request</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="comment"># 尝试获取 first_access cookie</span></span><br><span class="line">    first_access = request.cookies.get(<span class="string">&#x27;first_access&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> first_access <span class="keyword">is</span> <span class="literal">None</span>:        <span class="comment"># 没有first_access cookie， 是第一次来</span></span><br><span class="line">        first_access = datetime.now().strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)</span><br><span class="line">        res = make_response(<span class="string">&#x27;hello world&#x27;</span>)</span><br><span class="line">        expires_time = datetime(year=<span class="number">2021</span>, month=<span class="number">9</span>, day=<span class="number">7</span>, hour=<span class="number">18</span>)</span><br><span class="line">        res.set_cookie(<span class="string">&#x27;first_access&#x27;</span>, first_access, expires=expires_time)        <span class="comment"># 在响应头里设置cookie</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    <span class="keyword">else</span>:       <span class="comment"># 不是第一次来</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;你第一次访问这个网页的时间是: <span class="subst">&#123;first_access&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
+
+<p>我设置cookie的过期时间是9月7日的18点，但通过浏览器查看cookie信息，显示过期时间是9月8日的凌晨2点，相差了8个小时，这是因为浏览器里会主动加8个小时，想要和我们的北京时间保持一致，在设置的时候就要减去8个小时。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">expires_time = datetime(year=<span class="number">2021</span>, month=<span class="number">9</span>, day=<span class="number">7</span>, hour=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<p>现在的cookie过期时间是9月7日下午18点。</p>
+]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Flask</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Nonebot创建聊天教学功能</title>
+    <url>/2023/03/08/2023-3-8-Nonebot%E5%88%9B%E5%BB%BA%E8%81%8A%E5%A4%A9%E6%95%99%E5%AD%A6%E5%8A%9F%E8%83%BD/</url>
+    <content><![CDATA[<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>  在阅读前辈代码的时候我发现前辈们会专门的分出一个类专门进行数据处理相关的操作，于是我便顺着这个想法改进了我的代码。</p>
+<p>  这使我项目代码的结构更为规整和简化，也提高了代码的可读性，在节省代码量的同时并没有影响工作效率。</p>
+<h4 id="一、实现简易的教学功能"><a href="#一、实现简易的教学功能" class="headerlink" title="一、实现简易的教学功能"></a>一、实现简易的教学功能</h4><p>构建思路：制造一个词库，无非就是，将获取的消息存入指定的json文件中，在需要响应消息的时候查询是否有相关的消息，如果有则回复。</p>
+<p>实现：在BOT收到 @LOVE酱 教学-XX&#x3D;XX 格式的消息时，会自动的分割消息，将教学内容和需要回复的词分开传参。</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> nonebot.adapters.onebot.v11 <span class="keyword">import</span> Event</span><br><span class="line"><span class="keyword">from</span> nonebot.adapters.onebot.v11.bot <span class="keyword">import</span> Bot</span><br><span class="line"><span class="keyword">from</span> nonebot.plugin.on <span class="keyword">import</span> on_command</span><br><span class="line"><span class="keyword">from</span> nonebot.rule <span class="keyword">import</span> to_me</span><br><span class="line"><span class="keyword">from</span> love.db <span class="keyword">import</span> JsonDB <span class="comment">#这一段尤为重要，正是在这一段中引入了我们处理数据库的类</span></span><br><span class="line"></span><br><span class="line">study = on_command(cmd=<span class="string">&#x27;教学-&#x27;</span>, rule=to_me(), priority=<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@study.handle()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot, event: Event</span>):</span><br><span class="line">    QQ = event.get_session_id().split(<span class="string">&#x27;_&#x27;</span>)[<span class="number">2</span>]  <span class="comment"># 获取QQ号</span></span><br><span class="line">    message = <span class="built_in">str</span>(event.get_message()).split(<span class="string">&#x27;-&#x27;</span>)[<span class="number">1</span>].split(<span class="string">&#x27;=&#x27;</span>)  <span class="comment"># 事件消息内容</span></span><br><span class="line">    send = message[<span class="number">0</span>]</span><br><span class="line">    Reply = message[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    Save = JsonDB(QQ=QQ, send=send, Reply=Reply)</span><br><span class="line">    Save.Save()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> study.send(<span class="string">&#x27;教学成功！(请等待主人审核哦~)&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>实现操作json数据的类，起到心脏的作用。</p>
+<p>将消息名作为文件名进行保存，再将消息存入json中，并记录时间和教学者的信息，</p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">JsonDB</span>():</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, QQ, send, Reply</span>):</span><br><span class="line">        self.QQ = QQ</span><br><span class="line">        self.send = send</span><br><span class="line">        self.Reply = Reply</span><br><span class="line"><span class="comment">#初始化</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#保存消息的方法</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">Save</span>(<span class="params">self</span>):</span><br><span class="line">        now = datetime.now()</span><br><span class="line">        data = &#123;</span><br><span class="line">            <span class="string">&quot;教学人&quot;</span>: self.QQ,</span><br><span class="line">            <span class="string">&quot;时间&quot;</span>: now.strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>),</span><br><span class="line">            self.send: self.Reply</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">#构建json消息段</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">f&quot;<span class="subst">&#123;curPathTwo + self.send&#125;</span>.json&quot;</span>, <span class="string">&quot;w&quot;</span>) <span class="keyword">as</span> json_file:</span><br><span class="line">            json.dump(data, json_file)</span><br><span class="line">        <span class="comment">#将消息存入</span></span><br></pre></td></tr></table></figure>
+
+<p>解决了保存，那么如何响应呢。</p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Reply = on_command(cmd=<span class="string">&#x27;&#x27;</span>, rule=to_me(), priority=<span class="number">60</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Reply.handle()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot, event: Event</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(<span class="built_in">str</span>(event.get_message())) &gt;= <span class="number">1</span>:</span><br><span class="line"></span><br><span class="line">        Load = JsonDB(QQ=<span class="string">&#x27;&#x27;</span>, Reply=<span class="string">&#x27;&#x27;</span>, send=event.get_message())</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> Reply.send(Load.Load())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        message = [<span class="string">&quot;你好，这里是LOVE酱，发送 帮助 可以查看我的功能哦！&quot;</span>,</span><br><span class="line">                   <span class="string">&quot;你好呀，我是LOVE酱，一个专为铁锈战争服务的虚拟少女！&quot;</span>,</span><br><span class="line">                   <span class="string">&quot;你好~有什么需要帮助的吗？&quot;</span>]</span><br><span class="line">        rnd = random.Random()</span><br><span class="line">        Num = rnd.randint(<span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span>  Reply.send(message[Num])</span><br></pre></td></tr></table></figure>
+
+<p>上面这段代码的作用是：在被艾特的时候随机响应一段回复词，而检测到字符串的时候便将字符串传参，实例化类并调用我们的写的查询方法，以此得到我们的回复词。</p>
+<p>查询方法的代码如下：</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">Load</span>(<span class="params">self</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 从JSON文件中读取数据并解码为Python对象</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">f&quot;<span class="subst">&#123;curPath + self.send&#125;</span>.json&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> json_file:</span><br><span class="line">            data = json.load(json_file)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> data[<span class="string">f&quot;<span class="subst">&#123;self.send&#125;</span>&quot;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;LOVE酱现在还听不懂哦~可以教我吗？&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里用到了一段异常处理：</p>
+<ul>
+<li><p>如果用户访问的文件存在，则会返回json中对应的键的值，也就是之前写入的字符串。</p>
+</li>
+<li><p>如果用户访问的文件并不存在，则说明这个词汇并没有被教学过，同时会引发异常，方法就会返回 “LOVE酱现在还听不懂哦~可以教我吗？” 这段字符串。</p>
+</li>
+</ul>
+<h4 id="二、实现简易的审核功能"><a href="#二、实现简易的审核功能" class="headerlink" title="二、实现简易的审核功能"></a>二、实现简易的审核功能</h4><p>写到这里可能就会有人会问了，教学实现了，要是被教学了奇怪的话怎么办呀？能不能写一个审核机制？</p>
+<p>当然是可以的。</p>
+<p>我实现审核机制的原理是，将新教学的词先暂放到一个文件夹里，这个文件夹称为待审核文件夹，而这个文件夹里面的词汇是待审核词汇。在Master同意某个词汇后，就将词汇转移到过审文件夹中，而我们的响应方法只会去响应过审后文件夹里的词汇。这样，便成功的实现了简易的审核机制。</p>
+<p>代码如下：</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">Examine = on_command(cmd=<span class="string">&#x27;查看待审核词汇&#x27;</span>, priority=<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Examine.handle()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot, event: Event</span>):</span><br><span class="line">    QQ = event.get_session_id().split(<span class="string">&#x27;_&#x27;</span>)[<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">int</span>(QQ) != <span class="number">3345483363</span>:</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> Examine.send(<span class="string">&quot;你不是LOVE的主人哦~&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line"></span><br><span class="line">        curPath = os.path.abspath(os.path.pardir) + <span class="string">&quot;/LOVE/love/data/Examine/&quot;</span></span><br><span class="line">        listFiles = os.listdir(curPath)  <span class="comment"># 获取文件目录</span></span><br><span class="line">        message = <span class="string">&#x27;&#x27;</span></span><br><span class="line">        QQ = <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(listFiles)):</span><br><span class="line">            Load = JsonDB(QQ=QQ, Reply=<span class="string">&#x27;&#x27;</span>, send=listFiles[i])</span><br><span class="line">            Text = listFiles[i].split(<span class="string">&#x27;.&#x27;</span>)[<span class="number">0</span>] + <span class="string">&#x27;:&#x27;</span> + Load.ExamineLoad()</span><br><span class="line">            message += Text + <span class="string">&#x27;|&#x27;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> Examine.send(<span class="string">f&quot;待审核的词汇如下：<span class="subst">&#123;message&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>以上代码中，我们通过查看待审核文件夹中的文件，将文件名和文件中键对应的值提取出来组成字符串。就可以看到待审核的教学词汇。</p>
+<p>实现移动文件和读取审核文件夹内名称的代码如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">curPathTwo = <span class="built_in">str</span>(os.path.abspath(os.path.pardir) + <span class="string">&quot;/LOVE/love/data/Examine/&quot;</span>).replace(<span class="string">&#x27;db/&#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">ExamineLoad</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;读取待审核文件夹内的文件名&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">f&quot;<span class="subst">&#123;curPathTwo + self.send&#125;</span>&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> json_file:</span><br><span class="line">            data = json.load(json_file)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> data[<span class="string">f&quot;<span class="subst">&#123;<span class="built_in">str</span>(self.send).split(<span class="string">&#x27;.&#x27;</span>)[<span class="number">0</span>]&#125;</span>&quot;</span>]  <span class="comment"># 将文件名返回</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">MOVE</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;将文件转移实现通过审核&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            shutil.move(curPathTwo + self.send, curPath)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            os.unlink(curPath + self.send)</span><br><span class="line">            shutil.move(curPathTwo + self.send, curPath)  <span class="comment"># 发现文件重复则删除文件</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="实现让用户自行撤回提交错误的词汇的功能"><a href="#实现让用户自行撤回提交错误的词汇的功能" class="headerlink" title="实现让用户自行撤回提交错误的词汇的功能"></a>实现让用户自行撤回提交错误的词汇的功能</h4><p>为了减轻Master的工作量，也为了提高用户体验。</p>
+<p>我们考虑到用户有时候可能打错字，便增加了一个撤回的功能。</p>
+<p>如果没用这个功能，而用户又想要删去这个提交错误的词汇，差不多就只能联系Master了，这样子很不方便。</p>
+<p>而在实现功能中，我们需要考虑一点，那就是，需要实现只有发送这个词汇的人才能撤回这个词汇。</p>
+<p>还记得我们存储数据使用的格式吗？忘了没关系，我们一起看看：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;教学人&quot;</span><span class="punctuation">:</span> self.QQ<span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;时间&quot;</span><span class="punctuation">:</span> now.strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)<span class="punctuation">,</span></span><br><span class="line">    self.send<span class="punctuation">:</span> self.Reply</span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>在我们存储的每一个词汇的json文件里，我们有三个键，教学人、时间、以及接受词。分别对应QQ、时间、回复词。</p>
+<p>而解决用户直接身份甄别的关键就在此处，那就是json中的教学人，只要我们将其于发送消息者的QQ进行对比，就可以看出这个词是不是教学人创建的。</p>
+<p>ps: 有一个BUG可以卡，就是下一个人创建的词会覆盖上一个人的内容。）</p>
+<p>话不多说，上代码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">recall = on_command(cmd=<span class="string">&#x27;撤回-&#x27;</span>, rule=to_me(), priority=<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@recall.handle()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot, event: Event</span>):</span><br><span class="line">    QQ = event.get_session_id().split(<span class="string">&#x27;_&#x27;</span>)[<span class="number">2</span>]  <span class="comment"># 获取QQ号</span></span><br><span class="line">    message = <span class="built_in">str</span>(event.get_message()).split(<span class="string">&#x27;-&#x27;</span>)[<span class="number">1</span>]  <span class="comment"># 事件消息内容</span></span><br><span class="line">    send = message</span><br><span class="line"></span><br><span class="line">    REC = JsonDB(QQ=QQ, send=send, Reply=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> recall.send(REC.recall())</span><br></pre></td></tr></table></figure>
+
+<p>然后是在类中实现的代码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">recall</span>(<span class="params">self</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 从JSON文件中读取数据并解码为Python对象</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">f&quot;<span class="subst">&#123;curPathTwo + self.send&#125;</span>.json&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> json_file:</span><br><span class="line">            data = json.load(json_file)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.QQ == data[<span class="string">&#x27;教学人&#x27;</span>]:</span><br><span class="line">            os.remove(curPathTwo + self.send+<span class="string">&#x27;.json&#x27;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;已成功撤回词汇&#x27;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;您并不是这个词汇的教学人哦~&#x27;</span></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;您并没有提交过这个词汇哦~&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Json</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2023/09/25/2023-7-8-Flask-11/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>Android项目文件目录分析</title>
+    <url>/2023/08/27/2023-8-27-Android%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<p>相信对第一次接触安卓开发的人来说，安卓应用的项目结构很令人疑惑。</p>
+<p>  刚巧，我也是，才下载了 <code>Android Studio</code>不久。看了不少的安卓教程，然后创建了一个示例项目准备摸索摸索。我去，怎么这么多代码，这么多文件，瞬间傻眼了。</p>
+<p>  不再傻眼，也为了更多和我一样的小白开发者不再傻眼，跟着我的视角，我们一起走进这个安卓App，看看它到底是个什么构造。</p>
+<p>  首先复制项目路径，打开文件管理器，进入我们的安卓项目文件夹。</p>
+<img src="http://171.38.91.172:4666/MOON/blog%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90/%E8%B7%AF%E5%BE%84.png" class="">
+
+<img src="http://171.38.91.172:4666/MOON/blog%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90/%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95.png" class="">
+
+<p>  来到这个页面后，我们看到前缀没有 <code>.</code> 的正常目录有 <code>app</code> 和 <code>gradle</code> 两个文件夹。能走到这一步的同学，必然是创建了项目了，也就安装好了<code>gradle</code>了，所以不再赘述，我们进入<code>app</code>文件夹。</p>
+<img src="http://171.38.91.172:4666/MOON/blog%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90/app%E7%9B%AE%E5%BD%95.png" class="">
+
+<p>  在此之前我已经编译过一次app，因此目录下有</p>
+<ul>
+<li><p><code>build</code> ：存放着构建后的内容</p>
+</li>
+<li><p><code>libs</code> : 存放着引用的外部库（因为没有使用里面试试空的）</p>
+</li>
+<li><p><code>src</code> : 源代码文件夹。</p>
+<p>三个文件夹。</p>
+</li>
+</ul>
+<p>因此，我们进入 <code>src</code> 这个文件夹。</p>
+<img src="http://171.38.91.172:4666/MOON/blog%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90/src%E7%9B%AE%E5%BD%95.png" class="">
+
+<p>  <code>src</code> 目录下，有三个文件夹：</p>
+<ul>
+<li><code>androidText</code> ：存放着Instrumented测试代码。Instrumented测试与单元测试不同，它们可以运行在整个Android应用或框架上，并可以访问Android系统服务和API。 </li>
+<li><code>main</code>：存放着主程序。</li>
+<li><code>test</code>：存放着单元测试代码。单元测试是软件开发中的一种实践，用于确保代码的各个单元按照预期工作。</li>
+</ul>
+<p>  很显然我们当务之急需要的是去了解<code>main</code>文件夹中的内容。</p>
+<hr>
+<p>  访问进去，有两个文件夹和一个<code>AndroidManifest.xml</code>文件。</p>
+<p><code>AndroidManifest.xml</code>：在Android程序中，所有的Activity都需要在<code>AndroidManifest.xml</code>中声明，才能够被用户通过INTENT找到。除了Activity以外，服务（Service）、广播接收者（BroadcastReceiver）、ContentProvider都需要在<code>AndroidManifest.xml</code>中声明。</p>
+<p>关于这两个文件夹：java |  res</p>
+<ul>
+<li>java：存放着java代码。（我选择了java项目示例，我选择在深度学习过java开发安卓后再转koutlin）</li>
+<li>res : 存放着各种资源文件。（稍后将一一的解释。）</li>
+</ul>
+<hr>
+<p>  下面我将列举一下示例项目中已存在的文件</p>
+<p>  <code>java\com\example\magichome</code> 在这个路径下有：<code>data</code>,<code>ui</code>,两个文件夹。</p>
+<p>  <code>data</code>文件夹中包含一个<code>model</code>文件夹,还有:</p>
+<ol>
+<li><p><code>LoginDataSource.java</code>：该类用于处理用户登录和注销的操作。</p>
+</li>
+<li><p>&#96;&#96;LoginRepository.java&#96;：用于处理用户登录和注销的操作，并维护一个内存中的登录状态和用户凭证信息缓存。</p>
+</li>
+<li><p><code>Result.java</code>：用于封装处理结果，包括成功的结果和错误的结果。</p>
+</li>
+</ol>
+<p>  总共三个文件。</p>
+<p><code>model文件夹</code>：</p>
+<ul>
+<li><code>LoggedInUser.java</code>：一个数据类，主要用于存储已登录用户的用户信息。这个类是从<code>LoginRepository</code>中获取的。</li>
+</ul>
+<hr>
+<p><code>  ui</code>文件夹中包含一个<code>login</code>文件夹，其中包含:</p>
+<ol>
+<li><code>LoggedInUserView.java</code>：主要用于将已登录用户的详细信息暴露给用户界面（UI）。</li>
+<li><code>LoginActivity.java</code>：实现一个登录活动的 Android 应用程序的一部分。该活动使用数据绑定和<code>ViewModel </code>来管理用户输入和登录状态。</li>
+<li><code>LoginFormState.java</code>：主要用于表示登录表单的数据验证状态。</li>
+<li><code>LoginResult.java</code>：主要用于封装登录操作的结果。</li>
+<li><code>LoginViewModel.java</code></li>
+<li><code>LoginViewModelFactory.java</code>：创建并返回一个特定的ViewModel。</li>
+</ol>
+<p>  总共六个文件。</p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>安卓 XML 文件 分析</title>
+    <url>/2023/08/28/2023-8-28-Android%20XML%20File%20Analysis/</url>
+    <content><![CDATA[<h1 id="安卓-XML-文件-分析"><a href="#安卓-XML-文件-分析" class="headerlink" title="安卓 XML 文件 分析"></a>安卓 XML 文件 分析</h1><p>本文以深度分析安卓的XML文件为主，了解XML文件的作用，以便于更好的理解开发的各个概念。</p>
+<p>学而不思则罔，思而不学则殆。</p>
+<p>要学习，先思考。</p>
+<p>首先定义三个问题：</p>
+<ol>
+<li>为什么要用到XML？</li>
+<li>XML文件是如何被引用的？</li>
+<li>XML的各个元素在java文件中又是如何表示的？</li>
+</ol>
+<h2 id="问题解答环节-（一）"><a href="#问题解答环节-（一）" class="headerlink" title="问题解答环节 （一）"></a>问题解答环节 （一）</h2><h3 id="问题一：为什么要用到XML？"><a href="#问题一：为什么要用到XML？" class="headerlink" title="问题一：为什么要用到XML？"></a>问题一：为什么要用到XML？</h3><p>答：主要出于以下几个原因</p>
+<ul>
+<li><p>方便定义用户界面</p>
+<ul>
+<li>XML非常的适合描述界面的视图元素，这使得开发人员能够以声明的形式定义界面元素，而不必在代码中直接构建和布局。</li>
+</ul>
+</li>
+<li><p>方便逻辑与布局分离</p>
+<ul>
+<li>XML文件描绘布局，java或kotlin文件实现逻辑，就这么简单。</li>
+</ul>
+</li>
+<li><p>代码简化</p>
+<ul>
+<li>代码分开写，看起来更简单。</li>
+</ul>
+</li>
+<li><p>支持可扩展性</p>
+<ul>
+<li>XML被设计为可扩展的标记语言</li>
+</ul>
+</li>
+<li><p>与安卓API集成</p>
+<ul>
+<li>可以通过使用XML布局文件和Android的API，开发人员可以轻松地创建动态的用户界面，响应用户的操作。（似懂非懂）</li>
+</ul>
+</li>
+</ul>
+<h3 id="问题二：XML代码是如何被引用的？"><a href="#问题二：XML代码是如何被引用的？" class="headerlink" title="问题二：XML代码是如何被引用的？"></a>问题二：XML代码是如何被引用的？</h3><p>首先，看代码。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.example.demoproject1.databinding.FragmentFirstBinding;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> androidx.annotation.NonNull;</span><br><span class="line"><span class="keyword">import</span> androidx.fragment.app.Fragment;</span><br><span class="line"><span class="keyword">import</span> androidx.navigation.fragment.NavHostFragment;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onViewCreated</span><span class="params">(<span class="meta">@NonNull</span> View view, Bundle savedInstanceState)</span> &#123;</span><br><span class="line">        <span class="comment">// 实现xml导航</span></span><br><span class="line">        <span class="built_in">super</span>.onViewCreated(view, savedInstanceState);</span><br><span class="line"></span><br><span class="line">        binding.buttonFirst.setOnClickListener(<span class="keyword">new</span> <span class="title class_">View</span>.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onClick</span><span class="params">(View view)</span> &#123;</span><br><span class="line">                NavHostFragment.findNavController(FirstFragment.<span class="built_in">this</span>)</span><br><span class="line">                        .navigate(R.id.action_FirstFragment_to_SecondFragment);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>上图代码中 <code>R.id.action_FirstFragment_to_SecondFragment</code> 这行代码，可以直接访问到<code>nav_graph.xml</code></p>
+<p>文件。</p>
+<p>实质: <code>action</code>  作用: First Fragment to Second Fragment</p>
+<p>解释: 将 第一片 Fragment导航到了 第二片 Fragment</p>
+<p>通过<code>NavHostFragment.findNavController()</code>这个方法,实现了Fragment之间的导航管理.</p>
+<p>看到这里,还没明白?没关系,来看看<code>nav_graph.xml</code>这个文件的内容.</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">navigation</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:app</span>=<span class="string">&quot;http://schemas.android.com/apk/res-auto&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">&quot;http://schemas.android.com/tools&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">&quot;@+id/nav_graph&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:startDestination</span>=<span class="string">&quot;@id/FirstFragment&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">fragment</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">&quot;@+id/FirstFragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">&quot;com.example.demoproject1.FirstFragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:label</span>=<span class="string">&quot;@string/first_fragment_label&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">tools:layout</span>=<span class="string">&quot;@layout/fragment_first&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/action_FirstFragment_to_SecondFragment&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:destination</span>=<span class="string">&quot;@id/SecondFragment&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">fragment</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">fragment</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">&quot;@+id/SecondFragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">&quot;com.example.demoproject1.SecondFragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:label</span>=<span class="string">&quot;@string/second_fragment_label&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">tools:layout</span>=<span class="string">&quot;@layout/fragment_second&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/action_SecondFragment_to_FirstFragment&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:destination</span>=<span class="string">&quot;@id/FirstFragment&quot;</span> /&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--我们可以看到这里有一个action标签 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">fragment</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">navigation</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>也就是说,我们通过 <code>R.id</code>可以直接引用到此<code>id</code>,访问到其下的<code>action_SecondFragment_to_FirstFragment</code>这段内容,也就没有那么难理解了吧.</p>
+<p>而<code>NavHostFragment</code>的<code>findNavController</code>方法,直译为<strong>寻找导航控制器</strong>.</p>
+<p>实际上是在告诉系统：“请在 <code>FirstFragment</code> 的上下文中找到与之关联的 <code>NavController</code>”。通过传入 <code>FirstFragment.this</code> 作为参数，为系统提供了找到正确 <code>NavController</code> 的必要上下文信息。</p>
+<p>navigate的本质:<code>navigate()</code>方法是Android Navigation组件中的一个方法，用于执行导航动作。该方法接受一个导航动作的ID作为参数，并触发与该动作关联的导航。</p>
+<p>而在XML文件中 <code>app:destination=&quot;@id/FirstFragment&quot; </code>这行代码的作用不可小觑.</p>
+<p>上文很重要的一句话是: <strong>并出发与该动作关联的导航</strong>.</p>
+<p>而<code>app:destination=&quot;@id/FirstFragment&quot; </code>,所提供的,就是关联!</p>
+<ul>
+<li><p>在导航XML中，<code>app:destination=&quot;@id/FirstFragment&quot;</code>的作用是指定一个目标页面的标识符，该标识符与FirstFragment类相关联。</p>
+<p>具体来说，<code>@id/FirstFragment</code>是一个资源标识符，它指定了目标页面的名称。在这种情况下，目标页面被指定为FirstFragment类，这意味着当应用程序需要跳转到FirstFragment时，可以参考这个标识符来找到正确的目标页面。</p>
+</li>
+</ul>
+<p><code>fragment_first.xml </code>中的代码:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">androidx.constraintlayout.widget.ConstraintLayout</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:app</span>=<span class="string">&quot;http://schemas.android.com/apk/res-auto&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">&quot;http://schemas.android.com/tools&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">tools:context</span>=<span class="string">&quot;.FirstFragment&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">&quot;@+id/textview_first&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">&quot;wrap_content&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">&quot;wrap_content&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">&quot;@string/hello_first_fragment&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_constraintBottom_toTopOf</span>=<span class="string">&quot;@id/button_first&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_constraintEnd_toEndOf</span>=<span class="string">&quot;parent&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_constraintStart_toStartOf</span>=<span class="string">&quot;parent&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_constraintTop_toTopOf</span>=<span class="string">&quot;parent&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">Button</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">&quot;@+id/button_first&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">&quot;wrap_content&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">&quot;wrap_content&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">&quot;@string/next&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_constraintBottom_toBottomOf</span>=<span class="string">&quot;parent&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_constraintEnd_toEndOf</span>=<span class="string">&quot;parent&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_constraintStart_toStartOf</span>=<span class="string">&quot;parent&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_constraintTop_toBottomOf</span>=<span class="string">&quot;@id/textview_first&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">androidx.constraintlayout.widget.ConstraintLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>总结:</p>
+<ul>
+<li>理解了XML文件</li>
+<li><code>findNavController()</code>方法</li>
+<li><code>navigate()</code>方法</li>
+<li><code>R.id</code>印象加深</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+        <tag>xml</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2023-9-25-Next.js目录文件</title>
+    <url>/2023/09/25/2023-9-25-Next-js%E7%9B%AE%E5%BD%95%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<h2 id="What-is-Next-js"><a href="#What-is-Next-js" class="headerlink" title="What is Next.js ?"></a>What is Next.js ?</h2><p>Next.js is React framework for building full-stack web applications.</p>
+<p> 翻译：Next.js是用于构建全栈web应用程序的React框架。 </p>
+<h2 id="Main-Features"><a href="#Main-Features" class="headerlink" title="Main Features"></a>Main Features</h2><p>Some of the main Next.js features include:</p>
+<ul>
+<li>Routing 		也就是路由</li>
+<li>Rendering             渲染</li>
+<li>Data Fetching       数据获取</li>
+<li>Styling                    样式</li>
+<li>Optimizations       优化</li>
+<li>TypeScript              支持TypeScript</li>
+</ul>
+<h2 id="App-Router-Pages-Router"><a href="#App-Router-Pages-Router" class="headerlink" title="App Router &amp;&amp; Pages Router"></a>App Router &amp;&amp; Pages Router</h2><p>Best newer is App Router, that allows use React’s latest features, such as Server Components and Streaming. </p>
+<p>Older is Pages Router, that is the original Next.js router, which allowed you to build server-rendered React applications and continues to be supported for older Next.js applications. </p>
+<p>两种路由方式，最新的 App路由，旧的是Pages路由，但仍然支持。</p>
+<h2 id="Automatic-Installation"><a href="#Automatic-Installation" class="headerlink" title="Automatic Installation"></a>Automatic Installation</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npx create-next-app@latest</span><br></pre></td></tr></table></figure>
+
+<p>为什么只有自动安装？哦，手动安装暂时懒得学。</p>
+<h2 id="Project-Structure"><a href="#Project-Structure" class="headerlink" title="Project Structure"></a>Project Structure</h2><h3 id="In-Top-level-Folders"><a href="#In-Top-level-Folders" class="headerlink" title="In Top-level Folders"></a>In Top-level Folders</h3><p>Look:
+     - app <code>App Router</code> 
+     - pages <code>Pages Router</code> 
+     - public <code>Static assets to be served</code>
+     - src <code>Optional application source folder </code></p>
+<h3 id="Top-level-files"><a href="#Top-level-files" class="headerlink" title="Top-level files"></a>Top-level files</h3><hr>
+<p>Next.js</p>
+<hr>
+<p><code>next.config.js</code> Next.js 的配置文件</p>
+<p><code>package.json</code> 项目依赖项和脚本(scripts)</p>
+<p><code>instrumentation.ts</code> 遥测框架配置文件</p>
+<p><code>middleware.ts</code>Next.js 请求的中间件</p>
+<p><code>.env</code> Environment variables 也就是环境变量</p>
+<p><code>.env.production</code>production 的环境变量</p>
+<p><code>.env.development</code>Development 的环境变量</p>
+<hr>
+<p>Tip: Development 意为开发，production 意为生产</p>
+<ul>
+<li>在开发时使用<code> .env.development</code>,而在实际的生产环境时应该用<code>.env.production</code></li>
+</ul>
+<hr>
+<p><code>.eslintrc.json</code> ESLint的配置文件</p>
+<hr>
+<p>Tip: ESLint是一个用于识别ECMAScript并按照规则给出报告的代码检测工具，它可以用来避免低级错误和统一代码的风格</p>
+<hr>
+<p><code>.gitignore</code> Git文件及其文件夹（可忽略）</p>
+<p><code>next0env.d.ts</code>Next.js 使用TypeScript 的声明文件</p>
+<p><code>tsconfig.json</code> TypeScript 的配置文件</p>
+<p><code>jsconfig.json</code> JavaScript 的配置文件</p>
+<p><code>postcss.config.js</code>Tailwind CSS的配置文件</p>
+<hr>
+<p>Tip: Tailwind CSS是一个利用公用程序类(Utilize Class)的CSS框架。它是一个可定制化的、功能类优先的CSS框架，和我们知道的UI框架差不多。</p>
+<hr>
+<h2 id="app-Routing-Conventions"><a href="#app-Routing-Conventions" class="headerlink" title="app Routing Conventions"></a><code>app</code> Routing Conventions</h2><h2 id="RoutingFiles"><a href="#RoutingFiles" class="headerlink" title="RoutingFiles"></a>RoutingFiles</h2><p><code>layout</code> 	<code>.js</code> <code>.jsx</code>  <code>.tsx</code>    布局</p>
+<p><code>page</code> 	<code>.js</code> <code>.jsx</code>  <code>.tsx</code> 	页面</p>
+<p><code>loading</code> 	<code>.js</code> <code>.jsx</code>  <code>.tsx</code>	等待中的UI</p>
+<p><code>not-found</code>	<code>.js</code> <code>.jsx</code>  <code>.tsx</code>	没搜索到的UI</p>
+<p><code>error</code>		<code>.js</code> <code>.jsx</code>  <code>.tsx</code>	错误的UI</p>
+<p><code>golobal-error</code>	<code>.js</code> <code>.jsx</code>  <code>.tsx</code>	全局错误的UI</p>
+<p><code>route</code>	<code>.js</code> <code>.ts</code>	API endpoint</p>
+<p><code>template</code>	<code>.js</code> <code>.jsx</code>  <code>.tsx</code>	重新渲染的布局</p>
+<p><code>default</code>	 <code>.js</code> <code>.jsx</code>  <code>.tsx</code>	</p>
+<h2 id="Nested-Routes"><a href="#Nested-Routes" class="headerlink" title="Nested Routes"></a>Nested Routes</h2><p>嵌套路由</p>
+<p><code>folder</code> 	路由段</p>
+<p><code>folder/folder</code> 嵌套路由段</p>
+<h2 id="Dynamic-Routes"><a href="#Dynamic-Routes" class="headerlink" title="Dynamic Routes"></a>Dynamic Routes</h2><p>动态路由</p>
+<p><code>[folder]</code>	动态路由线</p>
+<p><code>[...folder] </code> 	捕获全部路由段</p>
+<p><code>[[...folder]]</code>	可选捕获全部路由段</p>
+<h2 id="Route-Groups-and-Private-Folders"><a href="#Route-Groups-and-Private-Folders" class="headerlink" title="Route Groups and Private Folders"></a>Route Groups and Private Folders</h2><p><code>(folder)</code>	分组路由而不影响路由</p>
+<p><code>_folder</code>	 选择文件夹和所有子段退出路由 </p>
+<h2 id="Parallel-and-Intercepted-Routes"><a href="#Parallel-and-Intercepted-Routes" class="headerlink" title="Parallel and Intercepted Routes"></a>Parallel and Intercepted Routes</h2><p><code>@folder</code>	命名插槽 Named slot</p>
+<p><code>(.)folder</code>	拦截同一级别</p>
+<p><code>(..)folder</code>	拦截一级以上</p>
+<p><code>(..)(..)folder</code>	拦截两级以上</p>
+<p><code>(...)folder</code>	从根目录开始拦截</p>
+<h2 id="App-Icons"><a href="#App-Icons" class="headerlink" title="App Icons"></a>App Icons</h2><p><code>favicon</code>	<code>.ico</code>	Favicon 文件</p>
+<p><code>icon</code>	<code>.ico</code> <code>.jpg</code> <code>.jpeg</code> <code>.png</code> <code>.svg</code>	App图标文件</p>
+<p><code>icon</code>	<code>.js</code>  <code>.ts</code> <code>.tsx</code>	生成的应用程序图标</p>
+<p><code>apple-icon</code>	<code>.jpg</code> <code>jpeg</code> <code>.png</code>	App应用程序图标文件</p>
+<p><code>apple-icon</code>	<code>.js</code> <code>.ts</code> <code>.tsx</code>	生成的App应用程序图标</p>
+<h2 id="Open-Graph-and-Twitter-Image"><a href="#Open-Graph-and-Twitter-Image" class="headerlink" title="Open Graph and Twitter Image"></a>Open Graph and Twitter Image</h2><p><code>opengraph-image</code>	<code>.jpg</code> <code>.jpeg</code> <code>.png</code> <code>.gif</code>	打开图像文件</p>
+<p><code>opengraph-image</code>	<code>.js</code> <code>.ts</code> <code>.tsx</code>	生成打开的图像文件</p>
+<p><code>twitter-image</code>	<code>.jpg</code> <code>.jpeg</code> <code>.png</code> <code>.gif</code>	打开推特图像文件</p>
+<p><code>twitter-image</code>	<code>.js</code> <code>.ts</code> <code>.tsx</code>	生成打开的推特图像文件</p>
+<h2 id="SEO"><a href="#SEO" class="headerlink" title="SEO"></a>SEO</h2><p><code>sitemap</code>	<code>.xml</code>	站点地图文件</p>
+<p><code>sitemap</code>	<code>.js</code> <code>.ts</code>	生成站点地图</p>
+<p><code>robots</code>	<code>.txt</code>	爬虫协议文件</p>
+<p><code>robots</code>	<code>.js</code> <code>.ts</code>	生成爬虫协议文件</p>
+<h2 id="pages-Routing-Conventions"><a href="#pages-Routing-Conventions" class="headerlink" title="pages Routing Conventions"></a><code>pages</code> Routing Conventions</h2><p><code>_app</code>	<code>.js</code> <code>.jsx</code> <code>.tsx</code>	自定义app</p>
+<p><code>_document</code>	<code>.js</code> <code>.jsx</code> <code>.tsx</code> 	自定义Doc</p>
+<p><code>_error</code>	<code>.js</code> <code>.jsx</code> <code>.tsx</code> 	自定义错误页面</p>
+<p><code>404</code>	<code>.js</code> <code>.jsx</code> <code>.tsx</code> 	404 错误页面</p>
+<p><code>500</code>	<code>.js</code> <code>.jsx</code> <code>.tsx</code> 	500 错误页面</p>
+<h2 id="Routes"><a href="#Routes" class="headerlink" title="Routes"></a>Routes</h2><h3 id="Folder-convention"><a href="#Folder-convention" class="headerlink" title="Folder convention"></a>Folder convention</h3><p><code>index</code>	<code>.js</code> <code>.jsx</code> <code>.tsx</code> 	主页</p>
+<p><code>folder/index</code>	<code>.js</code> <code>.jsx</code> <code>.tsx</code> 	嵌套页面</p>
+<h3 id="File-convention"><a href="#File-convention" class="headerlink" title="File convention"></a>File convention</h3><p><code>index</code> 	<code>.js</code> <code>.jsx</code> <code>.tsx</code> 	主页</p>
+<p><code>file</code>	<code>.js</code> <code>.jsx</code> <code>.tsx</code> 	嵌套页面</p>
+<h2 id="Dynamic-Routes-1"><a href="#Dynamic-Routes-1" class="headerlink" title="Dynamic Routes"></a>Dynamic Routes</h2><h3 id="Folder-convention-1"><a href="#Folder-convention-1" class="headerlink" title="Folder convention"></a>Folder convention</h3><p><code>[folder]/index</code>	<code>.js</code> <code>.jsx</code> <code>.tsx</code> 	动态路由段</p>
+<p><code>[...folder]/index</code>	<code>.js</code> <code>.jsx</code> <code>.tsx</code> 	捕获所有路由段</p>
+<p><code>[[...folder]]/index</code>	<code>.js</code> <code>.jsx</code> <code>.tsx</code>	可选的捕获全部路由段</p>
+<h3 id="File-convention-1"><a href="#File-convention-1" class="headerlink" title="File convention"></a>File convention</h3><p>| <a href="https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes"><code>[file]</code></a> | <code>.js</code> <code>.jsx</code> <code>.tsx</code> | Dynamic route segment            |
+| ———————————————————— | ——————- | ——————————– |
+| <a href="https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes#catch-all-segments"><code>[...file]</code></a> | <code>.js</code> <code>.jsx</code> <code>.tsx</code> | Catch-all route segment          |
+| <a href="https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes#optional-catch-all-segments"><code>[[...file]]</code></a> | <code>.js</code> <code>.jsx</code> <code>.tsx</code> | Optional catch-all route segment |</p>
+<h2 id="App-Router"><a href="#App-Router" class="headerlink" title="App Router"></a>App Router</h2><p><code>Next.js</code> 应用程序路由器为React的最新范例功能，应用路由是由基于文件系统的路由器在页面路由器中的自然演变。</p>
+<p>一个应用程序中可以采取两种路由方式，但官方仍然建议使用应用路由器。</p>
+<h2 id="Frequently-Asked-Questions"><a href="#Frequently-Asked-Questions" class="headerlink" title="Frequently Asked Questions"></a>Frequently Asked Questions</h2><h3 id="How-can-I-access-the-request-object-in-a-layout"><a href="#How-can-I-access-the-request-object-in-a-layout" class="headerlink" title="How can I access the request object in a layout?"></a>How can I access the request object in a layout?</h3><p>如何访问布局中的请求对象？</p>
+<p>没有办法直接访问原始的请求对象，但是可以通过服务端函数访问请求头和Cookie，也可以设置Cookie。</p>
+<p>布局不会重新渲染，可以缓存和复用，以减少页面之间进行导航的非必要计算。通过限制布局访问原始请求，<code>Next.js</code> 可以访问在布局中执行潜在的缓慢或昂贵的用户代码，这可能对性能造成负面影响。</p>
+<h2 id="Build-Your-Application"><a href="#Build-Your-Application" class="headerlink" title="Build Your Application"></a>Build Your Application</h2><p>这种设计还强制不同页面之间的布局一致且可预测，以此来简化开发和调试，因为开发人员可以依靠布局以相同方式表现，而无需考虑所应用的特定页面。</p>
+<p>根据正在构建的UI模式，Parallel 路由允许同一布局中呈现多个页面，并且页面可以访问路由段以</p>
+<h2 id="How-can-I-access-the-URL-on-a-page"><a href="#How-can-I-access-the-URL-on-a-page" class="headerlink" title="How can I access the URL on a page?"></a>How can I access the URL on a page?</h2><p>如何访问页面上的URL？</p>
+<p>默认情况下，页面是服务器组件。对于给定的页面可以通过 <code>params</code> 属性访问路由段，通过 <code>searchParams</code> 访问URL搜索参数。</p>
+<p>如果使用的是客户端组件，对于更复杂的路由，可以使用 <code>usePathname</code>、<code>useSelectedLayout</code> 和<code>useSelectedLayoutSegments</code>。</p>
+<p>此外，根据正在构建的UI模式 Parallel 路由允许在相同的布局呈现多个页面，并且页面可以访问路由段以及URL搜索参数。</p>
+<h2 id="How-can-I-redirect-form-a-Server-Component"><a href="#How-can-I-redirect-form-a-Server-Component" class="headerlink" title="How can I redirect form a Server Component?"></a>How can I redirect form a Server Component?</h2><p>如何重定向服务器组件？</p>
+<p>可以使用<code>redirect</code>将页面重定向到相对或绝对URL。<code>redirect</code>是临时（307）重定向，而<code>permanentRedirect</code>是永久（308）重定向。在流式UI中使用这些功能时，将会插入一个<code>meta</code>标签以客户端发出重定向。</p>
+<h1 id="How-can-I-handle-authentication-with-the-App-Router"><a href="#How-can-I-handle-authentication-with-the-App-Router" class="headerlink" title="How can I handle authentication with the App Router."></a>How can I handle authentication with the App Router.</h1><p>如何使用 App 路由进行身份验证？</p>
+<p>官方给出的方案：</p>
+<pre><code>- [NextAuth.js](https://next-auth.js.org/configuration/nextjs#in-app-router)
+- [Clerk](https://clerk.com/docs/quickstarts/nextjs)
+- [Auth0](https://github.com/auth0/nextjs-auth0#app-router)
+- Or manually handling sessions or JWTs
+</code></pre>
+<h2 id="How-can-I-set-cookies"><a href="#How-can-I-set-cookies" class="headerlink" title="How can I set cookies?"></a>How can I set cookies?</h2><p>可以使用 <code>cookies </code> 函数在<code>Server Actions</code> 或 <code>rOUTE hANDLERS</code> 中设置cookies。</p>
+<p>由于 HTTP 不允许在流开始后设置 cookies ,因此不能从页面或者布局中之间设置 cookies。其他方法是从<code>Middleware</code>也就是中间件中设置。</p>
+<h2 id="How-can-I-build-multi-tenant-apps"><a href="#How-can-I-build-multi-tenant-apps" class="headerlink" title="How can I build multi-tenant apps?"></a>How can I build multi-tenant apps?</h2><p>我该如何构建多用户应用程序？</p>
+<p>例子 https:&#x2F;&#x2F;vercel.com&#x2F;templates&#x2F;next.js&#x2F;platforms-starter-kit</p>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>Next.js</tag>
+        <tag>React</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Next学习手册（一）DOM</title>
+    <url>/2023/09/25/2023-9-25-Next%E5%AD%A6%E4%B9%A0%E6%89%8B%E5%86%8C%EF%BC%88%E4%B8%80%EF%BC%89-%20DOM/</url>
+    <content><![CDATA[<h3 id="React工作原理"><a href="#React工作原理" class="headerlink" title="React工作原理"></a>React工作原理</h3><p>当浏览器试图访问一个网页时，会得到诸如下图一样的响应内容：</p>
+<img src="http://171.38.91.172:4666/MOON/blog%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90/html-to-dom.png" class="">
+
+<p>然后浏览器将通过此响应内容，构造 DOM (文档对象模型)。</p>
+<p>然后才是我们所看到的UI界面。</p>
+<h3 id="什么是DOM"><a href="#什么是DOM" class="headerlink" title="什么是DOM?"></a>什么是DOM?</h3><p>对于什么是DOM，<code>Next.js</code> 官方给出了如下解释。</p>
+<p>The DOM is an object representation of the HTML elements. It acts as a  bridge between your code and the user interface, and has a tree-like  structure with parent and child relationships.</p>
+<p>翻译：DOM是HTML元素的对象表示。它充当代码和用户界面之间的桥梁，并具有具有父子关系的树状结构。</p>
+<p>这意味着我们可以通过DOM界面以及程序来监听用户事件，并通过修改元素来操作DOM。</p>
+<h4 id="示例一："><a href="#示例一：" class="headerlink" title="示例一："></a>示例一：</h4><p>  假设我们有一个HTML文件，内容如下：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这个HTML中，我们给<code>&lt;div&gt;</code>加了一个唯一的id，为了方便针对。并且为了在HTML中编写javascript代码，添加了标记。</p>
+<p>现在通过一个DOM方法，<code>getElementByID()</code>来根据<code>id</code>选择<code>&lt;div&gt;</code>标签。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> app = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;app&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后继续使用DOM方法创建一个新的元素。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="comment">// 根据id 选择div标签</span></span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> app = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;app&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="comment">// 声明一个新的 h1 元素</span></span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> header = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;h1&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="comment">// 声明新的文本内容</span></span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> headerContent = <span class="variable language_">document</span>.<span class="title function_">createTextNode</span>(</span></span><br><span class="line"><span class="language-javascript">        <span class="string">&#x27;Develop. Preview. Ship. 🚀&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">      );</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="comment">// 将刚才声明的文本内容添加给 h1 元素</span></span></span><br><span class="line"><span class="language-javascript">      header.<span class="title function_">appendChild</span>(headerContent);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="comment">// 将刚才声明的 h1 元素 放置在 div中</span></span></span><br><span class="line"><span class="language-javascript">      app.<span class="title function_">appendChild</span>(header);</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>接着我们可以看到如下页面：</p>
+<img src="http://171.38.91.172:4666/MOON/blog%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90/page_image_1.png" class="">
+
+<h3 id="HTML-AND-DOM"><a href="#HTML-AND-DOM" class="headerlink" title="HTML AND DOM"></a>HTML AND DOM</h3><p>通过查看页面DOM元素，我们会看到页面中包含<code>&lt;h1&gt;</code>元素，这与我们的源代码不同。</p>
+<img src="http://171.38.91.172:4666/MOON/blog%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90/source-code.png" class="">
+
+<p>原因就是，HTML表示的是初始页面内容，而DOM表示修改后的页面内容。之所以呈现不同，就是因为我们看到的页面已经被编写的javascript 代码修改过了。</p>
+<p>使用简单的javascript代码来更新DOM非常强大，但代码很冗长。我们使用了如下7行代码来更新了一个<code>&lt;h1&gt;</code>元素及其内容。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">const</span> app = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;app&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">const</span> header = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;h1&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">const</span> headerContent = <span class="variable language_">document</span>.<span class="title function_">createTextNode</span>(<span class="string">&#x27;Develop. Preview. Ship. 🚀&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">  header.<span class="title function_">appendChild</span>(headerContent);</span></span><br><span class="line"><span class="language-javascript">  app.<span class="title function_">appendChild</span>(header);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>随着应用体积增长，使用这种方法编写应用会越来越难。但开发者通过编写指令，描述想现实的内容，让计算机知道该如何更新DOM，这是很不错的。</p>
+<h3 id="命令式编程和声明式编程"><a href="#命令式编程和声明式编程" class="headerlink" title="命令式编程和声明式编程"></a>命令式编程和声明式编程</h3><p>上面的代码是命令式编程的例子，我们编写如何更新用户界面的步骤。但涉及到构建用户界面时，声明式编程是首选的，因为这可以加快开发过程。</p>
+<p>In other words, <strong>imperative programming</strong> is like giving a chef step-by-step instructions on how to make a pizza. <strong>Declarative programming</strong> is like ordering a pizza without being concerned about the steps it takes to make the pizza. 🍕	— Next.js</p>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>Next.js</tag>
+        <tag>React</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>联机教程</title>
+    <url>/2023/09/05/2023-9-5-%E8%81%94%E6%9C%BA/</url>
+    <content><![CDATA[<h3 id="【联机方式】"><a href="#【联机方式】" class="headerlink" title="【联机方式】"></a>【联机方式】</h3><p>铁锈战争非常的自由，支持多种联机方式。
+下面按照使用难度从易到难，分别叙述。</p>
+<h4 id="【公开服务器联机】难度-零星"><a href="#【公开服务器联机】难度-零星" class="headerlink" title="【公开服务器联机】难度: 零星"></a>【公开服务器联机】难度: 零星</h4><p>出现在多人游戏列表中的官方服务器以及第三方服务器，只需点击即可加入。</p>
+<h4 id="【REPALY联机】难度-一星"><a href="#【REPALY联机】难度-一星" class="headerlink" title="【REPALY联机】难度: 一星"></a>【REPALY联机】难度: 一星</h4><p>RELAY, 又称继电器, 是在 Rusted Warfare 1.14.P8 (测试版) 加入的功能, 目的是在 不使用 任何工具的情况下, 使玩家作为 NAT 网络下的工具, 可以和玩家进行联机.
+                                                                —- Dr</p>
+<h5 id="官方REPALY"><a href="#官方REPALY" class="headerlink" title="[官方REPALY]:"></a>[官方REPALY]:</h5><p>多人游戏列表中选择Aisa&#x2F;US
+Aisa为亚洲REPALY,US为美洲REPLAY</p>
+<h5 id="第三方REPLAY"><a href="#第三方REPLAY" class="headerlink" title="[第三方REPLAY]:"></a>[第三方REPLAY]:</h5><p>RELAY-CN 是由 RW-HPS &amp; RCN Team 搭建的 中国区非官方 RELAY (ID: R) rcn[docs]: https:&#x2F;&#x2F;docs.der.kim&#x2F;web&#x2F;#&#x2F;5&#x2F;23
+RELAY-RU 是由 Vulkan (RMT) 搭建的 俄区非官方 RELAY (ID: V) : </p>
+<h4 id="【第三方联机服务】难度-一星"><a href="#【第三方联机服务】难度-一星" class="headerlink" title="【第三方联机服务】难度: 一星"></a>【第三方联机服务】难度: 一星</h4><p>蒲公英联机、水瓶联机、小火箭联机，等。
+通过第三方联机平台进行的联机，具体情况视软件而不同，故不多赘述。</p>
+<h4 id="【ipv6联机】难度-二星"><a href="#【ipv6联机】难度-二星" class="headerlink" title="【ipv6联机】难度: 二星"></a>【ipv6联机】难度: 二星</h4><p>ipv6对某些未普及的地区来说属于比较苛刻的条件，但随时间推移这也许将不再苛刻。
+铁锈战争支持ipv6直连，如果你和你的朋友都支持ipv6话可以考虑。
+一个IPV6检测网站: http:&#x2F;&#x2F;test-ipv6.com&#x2F;
+如果检测不到ipv6可以尝试开启，开启后输入ipv6地址+5123端口直连即可。</p>
+<h4 id="【自建第三方服务器联机】难度-三星"><a href="#【自建第三方服务器联机】难度-三星" class="headerlink" title="【自建第三方服务器联机】难度: 三星"></a>【自建第三方服务器联机】难度: 三星</h4><p>这需要你成为铁锈战争的服主，首先你需要有一台拥有公网的服务器，然后在你的服务器上运行联机服务软件即可。
+一些开源的联机服务软件：
+        - [RW-HPS]:https:&#x2F;&#x2F;github.com&#x2F;RW-HPS&#x2F;RW-HPS&#x2F;
+        - [Rukkit]:https:&#x2F;&#x2F;github.com&#x2F;RukkitDev&#x2F;Rukkit
+        - [RW-CPPS]:https:&#x2F;&#x2F;github.com&#x2F;shishanyue&#x2F;RW-CPPS</p>
+<p>####【端口映射和端口转发】难度: 三星</p>
+<h5 id="端口映射-将外网的一个端口完全映射给内网一个地址的指定端口-实现外网到内网和内网到外网双向的通信"><a href="#端口映射-将外网的一个端口完全映射给内网一个地址的指定端口-实现外网到内网和内网到外网双向的通信" class="headerlink" title="[端口映射]:将外网的一个端口完全映射给内网一个地址的指定端口,实现外网到内网和内网到外网双向的通信."></a>[端口映射]:将外网的一个端口完全映射给内网一个地址的指定端口,实现外网到内网和内网到外网双向的通信.</h5><pre><code>- 知乎：https://zhuanlan.zhihu.com/p/43233032
+</code></pre>
+<h5 id="端口转发-如果你有一台可以使用公网的设备-而你又无法直接在那个设备上进行游戏，可以借助工具进行端口转发，从而利用公网为你的游戏联机提供服务。这里仅推荐开源的跨平台端口转发工具–FRP。"><a href="#端口转发-如果你有一台可以使用公网的设备-而你又无法直接在那个设备上进行游戏，可以借助工具进行端口转发，从而利用公网为你的游戏联机提供服务。这里仅推荐开源的跨平台端口转发工具–FRP。" class="headerlink" title="[端口转发]:如果你有一台可以使用公网的设备,而你又无法直接在那个设备上进行游戏，可以借助工具进行端口转发，从而利用公网为你的游戏联机提供服务。这里仅推荐开源的跨平台端口转发工具–FRP。"></a>[端口转发]:如果你有一台可以使用公网的设备,而你又无法直接在那个设备上进行游戏，可以借助工具进行端口转发，从而利用公网为你的游戏联机提供服务。这里仅推荐开源的跨平台端口转发工具–FRP。</h5><pre><code>- FRP端口转发: https://gofrp.org/
+</code></pre>
+<h3 id="【自己写个联机软件】难度-满天星"><a href="#【自己写个联机软件】难度-满天星" class="headerlink" title="【自己写个联机软件】难度: 满天星"></a>【自己写个联机软件】难度: 满天星</h3><p>自己想。</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
       </tags>
   </entry>
 </search>
