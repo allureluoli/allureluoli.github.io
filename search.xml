@@ -3764,4 +3764,125 @@ RELAY-RU 是由 Vulkan (RMT) 搭建的 俄区非官方 RELAY (ID: V) : </p>
         <tag>jsx</tag>
       </tags>
   </entry>
+  <entry>
+    <title>SQLite初级入门</title>
+    <url>/2023/11/26/2023-11-26-SQLite%E5%88%9D%E7%BA%A7%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<h3 id="一、为什么要使用Sqlite"><a href="#一、为什么要使用Sqlite" class="headerlink" title="一、为什么要使用Sqlite"></a>一、为什么要使用Sqlite</h3><p>  此前，我一直采用的使用json存储数据的方法，这种方法虽然轻便，但操作复杂。而且实际操作的过程中，是将json的全部数据存入内存，再进行操作的，会出现一个情况就是随着数据量的增加而导致占用内存越来越多。</p>
+<p>  使用数据库不仅可以提高效率并减少内存使用，而且还能提供更复杂的数据查询和操作功能。</p>
+<p>  此外，数据库作为IT行业中非常常用的软件，这使我有不得不学习的理由。</p>
+<h3 id="二、了解它"><a href="#二、了解它" class="headerlink" title="二、了解它"></a>二、了解它</h3><ul>
+<li><h3 id="What-Is-SQLite"><a href="#What-Is-SQLite" class="headerlink" title="What Is SQLite?"></a>What Is SQLite?</h3><p> SQLite是一个C语言库，它实现了一个〔small〕(https:&#x2F;&#x2F;www.sqlite.org&#x2F;footprint.html)，<a href="https://www.sqlite.org/fasterthanfs.html">快速</a>，<a href="https://www.sqlite.org/selfcontained.html">自给自足</a>，<a href="https://www.sqlite.org/hirely.html">高可靠性</a>，<a href="https://www.sqlite.org/fullsql.html">功能齐全</a>，SQL数据库引擎。SQLite是<a href="https://www.sqlite.org/mostdeployed.html">最常用的</a>数据库引擎。SQLite内置于所有手机和大多数计算机中，并捆绑在人们每天使用的无数其他应用程序中。<a href="https://www.sqlite.org/about.html">更多信息…</a>  </p>
+<p> SQLite<a href="https://www.sqlite.org/fileformat2.html">文件格式</a>是稳定的、跨平台的、向后兼容的，开发人员承诺（到2050年）保持这种状态(https:&#x2F;&#x2F;www.sqlite.org&#x2F;lts.html)。SQLite数据库文件通常用作在系统之间传输丰富内容的容器[<a href="https://www.sqlite.org/aff_short.html">1]</a>[<a href="https://www.sqlite.org/sqlar.html">2]</a>[<a href="https://www.sqlite.org/appfileformat.html">3]</a>并作为数据的长期存档格式[<a href="https://www.sqlite.org/locrsf.html">4]</a>。有超过1万亿（1e12）个SQLite数据库在积极使用[<a href="https://www.sqlite.org/mostdeployed.html">5]</a>。  </p>
+<p> SQLite<a href="https://sqlite.org/src">源代码</a>在<a href="https://www.sqlite.org/copyright.html">公共领域</a>并且每个人都可以自由用于任何目的。  </p>
+<p>​																—— 以上全文摘自SQLite官网</p>
+</li>
+</ul>
+<p>讲的太明白了。</p>
+<h3 id="三、最基本的使用"><a href="#三、最基本的使用" class="headerlink" title="三、最基本的使用"></a>三、最基本的使用</h3><pre><code> 我个人的理解，想要入门数据库，需要学会四点：创建数据库、从数据库插入数据、从数据库查询查询数据，学会以上四点，就没啥问题了。
+</code></pre>
+<p>​	而在Python中使用SQLite，首先就是安装它。</p>
+<p>使用我们强大的pip！</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">pip install pysqlite3 </span><br></pre></td></tr></table></figure>
+
+<p>勿要用错安装命令嗷，开箱即用，安装完就可以直接用了。</p>
+<h4 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 连接到数据库（如果不存在则创建）</span></span><br><span class="line">conn = sqlite3.connect(<span class="string">&#x27;data.db&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个游标对象</span></span><br><span class="line">cursor = conn.cursor()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个表</span></span><br><span class="line">cursor.execute(<span class="string">&#x27;&#x27;&#x27;CREATE TABLE IF NOT EXISTS UserLib (  </span></span><br><span class="line"><span class="string">                    UserId TEXT PRIMARY KEY,  </span></span><br><span class="line"><span class="string">                    Username TEXT,</span></span><br><span class="line"><span class="string">                    DayQuantity int,</span></span><br><span class="line"><span class="string">                     Favorability real,</span></span><br><span class="line"><span class="string">                      Inauspicious int,</span></span><br><span class="line"><span class="string">                      Time DATE</span></span><br><span class="line"><span class="string">                 )&#x27;&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 断开连接</span></span><br><span class="line">conn.close()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>  只需要短短的几行代码，我们就可以创建数据库了。</p>
+<p>  过程分为四步：</p>
+<ul>
+<li>连接</li>
+<li>创建对象</li>
+<li>使用execute执行命令</li>
+<li>断开</li>
+</ul>
+<p>其中，execute中的命令尤为关键。</p>
+<p>  数据库的表中我理解的情况是一个完整结构分为三部分：</p>
+<ul>
+<li><p>第一层：</p>
+<ul>
+<li>表名：上文的表名就是UserLib</li>
+<li><code>CREATE TABLE IF NOT EXISTS UserLib</code>这条代码就成功创建了一个表名为UserLib的数据库。</li>
+</ul>
+</li>
+<li><p>第二层：</p>
+<ul>
+<li>主键：上文的主键就是UserId，数据库主要就是通过这个来完成对数据的区分的。数据库的规则是，必须有主键，且主键的值唯一，也就是不能重复。</li>
+<li><code>  UserId TEXT PRIMARY KEY</code>这条代码就定义了一个TEXT类型的主键，在数据库中TEXT表示字符串类型。</li>
+</ul>
+</li>
+<li><p>第三层：</p>
+<ul>
+<li>次键：也就是普通的键，它的值有很多种，且可重复。</li>
+<li>定义时只需要简单的定义一个键名和类型就可以了，像这样<code> Favorability real</code>，就定义了一个浮点数的类型。</li>
+</ul>
+</li>
+<li><p>小记 ps:</p>
+</li>
+<li><p><code>ORDER BY</code>：用于对查询结果进行排序。</p>
+</li>
+<li><p><code>GROUP BY</code>：用于对查询结果进行分组。</p>
+</li>
+<li><p><code>HAVING</code>：用于对分组后的结果进行过滤。</p>
+</li>
+<li><p><code>LIMIT</code>：用于限制查询结果的数量。</p>
+</li>
+</ul>
+<h4 id="存入数据"><a href="#存入数据" class="headerlink" title="存入数据"></a>存入数据</h4><p>数据库的存入也主要是利用SQL语句来进行操作的，即调用<code>execute()</code>方法。</p>
+<p>在完成连接和创建的前提下，我们可以利用以下语句对已经存在的表UserLib插入一些数据。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">cursor.execute(<span class="string">&quot;INSERT INTO UserLib VALUES (&#x27;ID1145124&#x27;, &#x27;Cure Sky&#x27;, 1, 1, 1, 1,0)&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>ps：<ul>
+<li>在插入数据时，是按照键的顺序来插入的，可以小于键的数量但不能多于键的数量。毕竟如果超过了，本身就不存在更多的键了，数据库就会寄。</li>
+</ul>
+</li>
+</ul>
+<h4 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h4><p>在存好数据后，想要把数据从数据库再提出来，也非常简单。</p>
+<p>以下命令可以查询一个表中全部的数据，因为使用了通配符*，所以结构包含表中的全部内容。</p>
+<p>同时我们使用了一个<code>fetchall()</code> 在执行完查询命令后实际上数据就到了游标对象这里，使用这个方法则是获取全部的数据。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建一个游标对象</span></span><br><span class="line">c = conn.cursor()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行查询语句 读取全部数据</span></span><br><span class="line">c.execute(<span class="string">&quot;SELECT * FROM UserLib&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取所有结果</span></span><br><span class="line">rows = c.fetchall()</span><br></pre></td></tr></table></figure>
+
+<p>那么查询单列数据，则只需要指定ID就可以了。</p>
+<p>这个语句可以查出符合<code> UserId = &#39;ID1145124&#39;</code>这个条件的数据，而通过前文我们知道，UserId是主键，自然就只返回一列了。</p>
+<p>在这里我们返回数据结果调用的是<code>fetchone()</code>方法，这个方法只会返回一条数据，因为我们很清楚我们只查了一条。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">cursor.execute(<span class="string">&#x27;&#x27;&#x27;SELECT * FROM UserLib WHERE UserId = &#x27;ID1145124&#x27;;&#x27;&#x27;&#x27;</span>)</span><br><span class="line">Var = cursor.fetchone()</span><br></pre></td></tr></table></figure>
+
+<p>如果要查询一条数据的某个键的话，只需要把<code>*</code>改为键名就可以了，像这样：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">cursor.execute(<span class="string">&#x27;&#x27;&#x27;SELECT DayQuantity FROM UserLib WHERE UserId = &#x27;ID1145124&#x27;;&#x27;&#x27;&#x27;</span>)</span><br><span class="line">Num = cursor.fetchone()</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h4><p>修改数据同样是使用<code>execute()</code>方法执行SQL语句进行操作的。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">cursor.execute(<span class="string">f&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">        UPDATE UserLib</span></span><br><span class="line"><span class="string">        SET DayQuantity = 23333</span></span><br><span class="line"><span class="string">        WHERE UserID = &#x27;ID1145124&#x27;;</span></span><br><span class="line"><span class="string">                 &#x27;&#x27;&#x27;</span>)</span><br><span class="line">conn.commit()</span><br><span class="line">conn.close()</span><br></pre></td></tr></table></figure>
+
+<p>SQL语句主要分为三个部分：</p>
+<ul>
+<li><p>第一部分：</p>
+<ul>
+<li><code>UPDATE UserLib</code>：这条代码指定了数据更新的表。</li>
+</ul>
+</li>
+<li><p>第二部分：</p>
+<ul>
+<li><code>SET DayQuantity = 23333</code>：这条代码指定了一个键以及这个键的内容，简单来说就是将<code>DayQuantity </code>的值改成了<code>23333</code>，像变量赋值一样简单。</li>
+</ul>
+</li>
+<li><p>第三部分：</p>
+<ul>
+<li><code>WHERE UserID = &#39;ID1145124&#39;;</code>指定了主键，虽说是修改某个键的值，但如果不说是哪个主键，数据库可不知道咋改。</li>
+</ul>
+</li>
+</ul>
+<p>看到这里，恭喜你，数据库已经入门啦~（仅限身娇体柔又可爱的SQLite）</p>
+<h3 id="四、构造数据库类"><a href="#四、构造数据库类" class="headerlink" title="四、构造数据库类"></a>四、构造数据库类</h3><p>  这个是我自己想出来的，针对同一个数据库可能有不同的繁多的操作，一条一条代码的反复去写非常麻烦，使用函数代替的话也需要不断的重复连接、创建游标这个过程。我们可以借助面向对象语言的特性来封装一个数据库类，只需要实例化类然后调用它的方法，就可以进行繁多的操作了。</p>
+<p>  以下代码是我在实际项目中对此的应用，可以参考一下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">DataSQL</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot; 数据库对象 &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line"></span><br><span class="line">        path = os.getcwd() + <span class="string">&#x27;/data/MoreGoodJrrpData/MoreGoodJrrpData.db&#x27;</span></span><br><span class="line">        self.conn = sqlite3.connect(path)</span><br><span class="line">        <span class="comment"># 连接到数据库（如果不存在则创建）</span></span><br><span class="line">        self.cursor = self.conn.cursor()</span><br><span class="line">        <span class="comment"># 创建一个游标对象</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">InIt</span>(<span class="params">self, ID, ImageName: <span class="built_in">str</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot; 初始化新用户的数据 &quot;&quot;&quot;</span></span><br><span class="line">        Time = NtpTime()</span><br><span class="line">        LuckValue = <span class="number">0</span></span><br><span class="line">        LuckQuantity = <span class="number">0</span></span><br><span class="line">        Inauspicious = <span class="number">0</span></span><br><span class="line">        Value = IfLuck(ImageName)  <span class="comment"># 判断吉凶</span></span><br><span class="line">        LuckValue += Value</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> Value &gt; <span class="number">0</span>:</span><br><span class="line">            LuckQuantity += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            Inauspicious += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        sql = <span class="string">f&quot;INSERT INTO UserLib VALUES (&#x27;<span class="subst">&#123;ID&#125;</span>&#x27;, &#x27;未命名用户&#x27;, 1, 0, &#x27;<span class="subst">&#123;LuckQuantity&#125;</span>&#x27;, &#x27;<span class="subst">&#123;Inauspicious&#125;</span>&#x27;, &#x27;<span class="subst">&#123;LuckValue&#125;</span>&#x27;,&#x27;<span class="subst">&#123;Time&#125;</span>&#x27;)&quot;</span></span><br><span class="line"></span><br><span class="line">        self.cursor.execute(sql)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 保存（提交）更改</span></span><br><span class="line">        self.conn.commit()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 关闭连接</span></span><br><span class="line">        self.conn.close()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">TodayUpdate</span>(<span class="params">self, ID, ImageName: <span class="built_in">str</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot; 抽签数据更新&quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># try:</span></span><br><span class="line">        <span class="comment"># self.cursor.execute()</span></span><br><span class="line">        <span class="comment"># 查询时间</span></span><br><span class="line">        self.cursor.execute(<span class="string">f&#x27;&#x27;&#x27;SELECT Time FROM UserLib WHERE UserId = &#x27;<span class="subst">&#123;ID&#125;</span>&#x27;;&#x27;&#x27;&#x27;</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            Time = self.cursor.fetchone()[<span class="number">0</span>]</span><br><span class="line">            <span class="comment"># 判断时间时间否更新</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> TimeJudgement(<span class="built_in">str</span>(Time)):</span><br><span class="line">                _ = TimeJudgement(<span class="built_in">str</span>(Time))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                _, Time = TimeJudgement(<span class="built_in">str</span>(Time))</span><br><span class="line">            <span class="keyword">if</span> _:</span><br><span class="line">                <span class="comment"># 查到了，开始更新数据</span></span><br><span class="line">                self.cursor.execute(</span><br><span class="line">                    <span class="string">f&#x27;&#x27;&#x27;SELECT DayQuantity, Favorability, LuckQuantity, Inauspicious, LuckValue  FROM UserLib WHERE UserId = &#x27;<span class="subst">&#123;ID&#125;</span>&#x27;;&#x27;&#x27;&#x27;</span>)</span><br><span class="line">                DayQuantity, Favorability, LuckQuantity, Inauspicious, LuckValue = self.cursor.fetchone()</span><br><span class="line">                DayQuantity += <span class="number">1</span></span><br><span class="line">                Favorability += <span class="number">5</span></span><br><span class="line">                Value = IfLuck(ImageName)  <span class="comment"># 判断吉凶</span></span><br><span class="line">                LuckValue += Value</span><br><span class="line">                <span class="keyword">if</span> Value &gt; <span class="number">0</span>:</span><br><span class="line">                    LuckQuantity += <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    Inauspicious += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">                self.cursor.execute(<span class="string">f&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">                        UPDATE UserLib</span></span><br><span class="line"><span class="string">                        SET DayQuantity = <span class="subst">&#123;DayQuantity&#125;</span>,</span></span><br><span class="line"><span class="string">                         Favorability = <span class="subst">&#123;Favorability&#125;</span>,</span></span><br><span class="line"><span class="string">                         LuckQuantity = <span class="subst">&#123;LuckQuantity&#125;</span>,</span></span><br><span class="line"><span class="string">                         Inauspicious = <span class="subst">&#123;Inauspicious&#125;</span>,</span></span><br><span class="line"><span class="string">                         LuckValue = <span class="subst">&#123;LuckValue&#125;</span>,</span></span><br><span class="line"><span class="string">                         Time = <span class="subst">&#123;Time&#125;</span></span></span><br><span class="line"><span class="string">                        WHERE UserID = &#x27;<span class="subst">&#123;ID&#125;</span>&#x27;;</span></span><br><span class="line"><span class="string">                                 &#x27;&#x27;&#x27;</span>)</span><br><span class="line">                <span class="comment"># 更新完了提交保存</span></span><br><span class="line">                self.conn.commit()</span><br><span class="line">                self.cursor.close()</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># &quot;已经签到过了 返回个False赶紧润&quot;</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">except</span> TypeError:</span><br><span class="line">            self.InIt(ID=ID, ImageName=ImageName)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">ChangeName</span>(<span class="params">self, ID, Name</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot; 修改名字的方法&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">        self.cursor.execute(<span class="string">f&#x27;&#x27;&#x27;SELECT * FROM UserLib WHERE UserId = &#x27;<span class="subst">&#123;ID&#125;</span>&#x27;;&#x27;&#x27;&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> self.cursor.fetchone() <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">        self.cursor.execute(<span class="string">f&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">                UPDATE UserLib</span></span><br><span class="line"><span class="string">                SET Username = &#x27;<span class="subst">&#123;Name&#125;</span>&#x27;</span></span><br><span class="line"><span class="string">                WHERE UserID = &#x27;<span class="subst">&#123;ID&#125;</span>&#x27;;</span></span><br><span class="line"><span class="string">                         &#x27;&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        self.conn.commit()</span><br><span class="line">        self.conn.close()</span><br><span class="line">        <span class="comment"># 究竟哪种断开才对呢。。。</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">UserInfoImage</span>(<span class="params">self, ID</span>):</span><br><span class="line"></span><br><span class="line">        self.cursor.execute(</span><br><span class="line">            <span class="string">f&#x27;&#x27;&#x27;SELECT Username, DayQuantity, Favorability, LuckQuantity,</span></span><br><span class="line"><span class="string">             Inauspicious, LuckValue FROM UserLib WHERE UserId = &#x27;<span class="subst">&#123;ID&#125;</span>&#x27;;&#x27;&#x27;&#x27;</span>)</span><br><span class="line">        Username, DayQuantity, Favorability, LuckQuantity, Inauspicious, LuckValue = self.cursor.fetchone()</span><br><span class="line">        self.cursor.close()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">await</span> TextImage(UserName=Username, DayQuantity=DayQuantity, Favorability=Favorability,</span><br><span class="line">                           LuckQuantity=LuckQuantity, LuckValue=LuckValue, Inauspicious=Inauspicious, ID=ID):</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Sqlite</tag>
+      </tags>
+  </entry>
 </search>
