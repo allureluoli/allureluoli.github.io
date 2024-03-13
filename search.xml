@@ -3885,4 +3885,80 @@ RELAY-RU 是由 Vulkan (RMT) 搭建的 俄区非官方 RELAY (ID: V) : </p>
         <tag>Sqlite</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Ntp服务的使用</title>
+    <url>/2023/11/29/2023-11-29-Ntp%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h3 id="什么是NTP服务"><a href="#什么是NTP服务" class="headerlink" title="什么是NTP服务"></a>什么是NTP服务</h3><p>使用之前我们先了解一下。</p>
+<p>  <a href="https://baike.baidu.com/item/NTP/1100433?fromModule=lemma_inlink">NTP</a>服务器【[Network Time Protocol](https:&#x2F;&#x2F;baike.baidu.com&#x2F;item&#x2F;Network Time Protocol&#x2F;2985649?fromModule&#x3D;lemma_inlink)（NTP）】是用来使计算机时间同步化的一种协议，它可以使<a href="https://baike.baidu.com/item/%E8%AE%A1%E7%AE%97%E6%9C%BA/140338?fromModule=lemma_inlink">计算机</a>对其服务器或<a href="https://baike.baidu.com/item/%E6%97%B6%E9%92%9F%E6%BA%90/3219811?fromModule=lemma_inlink">时钟源</a>（如<a href="https://baike.baidu.com/item/%E7%9F%B3%E8%8B%B1%E9%92%9F/1809648?fromModule=lemma_inlink">石英钟</a>，<a href="https://baike.baidu.com/item/GPS/214654?fromModule=lemma_inlink">GPS</a>等等），做同步化，它可以提供高精准度的时间校正（LAN上与标准间差小于1毫秒，<a href="https://baike.baidu.com/item/WAN/297040?fromModule=lemma_inlink">WAN</a>上几十毫秒），且可介由加密确认的方式来防止恶毒的协议攻击。时间按NTP服务器的等级传播。按照离外部UTC源的远近把所有服务器归入不同的Stratum（层）中。</p>
+<p>​																				——百度百科</p>
+<p>  上文说的很复杂，但简单来说就是获取时间的一种方式。</p>
+<p>  在需要时间数据时，我们有系统时间和外部时间两种方式来获取。但是呢，使用时可能遇到一些情况。例如系统时间设置的不正确，从而会导致出现误差。虽然说一般系统时间也是根据NTP服务器来获取的，但我们无法保证系统的NTP服务器是否正常工作，所以我们可以考虑直接使用NTP服务器来获取正确的时间。</p>
+<p>  这也是我自己的想法，国家授时中心，以及腾讯云、阿里云，这类一线大厂，它们提供的NTP服务具有稳定性。经过本人验证，企业的NTP服务是比授时中心快一些的。话不多说，直接上手吧。</p>
+<h4 id="使用NTP"><a href="#使用NTP" class="headerlink" title="使用NTP"></a>使用NTP</h4><p>以下的代码就是我本人使用NTP服务器的例子，根据我的需求我只需要年月日这个时间。</p>
+<p>图片（暂时没有稳定图床）</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">NtpTime</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot; 通过Ntp服务器返回时间 &quot;&quot;&quot;</span></span><br><span class="line">    MD = <span class="literal">True</span></span><br><span class="line">    num = <span class="number">1</span></span><br><span class="line">    ntpurl = <span class="string">f&#x27;ntp<span class="subst">&#123;num&#125;</span>&#x27;</span></span><br><span class="line">    <span class="keyword">while</span> MD:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            ntp_server = <span class="string">f&quot;<span class="subst">&#123;ntpurl&#125;</span>.aliyun.com&quot;</span></span><br><span class="line">            <span class="comment"># 创建NTP客户端</span></span><br><span class="line">            client = ntplib.NTPClient()</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 发送NTP请求并获取时间信息</span></span><br><span class="line">            response = client.request(ntp_server)</span><br><span class="line">            MD = <span class="literal">False</span></span><br><span class="line">            timestamp = response.tx_time</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 将时间戳转换为日期时间格式</span></span><br><span class="line"></span><br><span class="line">            local_time = time.localtime(timestamp)</span><br><span class="line">            formatted_time = time.strftime(<span class="string">&quot;%Y,%m,%d&quot;</span>, local_time)</span><br><span class="line">            Year, Mouth, Day = formatted_time.split(<span class="string">&#x27;,&#x27;</span>)</span><br><span class="line"></span><br><span class="line">            Year, Mouth, Day = <span class="built_in">map</span>(<span class="built_in">int</span>, [Year, Mouth, Day])</span><br><span class="line">            <span class="comment"># 定义两个日期</span></span><br><span class="line"></span><br><span class="line">            date1 = datetime.date(Year, Mouth, Day)</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">str</span>(date1)</span><br><span class="line">        <span class="keyword">except</span> ntplib.NTPException:</span><br><span class="line">            num += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="使用NTP的缺点"><a href="#使用NTP的缺点" class="headerlink" title="使用NTP的缺点"></a>使用NTP的缺点</h4><p>毕竟我们通过访问NTP得到时间这一过程也需要耗时的，所以我们无法得到一个更精准的时间。</p>
+<p>除非我们能估算代码的运行速度，提前加上，才能确保时间足够精准。</p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>NTP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2023/12/22/%E4%B8%AA%E4%BA%BA%E7%95%8C%E9%9D%A2/</url>
+    <content><![CDATA[<h3 id="个人界面"><a href="#个人界面" class="headerlink" title="个人界面"></a>个人界面</h3><p>ID：二月</p>
+<ul>
+<li>后端能力：Djongo、Flask、FastApi、Next.js、</li>
+<li>前端能力：JavaScript、HTML、CSS、React.js</li>
+<li>语言：Python、Golang、C++、PHP、C#</li>
+<li>渗透能力：Web、Pwn、流量分析</li>
+<li>游戏开发能力：Pygame、Godot、GoWorld</li>
+<li>操作系统：Windows、Debian、Ubuntu、RedHat、Arch、Centos</li>
+<li>测试：Pytest、Allure</li>
+</ul>
+<h6 id="个人维护项目"><a href="#个人维护项目" class="headerlink" title="个人维护项目"></a>个人维护项目</h6><ul>
+<li><p>QQLove：QQ官方协议</p>
+</li>
+<li><p>GocqLove：完成</p>
+</li>
+<li><p>Honeysuckle：Pygame游戏</p>
+</li>
+<li><p>萌军的网址导航</p>
+</li>
+<li><p>萌军官网：待开发</p>
+</li>
+<li><p>二月の档案室</p>
+</li>
+<li><p>Egg：像素画网站</p>
+</li>
+<li><p>C#聊天软件：基于websocket和WPF</p>
+</li>
+</ul>
+<h6 id="团队开发项目"><a href="#团队开发项目" class="headerlink" title="团队开发项目"></a>团队开发项目</h6><ul>
+<li>秘封幻想社官方网站</li>
+<li>铁锈战争战网</li>
+<li></li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>2024-3-13-使用Code::block和cpp来开发SDL2-环境配置</title>
+    <url>/2024/03/13/2024-3-13-%E4%BD%BF%E7%94%A8Code-block%E5%92%8Ccpp%E6%9D%A5%E5%BC%80%E5%8F%91SDL2-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p><img src="D:\1myfile\Destok\Folder\site\BLOG\github\source_posts\images\tu1.png" alt="img"></p>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>Code::Block</tag>
+        <tag>SDL2</tag>
+      </tags>
+  </entry>
 </search>
