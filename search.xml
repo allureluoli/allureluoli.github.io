@@ -3910,44 +3910,6 @@ RELAY-RU 是由 Vulkan (RMT) 搭建的 俄区非官方 RELAY (ID: V) : </p>
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/2023/12/22/%E4%B8%AA%E4%BA%BA%E7%95%8C%E9%9D%A2/</url>
-    <content><![CDATA[<h3 id="个人界面"><a href="#个人界面" class="headerlink" title="个人界面"></a>个人界面</h3><p>ID：二月</p>
-<ul>
-<li>后端能力：Djongo、Flask、FastApi、Next.js、</li>
-<li>前端能力：JavaScript、HTML、CSS、React.js</li>
-<li>语言：Python、Golang、C++、PHP、C#</li>
-<li>渗透能力：Web、Pwn、流量分析</li>
-<li>游戏开发能力：Pygame、Godot、GoWorld</li>
-<li>操作系统：Windows、Debian、Ubuntu、RedHat、Arch、Centos</li>
-<li>测试：Pytest、Allure</li>
-</ul>
-<h6 id="个人维护项目"><a href="#个人维护项目" class="headerlink" title="个人维护项目"></a>个人维护项目</h6><ul>
-<li><p>QQLove：QQ官方协议</p>
-</li>
-<li><p>GocqLove：完成</p>
-</li>
-<li><p>Honeysuckle：Pygame游戏</p>
-</li>
-<li><p>萌军的网址导航</p>
-</li>
-<li><p>萌军官网：待开发</p>
-</li>
-<li><p>二月の档案室</p>
-</li>
-<li><p>Egg：像素画网站</p>
-</li>
-<li><p>C#聊天软件：基于websocket和WPF</p>
-</li>
-</ul>
-<h6 id="团队开发项目"><a href="#团队开发项目" class="headerlink" title="团队开发项目"></a>团队开发项目</h6><ul>
-<li>秘封幻想社官方网站</li>
-<li>铁锈战争战网</li>
-<li></li>
-</ul>
-]]></content>
-  </entry>
-  <entry>
     <title>2024-3-13-使用Code::block和cpp来开发SDL2-环境配置</title>
     <url>/2024/03/13/2024-3-13-%E4%BD%BF%E7%94%A8Code-block%E5%92%8Ccpp%E6%9D%A5%E5%BC%80%E5%8F%91SDL2-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<h3 id="使用Code-block和cpp来开发SDL2-环境配置"><a href="#使用Code-block和cpp来开发SDL2-环境配置" class="headerlink" title="使用Code::block和cpp来开发SDL2-环境配置"></a>使用Code::block和cpp来开发SDL2-环境配置</h3><p>由于网上关于Code::block 和 SDL2的中文教程比较少，也为了巩固我的经验所以编写了这篇博客。</p>
