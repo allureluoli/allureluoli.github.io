@@ -3910,9 +3910,9 @@ RELAY-RU 是由 Vulkan (RMT) 搭建的 俄区非官方 RELAY (ID: V) : </p>
       </tags>
   </entry>
   <entry>
-    <title>2024-3-13-使用Code::block和cpp来开发SDL2-环境配置</title>
+    <title>2024-3-13-开发SDL2的常见问题</title>
     <url>/2024/03/13/2024-3-13-%E4%BD%BF%E7%94%A8Code-block%E5%92%8Ccpp%E6%9D%A5%E5%BC%80%E5%8F%91SDL2-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h3 id="使用Code-block和cpp来开发SDL2-环境配置"><a href="#使用Code-block和cpp来开发SDL2-环境配置" class="headerlink" title="使用Code::block和cpp来开发SDL2-环境配置"></a>使用Code::block和cpp来开发SDL2-环境配置</h3><p>由于网上关于Code::block 和 SDL2的中文教程比较少，也为了巩固我的经验所以编写了这篇博客。</p>
+    <content><![CDATA[<h3 id="使用Code-block开发SDL2的常见问题"><a href="#使用Code-block开发SDL2的常见问题" class="headerlink" title="使用Code::block开发SDL2的常见问题"></a>使用Code::block开发SDL2的常见问题</h3><p>由于网上关于Code::block 和 SDL2的中文教程比较少，也为了巩固我的经验所以编写了这篇博客。</p>
 <h4 id="第一个问题-找不到头文件"><a href="#第一个问题-找不到头文件" class="headerlink" title="第一个问题 找不到头文件"></a>第一个问题 找不到头文件</h4><p><img src="/img/images/csdl2tu4.png" alt="img"></p>
 <p>这是因为没有设置搜索路径</p>
 <p>打开编译器设置 &gt; 搜索路径设置</p>
