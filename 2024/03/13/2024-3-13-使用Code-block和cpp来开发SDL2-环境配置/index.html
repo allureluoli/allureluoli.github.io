@@ -10,8 +10,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="二月,"> 
-    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,
-"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,使用Code::block和cpp来开发SDL2-环境配置由于网上关于Code::block 和 SDL2的中文教程比较少，也为了巩固我的经验所以编写了这篇博客。
+第一个问题 找不到头文件
+这是因为,"> 
     <meta name="author" content="Allureluoli"> 
     <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -20,8 +21,9 @@
     
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:title" content="2024-3-13-使用Code::block和cpp来开发SDL2-环境配置 - 二月の档案室"/>
-    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,
-"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,使用Code::block和cpp来开发SDL2-环境配置由于网上关于Code::block 和 SDL2的中文教程比较少，也为了巩固我的经验所以编写了这篇博客。
+第一个问题 找不到头文件
+这是因为,"/>
     
     
     
@@ -29,8 +31,9 @@
     <meta property="og:site_name" content="二月の档案室"/>
     <meta property="og:type" content="object"/>
     <meta property="og:title" content="2024-3-13-使用Code::block和cpp来开发SDL2-环境配置 - 二月の档案室"/>
-    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,
-"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,使用Code::block和cpp来开发SDL2-环境配置由于网上关于Code::block 和 SDL2的中文教程比较少，也为了巩固我的经验所以编写了这篇博客。
+第一个问题 找不到头文件
+这是因为,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 
@@ -72,7 +75,19 @@
 
         </div>
         <div class="content markdown">
-            <p><img src="/images/csdl2tu1.png" alt="img"></p>
+            <h3 id="使用Code-block和cpp来开发SDL2-环境配置"><a href="#使用Code-block和cpp来开发SDL2-环境配置" class="headerlink" title="使用Code::block和cpp来开发SDL2-环境配置"></a>使用Code::block和cpp来开发SDL2-环境配置</h3><p>由于网上关于Code::block 和 SDL2的中文教程比较少，也为了巩固我的经验所以编写了这篇博客。</p>
+<h4 id="第一个问题-找不到头文件"><a href="#第一个问题-找不到头文件" class="headerlink" title="第一个问题 找不到头文件"></a>第一个问题 找不到头文件</h4><p><img src="/img/images/csdl2tu4.png" alt="img"></p>
+<p>这是因为没有设置搜索路径</p>
+<p>打开编译器设置 &gt; 搜索路径设置</p>
+<p><img src="/img/images/csdl2tu3.png" alt="img"></p>
+<p>把搜索路径添加进去后编译器才会知道从哪里找头文件</p>
+<p>当然链接器的搜索路径也要添加哦，两个需要添加的内容是一样的</p>
+<h4 id="第二个问题-SDL2RTSGame-init-cpp-42-undefined-reference-to-IMG-Init’"><a href="#第二个问题-SDL2RTSGame-init-cpp-42-undefined-reference-to-IMG-Init’" class="headerlink" title="第二个问题 \SDL2RTSGame\init.cpp|42|undefined reference to &#96;IMG_Init’|"></a>第二个问题 \SDL2RTSGame\init.cpp|42|undefined reference to &#96;IMG_Init’|</h4><p><img src="/img/images/csdl2tu5.png" alt="img"></p>
+<p>实际上是没有添加链接库</p>
+<p>这里有个陷阱，这里支持的文件格式里并没有dll文件，实际上dll文件是属于<strong>动态链接库</strong>的。但很容易让没有经验的小白误以为dll不是，然后去尝试很多 <code>.a</code>之类的文件，都不行。</p>
+<p><img src="/img/images/csdl2tu6.png" alt="img"></p>
+<p>在这里需要勾选所有，然后将dll文件添加进去就可以了。</p>
+<p><img src="/img/images/csdl2tu7.png" alt="img"></p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
@@ -109,7 +124,7 @@
     </div>
     
         <div class="side">
-            
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Code-block%E5%92%8Ccpp%E6%9D%A5%E5%BC%80%E5%8F%91SDL2-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text">使用Code::block和cpp来开发SDL2-环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98-%E6%89%BE%E4%B8%8D%E5%88%B0%E5%A4%B4%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.</span> <span class="toc-text">第一个问题 找不到头文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E4%B8%AA%E9%97%AE%E9%A2%98-SDL2RTSGame-init-cpp-42-undefined-reference-to-IMG-Init%E2%80%99"><span class="toc-number">1.2.</span> <span class="toc-text">第二个问题 \SDL2RTSGame\init.cpp|42|undefined reference to &#96;IMG_Init’|</span></a></li></ol></li></ol>
         </div>
     
 </div>
