@@ -3935,4 +3935,24 @@ RELAY-RU 是由 Vulkan (RMT) 搭建的 俄区非官方 RELAY (ID: V) : </p>
         <tag>SDL2</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2024-3-16-SDL2loadSurface</title>
+    <url>/2024/03/16/2024-3-16-SDL2loadSurface/</url>
+    <content><![CDATA[<h3 id="loadSurface"><a href="#loadSurface" class="headerlink" title="loadSurface"></a>loadSurface</h3><p>这是SDL2作者的官方demo中所制作出的一个函数，具体如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">SDL_Surface* <span class="title">loadSurface</span><span class="params">( std::string path )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 两个指针变量</span></span><br><span class="line"></span><br><span class="line">	SDL_Surface* optimizedSurface = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">	SDL_Surface* loadedSurface = <span class="built_in">IMG_Load</span>( path.<span class="built_in">c_str</span>() );</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>( loadedSurface == <span class="literal">NULL</span> )<span class="comment">// 如果 IMG_Load读取失败则返回空 以此抛出错误</span></span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Unable to load image %s! SDL_image Error: &quot;</span> &lt;&lt; path.<span class="built_in">c_str</span>() &lt;&lt; <span class="built_in">IMG_GetError</span>() &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//Convert surface to screen format</span></span><br><span class="line"></span><br><span class="line">		optimizedSurface = <span class="built_in">SDL_ConvertSurface</span>( loadedSurface, gScreenSurface-&gt;format, <span class="number">0</span> );</span><br><span class="line">        <span class="comment">// 使用SDL_ConvertSurface处理</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>( optimizedSurface == <span class="literal">NULL</span> )</span><br><span class="line">		&#123;</span><br><span class="line">			std::cout &lt;&lt; <span class="string">&quot;Unable to optimize image %s! SDL Error: &quot;</span> &lt;&lt; path.<span class="built_in">c_str</span>() &lt;&lt; <span class="built_in">SDL_GetError</span>() &lt;&lt; std::endl;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//Get rid of old loaded surface</span></span><br><span class="line">		<span class="built_in">SDL_FreeSurface</span>( loadedSurface );</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> optimizedSurface;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这个函数十分简单，主要进行的操作就是两步</p>
+<p>第一步，loadedSurface读取图像</p>
+<p><code>SDL_Surface* loadedSurface = IMG_Load( path.c_str() );</code></p>
+<p>第二步，SDL_ConvertSurface将图像输出到表面。</p>
+<p><code>optimizedSurface = SDL_ConvertSurface( loadedSurface, gScreenSurface-&gt;format, 0 );</code></p>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>SDL2</tag>
+      </tags>
+  </entry>
 </search>
