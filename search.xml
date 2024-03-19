@@ -3955,4 +3955,69 @@ RELAY-RU 是由 Vulkan (RMT) 搭建的 俄区非官方 RELAY (ID: V) : </p>
         <tag>SDL2</tag>
       </tags>
   </entry>
+  <entry>
+    <title></title>
+    <url>/2024/03/19/2024-3-20-SDL2%E5%BC%80%E5%8F%91%E4%B8%80/</url>
+    <content><![CDATA[<p>SDL2步骤</p>
+<ol>
+<li>要做的第一件事，先初始化，调用 SDL_Init()方法<ul>
+<li>如果不初始化的话，一些方法在后续是无法起作用的。</li>
+<li>例如 未初始化 <code>SDL_AUDIO</code>就无法使用<code>SDL_AUDIO.h</code>内包含的方法</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//我的初始化例子</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">init</span><span class="params">()</span><span class="comment">// 初始化</span></span></span><br><span class="line"><span class="function">	<span class="comment">//Initialization flag</span></span></span><br><span class="line"><span class="function">	<span class="type">bool</span> success </span>= <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Initialize SDL</span></span><br><span class="line">	<span class="keyword">if</span>( <span class="built_in">SDL_Init</span>( SDL_INIT_EVERYTHING ) &lt; <span class="number">0</span> )<span class="comment">// 初始化全部系统</span></span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;SDL could not initialize! SDL Error: &quot;</span> &lt;&lt; <span class="built_in">SDL_GetError</span>() &lt;&lt; std::endl;</span><br><span class="line">		success = <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">       ...... <span class="comment">// 这里编写成功后的代码</span></span><br><span class="line">        </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这段初始化代码使用了<code>SDL_INIT_EVERYTHING</code>常量，意思是初始化全部的系统。</p>
+<p>如果没有成功初始化会打印出错误来。</p>
+<ol start="2">
+<li>要做的第二件事 创建屏幕 使用<code>SDL_CreateWindow()</code>方法即可</li>
+</ol>
+<p>但是在此之前我们需要定义几个变量</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//The window we&#x27;ll be rendering to</span></span><br><span class="line">SDL_Window* gWindow = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//The surface contained by the window</span></span><br><span class="line">SDL_Surface* gScreenSurface = <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+
+<p>以上定义了一个窗口指针和一个曲面指针，这在我们后续会用到的。</p>
+<p>然后定义两个常量</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> SCREEN_WIDTH = <span class="number">1920</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> SCREEN_HEIGHT = <span class="number">1080</span>;</span><br></pre></td></tr></table></figure>
+
+<p>也就是我们窗口的长和宽了。</p>
+<p>然后如何使用<code>SDL_Createwindow()</code>呢</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">extern</span> DECLSPEC SDL_Window * SDLCALL <span class="title">SDL_CreateWindow</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *title,</span></span></span><br><span class="line"><span class="params"><span class="function">                                                      <span class="type">int</span> x, <span class="type">int</span> y, <span class="type">int</span> w,</span></span></span><br><span class="line"><span class="params"><span class="function">                                                      <span class="type">int</span> h, Uint32 flags)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Create an SDL window from an existing native window.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * In some cases (e.g. OpenGL) and on some platforms (e.g. Microsoft Windows)</span></span><br><span class="line"><span class="comment"> * the hint `SDL_HINT_VIDEO_WINDOW_SHARE_PIXEL_FORMAT` needs to be configured</span></span><br><span class="line"><span class="comment"> * before using SDL_CreateWindowFrom().</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * \param data a pointer to driver-dependent window creation data, typically</span></span><br><span class="line"><span class="comment"> *             your native window cast to a void*</span></span><br><span class="line"><span class="comment"> * \returns the window that was created or NULL on failure; call</span></span><br><span class="line"><span class="comment"> *          SDL_GetError() for more information.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * \since This function is available since SDL 2.0.0.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * \sa SDL_CreateWindow</span></span><br><span class="line"><span class="comment"> * \sa SDL_DestroyWindow</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到它默认接受6个参数</p>
+<ol>
+<li>第1个是标题，字符串类型的</li>
+<li>第2，3个是坐标，这个坐标是相对于屏幕的坐标，就是一屏幕左上角为0，0开始</li>
+<li>第4，5，个很显然是width和height的缩写</li>
+<li>第6个，flag标志位，则是填写一些SDL定义好的常量了</li>
+</ol>
+<p>示例</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">gWindow = <span class="built_in">SDL_CreateWindow</span>( <span class="string">&quot;SDL Tutorial&quot;</span>, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_FULLSCREEN );</span><br></pre></td></tr></table></figure>
+
+<p>示例中的代码我们使用了一个特殊的常量：<code> SDL_WINDOWPOS_UNDEFINED</code></p>
+<ul>
+<li>表示将窗口的位置设置为不确定，这意味着窗口将被放置在一个由操作系统确定的默认位置。这通常用于在创建窗口时指定窗口的初始位置。</li>
+</ul>
+<ol start="3">
+<li>要做的第三件事：构建事件循环</li>
+</ol>
+<p>如果不去构建事件循环，我们将无法直接和我们的程序交互。所以我们需要构建一个用来监听事件的事件循环。</p>
+<p>示例：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">bool</span> quit = <span class="literal">false</span>;</span><br><span class="line">SDL_Event e;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">			<span class="comment">//While application is running</span></span><br><span class="line"></span><br><span class="line">			<span class="keyword">while</span>( !quit )</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="comment">//Handle events on queue</span></span><br><span class="line">				<span class="keyword">while</span>( <span class="built_in">SDL_PollEvent</span>( &amp;e ) != <span class="number">0</span> )</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="comment">//User requests quit</span></span><br><span class="line">					<span class="keyword">if</span>( e.type == SDL_QUIT )</span><br><span class="line">					&#123;</span><br><span class="line">						quit = <span class="literal">true</span>;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">            &#125;   </span><br></pre></td></tr></table></figure>
+
+<p>这段代码里我们首先声明了和<code>bool </code>类型的变量<code>quit</code>和<code>SDL_Event</code>类型的变量<code>e</code>.</p>
+<p>quit 用来判断是否退出，如果退出则终止循环。</p>
+<p>写成<code>!quit </code>也是为了便于理解，相当于如果<code>quit</code>为<code>true</code>的时候，则主循环终止。</p>
+<p>重要的事情有三点：</p>
+<ul>
+<li><p><code>SDL_PollEvent()</code>是 SDL 库中用于轮询事件队列的函数。</p>
+</li>
+<li><p>当调用 <code>SDL_PollEvent()</code> 函数时，它会检查当前事件队列中是否有任何待处理的事件。如果有事件在队列中，它将从队列中取出一个事件，并将其存储在传入的 <code>SDL_Event</code> 结构体中。然后你可以根据事件的类型和内容来做出相应的处理。</p>
+</li>
+<li><p><code>SDL_PollEvent()</code> 是一个非阻塞函数，即如果没有事件发生，它会立即返回，不会阻塞程序的执行。</p>
+</li>
+</ul>
+<p>也就是说，内层循环中，<code>SDL_PollEvent()</code>即使一直被反复执行，也不会发生阻塞，但其一直反复的等待事件发生，以便做出相应的处理。</p>
+]]></content>
+  </entry>
 </search>

@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title> - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,SDL2步骤
+
+要做的第一件事，先初始化，调用 SDL_Init()方法
+如果不初始化的话，一些方法在后续是无法起作用的。
+例如 未初始化 SDL_AUDIO就无法使用SDL_AUDIO.h内包含的,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content=" - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,SDL2步骤
+
+要做的第一件事，先初始化，调用 SDL_Init()方法
+如果不初始化的话，一些方法在后续是无法起作用的。
+例如 未初始化 SDL_AUDIO就无法使用SDL_AUDIO.h内包含的,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content=" - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,SDL2步骤
+
+要做的第一件事，先初始化，调用 SDL_Init()方法
+如果不初始化的话，一些方法在后续是无法起作用的。
+例如 未初始化 SDL_AUDIO就无法使用SDL_AUDIO.h内包含的,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle"></h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title"></h1>
+        <div class="stuff">
+            <span>三月 19, 2024</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <p>SDL2步骤</p>
+<ol>
+<li>要做的第一件事，先初始化，调用 SDL_Init()方法<ul>
+<li>如果不初始化的话，一些方法在后续是无法起作用的。</li>
+<li>例如 未初始化 <code>SDL_AUDIO</code>就无法使用<code>SDL_AUDIO.h</code>内包含的方法</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//我的初始化例子</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">init</span><span class="params">()</span><span class="comment">// 初始化</span></span></span><br><span class="line"><span class="function">	<span class="comment">//Initialization flag</span></span></span><br><span class="line"><span class="function">	<span class="type">bool</span> success </span>= <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Initialize SDL</span></span><br><span class="line">	<span class="keyword">if</span>( <span class="built_in">SDL_Init</span>( SDL_INIT_EVERYTHING ) &lt; <span class="number">0</span> )<span class="comment">// 初始化全部系统</span></span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;SDL could not initialize! SDL Error: &quot;</span> &lt;&lt; <span class="built_in">SDL_GetError</span>() &lt;&lt; std::endl;</span><br><span class="line">		success = <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">       ...... <span class="comment">// 这里编写成功后的代码</span></span><br><span class="line">        </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这段初始化代码使用了<code>SDL_INIT_EVERYTHING</code>常量，意思是初始化全部的系统。</p>
+<p>如果没有成功初始化会打印出错误来。</p>
+<ol start="2">
+<li>要做的第二件事 创建屏幕 使用<code>SDL_CreateWindow()</code>方法即可</li>
+</ol>
+<p>但是在此之前我们需要定义几个变量</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//The window we&#x27;ll be rendering to</span></span><br><span class="line">SDL_Window* gWindow = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//The surface contained by the window</span></span><br><span class="line">SDL_Surface* gScreenSurface = <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+
+<p>以上定义了一个窗口指针和一个曲面指针，这在我们后续会用到的。</p>
+<p>然后定义两个常量</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> SCREEN_WIDTH = <span class="number">1920</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> SCREEN_HEIGHT = <span class="number">1080</span>;</span><br></pre></td></tr></table></figure>
+
+<p>也就是我们窗口的长和宽了。</p>
+<p>然后如何使用<code>SDL_Createwindow()</code>呢</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">extern</span> DECLSPEC SDL_Window * SDLCALL <span class="title">SDL_CreateWindow</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *title,</span></span></span><br><span class="line"><span class="params"><span class="function">                                                      <span class="type">int</span> x, <span class="type">int</span> y, <span class="type">int</span> w,</span></span></span><br><span class="line"><span class="params"><span class="function">                                                      <span class="type">int</span> h, Uint32 flags)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Create an SDL window from an existing native window.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * In some cases (e.g. OpenGL) and on some platforms (e.g. Microsoft Windows)</span></span><br><span class="line"><span class="comment"> * the hint `SDL_HINT_VIDEO_WINDOW_SHARE_PIXEL_FORMAT` needs to be configured</span></span><br><span class="line"><span class="comment"> * before using SDL_CreateWindowFrom().</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * \param data a pointer to driver-dependent window creation data, typically</span></span><br><span class="line"><span class="comment"> *             your native window cast to a void*</span></span><br><span class="line"><span class="comment"> * \returns the window that was created or NULL on failure; call</span></span><br><span class="line"><span class="comment"> *          SDL_GetError() for more information.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * \since This function is available since SDL 2.0.0.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * \sa SDL_CreateWindow</span></span><br><span class="line"><span class="comment"> * \sa SDL_DestroyWindow</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到它默认接受6个参数</p>
+<ol>
+<li>第1个是标题，字符串类型的</li>
+<li>第2，3个是坐标，这个坐标是相对于屏幕的坐标，就是一屏幕左上角为0，0开始</li>
+<li>第4，5，个很显然是width和height的缩写</li>
+<li>第6个，flag标志位，则是填写一些SDL定义好的常量了</li>
+</ol>
+<p>示例</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gWindow = <span class="built_in">SDL_CreateWindow</span>( <span class="string">&quot;SDL Tutorial&quot;</span>, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_FULLSCREEN );</span><br></pre></td></tr></table></figure>
+
+<p>示例中的代码我们使用了一个特殊的常量：<code> SDL_WINDOWPOS_UNDEFINED</code></p>
+<ul>
+<li>表示将窗口的位置设置为不确定，这意味着窗口将被放置在一个由操作系统确定的默认位置。这通常用于在创建窗口时指定窗口的初始位置。</li>
+</ul>
+<ol start="3">
+<li>要做的第三件事：构建事件循环</li>
+</ol>
+<p>如果不去构建事件循环，我们将无法直接和我们的程序交互。所以我们需要构建一个用来监听事件的事件循环。</p>
+<p>示例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> quit = <span class="literal">false</span>;</span><br><span class="line">SDL_Event e;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">			<span class="comment">//While application is running</span></span><br><span class="line"></span><br><span class="line">			<span class="keyword">while</span>( !quit )</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="comment">//Handle events on queue</span></span><br><span class="line">				<span class="keyword">while</span>( <span class="built_in">SDL_PollEvent</span>( &amp;e ) != <span class="number">0</span> )</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="comment">//User requests quit</span></span><br><span class="line">					<span class="keyword">if</span>( e.type == SDL_QUIT )</span><br><span class="line">					&#123;</span><br><span class="line">						quit = <span class="literal">true</span>;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">            &#125;   </span><br></pre></td></tr></table></figure>
+
+<p>这段代码里我们首先声明了和<code>bool </code>类型的变量<code>quit</code>和<code>SDL_Event</code>类型的变量<code>e</code>.</p>
+<p>quit 用来判断是否退出，如果退出则终止循环。</p>
+<p>写成<code>!quit </code>也是为了便于理解，相当于如果<code>quit</code>为<code>true</code>的时候，则主循环终止。</p>
+<p>重要的事情有三点：</p>
+<ul>
+<li><p><code>SDL_PollEvent()</code>是 SDL 库中用于轮询事件队列的函数。</p>
+</li>
+<li><p>当调用 <code>SDL_PollEvent()</code> 函数时，它会检查当前事件队列中是否有任何待处理的事件。如果有事件在队列中，它将从队列中取出一个事件，并将其存储在传入的 <code>SDL_Event</code> 结构体中。然后你可以根据事件的类型和内容来做出相应的处理。</p>
+</li>
+<li><p><code>SDL_PollEvent()</code> 是一个非阻塞函数，即如果没有事件发生，它会立即返回，不会阻塞程序的执行。</p>
+</li>
+</ul>
+<p>也就是说，内层循环中，<code>SDL_PollEvent()</code>即使一直被反复执行，也不会发生阻塞，但其一直反复的等待事件发生，以便做出相应的处理。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
