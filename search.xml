@@ -3956,8 +3956,8 @@ RELAY-RU 是由 Vulkan (RMT) 搭建的 俄区非官方 RELAY (ID: V) : </p>
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/2024/03/19/2024-3-20-SDL2%E5%BC%80%E5%8F%91%E4%B8%80/</url>
+    <title>2024-3-20-SDL2开发一</title>
+    <url>/2024/03/20/2024-3-20-SDL2%E5%BC%80%E5%8F%91%E4%B8%80/</url>
     <content><![CDATA[<p>SDL2步骤</p>
 <ol>
 <li>要做的第一件事，先初始化，调用 SDL_Init()方法<ul>
@@ -4019,5 +4019,26 @@ RELAY-RU 是由 Vulkan (RMT) 搭建的 俄区非官方 RELAY (ID: V) : </p>
 </ul>
 <p>也就是说，内层循环中，<code>SDL_PollEvent()</code>即使一直被反复执行，也不会发生阻塞，但其一直反复的等待事件发生，以便做出相应的处理。</p>
 ]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>SDL2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2024-3-20-SDL2开发二</title>
+    <url>/2024/03/20/2024-3-20-SDL2%E5%BC%80%E5%8F%91%E4%BA%8C/</url>
+    <content><![CDATA[<h3 id="aaa"><a href="#aaa" class="headerlink" title="aaa"></a>aaa</h3><p>上一篇讲了SDL2项目首先要做的三件事，以及一些基础函数。</p>
+<p>这篇接着搞没讲完的</p>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>SDL2</tag>
+      </tags>
   </entry>
 </search>
