@@ -5,19 +5,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>2024-3-20-SDL2开发二 - 二月の档案室</title>
+    <title>2024-3-20-SDL2开发三 - 二月の档案室</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="二月,"> 
-    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,aaa上一篇讲了SDL2项目首先要做的三件事，以及一些基础函数。
-这篇接着搞没讲完的
-
-第四件事，优化代码
-添加SDL_FreeSurface(gPNGSurface);释放资源
-
-
-​	添加SDL,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,"> 
     <meta name="author" content="Allureluoli"> 
     <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -27,30 +20,16 @@
     
     
     <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="2024-3-20-SDL2开发二 - 二月の档案室"/>
-    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,aaa上一篇讲了SDL2项目首先要做的三件事，以及一些基础函数。
-这篇接着搞没讲完的
-
-第四件事，优化代码
-添加SDL_FreeSurface(gPNGSurface);释放资源
-
-
-​	添加SDL,"/>
+    <meta name="twitter:title" content="2024-3-20-SDL2开发三 - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,"/>
     
     
     
     
     <meta property="og:site_name" content="二月の档案室"/>
     <meta property="og:type" content="object"/>
-    <meta property="og:title" content="2024-3-20-SDL2开发二 - 二月の档案室"/>
-    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,aaa上一篇讲了SDL2项目首先要做的三件事，以及一些基础函数。
-这篇接着搞没讲完的
-
-第四件事，优化代码
-添加SDL_FreeSurface(gPNGSurface);释放资源
-
-
-​	添加SDL,"/>
+    <meta property="og:title" content="2024-3-20-SDL2开发三 - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 
@@ -68,7 +47,7 @@
     <div class="bar" style="width: 0;"></div>
     <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
     <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">2024-3-20-SDL2开发二</h3>
+    <h3 class="subtitle">2024-3-20-SDL2开发三</h3>
     <div class="social">
         <div>
             <div class="share">
@@ -83,71 +62,14 @@
     <div class="section">
         <div class="article">
     <div class='main'>
-        <h1 class="title">2024-3-20-SDL2开发二</h1>
+        <h1 class="title">2024-3-20-SDL2开发三</h1>
         <div class="stuff">
             <span>三月 20, 2024</span>
             
-  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/SDL2/" rel="tag">SDL2</a></li></ul>
-
 
         </div>
         <div class="content markdown">
-            <h3 id="aaa"><a href="#aaa" class="headerlink" title="aaa"></a>aaa</h3><p>上一篇讲了SDL2项目首先要做的三件事，以及一些基础函数。</p>
-<p>这篇接着搞没讲完的</p>
-<ol start="4">
-<li><p>第四件事，优化代码</p>
-<p>添加<code>SDL_FreeSurface(gPNGSurface);</code>释放资源</p>
-</li>
-</ol>
-<p>​	添加<code>SDL_UpdateWindowSurface( gWindow );</code>刷新屏幕</p>
-<p>​	添加<code>close();</code>关闭SDL2记得return 0;</p>
-<p>​	（待补充）</p>
-<ol start="5">
-<li>第五件事 先会用SDL 1.0版本的 Surface  SDL_Render系列，但是我现在懒得写，</li>
-</ol>
-<p>示例</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gSurface = <span class="built_in">SDL_GetWindowSurface</span>(gWindows);</span><br></pre></td></tr></table></figure>
-
-<p>要使用先初始化，但是一旦初始化了Surface，gwindow就不可以用来初始化别的了。</p>
-<ol start="6">
-<li>第六件事，纹理和渲染器，SDL 2.0版本降临</li>
-</ol>
-<p>Surface  和 Texture 的区别：</p>
-<p>​	Surface  使用CPU进行处理，存在于内存</p>
-<p>​	Texture使用GPU处理，背后使用了OpenGL和Direct3D接口，让游戏更流畅更快。</p>
-<p>Render可以渲染Texture</p>
-<p>创建渲染器：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SDL_Renderer* renderer = <span class="built_in">SDL_CreateRenderer</span>(gWindow, <span class="number">-1</span>, SDL_RENDERER_SOFTWARE);</span><br></pre></td></tr></table></figure>
-
-<p>其中<code>SDL_RENDERER_SOFTWARE</code>代表使用软件加速，-1代表使用第一块显卡，而<code>SDL_CreateRenderer</code>必须要接受3个参数。</p>
-<p>ps: 除此之外的其他常量还有<code>SDL_RENDERER_ACCELERATED</code>代表硬件加速，实际上就是2，而是软件加速是1</p>
-<p>读取图像：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SDL_Surface* loadedSurface = <span class="built_in">IMG_Load</span>( path.<span class="built_in">c_str</span>() );</span><br></pre></td></tr></table></figure>
-
-<p>然后转换</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">SDL_CreateTextureFromSurface</span>(loadedSurface);</span><br></pre></td></tr></table></figure>
-
-
-
-<hr>
-<p>常见问题三</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">||=== 构建: Debug 在 demo04 中 (编译器: GNU GCC Compiler) ===|</span><br><span class="line">main.cpp||In function <span class="string">&#x27;int SDL_main(int, char**)&#x27;</span>:|</span><br><span class="line">main.cpp|<span class="number">135</span>|error: cannot convert <span class="string">&#x27;SDL_Surface*&#x27;</span> to <span class="string">&#x27;SDL_Texture*&#x27;</span>|</span><br><span class="line">SDL2\SDL_render.h|<span class="number">1410</span>|note:   initializing argument <span class="number">2</span> of <span class="string">&#x27;int SDL_RenderCopy(SDL_Renderer*, SDL_Texture*, const SDL_Rect*, const SDL_Rect*)&#x27;</span>|</span><br><span class="line">||=== 构建 结束: <span class="number">1</span> 错误, <span class="number">0</span> 警告 (<span class="number">0</span> 分, <span class="number">0</span> 秒) ===|</span><br></pre></td></tr></table></figure>
-
-<p>接收类型不正确？</p>
-<p>排查了半天是头文件里的声明忘了</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> SDL_Texture* gPNGSurface; </span><br></pre></td></tr></table></figure>
-
-<p>在检查全局变量类型时，是按照头文件的传输类型来检查的。</p>
-<hr>
-<p><code>SDL_Rect</code>结构体</p>
-<ul>
-<li><p><code>SDL_Rect</code>结构体是Simple DirectMedia Layer (SDL)  中用于表示矩形区域的数据结构。它通常用于游戏开发和图形处理中。<code>SDL_Rect </code>结构体包含四个整数成员，分别表示矩形区域的左上角的 x 和 y  坐标，以及矩形的宽度和高度。通过<code>SDL_Rect</code>结构体，开发人员可以方便地定义、操作和管理矩形区域，用于绘制图形、碰撞检测等功能。</p>
-<ul>
-<li>也就是说，如果截取到了角落的部分则会被拉伸</li>
-</ul>
-</li>
-</ul>
-
+            
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
                 <source type="audio/mpeg" src="">
@@ -183,7 +105,7 @@
     </div>
     
         <div class="side">
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#aaa"><span class="toc-number">1.</span> <span class="toc-text">aaa</span></a></li></ol>
+            
         </div>
     
 </div>
