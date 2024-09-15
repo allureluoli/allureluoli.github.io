@@ -4137,4 +4137,34 @@ RELAY-RU 是由 Vulkan (RMT) 搭建的 俄区非官方 RELAY (ID: V) : </p>
         <tag>Windows</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2024-8-24-寨板X99Bios</title>
+    <url>/2024/08/24/2024-8-24-%E5%AF%A8%E6%9D%BFX99Bios/</url>
+    <content><![CDATA[<p>忘了要写啥了</p>
+<p>我记得是</p>
+<p>X99的需要特殊的BIOS固件才能当好服务器</p>
+<p>否则无法在无显卡的情况下进入系统</p>
+<p>我需要绕过他的自检</p>
+<p>后面没研究了开学了</p>
+<p>目前是加了个铝热亮机卡。。</p>
+<p>哎</p>
+<p>白白多耗电</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>OS</tag>
+        <tag>硬件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2024-9-15-test</title>
+    <url>/2024/09/15/2024-9-15-test/</url>
+    <content><![CDATA[<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>因为很久没有更新blog了，我需要发送一条测试blog</p>
+]]></content>
+      <tags>
+        <tag>-hexo</tag>
+      </tags>
+  </entry>
 </search>
