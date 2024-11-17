@@ -4167,4 +4167,188 @@ RELAY-RU 是由 Vulkan (RMT) 搭建的 俄区非官方 RELAY (ID: V) : </p>
         <tag>-hexo</tag>
       </tags>
   </entry>
+  <entry>
+    <title>自我反思</title>
+    <url>/2024/01/17/2024-11-17-%E8%87%AA%E6%88%91%E5%8F%8D%E6%80%9D/</url>
+    <content><![CDATA[<h1 id="自我反思"><a href="#自我反思" class="headerlink" title="自我反思"></a>自我反思</h1><p>目前在做的CTF方向</p>
+<p>主要方向</p>
+<p>​	第一 逆向</p>
+<p>​	第二 WEB</p>
+<p>​	第三 杂项</p>
+<p>​	第四 密码</p>
+<p>我要细数我在每个方向中的不足之处。</p>
+<ol>
+<li><p>逆向</p>
+<ul>
+<li><p>当前情况：</p>
+<ul>
+<li>做 二进制 可执行文件逆向时，主用ida pro</li>
+<li>做 android逆向主用 mt</li>
+<li>做jar逆向，则用idea</li>
+<li>pyc逆向 可直接反编译</li>
+<li>js逆向 无需反编译</li>
+<li>o 文件逆向</li>
+</ul>
+<p>目前也就做过这些</p>
+<p>太少！</p>
+<p>太窄！</p>
+</li>
+<li><p>能力方面：</p>
+</li>
+<li><p>需要什么：</p>
+<ul>
+<li>伪C</li>
+<li>x86汇编</li>
+<li>smali汇编</li>
+<li>cpp</li>
+<li>python</li>
+<li>java</li>
+<li>javascript</li>
+<li>…</li>
+</ul>
+</li>
+<li><p>伪C方面</p>
+<ul>
+<li>C的各种指针<ul>
+<li>-&gt;</li>
+<li>&amp;</li>
+<li>[]…多重嵌套</li>
+<li>位运算</li>
+<li>异或运算</li>
+<li>结构体</li>
+</ul>
+</li>
+<li>代码阅读能力</li>
+<li>py2</li>
+<li>javaScript的复杂代码</li>
+</ul>
+</li>
+<li><p>smali方面</p>
+<ul>
+<li>dex++</li>
+<li>dex</li>
+</ul>
+</li>
+<li><p>其他方面：</p>
+<ul>
+<li>脱壳经验少</li>
+<li>ghidraRun 使用少</li>
+<li>ollydbg</li>
+<li>二进制插桩</li>
+<li>debug调试</li>
+</ul>
+</li>
+<li><p>表达式推导能力</p>
+</li>
+<li><p>逆推能力</p>
+</li>
+<li><p>各方面的效率，思路思维</p>
+</li>
+</ul>
+</li>
+<li><p>WEB</p>
+<ul>
+<li>web方向体系不完善</li>
+<li>思路不完整</li>
+<li>工具掌握不全面</li>
+<li>正确体系：<ul>
+<li>情报搜集<ul>
+<li>端口扫描</li>
+<li>源码刨析</li>
+<li>接口查找</li>
+<li>提示寻找</li>
+</ul>
+</li>
+<li>攻击类型探索<ul>
+<li>XXE</li>
+<li>反序列化</li>
+<li>SQL注入</li>
+<li>基于框架的漏洞：如flask算pin</li>
+<li>基于配置的漏洞</li>
+</ul>
+</li>
+<li>基于已知情报的攻击计划<ul>
+<li>挂马</li>
+<li>注入</li>
+<li>反弹shell</li>
+<li>XSS</li>
+<li>破解</li>
+</ul>
+</li>
+<li>攻击实操时工具的使用<ul>
+<li>Bp</li>
+<li>hackerBar</li>
+<li>Fiddler</li>
+<li>WireShark</li>
+<li>改包脚本 发包脚本 curl wget</li>
+</ul>
+</li>
+<li>经验…</li>
+<li>各类框架体系：<ul>
+<li>php</li>
+<li>jsp</li>
+<li>静态html apache nginx</li>
+<li>flask : jinjia2</li>
+<li>djongo</li>
+<li>ktro</li>
+<li>javalin</li>
+<li>后端无止境</li>
+<li>还需多前行</li>
+<li>多读CVE</li>
+</ul>
+</li>
+<li>漏洞体系：<ul>
+<li>文件上传蚁剑类</li>
+<li>冰蝎类</li>
+<li>内存马</li>
+<li>…</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>杂项</p>
+<ul>
+<li><p>解密题目数量少</p>
+</li>
+<li><p>脚本能力一般</p>
+</li>
+<li><p>听力差，手敲摩斯密码能力差，需音频解析软件辅助</p>
+</li>
+<li><p>古典密码认知少</p>
+</li>
+<li><p>知其浅薄原理而不知其根本，没有真正理解古典密码的加密方式</p>
+</li>
+<li><p>流量分析类</p>
+</li>
+<li><p>文件检索能力差</p>
+</li>
+<li><p>各类协议原理仍然不够了解</p>
+</li>
+</ul>
+</li>
+<li><p>密码学</p>
+<ul>
+<li>目前仅会解简单RSA</li>
+<li>需多看源码</li>
+<li>加密过程</li>
+<li>加密方式</li>
+<li>解密过程</li>
+<li>解密方式</li>
+<li>密钥获取</li>
+</ul>
+</li>
+</ol>
+<pre><code>
+</code></pre>
+]]></content>
+      <categories>
+        <category>网络安全</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>反思</tag>
+      </tags>
+  </entry>
 </search>
