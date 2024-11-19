@@ -4396,4 +4396,15 @@ RELAY-RU 是由 Vulkan (RMT) 搭建的 俄区非官方 RELAY (ID: V) : </p>
         <tag>cpp</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2024-11-19-GodotFastIn</title>
+    <url>/2024/11/19/2024-11-19-GodotFastIn/</url>
+    <content><![CDATA[<h2 id="设置godot为C-模式"><a href="#设置godot为C-模式" class="headerlink" title="设置godot为C#模式"></a>设置godot为C#模式</h2><p>godot默认脚本为GDScript，我们需要手动设置项目的脚本为C#</p>
+<p>前提：mono 版本 godot</p>
+]]></content>
+      <tags>
+        <tag>C#</tag>
+        <tag>godot</tag>
+      </tags>
+  </entry>
 </search>
