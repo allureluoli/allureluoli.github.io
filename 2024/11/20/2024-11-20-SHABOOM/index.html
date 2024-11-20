@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2024-11-20-SHABOOM - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,反汇编得到的加密函数sub_401230
+SHA
+123456789101112131415161718192021222324252627282930313233343536373839int _,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2024-11-20-SHABOOM - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,反汇编得到的加密函数sub_401230
+SHA
+123456789101112131415161718192021222324252627282930313233343536373839int _,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2024-11-20-SHABOOM - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,反汇编得到的加密函数sub_401230
+SHA
+123456789101112131415161718192021222324252627282930313233343536373839int _,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2024-11-20-SHABOOM</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2024-11-20-SHABOOM</h1>
+        <div class="stuff">
+            <span>十一月 20, 2024</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Reverse/" rel="tag">Reverse</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/cpp/" rel="tag">cpp</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="反汇编得到的加密函数"><a href="#反汇编得到的加密函数" class="headerlink" title="反汇编得到的加密函数"></a>反汇编得到的加密函数</h2><p><code>sub_401230</code></p>
+<p>SHA</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __cdecl <span class="title function_">sub_401230</span><span class="params">(BYTE *pbData, DWORD dwDataLen, LPSTR lpString1)</span></span><br><span class="line">&#123;</span><br><span class="line">  DWORD i; <span class="comment">// [esp+4Ch] [ebp-28h]</span></span><br><span class="line">  CHAR String2[<span class="number">4</span>]; <span class="comment">// [esp+50h] [ebp-24h] BYREF</span></span><br><span class="line">  BYTE v6[<span class="number">20</span>]; <span class="comment">// [esp+54h] [ebp-20h] BYREF</span></span><br><span class="line">  DWORD pdwDataLen; <span class="comment">// [esp+68h] [ebp-Ch] BYREF</span></span><br><span class="line">  HCRYPTHASH phHash; <span class="comment">// [esp+6Ch] [ebp-8h] BYREF</span></span><br><span class="line">  HCRYPTPROV phProv; <span class="comment">// [esp+70h] [ebp-4h] BYREF</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ( !CryptAcquireContextA(&amp;phProv, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1u</span>, <span class="number">0xF0000000</span>) )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> ( CryptCreateHash(phProv, <span class="number">0x8004</span>u, <span class="number">0</span>, <span class="number">0</span>, &amp;phHash) )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( CryptHashData(phHash, pbData, dwDataLen, <span class="number">0</span>) )</span><br><span class="line">    &#123;</span><br><span class="line">      CryptGetHashParam(phHash, <span class="number">2u</span>, v6, &amp;pdwDataLen, <span class="number">0</span>);</span><br><span class="line">      *lpString1 = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt; pdwDataLen; ++i )</span><br><span class="line">      &#123;</span><br><span class="line">        wsprintfA(String2, <span class="string">&quot;%02X&quot;</span>, v6[i]);</span><br><span class="line">        lstrcatA(lpString1, String2);</span><br><span class="line">      &#125;</span><br><span class="line">      CryptDestroyHash(phHash);</span><br><span class="line">      CryptReleaseContext(phProv, <span class="number">0</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      CryptDestroyHash(phHash);</span><br><span class="line">      CryptReleaseContext(phProv, <span class="number">0</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    CryptReleaseContext(phProv, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>sub_401040</code>MD5</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __cdecl <span class="title function_">sub_401040</span><span class="params">(BYTE *pbData, DWORD dwDataLen, LPSTR lpString1)</span></span><br><span class="line">&#123;</span><br><span class="line">  DWORD i; <span class="comment">// [esp+4Ch] [ebp-24h]</span></span><br><span class="line">  CHAR String2[<span class="number">4</span>]; <span class="comment">// [esp+50h] [ebp-20h] BYREF</span></span><br><span class="line">  BYTE v6[<span class="number">16</span>]; <span class="comment">// [esp+54h] [ebp-1Ch] BYREF</span></span><br><span class="line">  DWORD pdwDataLen; <span class="comment">// [esp+64h] [ebp-Ch] BYREF</span></span><br><span class="line">  HCRYPTHASH phHash; <span class="comment">// [esp+68h] [ebp-8h] BYREF</span></span><br><span class="line">  HCRYPTPROV phProv; <span class="comment">// [esp+6Ch] [ebp-4h] BYREF</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ( !CryptAcquireContextA(&amp;phProv, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1u</span>, <span class="number">0xF0000000</span>) )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> ( CryptCreateHash(phProv, <span class="number">0x8003</span>u, <span class="number">0</span>, <span class="number">0</span>, &amp;phHash) )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( CryptHashData(phHash, pbData, dwDataLen, <span class="number">0</span>) )</span><br><span class="line">    &#123;</span><br><span class="line">      CryptGetHashParam(phHash, <span class="number">2u</span>, v6, &amp;pdwDataLen, <span class="number">0</span>);</span><br><span class="line">      *lpString1 = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt; pdwDataLen; ++i )</span><br><span class="line">      &#123;</span><br><span class="line">        wsprintfA(String2, <span class="string">&quot;%02X&quot;</span>, v6[i]);</span><br><span class="line">        lstrcatA(lpString1, String2);</span><br><span class="line">      &#125;</span><br><span class="line">      CryptDestroyHash(phHash);</span><br><span class="line">      CryptReleaseContext(phProv, <span class="number">0</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      CryptDestroyHash(phHash);</span><br><span class="line">      CryptReleaseContext(phProv, <span class="number">0</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    CryptReleaseContext(phProv, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="通过中间函数简单访问"><a href="#通过中间函数简单访问" class="headerlink" title="通过中间函数简单访问"></a>通过中间函数简单访问</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;testCode.h&quot;</span></span></span><br><span class="line"><span class="type">int</span> __cdecl <span class="title function_">sub_40100A</span><span class="params">(BYTE *pbData, DWORD dwDataLen, LPSTR lpString1)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> sub_401230(pbData, dwDataLen, lpString1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="我的解密过程"><a href="#我的解密过程" class="headerlink" title="我的解密过程"></a>我的解密过程</h3><h4 id="首先是基本情报搜集"><a href="#首先是基本情报搜集" class="headerlink" title="首先是基本情报搜集"></a>首先是基本情报搜集</h4><p>len(Destination) &#x3D; 6
+v3 &#x3D; 6
+v7 &#x3D;  Destination 中的数字
+v7 &gt; 100000 也就是六位数起步
+Destination 然后末尾加上 @DBApp
+String1 将包含由传入数据 Destination 和长度 v3 计算出的哈希值的十六进制表示
+String1 &#x3D;&#x3D; Hax(Destination) &#x3D;&#x3D; 6E32D0943418C2C33385BC35A1470250DD8923A9</p>
+<p>Str 长度v4
+v4 &#x3D;&#x3D; 6
+String1  &#x3D;&#x3D; MD5(Str)
+String1 &#x3D;&#x3D; 27019e688a4e62a649fd99cadaafdb4e</p>
+<hr>
+<p>Destination由数字构成
+且数字长度(v7) &#x3D;&#x3D; 6
+六位数的数字
+传入v3和原型计算出sha &#x3D; 6E32D0943418C2C33385BC35A1470250DD8923A9
+逆推或爆破 原型</p>
+<hr>
+<p>Str也是 6位
+但是经过了 strcat
+所以
+Str + Destination的md5值是 27019e688a4e62a649fd99cadaafdb4e</p>
+<h4 id="解密脚本-SHA部分"><a href="#解密脚本-SHA部分" class="headerlink" title="解密脚本 SHA部分"></a>解密脚本 SHA部分</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;testCode.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;test.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">testHeadFile</span>();</span><br><span class="line"></span><br><span class="line">    <span class="type">char</span> String1[<span class="number">260</span>];</span><br><span class="line">    <span class="built_in">memset</span>(String1, <span class="number">0</span>, <span class="built_in">sizeof</span>(String1)); <span class="comment">// 填充0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// for循环爆破</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> num = <span class="number">0</span>; num &lt; <span class="number">1000000</span>; num++)&#123;</span><br><span class="line">        std::string Destination = std::<span class="built_in">to_string</span>(num);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (Destination.<span class="built_in">length</span>() &lt; <span class="number">6</span>) &#123;</span><br><span class="line">            Destination = <span class="string">&#x27;0&#x27;</span> + Destination;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">char</span> String1[<span class="number">256</span>];</span><br><span class="line">        cout &lt;&lt; Destination &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">        <span class="type">char</span> destinationWithSuffix[<span class="number">512</span>];</span><br><span class="line">        <span class="built_in">strcpy</span>(destinationWithSuffix, Destination.<span class="built_in">c_str</span>()); <span class="comment">// 类型转换</span></span><br><span class="line">        <span class="built_in">strcat</span>(destinationWithSuffix, <span class="string">&quot;@DBApp&quot;</span>); <span class="comment">// 拼凑字符</span></span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> v3;</span><br><span class="line"></span><br><span class="line">        v3 = <span class="built_in">strlen</span>(destinationWithSuffix);</span><br><span class="line">        <span class="built_in">sub_40100A</span>((BYTE*)destinationWithSuffix, v3, String1);</span><br><span class="line">        <span class="keyword">if</span> (_strcmpi(String1, <span class="string">&quot;6E32D0943418C2C33385BC35A1470250DD8923A9&quot;</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;correct:&quot;</span> &lt;&lt; endl; <span class="comment">// 爆破成功</span></span><br><span class="line">            cout &lt;&lt; Destination &lt;&lt; endl;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;@DBApp&quot;</span> &lt;&lt; endl;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E6%B1%87%E7%BC%96%E5%BE%97%E5%88%B0%E7%9A%84%E5%8A%A0%E5%AF%86%E5%87%BD%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">反汇编得到的加密函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E4%B8%AD%E9%97%B4%E5%87%BD%E6%95%B0%E7%AE%80%E5%8D%95%E8%AE%BF%E9%97%AE"><span class="toc-number">1.1.</span> <span class="toc-text">通过中间函数简单访问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%91%E7%9A%84%E8%A7%A3%E5%AF%86%E8%BF%87%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">我的解密过程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A6%96%E5%85%88%E6%98%AF%E5%9F%BA%E6%9C%AC%E6%83%85%E6%8A%A5%E6%90%9C%E9%9B%86"><span class="toc-number">1.2.1.</span> <span class="toc-text">首先是基本情报搜集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E5%AF%86%E8%84%9A%E6%9C%AC-SHA%E9%83%A8%E5%88%86"><span class="toc-number">1.2.2.</span> <span class="toc-text">解密脚本 SHA部分</span></a></li></ol></li></ol></li></ol>
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
