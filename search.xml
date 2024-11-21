@@ -4664,11 +4664,15 @@ Str + Destination的md5值是 27019e688a4e62a649fd99cadaafdb4e</p>
 <p>图片，音频，脚本，都以此格式调用</p>
 <p>默认状态下无法保存任何东西</p>
 <p>但是可以以此创建新类</p>
+<p>创建代码 &gt;&gt; 选择代码继承自 <code>Rersource</code></p>
 <hr>
-<p>创建 <code>class_name SceneData</code></p>
+<p>创建 <code>class_name SceneData</code> </p>
 <p>保存玩家状态，创建二位矢量变量</p>
 <p>想以文件形式保存，需要加<code>@export</code> 关键词</p>
 <p>希望保存方向 就保存关键词</p>
+<p>C# 写法</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> Godot;</span><br><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">partial</span> <span class="keyword">class</span> <span class="title">PlayerData</span> : <span class="title">Resource</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">Export</span>] <span class="keyword">public</span> <span class="built_in">int</span> money;</span><br><span class="line">    [<span class="meta">Export</span>] <span class="keyword">public</span> <span class="built_in">bool</span> IsNovice;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <hr>
 <h4 id="保存按钮的设计"><a href="#保存按钮的设计" class="headerlink" title="保存按钮的设计"></a>保存按钮的设计</h4><p>通过实例化 <code>SceneData</code> 来进行数据保存</p>
 <p>通过<code>@export</code> 关键词设置的变量可以连接到<code>Player</code>的对象，获取<code>Player</code>对象的属性。</p>
@@ -4676,10 +4680,15 @@ Str + Destination的md5值是 27019e688a4e62a649fd99cadaafdb4e</p>
 <p>然后就可以访问字节点的内容</p>
 <p>然后设置实例化的对象的属性，将对象使用<code>ResourceSaver.save()</code>来保存即可。</p>
 <p><code>save()</code>方法填两个参数，资源对象和路径。</p>
-<p>路径可以选择<code>usre://</code></p>
+<p>路径可以选择<code>user://</code></p>
 <p>不同的文件后缀名会存在不同的编码</p>
 <p><code>res</code>后缀为二进制格式</p>
 <p><code>tres</code>后缀为可阅读编码格式</p>
+<p>Example Code:</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> _on_save()&#123;</span><br><span class="line"></span><br><span class="line">    playerHero = GetNode&lt;PlayerHero&gt;(<span class="string">&quot;PlayerHero&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> playerData = <span class="keyword">new</span> PlayerData();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    playerData.money = playerHero.money;</span><br><span class="line">    playerData.IsNovice = playerHero.IsNovice;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    ResourceSaver.Save(playerData, <span class="string">&quot;user://PlayerData.res&quot;</span>);</span><br><span class="line">    GD.Print(<span class="string">&quot;存档成功&quot;</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 <hr>
 <h3 id="读取存档"><a href="#读取存档" class="headerlink" title="读取存档"></a>读取存档</h3><p>通过 <code>ResourceLoader.load()</code>方法直接读取存档文件即可。</p>
 <figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> data = ResourceLoader.load() <span class="keyword">as</span> SceneData</span><br></pre></td></tr></table></figure>
@@ -4687,6 +4696,11 @@ Str + Destination的md5值是 27019e688a4e62a649fd99cadaafdb4e</p>
 <p>ps: 注意这里使用load返回后需要转为SceneData对象，否则无法访问相关属性</p>
 <p><code>上述为代码为GDScript</code> C#应该有其他的写法</p>
 <p>读取后将玩家的属性设置为存档中的内容即可</p>
+<p>Example Code:</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> _on_load()&#123;</span><br><span class="line">    <span class="keyword">var</span> data = ResourceLoader.Load(<span class="string">&quot;user://PlayerData.res&quot;</span>) <span class="keyword">as</span> PlayerData;</span><br><span class="line"></span><br><span class="line">    playerHero.IsNovice = data.IsNovice;</span><br><span class="line">    GD.Print(data.IsNovice);</span><br><span class="line">    GD.Print(<span class="string">&quot;读档成功&quot;</span>);</span><br><span class="line"></span><br><span class="line">    _Ready();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 <hr>
 <h4 id="More-Example-About-PackedScene"><a href="#More-Example-About-PackedScene" class="headerlink" title="More Example About PackedScene"></a>More Example About PackedScene</h4><h5 id="SAVE部分"><a href="#SAVE部分" class="headerlink" title="SAVE部分"></a>SAVE部分</h5><p>节点的各种属性（大小，位置，状态）都可以打包为 PackedScene</p>
 <p><code>@export var box_array: Array[PackedScene]</code></p>
