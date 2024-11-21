@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2024-11-21-PHPBaseFun - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,PHP的一些基础函数记录由于不常用PHP写项目，在CTF WEB 方向中经常使用PHP的各种函数，使用过程中经常忘记用法甚至陌生，导致源码审计收到阻碍，故在此记录一些PHP的常用函数。
+
+json_,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2024-11-21-PHPBaseFun - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,PHP的一些基础函数记录由于不常用PHP写项目，在CTF WEB 方向中经常使用PHP的各种函数，使用过程中经常忘记用法甚至陌生，导致源码审计收到阻碍，故在此记录一些PHP的常用函数。
+
+json_,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2024-11-21-PHPBaseFun - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,PHP的一些基础函数记录由于不常用PHP写项目，在CTF WEB 方向中经常使用PHP的各种函数，使用过程中经常忘记用法甚至陌生，导致源码审计收到阻碍，故在此记录一些PHP的常用函数。
+
+json_,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2024-11-21-PHPBaseFun</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2024-11-21-PHPBaseFun</h1>
+        <div class="stuff">
+            <span>十一月 21, 2024</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/PHP/" rel="tag">PHP</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="PHP的一些基础函数记录"><a href="#PHP的一些基础函数记录" class="headerlink" title="PHP的一些基础函数记录"></a>PHP的一些基础函数记录</h2><p>由于不常用PHP写项目，在CTF WEB 方向中经常使用PHP的各种函数，使用过程中经常忘记用法甚至陌生，导致源码审计收到阻碍，故在此记录一些PHP的常用函数。</p>
+<hr>
+<p><code>json_decode()</code> 用于将 JSON 格式的字符串转换为 PHP 变量。通常用于从 JSON 数据中解析出数组或对象，以便在 PHP 中进一步处理。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">json_decode</span>(<span class="keyword">string</span> <span class="variable">$json</span>, <span class="keyword">bool</span> <span class="variable">$assoc</span> = <span class="literal">false</span>, <span class="keyword">int</span> <span class="variable">$depth</span> = <span class="number">512</span>, <span class="keyword">int</span> <span class="variable">$options</span> = <span class="number">0</span>): <span class="keyword">mixed</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>$json</strong> (string)：要解码的 JSON 字符串。</li>
+<li><strong>$assoc</strong> (bool)：如果设为 <code>true</code>，返回关联数组；如果设为 <code>false</code>（默认值），返回对象。</li>
+<li><strong>$depth</strong> (int)：设置递归的最大深度，默认是 512。</li>
+<li><strong>$options</strong> (int)：设置解码选项，常用的值有 <code>JSON_BIGINT_AS_STRING</code> 等。</li>
+</ul>
+<p>example:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$json</span> = <span class="string">&#x27;&#123;&quot;person&quot;: &#123;&quot;name&quot;: &quot;John&quot;, &quot;age&quot;: 30&#125;, &quot;address&quot;: &quot;New York&quot;&#125;&#x27;</span>;</span><br><span class="line"><span class="variable">$data</span> = <span class="title function_ invoke__">json_decode</span>(<span class="variable">$json</span>, <span class="literal">true</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$data</span>[<span class="string">&#x27;person&#x27;</span>][<span class="string">&#x27;name&#x27;</span>];  <span class="comment">// 输出 &quot;John&quot;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><code>isset()</code>用于检查一个变量是否已经被设置并且值不为 <code>NULL</code>。它返回一个布尔值，<code>true</code> 表示变量已被设置并且不是 <code>NULL</code>，否则返回 <code>false</code> 。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">isset</span>(<span class="keyword">mixed</span> <span class="variable">$var</span>, <span class="keyword">mixed</span> ...<span class="variable">$vars</span>): <span class="keyword">bool</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>$var</strong>：需要检查的变量。</li>
+<li><strong>$vars</strong>：可选的，检查多个变量。</li>
+</ul>
+<hr>
+<p><code>ini_set</code> 函数用于设置 PHP 配置选项，允许你在运行时修改 PHP 配置值。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">ini_set</span>(<span class="keyword">string</span> <span class="variable">$varname</span>, <span class="keyword">string</span> <span class="variable">$newvalue</span>): <span class="keyword">string</span>|<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>$varname</code>：配置选项的名称（例如：<code>display_errors</code>、<code>max_execution_time</code>）。</li>
+<li><code>$newvalue</code>：设置的新值。</li>
+</ul>
+<p>example:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">ini_set</span>(<span class="string">&quot;allow_url_include&quot;</span>,<span class="string">&quot;on&quot;</span>);  <span class="comment">// 设置allow_url_include为打开</span></span><br></pre></td></tr></table></figure>
+
+<p>作用：允许 PHP 通过 URL 引入文件。</p>
+<hr>
+<p><code>header()</code> 函数用于发送原始 HTTP 头信息。可以通过它来设置响应头，例如重定向、设置内容类型、缓存控制等。
+    规则：<code>header()</code> 函数必须在输出任何内容之前调用。</p>
+<ul>
+<li><code>$header</code>：要发送的 HTTP 头信息。</li>
+<li><code>$replace</code>：如果为 <code>true</code>，则替换掉已存在的相同头；如果为 <code>false</code>，则不会替换。</li>
+<li><code>$response_code</code>：设置响应的 HTTP 状态码。</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">header</span>(<span class="keyword">string</span> <span class="variable">$header</span>, <span class="keyword">bool</span> <span class="variable">$replace</span> = <span class="literal">true</span>, <span class="keyword">int</span> <span class="variable">$response_code</span> = <span class="number">0</span>): <span class="keyword">void</span></span><br></pre></td></tr></table></figure>
+
+<p>example:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">header</span>(<span class="string">&quot;Content-type: text/html; charset=utf-8&quot;</span>); </span><br><span class="line">设置内容类型为 text/html 字符编码集为utf-<span class="number">8</span></span><br></pre></td></tr></table></figure>
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E5%87%BD%E6%95%B0%E8%AE%B0%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">PHP的一些基础函数记录</span></a></li></ol>
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

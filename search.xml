@@ -4491,6 +4491,11 @@ Str + Destination的md5值是 27019e688a4e62a649fd99cadaafdb4e</p>
 </li>
 </ul>
 ]]></content>
+      <tags>
+        <tag>cpp</tag>
+        <tag>网络安全</tag>
+        <tag>c</tag>
+      </tags>
   </entry>
   <entry>
     <title>2024-11-20-WinAPICrypt</title>
@@ -4526,5 +4531,136 @@ Str + Destination的md5值是 27019e688a4e62a649fd99cadaafdb4e</p>
 
 
 ]]></content>
+  </entry>
+  <entry>
+    <title>2024-11-21-SQLBase</title>
+    <url>/2024/11/21/2024-11-21-SQLBase/</url>
+    <content><![CDATA[<h3 id="SQL注入基本思路"><a href="#SQL注入基本思路" class="headerlink" title="SQL注入基本思路"></a>SQL注入基本思路</h3><h4 id="检查回显"><a href="#检查回显" class="headerlink" title="检查回显"></a>检查回显</h4><p>在此基础下 </p>
+<ul>
+<li><p>判断闭合方式：</p>
+</li>
+<li><p>判断字段数：</p>
+</li>
+<li><p>判断回显位：服务端执行SQL语句查询数据库中的数据，客户端显示数据的位置就是回显位。</p>
+</li>
+</ul>
+<p>根据注入类型选择注入方式</p>
+<ul>
+<li><p>报错注入：</p>
+<ul>
+<li><p>显示报错信息时可以使用的注入方式</p>
+</li>
+<li><p>原理</p>
+<ul>
+<li>通过特殊函数错误，使其输出错误结果来获取信息。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>盲注:</p>
+<ul>
+<li>布尔盲注：只能从应用返回中推断语句执行后的布尔值 <ul>
+<li>页面结果仅有True或者False</li>
+<li>那么就通过这个判断来获取页面的相关信息</li>
+</ul>
+</li>
+<li>时间盲注：应用没有明确的回显，只能使用特定的时间函数来判断<ul>
+<li>一般思路：<ul>
+<li>延迟注入：利用 <code>sleep()</code> 或 <code>benchmark()</code> 等函数让时间变长，结果判断语句<code>if(expr1, expr2, expr3)</code>，通过页面响应时间来判断语句返回的值是<code>True</code> 还是 <code>False</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>堆叠注入：有的应用可以加入 <code>;</code> 后一次执行多条语句</p>
+</li>
+<li><p>联合查询注入</p>
+</li>
+<li><p>二次注入</p>
+</li>
+<li><p><a href="https://cs-cshi.github.io/cybersecurity/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5%E6%B7%B1%E5%BA%A6%E8%AE%B2%E8%A7%A3/]">宽字节注入</a>：</p>
+<ul>
+<li>什么是宽字节：  宽字节是相对于ascII这样单字节而言的；像 GB2312、GBK、GB18030、BIG5、Shift_JIS 等这些都是常说的宽字节，实际上只有两字节</li>
+<li>转义函数：为了过滤数据对特殊字符加上反斜杠”\“ 进行转义<ul>
+<li>如：MySQL的<code>addslashes()</code>，<code>mysql_real_escape_string()</code>，<code>mysql_escape_string()</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>HTTP头部注入</p>
+</li>
+</ul>
+<hr>
+<p>转自大佬的blog：</p>
+<p>https:&#x2F;&#x2F;websec.readthedocs.io&#x2F;zh&#x2F;latest&#x2F;vuln&#x2F;sql&#x2F;classify.html</p>
+<p>注入类型根据获取数据的方式分为3类</p>
+<h3 id="inband"><a href="#inband" class="headerlink" title="inband"></a>inband</h3><p>利用Web应用来直接获取数据，如报错注入，这类注入都是通过站点的响应或者错误反馈来提取数据。</p>
+<h3 id="inference"><a href="#inference" class="headerlink" title="inference"></a>inference</h3><p>通过Web的一些反映来推断数据，如布尔盲注，也就是我们通俗的盲注， 通过web应用的其他改变来推断数据。</p>
+<h3 id="out-of-band-OOB"><a href="#out-of-band-OOB" class="headerlink" title="out of band (OOB)"></a>out of band (OOB)</h3><p>通过其他传输方式来获得数据，比如DNS解析协议和电子邮件。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>2024-11-21-UseSQLMap</title>
+    <url>/2024/11/21/2024-11-21-UseSQLMap/</url>
+    <content><![CDATA[<h3 id="sqlMap使用"><a href="#sqlMap使用" class="headerlink" title="sqlMap使用"></a>sqlMap使用</h3><p>使用sqlmap可以快速的进行sql注入测试，节省时间提高效率。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">-u：指定含有参数的URL</span><br><span class="line">--dbs：爆出数据库</span><br><span class="line">--batch：默认选择执行</span><br><span class="line">--random-agent：使用随机user-agent</span><br><span class="line">-r：POST注入</span><br><span class="line">--level：注入等级，一共有5个等级（1-5） 不加 level 时，默认是1，5级包含的payload最多，会自动破解出cookie、XFF等头部注入，相对应他的速度也比较慢</span><br><span class="line">--timeout：设定重试超时</span><br><span class="line">--cookie：设置cookie信息</span><br><span class="line">--flush-session：删除指定目标缓存，重新对该目标进行测试</span><br><span class="line">--tamper：使用waf绕过脚本</span><br><span class="line">--time-sec：设定延时时间，默认是5秒</span><br><span class="line">--thread：多线程，默认为1，最大为10</span><br><span class="line">--keep-live： sqlmap默认是一次连接成功后马上关闭；HTTP报文中相当于Connection: Close（一次连接马上关闭）。要扫描站点的URL比较多时，这样比较耗费性能，所以需要将HTTP连接持久化来提高扫描性能；HTTP报文相当于Connection: Keep-Alive</span><br></pre></td></tr></table></figure>
+
+]]></content>
+  </entry>
+  <entry>
+    <title>2024-11-21-PHPBaseFun</title>
+    <url>/2024/11/21/2024-11-21-PHPBaseFun/</url>
+    <content><![CDATA[<h2 id="PHP的一些基础函数记录"><a href="#PHP的一些基础函数记录" class="headerlink" title="PHP的一些基础函数记录"></a>PHP的一些基础函数记录</h2><p>由于不常用PHP写项目，在CTF WEB 方向中经常使用PHP的各种函数，使用过程中经常忘记用法甚至陌生，导致源码审计收到阻碍，故在此记录一些PHP的常用函数。</p>
+<hr>
+<p><code>json_decode()</code> 用于将 JSON 格式的字符串转换为 PHP 变量。通常用于从 JSON 数据中解析出数组或对象，以便在 PHP 中进一步处理。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="title function_ invoke__">json_decode</span>(<span class="keyword">string</span> <span class="variable">$json</span>, <span class="keyword">bool</span> <span class="variable">$assoc</span> = <span class="literal">false</span>, <span class="keyword">int</span> <span class="variable">$depth</span> = <span class="number">512</span>, <span class="keyword">int</span> <span class="variable">$options</span> = <span class="number">0</span>): <span class="keyword">mixed</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>$json</strong> (string)：要解码的 JSON 字符串。</li>
+<li><strong>$assoc</strong> (bool)：如果设为 <code>true</code>，返回关联数组；如果设为 <code>false</code>（默认值），返回对象。</li>
+<li><strong>$depth</strong> (int)：设置递归的最大深度，默认是 512。</li>
+<li><strong>$options</strong> (int)：设置解码选项，常用的值有 <code>JSON_BIGINT_AS_STRING</code> 等。</li>
+</ul>
+<p>example:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$json</span> = <span class="string">&#x27;&#123;&quot;person&quot;: &#123;&quot;name&quot;: &quot;John&quot;, &quot;age&quot;: 30&#125;, &quot;address&quot;: &quot;New York&quot;&#125;&#x27;</span>;</span><br><span class="line"><span class="variable">$data</span> = <span class="title function_ invoke__">json_decode</span>(<span class="variable">$json</span>, <span class="literal">true</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$data</span>[<span class="string">&#x27;person&#x27;</span>][<span class="string">&#x27;name&#x27;</span>];  <span class="comment">// 输出 &quot;John&quot;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><code>isset()</code>用于检查一个变量是否已经被设置并且值不为 <code>NULL</code>。它返回一个布尔值，<code>true</code> 表示变量已被设置并且不是 <code>NULL</code>，否则返回 <code>false</code> 。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">isset</span>(<span class="keyword">mixed</span> <span class="variable">$var</span>, <span class="keyword">mixed</span> ...<span class="variable">$vars</span>): <span class="keyword">bool</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>$var</strong>：需要检查的变量。</li>
+<li><strong>$vars</strong>：可选的，检查多个变量。</li>
+</ul>
+<hr>
+<p><code>ini_set</code> 函数用于设置 PHP 配置选项，允许你在运行时修改 PHP 配置值。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="title function_ invoke__">ini_set</span>(<span class="keyword">string</span> <span class="variable">$varname</span>, <span class="keyword">string</span> <span class="variable">$newvalue</span>): <span class="keyword">string</span>|<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>$varname</code>：配置选项的名称（例如：<code>display_errors</code>、<code>max_execution_time</code>）。</li>
+<li><code>$newvalue</code>：设置的新值。</li>
+</ul>
+<p>example:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="title function_ invoke__">ini_set</span>(<span class="string">&quot;allow_url_include&quot;</span>,<span class="string">&quot;on&quot;</span>);  <span class="comment">// 设置allow_url_include为打开</span></span><br></pre></td></tr></table></figure>
+
+<p>作用：允许 PHP 通过 URL 引入文件。</p>
+<hr>
+<p><code>header()</code> 函数用于发送原始 HTTP 头信息。可以通过它来设置响应头，例如重定向、设置内容类型、缓存控制等。
+    规则：<code>header()</code> 函数必须在输出任何内容之前调用。</p>
+<ul>
+<li><code>$header</code>：要发送的 HTTP 头信息。</li>
+<li><code>$replace</code>：如果为 <code>true</code>，则替换掉已存在的相同头；如果为 <code>false</code>，则不会替换。</li>
+<li><code>$response_code</code>：设置响应的 HTTP 状态码。</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="title function_ invoke__">header</span>(<span class="keyword">string</span> <span class="variable">$header</span>, <span class="keyword">bool</span> <span class="variable">$replace</span> = <span class="literal">true</span>, <span class="keyword">int</span> <span class="variable">$response_code</span> = <span class="number">0</span>): <span class="keyword">void</span></span><br></pre></td></tr></table></figure>
+
+<p>example:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="title function_ invoke__">header</span>(<span class="string">&quot;Content-type: text/html; charset=utf-8&quot;</span>); </span><br><span class="line">设置内容类型为 text/html 字符编码集为utf-<span class="number">8</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>PHP</tag>
+      </tags>
   </entry>
 </search>

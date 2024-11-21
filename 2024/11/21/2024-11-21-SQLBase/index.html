@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2024-11-21-SQLBase - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,SQL注入基本思路检查回显在此基础下 
+
+判断闭合方式：
+
+判断字段数：
+
+判断回显位：服务端执行SQL语句查询数据库中的数据，客户端显示数据的位置就是回显位。
+
+
+根据注入类型选择注入方式
+
+报错,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2024-11-21-SQLBase - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,SQL注入基本思路检查回显在此基础下 
+
+判断闭合方式：
+
+判断字段数：
+
+判断回显位：服务端执行SQL语句查询数据库中的数据，客户端显示数据的位置就是回显位。
+
+
+根据注入类型选择注入方式
+
+报错,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2024-11-21-SQLBase - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,SQL注入基本思路检查回显在此基础下 
+
+判断闭合方式：
+
+判断字段数：
+
+判断回显位：服务端执行SQL语句查询数据库中的数据，客户端显示数据的位置就是回显位。
+
+
+根据注入类型选择注入方式
+
+报错,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2024-11-21-SQLBase</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2024-11-21-SQLBase</h1>
+        <div class="stuff">
+            <span>十一月 21, 2024</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h3 id="SQL注入基本思路"><a href="#SQL注入基本思路" class="headerlink" title="SQL注入基本思路"></a>SQL注入基本思路</h3><h4 id="检查回显"><a href="#检查回显" class="headerlink" title="检查回显"></a>检查回显</h4><p>在此基础下 </p>
+<ul>
+<li><p>判断闭合方式：</p>
+</li>
+<li><p>判断字段数：</p>
+</li>
+<li><p>判断回显位：服务端执行SQL语句查询数据库中的数据，客户端显示数据的位置就是回显位。</p>
+</li>
+</ul>
+<p>根据注入类型选择注入方式</p>
+<ul>
+<li><p>报错注入：</p>
+<ul>
+<li><p>显示报错信息时可以使用的注入方式</p>
+</li>
+<li><p>原理</p>
+<ul>
+<li>通过特殊函数错误，使其输出错误结果来获取信息。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>盲注:</p>
+<ul>
+<li>布尔盲注：只能从应用返回中推断语句执行后的布尔值 <ul>
+<li>页面结果仅有True或者False</li>
+<li>那么就通过这个判断来获取页面的相关信息</li>
+</ul>
+</li>
+<li>时间盲注：应用没有明确的回显，只能使用特定的时间函数来判断<ul>
+<li>一般思路：<ul>
+<li>延迟注入：利用 <code>sleep()</code> 或 <code>benchmark()</code> 等函数让时间变长，结果判断语句<code>if(expr1, expr2, expr3)</code>，通过页面响应时间来判断语句返回的值是<code>True</code> 还是 <code>False</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>堆叠注入：有的应用可以加入 <code>;</code> 后一次执行多条语句</p>
+</li>
+<li><p>联合查询注入</p>
+</li>
+<li><p>二次注入</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://cs-cshi.github.io/cybersecurity/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5%E6%B7%B1%E5%BA%A6%E8%AE%B2%E8%A7%A3/]">宽字节注入</a>：</p>
+<ul>
+<li>什么是宽字节：  宽字节是相对于ascII这样单字节而言的；像 GB2312、GBK、GB18030、BIG5、Shift_JIS 等这些都是常说的宽字节，实际上只有两字节</li>
+<li>转义函数：为了过滤数据对特殊字符加上反斜杠”\“ 进行转义<ul>
+<li>如：MySQL的<code>addslashes()</code>，<code>mysql_real_escape_string()</code>，<code>mysql_escape_string()</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>HTTP头部注入</p>
+</li>
+</ul>
+<hr>
+<p>转自大佬的blog：</p>
+<p>https:&#x2F;&#x2F;websec.readthedocs.io&#x2F;zh&#x2F;latest&#x2F;vuln&#x2F;sql&#x2F;classify.html</p>
+<p>注入类型根据获取数据的方式分为3类</p>
+<h3 id="inband"><a href="#inband" class="headerlink" title="inband"></a>inband</h3><p>利用Web应用来直接获取数据，如报错注入，这类注入都是通过站点的响应或者错误反馈来提取数据。</p>
+<h3 id="inference"><a href="#inference" class="headerlink" title="inference"></a>inference</h3><p>通过Web的一些反映来推断数据，如布尔盲注，也就是我们通俗的盲注， 通过web应用的其他改变来推断数据。</p>
+<h3 id="out-of-band-OOB"><a href="#out-of-band-OOB" class="headerlink" title="out of band (OOB)"></a>out of band (OOB)</h3><p>通过其他传输方式来获得数据，比如DNS解析协议和电子邮件。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL%E6%B3%A8%E5%85%A5%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF"><span class="toc-number">1.</span> <span class="toc-text">SQL注入基本思路</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E5%9B%9E%E6%98%BE"><span class="toc-number">1.1.</span> <span class="toc-text">检查回显</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#inband"><span class="toc-number">2.</span> <span class="toc-text">inband</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#inference"><span class="toc-number">3.</span> <span class="toc-text">inference</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#out-of-band-OOB"><span class="toc-number">4.</span> <span class="toc-text">out of band (OOB)</span></a></li></ol>
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
