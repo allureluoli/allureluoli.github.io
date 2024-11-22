@@ -93,10 +93,10 @@ Python 模块重载 更好的调用函数的方法
 好在，Python为我们提供的一个函数 – reload() 函数</p>
 <ul>
 <li><p>使用第一步
-  from importlib import reload
+  <code>from importlib import reload</code>
   将这个模块导入
-  切记不要导成from imp import reload这样的形式
-  imp中的reload是一个古老的且已经弃用的函数</p>
+  切记不要导成<code>from imp import reload</code>这样的形式
+  <code>imp</code>中的<code>reload</code>是一个古老的且已经弃用的函数</p>
 </li>
 <li><p>函数说明
   reload的中文翻译为：重读  而它的用法也正如其名
@@ -108,11 +108,13 @@ Python 模块重载 更好的调用函数的方法
 <li><p>函数用法
   非常的简单，直接填写模块名
   例:
-  reloda(funciton)
-<br>  reloda(xxx)
+  reload(funciton)
+<br>
+  reload(xxx)
   ps:中间的模块名并非是字符串的形式，请勿加引号或者双引号</p>
 </li>
 </ul>
+<p>​	</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">

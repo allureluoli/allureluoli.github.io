@@ -1,0 +1,323 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2024-11-22-SQLBaseUse - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,SQL基础使用DISTINCT: 用于返回不同的值，去除重复的记录。
+Example:
+1SELECT DISTINCT column_name FROM table;
+
+数据表中选择 column,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2024-11-22-SQLBaseUse - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,SQL基础使用DISTINCT: 用于返回不同的值，去除重复的记录。
+Example:
+1SELECT DISTINCT column_name FROM table;
+
+数据表中选择 column,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2024-11-22-SQLBaseUse - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,SQL基础使用DISTINCT: 用于返回不同的值，去除重复的记录。
+Example:
+1SELECT DISTINCT column_name FROM table;
+
+数据表中选择 column,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2024-11-22-SQLBaseUse</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2024-11-22-SQLBaseUse</h1>
+        <div class="stuff">
+            <span>十一月 22, 2024</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/SQL/" rel="tag">SQL</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="SQL基础使用"><a href="#SQL基础使用" class="headerlink" title="SQL基础使用"></a>SQL基础使用</h3><p><code>DISTINCT</code>: 用于返回不同的值，去除重复的记录。</p>
+<p>Example:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> column_name <span class="keyword">FROM</span> <span class="keyword">table</span>;</span><br></pre></td></tr></table></figure>
+
+<p>数据表中选择 <code>column_name</code> 列的唯一值。</p>
+<p><code>INTO</code> ：将查询结果插入到新表中或将数据导出。</p>
+<p>Example:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">INTO</span> new_table <span class="keyword">FROM</span> old_table;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>将 <code>new_table</code> 的数据复制到 <code>old_table</code> 中。</p>
+<p><code>VALUES</code>: 用于将查询结果插入到新表中或将数据导出。</p>
+<p>Example: </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table_name (column1, column2) <span class="keyword">VALUES</span> (value1, value2);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>向 table_name中 插入数据 <code>column1, column2</code> .</p>
+<p><code>UPDATE</code> 更新表中的现有记录</p>
+<ul>
+<li><code>condition</code> 可以是一些逻辑判断式。</li>
+</ul>
+<p><code>SET</code> 基于<code>UPDATE</code> 语句使用，用来指定要更新的值和列</p>
+<p>Example:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> table_name <span class="keyword">SET</span> column1 <span class="operator">=</span> value1 <span class="keyword">WHERE</span> <span class="keyword">condition</span>;</span><br></pre></td></tr></table></figure>
+
+<p>更新 <code>table_name </code>中的 <code>column1</code> 设置为 <code>value1</code> 在满足 <code>condition</code> 这个条件时会更新。</p>
+<hr>
+<p><code>MIN</code> 用于返回某列中的最小值</p>
+<p>Example:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">MIN</span>(column_name) <span class="keyword">FROM</span> <span class="keyword">table</span>;</span><br></pre></td></tr></table></figure>
+
+<p>选择 <code>column_name </code>列中的最小值</p>
+<hr>
+<p><code>COUNT</code>：用来统计满足条件的行数。</p>
+<p>Example:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(column_name) <span class="keyword">FROM</span> table_name <span class="keyword">WHERE</span> <span class="keyword">condition</span>; </span><br></pre></td></tr></table></figure>
+
+<p>返回 <code>table_name </code>中 <code>condition</code> 条件下  <code>column_name </code>列的行数 </p>
+<hr>
+<p><code>WHERE</code> 用于指定查询条件，过滤符合条件的数据。</p>
+<p>Example:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> <span class="keyword">table</span> <span class="keyword">WHERE</span> <span class="keyword">column</span> <span class="operator">=</span> <span class="keyword">value</span>;</span><br></pre></td></tr></table></figure>
+
+<p>选择所有表中<code>column</code> 列值为<code>value</code>的数据。</p>
+<hr>
+<p><code>AVG</code>：返回某列的平均值</p>
+<p>Example:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">AVG</span>(column_name) <span class="keyword">FROM</span> <span class="keyword">table</span>;</span><br></pre></td></tr></table></figure>
+
+<p>返回表中 <code>column_name</code> 列的平均值。</p>
+<hr>
+<p><code>SUM</code>：用于返回某列的总和。</p>
+<p>Example：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">SUM</span>(column_name) <span class="keyword">FROM</span> <span class="keyword">table</span>;</span><br></pre></td></tr></table></figure>
+
+<p>返回<code>column_name</code> 列的合。</p>
+<hr>
+<p><code>IN</code>： 用于在<code>WHERE</code> 自居中检查某列值是否在指定的多个值中。</p>
+<p>Example:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> <span class="keyword">table</span> <span class="keyword">WHERE</span> <span class="keyword">column</span> <span class="keyword">IN</span> (value1, value2, value3)</span><br></pre></td></tr></table></figure>
+
+<p>选择<code>table </code> 表中的<code>column</code>列检查列中是否含有<code>(value1, value2, value3)</code>中的值。</p>
+<hr>
+<p><code>BETWEEN</code> 用于在 <code>WHERE</code> 中指定一个范围（开始 — 结束）</p>
+<p>Example:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> <span class="keyword">table</span> <span class="keyword">WHERE</span> <span class="keyword">column</span> <span class="keyword">BETWEEN</span> value1 <span class="keyword">AND</span> value2;</span><br></pre></td></tr></table></figure>
+
+<p>选择 <code>table</code> 表中 <code>column</code> 列的范围是<code>value1</code> 到 <code>value2</code></p>
+<p>ps: <code>value1 </code>和 <code>value2</code> 为边界</p>
+<hr>
+<p><code>AS</code>: 用于为列或表指定别名</p>
+<p>Example：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column_name <span class="keyword">AS</span> alias_name <span class="keyword">FROM</span> <span class="keyword">table</span>;</span><br></pre></td></tr></table></figure>
+
+<p>从数据库的<code>table</code>表中查询 <code>column_name</code> 列的数据，并为此列设置一个别名为<code>alias_name</code> </p>
+<hr>
+<p><code>JOIN</code> 用于同时查询多张表，通过在不同表之间建立关系，将他们的数据合并到一个结果中。</p>
+<p><code>ON</code>: 用于在<code>JOIN</code>语句中指定连接条件</p>
+<p>Example:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> columns</span><br><span class="line"><span class="keyword">FROM</span> table1</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> table2</span><br><span class="line"><span class="keyword">ON</span> table1.column_name <span class="operator">=</span> table2.collumn_name</span><br></pre></td></tr></table></figure>
+
+<p>查询列 <code>columns</code> 在<code>table1</code>和<code>table2</code>表中连接  两个表 符合条件<code>table1.column_name = table2.column_name;</code> 则返回数据。</p>
+<hr>
+<p><code>INNER</code> 内连接（只返回两个表中匹配的记录）</p>
+<p>Example:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table1 <span class="keyword">INNER</span> <span class="keyword">JOIN</span> table2 <span class="keyword">ON</span> table1.id <span class="operator">=</span> table2.id;</span><br></pre></td></tr></table></figure>
+
+<p>选择表<code>table1</code> 内联 <code>table2</code> 满足<code>table2 ON table1.id = table2.id;</code> 返回相关的所有列数据</p>
+<hr>
+<p><code>RIGHT</code> 返回右边表中的所有记录以及左边表中能匹配右边记录的行。</p>
+<p>Example：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table1 <span class="keyword">RIGHT</span> <span class="keyword">JOIN</span> table2 <span class="keyword">ON</span> table1.id <span class="operator">=</span> table2.id;</span><br></pre></td></tr></table></figure>
+
+<p>连接 <code>table1</code> 和 <code>table2</code> 返回 <code>table2</code>的所有数据和<code>table1.id = table2.id;</code>相匹配的左边的数据。</p>
+<hr>
+<p><code>ORDER BY</code> 子句用于对查询结果进行排序。</p>
+<p><code>DESC</code>用于在<code>DRDER BY</code> 字句中指定降序排序。</p>
+<p><code>ASC</code>用于在<code>DRDER BY</code> 字句中指定升序排序。</p>
+<ul>
+<li><p>可以按照一个或多个列对结果进行升序<code>ASC</code> 或降序<code>DESC</code></p>
+</li>
+<li><p><strong>升序排序</strong>通常是数字从小到大，字符串从字母 A 到 Z</p>
+<ul>
+<li>降序反之</li>
+</ul>
+</li>
+</ul>
+<p>Example:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> <span class="keyword">table</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">column</span> <span class="keyword">DESC</span>;</span><br></pre></td></tr></table></figure>
+
+<p>获取 <code>table</code> 中的所有列并根据<code>column</code>的值 按照 <code>DESC</code> 排序。</p>
+<hr>
+<p><code>DROP</code> 用于删除数据库中的对象（表、视图、数据库）等。</p>
+<p>Example:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> table_name;</span><br></pre></td></tr></table></figure>
+
+<p>删除了表名为<code>table_name</code> 的表。</p>
+<hr>
+<p><code>AKTER</code> ：用于修改表的结构（添加、删除、…）</p>
+<p>Example：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name <span class="keyword">ADD</span> column_name datatype;</span><br></pre></td></tr></table></figure>
+
+<p>修改<code>table_name</code>表的列，添加了一个<code>datatype</code>类型名为<code>column_name</code>的列。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">SQL基础使用</span></a></li></ol>
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
