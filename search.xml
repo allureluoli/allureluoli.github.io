@@ -4873,4 +4873,52 @@ Str + Destination的md5值是 27019e688a4e62a649fd99cadaafdb4e</p>
         <tag>数据库</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2024-11-24-GDProgressBar</title>
+    <url>/2024/11/24/2024-11-24-GDProgressBar/</url>
+    <content><![CDATA[<h3 id="实现独立渲染的加载进度条界面（已弃用）"><a href="#实现独立渲染的加载进度条界面（已弃用）" class="headerlink" title="实现独立渲染的加载进度条界面（已弃用）"></a>实现独立渲染的加载进度条界面（已弃用）</h3><p>基本步骤</p>
+<ol>
+<li><p>创建 <code>CanvasLayer</code>作为独立渲染节点</p>
+</li>
+<li><p>使用Godot自带的<code>ProgressBar</code> 作为子节点</p>
+<ol>
+<li>修改颜色</li>
+<li>添加<code>Value</code>类</li>
+</ol>
+</li>
+<li><p>添加脚本</p>
+</li>
+</ol>
+<p><code>GDScript</code>写法：</p>
+<p>进度条的脚本</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line">extends Control</span><br><span class="line"><span class="comment">// 获取一下进度条</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义读取的路径</span></span><br><span class="line"><span class="keyword">var</span> loading_path = <span class="string">&quot;&quot;</span>    </span><br><span class="line">@onready <span class="keyword">var</span> progressBar:ProgressBar = $ProgressBar</span><br><span class="line">    </span><br><span class="line"><span class="comment">// 定义进度的数组和值</span></span><br><span class="line"><span class="keyword">var</span> progress = []</span><br><span class="line"><span class="keyword">var</span> scene_load_status = <span class="number">0</span></span><br><span class="line">fun _ready():</span><br><span class="line">	<span class="comment">// 定义一个最大值</span></span><br><span class="line">	progressBar.max_value</span><br><span class="line">    <span class="comment">// 传入下一个场景的路径</span></span><br><span class="line">    ResourceLoader.load_threaded_request(SceneChanger.loading_path)</span><br><span class="line">    pass</span><br><span class="line">fun _process():</span><br><span class="line">	scene_load_status = ResourceLoader.load_threaded_get_status(ScenChanger.loading_path)</span><br><span class="line">    <span class="comment">// 更改进度条</span></span><br><span class="line">    progressBar.<span class="keyword">value</span> = progress[<span class="number">0</span>] * <span class="number">100</span></span><br><span class="line">        <span class="comment">// 判断是否加载完毕</span></span><br><span class="line">    <span class="keyword">if</span> scene_load_status = ResourceLoader.THEAD_LOAD_LOADED:</span><br><span class="line">		<span class="comment">// 关闭加载函数</span></span><br><span class="line">		set_proess(<span class="literal">false</span>)</span><br><span class="line">        <span class="comment">// 交互优化 停顿0.5s</span></span><br><span class="line">        <span class="keyword">await</span> get_tree().create_timer(<span class="number">0.5</span>).timeout</span><br><span class="line">        SceneChanger.change_scene(ReosurceLoader.load_threaded_get(SceneChanger.loading_path)) </span><br><span class="line">    pass</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<p>场景的定义</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line">extends CanvasLayer</span><br><span class="line"><span class="keyword">var</span> loading_path = <span class="string">&quot;&quot;</span></span><br><span class="line">@onready <span class="keyword">var</span> animation:AnimationPlaer = $AnimationPlayer</span><br><span class="line">func _ready():</span><br><span class="line">	self.hide()</span><br><span class="line">    pass</span><br><span class="line">func _process(delta):</span><br><span class="line">	<span class="function">pass</span></span><br><span class="line"><span class="function">func <span class="title">change_scene</span>(<span class="params">path, isLoading:<span class="built_in">bool</span> = <span class="literal">false</span></span>):</span></span><br><span class="line"><span class="function">	self.<span class="title">show</span>()</span></span><br><span class="line"><span class="function">    self.<span class="title">set_layer</span>(<span class="params"><span class="number">999</span></span>)</span></span><br><span class="line"><span class="function">    animation.<span class="title">play</span>(<span class="params"><span class="string">&quot;changer&quot;</span></span>)</span></span><br><span class="line"><span class="function">    <span class="keyword">await</span> animation.animation_finished</span></span><br><span class="line"><span class="function">        <span class="keyword">if</span> <span class="keyword">is</span> Loading:</span></span><br><span class="line"><span class="function">			loading_path</span> = path</span><br><span class="line">            <span class="comment">// 那就执行loading页面</span></span><br><span class="line">            get_tree().change_scene_to_file(<span class="string">&quot;res://page_loading/page_loading.tscn&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">			<span class="comment">// 资源加载完资源有一个自己的类型</span></span><br><span class="line">			<span class="function"><span class="keyword">if</span> <span class="title">typeof</span>(<span class="params">path</span>)</span> == TYPE_STRING:</span><br><span class="line">				</span><br><span class="line">				get_tree().change_scene_to_file(path)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">				get_tree().change_scene_to_packed(path)</span><br><span class="line">    get_tree().change_scene_to_file(path)</span><br><span class="line">    animation.play_backwards(<span class="string">&quot;changer&quot;</span>)</span><br><span class="line">    <span class="keyword">await</span> animation.animation_finished</span><br><span class="line">    self.set_layer(<span class="number">-1</span>)</span><br><span class="line">    self.hide()</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
+
+<p>调用时</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line">SceneChanger.change_scene(<span class="string">&quot;res://scene2.tscn&quot;</span>, <span class="literal">true</span>)</span><br></pre></td></tr></table></figure>
+
+<p><code>C#</code> 写法</p>
+<hr>
+<p>主要思路就是，先检查是否加载，若未加载，则运行进度条，加载后出现</p>
+<p>定义方法，接收场景资源和进度条资源</p>
+<p>进度条根据场景资源的加载速度来加载</p>
+<h2 id="使用-ResourceLoader¶"><a href="#使用-ResourceLoader¶" class="headerlink" title="使用 ResourceLoader¶"></a>使用 ResourceLoader<a href="https://docs.godotengine.org/zh-cn/4.x/tutorials/io/background_loading.html#using-resourceloader">¶</a></h2><p>通常使用 <a href="https://docs.godotengine.org/zh-cn/4.x/classes/class_resourceloader.html#class-resourceloader-method-load-threaded-request">ResourceLoader.load_threaded_request</a> 将资源加载请求加入队列，其他线程会在后台进行加载。</p>
+<p>你可以使用 <a href="https://docs.godotengine.org/zh-cn/4.x/classes/class_resourceloader.html#class-resourceloader-method-load-threaded-get-status">ResourceLoader.load_threaded_get_status</a> 检查状态。给 progress 传一个数组变量就可以获取进度，返回时该数组中包含一个元素，表示百分比。</p>
+<p>最后调用 <a href="https://docs.godotengine.org/zh-cn/4.x/classes/class_resourceloader.html#class-resourceloader-method-load-threaded-get">ResourceLoader.load_threaded_get</a> 即可获取加载到的资源。</p>
+<p>传入需要加载的场景的路径，让场景都在进度条的类下进行加载。</p>
+<p>加载完毕后关闭进度条类。</p>
+<p>实例化场景类。</p>
+<hr>
+<p>迫真写法</p>
+<p>我这个无敌了上面麻烦死了！！！</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line">ResourceLoader.LoadThreadedRequest(resourcePath, <span class="string">&quot;PackedScene&quot;</span>, <span class="literal">true</span>);</span><br><span class="line">ResourceLoader.ThreadLoadStatus loadState = ResourceLoader.LoadThreadedGetStatus(resourcePath, progressArray);</span><br><span class="line">            </span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>C#</tag>
+        <tag>godot</tag>
+      </tags>
+  </entry>
 </search>

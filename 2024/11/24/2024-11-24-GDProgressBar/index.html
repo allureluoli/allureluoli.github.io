@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2024-11-24-GDProgressBar - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,实现独立渲染的加载进度条界面（已弃用）基本步骤
+
+创建 CanvasLayer作为独立渲染节点
+
+使用Godot自带的ProgressBar 作为子节点
+
+修改颜色
+添加Value类
+
+
+添加脚本
+,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2024-11-24-GDProgressBar - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,实现独立渲染的加载进度条界面（已弃用）基本步骤
+
+创建 CanvasLayer作为独立渲染节点
+
+使用Godot自带的ProgressBar 作为子节点
+
+修改颜色
+添加Value类
+
+
+添加脚本
+,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2024-11-24-GDProgressBar - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,实现独立渲染的加载进度条界面（已弃用）基本步骤
+
+创建 CanvasLayer作为独立渲染节点
+
+使用Godot自带的ProgressBar 作为子节点
+
+修改颜色
+添加Value类
+
+
+添加脚本
+,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2024-11-24-GDProgressBar</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2024-11-24-GDProgressBar</h1>
+        <div class="stuff">
+            <span>十一月 24, 2024</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/godot/" rel="tag">godot</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="实现独立渲染的加载进度条界面（已弃用）"><a href="#实现独立渲染的加载进度条界面（已弃用）" class="headerlink" title="实现独立渲染的加载进度条界面（已弃用）"></a>实现独立渲染的加载进度条界面（已弃用）</h3><p>基本步骤</p>
+<ol>
+<li><p>创建 <code>CanvasLayer</code>作为独立渲染节点</p>
+</li>
+<li><p>使用Godot自带的<code>ProgressBar</code> 作为子节点</p>
+<ol>
+<li>修改颜色</li>
+<li>添加<code>Value</code>类</li>
+</ol>
+</li>
+<li><p>添加脚本</p>
+</li>
+</ol>
+<p><code>GDScript</code>写法：</p>
+<p>进度条的脚本</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">extends Control</span><br><span class="line"><span class="comment">// 获取一下进度条</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义读取的路径</span></span><br><span class="line"><span class="keyword">var</span> loading_path = <span class="string">&quot;&quot;</span>    </span><br><span class="line">@onready <span class="keyword">var</span> progressBar:ProgressBar = $ProgressBar</span><br><span class="line">    </span><br><span class="line"><span class="comment">// 定义进度的数组和值</span></span><br><span class="line"><span class="keyword">var</span> progress = []</span><br><span class="line"><span class="keyword">var</span> scene_load_status = <span class="number">0</span></span><br><span class="line">fun _ready():</span><br><span class="line">	<span class="comment">// 定义一个最大值</span></span><br><span class="line">	progressBar.max_value</span><br><span class="line">    <span class="comment">// 传入下一个场景的路径</span></span><br><span class="line">    ResourceLoader.load_threaded_request(SceneChanger.loading_path)</span><br><span class="line">    pass</span><br><span class="line">fun _process():</span><br><span class="line">	scene_load_status = ResourceLoader.load_threaded_get_status(ScenChanger.loading_path)</span><br><span class="line">    <span class="comment">// 更改进度条</span></span><br><span class="line">    progressBar.<span class="keyword">value</span> = progress[<span class="number">0</span>] * <span class="number">100</span></span><br><span class="line">        <span class="comment">// 判断是否加载完毕</span></span><br><span class="line">    <span class="keyword">if</span> scene_load_status = ResourceLoader.THEAD_LOAD_LOADED:</span><br><span class="line">		<span class="comment">// 关闭加载函数</span></span><br><span class="line">		set_proess(<span class="literal">false</span>)</span><br><span class="line">        <span class="comment">// 交互优化 停顿0.5s</span></span><br><span class="line">        <span class="keyword">await</span> get_tree().create_timer(<span class="number">0.5</span>).timeout</span><br><span class="line">        SceneChanger.change_scene(ReosurceLoader.load_threaded_get(SceneChanger.loading_path)) </span><br><span class="line">    pass</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<p>场景的定义</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">extends CanvasLayer</span><br><span class="line"><span class="keyword">var</span> loading_path = <span class="string">&quot;&quot;</span></span><br><span class="line">@onready <span class="keyword">var</span> animation:AnimationPlaer = $AnimationPlayer</span><br><span class="line">func _ready():</span><br><span class="line">	self.hide()</span><br><span class="line">    pass</span><br><span class="line">func _process(delta):</span><br><span class="line">	<span class="function">pass</span></span><br><span class="line"><span class="function">func <span class="title">change_scene</span>(<span class="params">path, isLoading:<span class="built_in">bool</span> = <span class="literal">false</span></span>):</span></span><br><span class="line"><span class="function">	self.<span class="title">show</span>()</span></span><br><span class="line"><span class="function">    self.<span class="title">set_layer</span>(<span class="params"><span class="number">999</span></span>)</span></span><br><span class="line"><span class="function">    animation.<span class="title">play</span>(<span class="params"><span class="string">&quot;changer&quot;</span></span>)</span></span><br><span class="line"><span class="function">    <span class="keyword">await</span> animation.animation_finished</span></span><br><span class="line"><span class="function">        <span class="keyword">if</span> <span class="keyword">is</span> Loading:</span></span><br><span class="line"><span class="function">			loading_path</span> = path</span><br><span class="line">            <span class="comment">// 那就执行loading页面</span></span><br><span class="line">            get_tree().change_scene_to_file(<span class="string">&quot;res://page_loading/page_loading.tscn&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">			<span class="comment">// 资源加载完资源有一个自己的类型</span></span><br><span class="line">			<span class="function"><span class="keyword">if</span> <span class="title">typeof</span>(<span class="params">path</span>)</span> == TYPE_STRING:</span><br><span class="line">				</span><br><span class="line">				get_tree().change_scene_to_file(path)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">				get_tree().change_scene_to_packed(path)</span><br><span class="line">    get_tree().change_scene_to_file(path)</span><br><span class="line">    animation.play_backwards(<span class="string">&quot;changer&quot;</span>)</span><br><span class="line">    <span class="keyword">await</span> animation.animation_finished</span><br><span class="line">    self.set_layer(<span class="number">-1</span>)</span><br><span class="line">    self.hide()</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
+
+<p>调用时</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SceneChanger.change_scene(<span class="string">&quot;res://scene2.tscn&quot;</span>, <span class="literal">true</span>)</span><br></pre></td></tr></table></figure>
+
+<p><code>C#</code> 写法</p>
+<hr>
+<p>主要思路就是，先检查是否加载，若未加载，则运行进度条，加载后出现</p>
+<p>定义方法，接收场景资源和进度条资源</p>
+<p>进度条根据场景资源的加载速度来加载</p>
+<h2 id="使用-ResourceLoader¶"><a href="#使用-ResourceLoader¶" class="headerlink" title="使用 ResourceLoader¶"></a>使用 ResourceLoader<a target="_blank" rel="noopener" href="https://docs.godotengine.org/zh-cn/4.x/tutorials/io/background_loading.html#using-resourceloader">¶</a></h2><p>通常使用 <a target="_blank" rel="noopener" href="https://docs.godotengine.org/zh-cn/4.x/classes/class_resourceloader.html#class-resourceloader-method-load-threaded-request">ResourceLoader.load_threaded_request</a> 将资源加载请求加入队列，其他线程会在后台进行加载。</p>
+<p>你可以使用 <a target="_blank" rel="noopener" href="https://docs.godotengine.org/zh-cn/4.x/classes/class_resourceloader.html#class-resourceloader-method-load-threaded-get-status">ResourceLoader.load_threaded_get_status</a> 检查状态。给 progress 传一个数组变量就可以获取进度，返回时该数组中包含一个元素，表示百分比。</p>
+<p>最后调用 <a target="_blank" rel="noopener" href="https://docs.godotengine.org/zh-cn/4.x/classes/class_resourceloader.html#class-resourceloader-method-load-threaded-get">ResourceLoader.load_threaded_get</a> 即可获取加载到的资源。</p>
+<p>传入需要加载的场景的路径，让场景都在进度条的类下进行加载。</p>
+<p>加载完毕后关闭进度条类。</p>
+<p>实例化场景类。</p>
+<hr>
+<p>迫真写法</p>
+<p>我这个无敌了上面麻烦死了！！！</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ResourceLoader.LoadThreadedRequest(resourcePath, <span class="string">&quot;PackedScene&quot;</span>, <span class="literal">true</span>);</span><br><span class="line">ResourceLoader.ThreadLoadStatus loadState = ResourceLoader.LoadThreadedGetStatus(resourcePath, progressArray);</span><br><span class="line">            </span><br></pre></td></tr></table></figure>
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="https://webfs.ali.kugou.com/202307041713/4c5c9c66054ff1b1e920cbadbb47ec17/v2/c39d8792fe8a2cd84414ee5d2642f870/G199/M03/1B/10/p5QEAF4oPP-AUpsZACo25HetF6U984.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E7%8B%AC%E7%AB%8B%E6%B8%B2%E6%9F%93%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%9B%E5%BA%A6%E6%9D%A1%E7%95%8C%E9%9D%A2%EF%BC%88%E5%B7%B2%E5%BC%83%E7%94%A8%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">实现独立渲染的加载进度条界面（已弃用）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-ResourceLoader%C2%B6"><span class="toc-number"></span> <span class="toc-text">使用 ResourceLoader</span></a>
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
