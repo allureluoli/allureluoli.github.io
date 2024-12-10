@@ -4942,4 +4942,25 @@ Str + Destination的md5值是 27019e688a4e62a649fd99cadaafdb4e</p>
         <tag>godot</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2024-12-2-SQL注入基操</title>
+    <url>/2024/12/02/2024-12-2-SQL%E6%B3%A8%E5%85%A5%E5%9F%BA%E6%93%8D/</url>
+    <content><![CDATA[<h3 id="SQL-注入基操"><a href="#SQL-注入基操" class="headerlink" title="SQL 注入基操"></a>SQL 注入基操</h3><p>基本判断</p>
+<p>sqlLabs 第一题</p>
+<p><code>http://127.0.0.1/Less-1/?id=1&#39;</code></p>
+<p>回显</p>
+<p><code> You have an error in your SQL syntax; check the  manual that corresponds to your MySQL server version for the right  syntax to use near &#39;&#39;1&#39;&#39; LIMIT 0,1&#39; at line 1</code></p>
+<p>翻译</p>
+<p><code>您的SQL语法有错误；查看与MySQL服务器版本对应的手册，了解第1行“1”“LIMIT 0,1”附近使用的正确语法</code>
+这时候已经很明显了</p>
+<p>有报错回显的注入</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">You have an error <span class="keyword">in</span> your <span class="keyword">SQL</span> syntax; <span class="keyword">check</span> the manual that corresponds <span class="keyword">to</span> your MySQL server version <span class="keyword">for</span> the <span class="keyword">right</span> syntax <span class="keyword">to</span> use near <span class="string">&#x27;&#x27;</span> LIMIT <span class="number">0</span>,<span class="number">1</span><span class="string">&#x27; at line 1 </span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>SQL</tag>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
 </search>
