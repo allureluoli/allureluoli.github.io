@@ -5033,4 +5033,172 @@ Str + Destination的md5值是 27019e688a4e62a649fd99cadaafdb4e</p>
         <tag>MySQL</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2025-1-9-NASM学习一</title>
+    <url>/2025/01/09/2025-1-9-NASM%E5%AD%A6%E4%B9%A0%E4%B8%80/</url>
+    <content><![CDATA[<h3 id="Nasm-1Day"><a href="#Nasm-1Day" class="headerlink" title="Nasm 1Day"></a>Nasm 1Day</h3><p>全部代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">extern _printf,_system ;声明外部的 printf 函数</span><br><span class="line">section .data</span><br><span class="line">	cmd db &#x27;chcp 65001&#x27;,0 ; 设置终端的编码</span><br><span class="line">	msg db &#x27;Hello,World!&#x27;, 0;定义字符串常量</span><br><span class="line">	newline db 10,0</span><br><span class="line">	info_1 db &#x27;qwq,This is my first nasm code&#x27;,0</span><br><span class="line">	info_2 db &#x27;这下是中文输出&#x27;,0</span><br><span class="line">	test_1 db &#x27;mkdir 1&#x27;,0</span><br><span class="line"></span><br><span class="line">section .text</span><br><span class="line">	global _main ; 设置入口函数为 _main</span><br><span class="line"></span><br><span class="line">_main:</span><br><span class="line">	push test_1</span><br><span class="line">    call _system ; 调用系统参数执行命令</span><br><span class="line"></span><br><span class="line">	push msg ;将字符串地址推入栈中,作为参数传递给printf</span><br><span class="line">	call _printf ;调用prinf 函数</span><br><span class="line">	add esp,4 ;清理栈上的参数</span><br><span class="line">	push newline</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4 </span><br><span class="line">	push info_1</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line"></span><br><span class="line">	push newline</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line"></span><br><span class="line">	push info_2</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line"></span><br><span class="line">	ret ;函数返回</span><br></pre></td></tr></table></figure>
+
+<p>代码执行：</p>
+<pre><code>- 打印 Hello,World! qwq,This is my first nasm code ... 等
+- 执行了两个cmd命令 设置编码和创建了名为1的文件夹
+</code></pre>
+<p>代码分段分析</p>
+<p>主要分为三个部分</p>
+<h4 id="声明部分"><a href="#声明部分" class="headerlink" title="声明部分"></a>声明部分</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">extern _printf,_system ;声明外部的 printf 函数</span><br></pre></td></tr></table></figure>
+
+<h4 id="定义部分"><a href="#定义部分" class="headerlink" title="定义部分"></a>定义部分</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">section .data</span><br><span class="line">	cmd db &#x27;chcp 65001&#x27;,0 ; 设置终端的编码</span><br><span class="line">	msg db &#x27;Hello,World!&#x27;, 0;定义字符串常量</span><br><span class="line">	newline db 10,0</span><br><span class="line">	info_1 db &#x27;qwq,This is my first nasm code&#x27;,0</span><br><span class="line">	info_2 db &#x27;这下是中文输出&#x27;,0</span><br><span class="line">	test_1 db &#x27;mkdir 1&#x27;,0</span><br><span class="line">section .text</span><br><span class="line">	global _main ; 设置入口函数为 _main</span><br></pre></td></tr></table></figure>
+
+<h4 id="执行部分"><a href="#执行部分" class="headerlink" title="执行部分"></a>执行部分</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">_main:</span><br><span class="line">	push test_1</span><br><span class="line">    call _system ; 调用系统参数执行命令</span><br><span class="line"></span><br><span class="line">	push msg ;将字符串地址推入栈中,作为参数传递给printf</span><br><span class="line">	call _printf ;调用prinf 函数</span><br><span class="line">	add esp,4 ;清理栈上的参数</span><br><span class="line">	push newline</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4 </span><br><span class="line">	push info_1</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line"></span><br><span class="line">	push newline</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line"></span><br><span class="line">	push info_2</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line"></span><br><span class="line">	ret ;函数返回</span><br></pre></td></tr></table></figure>
+
+<h3 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h3><h4 id="extern"><a href="#extern" class="headerlink" title="extern"></a>extern</h4><p>作用：</p>
+<ul>
+<li>用于声明外部符号</li>
+<li>告诉汇编器某个符号在当前之外的文件定义</li>
+</ul>
+<h4 id="section"><a href="#section" class="headerlink" title="section"></a>section</h4><ul>
+<li>用于指定代码或数据的段，告诉汇编器代码应该放在特定的段中</li>
+<li>常见的段有 <ul>
+<li><code>.text</code>（代码段）</li>
+<li><code>.data</code>（数据段）</li>
+<li><code>.bss</code>（未初始化数据段）</li>
+</ul>
+</li>
+</ul>
+<h4 id="push"><a href="#push" class="headerlink" title="push"></a>push</h4><ul>
+<li>该指令将一个值压入栈中</li>
+<li>会将操作数（寄存器、立即数、内存中的数据）压入栈并更新栈指针</li>
+<li>常用于保存寄存器的值</li>
+</ul>
+<h4 id="call"><a href="#call" class="headerlink" title="call"></a>call</h4><ul>
+<li>用于调用函数</li>
+<li>call 将返回地址压入栈中，然后跳转到目标地址</li>
+<li>也就是将函数调用后继续执行的地方放到函数的入口点</li>
+</ul>
+<h4 id="add"><a href="#add" class="headerlink" title="add"></a>add</h4><ul>
+<li>将两个操作数相加 并将结果存储到第一个操作数中</li>
+<li>支持将寄存器 立即数 以及内存地址作为操作数</li>
+</ul>
+<h4 id="ret"><a href="#ret" class="headerlink" title="ret"></a>ret</h4><ul>
+<li>用于从函数返回</li>
+<li>执行ret时 会从栈中弹出返回地址 将控制权传递给该地址处的代码（通常是函数调用的下一条指令）</li>
+</ul>
+<h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><h4 id="PE文件节"><a href="#PE文件节" class="headerlink" title="PE文件节"></a>PE文件节</h4><p>想了解什么是PE文件的 节 ，先要搞懂什么是PE文件</p>
+<p>PE (Portable Executable)  译作：便携式可执行文件</p>
+<p>用于</p>
+<ul>
+<li>可执行程序</li>
+<li>动态链接库</li>
+<li>系统驱动程序</li>
+</ul>
+<p>等文件格式</p>
+<p>PE文件是Windows平台上执行程序的标准格式</p>
+<p>基于COFF（Common Object File Format）格式</p>
+<p>包含了不同的结构和信息来帮助操作系统 加载、执行、调试程序</p>
+<p><strong>节</strong> 是PE文件内部的重要概念</p>
+<p>指的是 文件中存储程序代码、数据、资源的区域</p>
+<p>每个节都有特定的功能和属性 可以满足不同部分代码和数据的存储需求</p>
+<h5 id="PE文件结构简述"><a href="#PE文件结构简述" class="headerlink" title="PE文件结构简述"></a>PE文件结构简述</h5><ol>
+<li><p>DOS头：</p>
+<ul>
+<li>标记PE文件开始部分</li>
+<li>包含魔数 <strong>MZ</strong></li>
+<li>包含指向PE头部的指针</li>
+</ul>
+</li>
+<li><p>PE头：</p>
+<ul>
+<li>PE文件的结构核心</li>
+<li>包含文件格式关键信息<ul>
+<li>机器平台</li>
+<li>目标平台</li>
+<li>节表位置</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>节表：</p>
+<ul>
+<li><p>记录文件中各个节</p>
+<ul>
+<li>位置</li>
+<li>大小</li>
+<li>属性</li>
+</ul>
+<ol start="4">
+<li>节：</li>
+</ol>
+<ul>
+<li>实际存储程序<ul>
+<li>代码</li>
+<li>数据</li>
+<li>资源</li>
+</ul>
+</li>
+<li>的区域</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="节的功能与属性"><a href="#节的功能与属性" class="headerlink" title="节的功能与属性"></a>节的功能与属性</h4><ul>
+<li><p>代码节 <code>.text</code> ：包含程序的机器代码，通常 <strong>只读</strong> 且 <strong>可执行</strong></p>
+</li>
+<li><p>数据节 <code>.data</code> :   包含已初始化的全局变量和静态变量，通常 <strong>可读写</strong></p>
+</li>
+<li><p>未初始化数据节 <code>.bss</code>：包含未初始化的全局变量和静态变量，不占磁盘空间，加载时会被<strong>初始化为0</strong></p>
+</li>
+<li><p>只读数据节<code>.rdata1</code>：存放数据的只读数据，如字符串常量，这部分数据通常是<strong>共享</strong>的，不允许修改</p>
+</li>
+<li><p>导入&#x2F;导出节 <code>.idata</code>  和 <code>.edata</code>：用于动态链接 导入节存储程序所需的外部函数和符号，导出节用于存储程序希望其他程序调用的函数和符号（感觉像头文件）</p>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>汇编</tag>
+        <tag>nasm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2024-12-30-类型论</title>
+    <url>/2024/12/30/2024-12-30-%E7%B1%BB%E5%9E%8B%E8%AE%BA/</url>
+    <content><![CDATA[<h3 id="类型论初学"><a href="#类型论初学" class="headerlink" title="类型论初学"></a>类型论初学</h3><p>简述：类型论是一种形式理论，被视为编程语言中类型系统的数学表述。</p>
+<p>特点：</p>
+<pre><code>- 基于lambda 演算
+- 使用规则定义类型
+- 不需要穷举无穷大集合中的所有元素
+- 命题也视为类型
+</code></pre>
+<p>函数类型对应内射态</p>
+<p>积类型对应积</p>
+<p>对应映射集 和 Descartes 积</p>
+<p>类型论的范畴语义</p>
+<p>模型：范畴 （范畴语义）</p>
+<p>类型论为范畴的内语言</p>
+<p>| <a href="https://www.bananaspace.org/wiki/%E9%9B%86%E5%90%88%E8%AE%BA">集合论</a> |                            类型论                            | <a href="https://www.bananaspace.org/wiki/%E8%8C%83%E7%95%B4%E8%AE%BA">范畴论</a> |      <a href="https://www.bananaspace.org/wiki/%E9%80%BB%E8%BE%91%E5%AD%A6">逻辑学</a>       |
+| :———————————————–: | :———————————————————-: | :———————————————–: | :———————————————————-: |
+|   <a href="https://www.bananaspace.org/wiki/%E9%9B%86%E5%90%88">集合</a>   |        <a href="https://www.bananaspace.org/wiki/%E7%B1%BB%E5%9E%8B">类型</a>         |   <a href="https://www.bananaspace.org/wiki/%E5%AF%B9%E8%B1%A1">对象</a>   |        <a href="https://www.bananaspace.org/wiki/%E5%91%BD%E9%A2%98">命题</a>         |
+| <a href="https://www.bananaspace.org/wiki/%E5%8D%95%E7%82%B9%E9%9B%86">单点集</a> |    <a href="https://www.bananaspace.org/wiki/%E5%8D%95%E4%BD%8D%E7%B1%BB%E5%9E%8B">单位类型</a>     | <a href="https://www.bananaspace.org/wiki/%E7%BB%88%E5%AF%B9%E8%B1%A1">终对象</a> | <a href="https://www.bananaspace.org/w/index.php?title=%E6%B0%B8%E7%9C%9F%E5%91%BD%E9%A2%98&action=edit&redlink=1">永真命题</a> |
+|   <a href="https://www.bananaspace.org/wiki/%E7%A9%BA%E9%9B%86">空集</a>   |      <a href="https://www.bananaspace.org/wiki/%E7%A9%BA%E7%B1%BB%E5%9E%8B">空类型</a>       | <a href="https://www.bananaspace.org/wiki/%E5%A7%8B%E5%AF%B9%E8%B1%A1">始对象</a> | <a href="https://www.bananaspace.org/w/index.php?title=%E6%B0%B8%E5%81%87%E5%91%BD%E9%A2%98&action=edit&redlink=1">永假命题</a> |
+|   <a href="https://www.bananaspace.org/wiki/%E5%85%83%E7%B4%A0">元素</a>   | <a href="https://www.bananaspace.org/w/index.php?title=%E5%AE%9E%E4%BE%8B&action=edit&redlink=1">实例</a> |                从终对象出发的态射                 | <a href="https://www.bananaspace.org/w/index.php?title=%E8%AF%81%E6%98%8E&action=edit&redlink=1">证明</a> |</p>
+<hr>
+<p>举例类型论：简单类型λ演算 ( 记作 λ→ 或者  STλC)</p>
+<h5 id="函数类型"><a href="#函数类型" class="headerlink" title="函数类型"></a>函数类型</h5><p>任何 λ→都是函数类型上扩充的</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A,B::=V∣A→B</span><br><span class="line">M,N,u,v::= V∣(M N)∣(λV. M)</span><br></pre></td></tr></table></figure>
+
+<p>其中：A,B 符号标识类型论中的类型</p>
+<p>M，N，u，v这四个符号都表示类型论中的值(λ 表达式)</p>
+<p>V标识变量或类型变量</p>
+<p>符号u代表一个表达式的意思满足三个条件：</p>
+<ul>
+<li>u∈V</li>
+<li>u形如 v1 v2 其中 v1 v2是类型u的表达式</li>
+<li>u 形如 λx. v, 其中 x∈V, 而 v 是类似 u 的表达式.</li>
+</ul>
+<p>对 A,B 等表示类型的符号的描述也类似.</p>
+]]></content>
+      <tags>
+        <tag>计算机科学</tag>
+      </tags>
+  </entry>
 </search>

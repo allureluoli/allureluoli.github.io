@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2024-12-30-类型论 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,类型论初学简述：类型论是一种形式理论，被视为编程语言中类型系统的数学表述。
+特点：
+- 基于lambda 演算
+- 使用规则定义类型
+- 不需要穷举无穷大集合中的所有元素
+- 命题也视为类型
+
+函数,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2024-12-30-类型论 - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,类型论初学简述：类型论是一种形式理论，被视为编程语言中类型系统的数学表述。
+特点：
+- 基于lambda 演算
+- 使用规则定义类型
+- 不需要穷举无穷大集合中的所有元素
+- 命题也视为类型
+
+函数,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2024-12-30-类型论 - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,类型论初学简述：类型论是一种形式理论，被视为编程语言中类型系统的数学表述。
+特点：
+- 基于lambda 演算
+- 使用规则定义类型
+- 不需要穷举无穷大集合中的所有元素
+- 命题也视为类型
+
+函数,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://blog.curesky.site"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2024-12-30-类型论</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2024-12-30-类型论</h1>
+        <div class="stuff">
+            <span>十二月 30, 2024</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" rel="tag">计算机科学</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="类型论初学"><a href="#类型论初学" class="headerlink" title="类型论初学"></a>类型论初学</h3><p>简述：类型论是一种形式理论，被视为编程语言中类型系统的数学表述。</p>
+<p>特点：</p>
+<pre><code>- 基于lambda 演算
+- 使用规则定义类型
+- 不需要穷举无穷大集合中的所有元素
+- 命题也视为类型
+</code></pre>
+<p>函数类型对应内射态</p>
+<p>积类型对应积</p>
+<p>对应映射集 和 Descartes 积</p>
+<p>类型论的范畴语义</p>
+<p>模型：范畴 （范畴语义）</p>
+<p>类型论为范畴的内语言</p>
+<p>| <a target="_blank" rel="noopener" href="https://www.bananaspace.org/wiki/%E9%9B%86%E5%90%88%E8%AE%BA">集合论</a> |                            类型论                            | <a target="_blank" rel="noopener" href="https://www.bananaspace.org/wiki/%E8%8C%83%E7%95%B4%E8%AE%BA">范畴论</a> |      <a target="_blank" rel="noopener" href="https://www.bananaspace.org/wiki/%E9%80%BB%E8%BE%91%E5%AD%A6">逻辑学</a>       |
+| :———————————————–: | :———————————————————-: | :———————————————–: | :———————————————————-: |
+|   <a target="_blank" rel="noopener" href="https://www.bananaspace.org/wiki/%E9%9B%86%E5%90%88">集合</a>   |        <a target="_blank" rel="noopener" href="https://www.bananaspace.org/wiki/%E7%B1%BB%E5%9E%8B">类型</a>         |   <a target="_blank" rel="noopener" href="https://www.bananaspace.org/wiki/%E5%AF%B9%E8%B1%A1">对象</a>   |        <a target="_blank" rel="noopener" href="https://www.bananaspace.org/wiki/%E5%91%BD%E9%A2%98">命题</a>         |
+| <a target="_blank" rel="noopener" href="https://www.bananaspace.org/wiki/%E5%8D%95%E7%82%B9%E9%9B%86">单点集</a> |    <a target="_blank" rel="noopener" href="https://www.bananaspace.org/wiki/%E5%8D%95%E4%BD%8D%E7%B1%BB%E5%9E%8B">单位类型</a>     | <a target="_blank" rel="noopener" href="https://www.bananaspace.org/wiki/%E7%BB%88%E5%AF%B9%E8%B1%A1">终对象</a> | <a target="_blank" rel="noopener" href="https://www.bananaspace.org/w/index.php?title=%E6%B0%B8%E7%9C%9F%E5%91%BD%E9%A2%98&action=edit&redlink=1">永真命题</a> |
+|   <a target="_blank" rel="noopener" href="https://www.bananaspace.org/wiki/%E7%A9%BA%E9%9B%86">空集</a>   |      <a target="_blank" rel="noopener" href="https://www.bananaspace.org/wiki/%E7%A9%BA%E7%B1%BB%E5%9E%8B">空类型</a>       | <a target="_blank" rel="noopener" href="https://www.bananaspace.org/wiki/%E5%A7%8B%E5%AF%B9%E8%B1%A1">始对象</a> | <a target="_blank" rel="noopener" href="https://www.bananaspace.org/w/index.php?title=%E6%B0%B8%E5%81%87%E5%91%BD%E9%A2%98&action=edit&redlink=1">永假命题</a> |
+|   <a target="_blank" rel="noopener" href="https://www.bananaspace.org/wiki/%E5%85%83%E7%B4%A0">元素</a>   | <a target="_blank" rel="noopener" href="https://www.bananaspace.org/w/index.php?title=%E5%AE%9E%E4%BE%8B&action=edit&redlink=1">实例</a> |                从终对象出发的态射                 | <a target="_blank" rel="noopener" href="https://www.bananaspace.org/w/index.php?title=%E8%AF%81%E6%98%8E&action=edit&redlink=1">证明</a> |</p>
+<hr>
+<p>举例类型论：简单类型λ演算 ( 记作 λ→ 或者  STλC)</p>
+<h5 id="函数类型"><a href="#函数类型" class="headerlink" title="函数类型"></a>函数类型</h5><p>任何 λ→都是函数类型上扩充的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A,B::=V∣A→B</span><br><span class="line">M,N,u,v::= V∣(M N)∣(λV. M)</span><br></pre></td></tr></table></figure>
+
+<p>其中：A,B 符号标识类型论中的类型</p>
+<p>M，N，u，v这四个符号都表示类型论中的值(λ 表达式)</p>
+<p>V标识变量或类型变量</p>
+<p>符号u代表一个表达式的意思满足三个条件：</p>
+<ul>
+<li>u∈V</li>
+<li>u形如 v1 v2 其中 v1 v2是类型u的表达式</li>
+<li>u 形如 λx. v, 其中 x∈V, 而 v 是类似 u 的表达式.</li>
+</ul>
+<p>对 A,B 等表示类型的符号的描述也类似.</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%AE%BA%E5%88%9D%E5%AD%A6"><span class="toc-number">1.</span> <span class="toc-text">类型论初学</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.0.1.</span> <span class="toc-text">函数类型</span></a></li></ol></li></ol></li></ol>
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

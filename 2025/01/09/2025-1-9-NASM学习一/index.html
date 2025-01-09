@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2025-1-9-NASM学习一 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,Nasm 1Day全部代码
+1234567891011121314151617181920212223242526272829303132333435extern _printf,_system ;,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2025-1-9-NASM学习一 - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,Nasm 1Day全部代码
+1234567891011121314151617181920212223242526272829303132333435extern _printf,_system ;,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2025-1-9-NASM学习一 - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,Nasm 1Day全部代码
+1234567891011121314151617181920212223242526272829303132333435extern _printf,_system ;,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://blog.curesky.site"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2025-1-9-NASM学习一</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2025-1-9-NASM学习一</h1>
+        <div class="stuff">
+            <span>一月 09, 2025</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/nasm/" rel="tag">nasm</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E6%B1%87%E7%BC%96/" rel="tag">汇编</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="Nasm-1Day"><a href="#Nasm-1Day" class="headerlink" title="Nasm 1Day"></a>Nasm 1Day</h3><p>全部代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">extern _printf,_system ;声明外部的 printf 函数</span><br><span class="line">section .data</span><br><span class="line">	cmd db &#x27;chcp 65001&#x27;,0 ; 设置终端的编码</span><br><span class="line">	msg db &#x27;Hello,World!&#x27;, 0;定义字符串常量</span><br><span class="line">	newline db 10,0</span><br><span class="line">	info_1 db &#x27;qwq,This is my first nasm code&#x27;,0</span><br><span class="line">	info_2 db &#x27;这下是中文输出&#x27;,0</span><br><span class="line">	test_1 db &#x27;mkdir 1&#x27;,0</span><br><span class="line"></span><br><span class="line">section .text</span><br><span class="line">	global _main ; 设置入口函数为 _main</span><br><span class="line"></span><br><span class="line">_main:</span><br><span class="line">	push test_1</span><br><span class="line">    call _system ; 调用系统参数执行命令</span><br><span class="line"></span><br><span class="line">	push msg ;将字符串地址推入栈中,作为参数传递给printf</span><br><span class="line">	call _printf ;调用prinf 函数</span><br><span class="line">	add esp,4 ;清理栈上的参数</span><br><span class="line">	push newline</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4 </span><br><span class="line">	push info_1</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line"></span><br><span class="line">	push newline</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line"></span><br><span class="line">	push info_2</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line"></span><br><span class="line">	ret ;函数返回</span><br></pre></td></tr></table></figure>
+
+<p>代码执行：</p>
+<pre><code>- 打印 Hello,World! qwq,This is my first nasm code ... 等
+- 执行了两个cmd命令 设置编码和创建了名为1的文件夹
+</code></pre>
+<p>代码分段分析</p>
+<p>主要分为三个部分</p>
+<h4 id="声明部分"><a href="#声明部分" class="headerlink" title="声明部分"></a>声明部分</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extern _printf,_system ;声明外部的 printf 函数</span><br></pre></td></tr></table></figure>
+
+<h4 id="定义部分"><a href="#定义部分" class="headerlink" title="定义部分"></a>定义部分</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">section .data</span><br><span class="line">	cmd db &#x27;chcp 65001&#x27;,0 ; 设置终端的编码</span><br><span class="line">	msg db &#x27;Hello,World!&#x27;, 0;定义字符串常量</span><br><span class="line">	newline db 10,0</span><br><span class="line">	info_1 db &#x27;qwq,This is my first nasm code&#x27;,0</span><br><span class="line">	info_2 db &#x27;这下是中文输出&#x27;,0</span><br><span class="line">	test_1 db &#x27;mkdir 1&#x27;,0</span><br><span class="line">section .text</span><br><span class="line">	global _main ; 设置入口函数为 _main</span><br></pre></td></tr></table></figure>
+
+<h4 id="执行部分"><a href="#执行部分" class="headerlink" title="执行部分"></a>执行部分</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">_main:</span><br><span class="line">	push test_1</span><br><span class="line">    call _system ; 调用系统参数执行命令</span><br><span class="line"></span><br><span class="line">	push msg ;将字符串地址推入栈中,作为参数传递给printf</span><br><span class="line">	call _printf ;调用prinf 函数</span><br><span class="line">	add esp,4 ;清理栈上的参数</span><br><span class="line">	push newline</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4 </span><br><span class="line">	push info_1</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line"></span><br><span class="line">	push newline</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line"></span><br><span class="line">	push info_2</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line"></span><br><span class="line">	ret ;函数返回</span><br></pre></td></tr></table></figure>
+
+<h3 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h3><h4 id="extern"><a href="#extern" class="headerlink" title="extern"></a>extern</h4><p>作用：</p>
+<ul>
+<li>用于声明外部符号</li>
+<li>告诉汇编器某个符号在当前之外的文件定义</li>
+</ul>
+<h4 id="section"><a href="#section" class="headerlink" title="section"></a>section</h4><ul>
+<li>用于指定代码或数据的段，告诉汇编器代码应该放在特定的段中</li>
+<li>常见的段有 <ul>
+<li><code>.text</code>（代码段）</li>
+<li><code>.data</code>（数据段）</li>
+<li><code>.bss</code>（未初始化数据段）</li>
+</ul>
+</li>
+</ul>
+<h4 id="push"><a href="#push" class="headerlink" title="push"></a>push</h4><ul>
+<li>该指令将一个值压入栈中</li>
+<li>会将操作数（寄存器、立即数、内存中的数据）压入栈并更新栈指针</li>
+<li>常用于保存寄存器的值</li>
+</ul>
+<h4 id="call"><a href="#call" class="headerlink" title="call"></a>call</h4><ul>
+<li>用于调用函数</li>
+<li>call 将返回地址压入栈中，然后跳转到目标地址</li>
+<li>也就是将函数调用后继续执行的地方放到函数的入口点</li>
+</ul>
+<h4 id="add"><a href="#add" class="headerlink" title="add"></a>add</h4><ul>
+<li>将两个操作数相加 并将结果存储到第一个操作数中</li>
+<li>支持将寄存器 立即数 以及内存地址作为操作数</li>
+</ul>
+<h4 id="ret"><a href="#ret" class="headerlink" title="ret"></a>ret</h4><ul>
+<li>用于从函数返回</li>
+<li>执行ret时 会从栈中弹出返回地址 将控制权传递给该地址处的代码（通常是函数调用的下一条指令）</li>
+</ul>
+<h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><h4 id="PE文件节"><a href="#PE文件节" class="headerlink" title="PE文件节"></a>PE文件节</h4><p>想了解什么是PE文件的 节 ，先要搞懂什么是PE文件</p>
+<p>PE (Portable Executable)  译作：便携式可执行文件</p>
+<p>用于</p>
+<ul>
+<li>可执行程序</li>
+<li>动态链接库</li>
+<li>系统驱动程序</li>
+</ul>
+<p>等文件格式</p>
+<p>PE文件是Windows平台上执行程序的标准格式</p>
+<p>基于COFF（Common Object File Format）格式</p>
+<p>包含了不同的结构和信息来帮助操作系统 加载、执行、调试程序</p>
+<p><strong>节</strong> 是PE文件内部的重要概念</p>
+<p>指的是 文件中存储程序代码、数据、资源的区域</p>
+<p>每个节都有特定的功能和属性 可以满足不同部分代码和数据的存储需求</p>
+<h5 id="PE文件结构简述"><a href="#PE文件结构简述" class="headerlink" title="PE文件结构简述"></a>PE文件结构简述</h5><ol>
+<li><p>DOS头：</p>
+<ul>
+<li>标记PE文件开始部分</li>
+<li>包含魔数 <strong>MZ</strong></li>
+<li>包含指向PE头部的指针</li>
+</ul>
+</li>
+<li><p>PE头：</p>
+<ul>
+<li>PE文件的结构核心</li>
+<li>包含文件格式关键信息<ul>
+<li>机器平台</li>
+<li>目标平台</li>
+<li>节表位置</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>节表：</p>
+<ul>
+<li><p>记录文件中各个节</p>
+<ul>
+<li>位置</li>
+<li>大小</li>
+<li>属性</li>
+</ul>
+<ol start="4">
+<li>节：</li>
+</ol>
+<ul>
+<li>实际存储程序<ul>
+<li>代码</li>
+<li>数据</li>
+<li>资源</li>
+</ul>
+</li>
+<li>的区域</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="节的功能与属性"><a href="#节的功能与属性" class="headerlink" title="节的功能与属性"></a>节的功能与属性</h4><ul>
+<li><p>代码节 <code>.text</code> ：包含程序的机器代码，通常 <strong>只读</strong> 且 <strong>可执行</strong></p>
+</li>
+<li><p>数据节 <code>.data</code> :   包含已初始化的全局变量和静态变量，通常 <strong>可读写</strong></p>
+</li>
+<li><p>未初始化数据节 <code>.bss</code>：包含未初始化的全局变量和静态变量，不占磁盘空间，加载时会被<strong>初始化为0</strong></p>
+</li>
+<li><p>只读数据节<code>.rdata1</code>：存放数据的只读数据，如字符串常量，这部分数据通常是<strong>共享</strong>的，不允许修改</p>
+</li>
+<li><p>导入&#x2F;导出节 <code>.idata</code>  和 <code>.edata</code>：用于动态链接 导入节存储程序所需的外部函数和符号，导出节用于存储程序希望其他程序调用的函数和符号（感觉像头文件）</p>
+</li>
+</ul>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Nasm-1Day"><span class="toc-number">1.</span> <span class="toc-text">Nasm 1Day</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E9%83%A8%E5%88%86"><span class="toc-number">1.1.</span> <span class="toc-text">声明部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E9%83%A8%E5%88%86"><span class="toc-number">1.2.</span> <span class="toc-text">定义部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E9%83%A8%E5%88%86"><span class="toc-number">1.3.</span> <span class="toc-text">执行部分</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-number">2.</span> <span class="toc-text">关键字</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#extern"><span class="toc-number">2.1.</span> <span class="toc-text">extern</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#section"><span class="toc-number">2.2.</span> <span class="toc-text">section</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#push"><span class="toc-number">2.3.</span> <span class="toc-text">push</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#call"><span class="toc-number">2.4.</span> <span class="toc-text">call</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#add"><span class="toc-number">2.5.</span> <span class="toc-text">add</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ret"><span class="toc-number">2.6.</span> <span class="toc-text">ret</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-number">3.</span> <span class="toc-text">知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#PE%E6%96%87%E4%BB%B6%E8%8A%82"><span class="toc-number">3.1.</span> <span class="toc-text">PE文件节</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#PE%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E7%AE%80%E8%BF%B0"><span class="toc-number">3.1.1.</span> <span class="toc-text">PE文件结构简述</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8A%82%E7%9A%84%E5%8A%9F%E8%83%BD%E4%B8%8E%E5%B1%9E%E6%80%A7"><span class="toc-number">3.2.</span> <span class="toc-text">节的功能与属性</span></a></li></ol></li></ol>
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
