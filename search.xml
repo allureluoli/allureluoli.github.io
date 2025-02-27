@@ -5765,4 +5765,46 @@ By Kahlil Gibran（卡里·纪伯伦）. </p>
         <tag>数学</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2025-2-26-ubuntu部署mysql流程并配置远程登陆</title>
+    <url>/2025/02/26/2025-2-26-ubuntu%E9%83%A8%E7%BD%B2mysql%E6%B5%81%E7%A8%8B%E5%B9%B6%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8B%E7%99%BB%E9%99%86/</url>
+    <content><![CDATA[<h1 id="2025-2-26-ubuntu部署mysql流程并配置远程登陆"><a href="#2025-2-26-ubuntu部署mysql流程并配置远程登陆" class="headerlink" title="2025-2-26 ubuntu部署mysql流程并配置远程登陆"></a>2025-2-26 ubuntu部署mysql流程并配置远程登陆</h1><p>先登录，默认无密码登录，但是需要root权限所以我们使用sudo</p>
+<ul>
+<li><code>sudo mysql -u root -p</code> 登录</li>
+</ul>
+<p>进入mysql命令行，我们知道mysql的用户密码都存在表名为mysql的表中</p>
+<ul>
+<li><code>&gt; use mysql </code>   进入表</li>
+</ul>
+<p>下一步修改root用户，让其允许任何IP进行连接</p>
+<ul>
+<li><code>update user set host=&#39;%&#39; where user=&#39;root&#39;;</code></li>
+</ul>
+<p>授予了 <code>root</code> 用户从任何主机（<code>%</code>）访问数据库的所有权限</p>
+<ul>
+<li><code>grant all privileges on *.* to &#39;root&#39;@&#39;%&#39;;</code></li>
+</ul>
+<p>设置一个密码</p>
+<ul>
+<li><pre><code>ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED WITH mysql_native_password BY &#39;your_new_password&#39;;
+</code></pre>
+</li>
+</ul>
+<p>刷新权限</p>
+<ul>
+<li><p><code>FLUSH PRIVILEGES;</code></p>
+</li>
+<li><p>修改bind ip 为 0.0.0.0即可</p>
+</li>
+<li><p>Tip: mysql高版本部署后不要去修改 &#x2F;etc&#x2F;mysql&#x2F;my.cnf 和 其中推荐你去配置的文件，监听IP等选项在&#x2F;etc&#x2F;mysql&#x2F;mysql.conf.d&#x2F;mysqld.cnf中</p>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>SQL</tag>
+        <tag>运维</tag>
+        <tag>Ubuntu</tag>
+      </tags>
+  </entry>
 </search>
