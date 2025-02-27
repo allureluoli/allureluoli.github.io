@@ -1,0 +1,331 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2025-2-16-密钥加密实现 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,以下是提高企业邮箱 mail-tester 评分及解决自建邮局核心问题的完整方案：
+
+一、mail-tester 评分提升策略（核心项）1. 基础身份认证（权重40%）
+SPF 记录
+txt
+复制
+,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2025-2-16-密钥加密实现 - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,以下是提高企业邮箱 mail-tester 评分及解决自建邮局核心问题的完整方案：
+
+一、mail-tester 评分提升策略（核心项）1. 基础身份认证（权重40%）
+SPF 记录
+txt
+复制
+,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2025-2-16-密钥加密实现 - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,以下是提高企业邮箱 mail-tester 评分及解决自建邮局核心问题的完整方案：
+
+一、mail-tester 评分提升策略（核心项）1. 基础身份认证（权重40%）
+SPF 记录
+txt
+复制
+,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://blog.curesky.site"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2025-2-16-密钥加密实现</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2025-2-16-密钥加密实现</h1>
+        <div class="stuff">
+            <span>二月 06, 2025</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E8%BF%90%E7%BB%B4/" rel="tag">运维</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>以下是提高企业邮箱 <strong>mail-tester 评分</strong>及解决自建邮局核心问题的完整方案：</p>
+<hr>
+<h3 id="一、mail-tester-评分提升策略（核心项）"><a href="#一、mail-tester-评分提升策略（核心项）" class="headerlink" title="一、mail-tester 评分提升策略（核心项）"></a><strong>一、mail-tester 评分提升策略（核心项）</strong></h3><h4 id="1-基础身份认证（权重40-）"><a href="#1-基础身份认证（权重40-）" class="headerlink" title="1. 基础身份认证（权重40%）"></a><strong>1. 基础身份认证（权重40%）</strong></h4><ul>
+<li><p><strong>SPF 记录</strong></p>
+<p>txt</p>
+<p>复制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v=spf1 mx ip4:你的服务器IP地址 include:_spf.google.com ~all</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>确保包含所有发信IP（如邮件服务器、第三方服务商），禁止使用<code>+all</code>。</li>
+</ul>
+</li>
+<li><p><strong>DKIM 签名</strong></p>
+<ul>
+<li>生成2048位密钥对，在DNS添加<code>selector._domainkey</code>记录（如 <code>default._domainkey</code>），确保邮件头包含有效签名。</li>
+</ul>
+</li>
+<li><p><strong>DMARC 策略</strong></p>
+<p>txt</p>
+<p>复制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v=DMARC1; p=quarantine; rua=mailto:dmarc@yourdomain.com; ruf=mailto:forensic@yourdomain.com; pct=100</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>初期使用<code>p=none</code>监控，稳定后升级为<code>p=quarantine</code>或<code>p=reject</code>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-反向DNS（PTR记录）"><a href="#2-反向DNS（PTR记录）" class="headerlink" title="2. 反向DNS（PTR记录）"></a><strong>2. 反向DNS（PTR记录）</strong></h4><ul>
+<li>要求ISP为邮件服务器IP设置反向解析，确保<code>IP → mail.yourdomain.com → 原IP</code>双向一致。</li>
+</ul>
+<h4 id="3-邮件内容优化（权重30-）"><a href="#3-邮件内容优化（权重30-）" class="headerlink" title="3. 邮件内容优化（权重30%）"></a><strong>3. 邮件内容优化（权重30%）</strong></h4><ul>
+<li><strong>HTML规范</strong><ul>
+<li>代码压缩至最小化，移除JavaScript和外部CSS。</li>
+<li>文字与图片比例建议≥6:4，避免纯图片邮件。</li>
+</ul>
+</li>
+<li><strong>文本兼容性</strong><ul>
+<li>必须提供纯文本版本（text&#x2F;plain），内容与HTML版本一致。</li>
+</ul>
+</li>
+<li><strong>垃圾词过滤</strong><ul>
+<li>避免使用”Free””Winner””Urgent”等高频垃圾邮件关键词。</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-基础设施优化（权重20-）"><a href="#4-基础设施优化（权重20-）" class="headerlink" title="4. 基础设施优化（权重20%）"></a><strong>4. 基础设施优化（权重20%）</strong></h4><ul>
+<li><strong>独立IP池</strong><ul>
+<li>专用IP仅用于企业邮局，不与Web服务共享。</li>
+<li>预热新IP：首周每天发送量≤100封，逐步提升。</li>
+</ul>
+</li>
+<li><strong>TLS加密</strong><ul>
+<li>强制启用TLS 1.2+，禁用SSLv3，使用Let’s Encrypt证书。</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-发信行为管理（权重10-）"><a href="#5-发信行为管理（权重10-）" class="headerlink" title="5. 发信行为管理（权重10%）"></a><strong>5. 发信行为管理（权重10%）</strong></h4><ul>
+<li><strong>发送频率限制</strong><ul>
+<li>单IP每小时发信量≤500封，突发流量需平滑控制。</li>
+</ul>
+</li>
+<li><strong>收件人验证</strong><ul>
+<li>实现实时RBL（如Spamhaus）校验，拦截无效&#x2F;高风险地址。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="二、其他关键问题及解决方案"><a href="#二、其他关键问题及解决方案" class="headerlink" title="二、其他关键问题及解决方案"></a><strong>二、其他关键问题及解决方案</strong></h3><h4 id="1-邮件服务器黑名单风险"><a href="#1-邮件服务器黑名单风险" class="headerlink" title="1. 邮件服务器黑名单风险"></a><strong>1. 邮件服务器黑名单风险</strong></h4><ul>
+<li><strong>实时监控工具</strong><ul>
+<li>部署Mxtoolbox&#x2F;Spamhaus API，自动检测IP是否进入SBL&#x2F;XBL。</li>
+<li>被列黑时，立即通过https:&#x2F;&#x2F;www.spamhaus.org&#x2F;lookup&#x2F; 提交移除请求。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-合规与隐私"><a href="#2-合规与隐私" class="headerlink" title="2. 合规与隐私"></a><strong>2. 合规与隐私</strong></h4><ul>
+<li><strong>GDPR合规</strong><ul>
+<li>邮件页脚强制包含：<strong>公司注册地址+退订链接（1-click unsubscribe）</strong>。</li>
+<li>用户数据存储加密，保留日志≤6个月。</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-垃圾邮件陷阱（Spam-Trap）"><a href="#3-垃圾邮件陷阱（Spam-Trap）" class="headerlink" title="3. 垃圾邮件陷阱（Spam Trap）"></a><strong>3. 垃圾邮件陷阱（Spam Trap）</strong></h4><ul>
+<li><strong>清洗邮件列表</strong><ul>
+<li>使用ZeroBounce或Hunter.io验证地址有效性，剔除：<ul>
+<li>无效域名（如<code>user@example.com</code>）</li>
+<li>长期未活跃账户（≥1年未打开邮件）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-邮件服务器安全"><a href="#4-邮件服务器安全" class="headerlink" title="4. 邮件服务器安全"></a><strong>4. 邮件服务器安全</strong></h4><ul>
+<li><p><strong>防开放中继</strong></p>
+<ul>
+<li><p>配置Postfix&#x2F;Sendmail仅允许认证用户发信：</p>
+<p>bash</p>
+<p>复制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">smtpd_relay_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong>暴力破解防护</strong></p>
+<ul>
+<li>Fail2ban规则：1小时内5次密码错误封禁IP 24小时。</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-送达率监控"><a href="#5-送达率监控" class="headerlink" title="5. 送达率监控"></a><strong>5. 送达率监控</strong></h4><ul>
+<li><strong>专业工具</strong><ul>
+<li>使用Mailgenomics&#x2F;GlockApps模拟多ISP（Gmail、Outlook、Yahoo）投递测试。</li>
+<li>监控指标：进箱率（≥95%）、垃圾率（≤0.5%）、退信率（≤1%）。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="三、高评分配置示例"><a href="#三、高评分配置示例" class="headerlink" title="三、高评分配置示例"></a><strong>三、高评分配置示例</strong></h3><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># DNS记录</span><br><span class="line">@            <span class="keyword">MX</span>    <span class="number">10</span> mail.yourdomain.com.</span><br><span class="line">mail         <span class="keyword">A</span>     [Your Server IP]</span><br><span class="line">_dmarc       <span class="keyword">TXT</span>   &quot;v=DMARC1<span class="comment">; p=none; rua=mailto:dmarc@yourdomain.com&quot;</span></span><br><span class="line">default._domainkey  <span class="keyword">TXT</span>  &quot;v=DKIM1<span class="comment">; k=rsa; p=MIIBIjANBgkqhkiG...（公钥内容）&quot;</span></span><br><span class="line">@            <span class="keyword">TXT</span>   &quot;v=spf1 mx ip<span class="number">4:12.34.56</span>.<span class="number">78</span> include:spf.protection.outlook.com -all&quot;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="四、极端场景应对"><a href="#四、极端场景应对" class="headerlink" title="四、极端场景应对"></a><strong>四、极端场景应对</strong></h3><ol>
+<li><strong>IP被大规模封禁</strong> <ul>
+<li>启用备用IP并限流，通过第三方中继服务（如Mailgun）临时发信。</li>
+</ul>
+</li>
+<li><strong>钓鱼邮件仿冒</strong><ul>
+<li>配置BIMI（Brand Indicators for Message Identification） + VMC（Verified Mark Certificate）。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h3><p>通过 <strong>三重认证（SPF+DKIM+DMARC）</strong> + <strong>反向DNS</strong> + <strong>内容合规</strong> 可确保mail-tester评分≥9&#x2F;10。同时需长期监控IP信誉、清洗名单、防御攻击，才能维持高送达率。建议使用PowerMTA或Amazon SES替代自建方案以降低运维成本。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81mail-tester-%E8%AF%84%E5%88%86%E6%8F%90%E5%8D%87%E7%AD%96%E7%95%A5%EF%BC%88%E6%A0%B8%E5%BF%83%E9%A1%B9%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">一、mail-tester 评分提升策略（核心项）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%9F%BA%E7%A1%80%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%EF%BC%88%E6%9D%83%E9%87%8D40-%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">1. 基础身份认证（权重40%）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%8F%8D%E5%90%91DNS%EF%BC%88PTR%E8%AE%B0%E5%BD%95%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">2. 反向DNS（PTR记录）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E9%82%AE%E4%BB%B6%E5%86%85%E5%AE%B9%E4%BC%98%E5%8C%96%EF%BC%88%E6%9D%83%E9%87%8D30-%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">3. 邮件内容优化（权重30%）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%E4%BC%98%E5%8C%96%EF%BC%88%E6%9D%83%E9%87%8D20-%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">4. 基础设施优化（权重20%）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E5%8F%91%E4%BF%A1%E8%A1%8C%E4%B8%BA%E7%AE%A1%E7%90%86%EF%BC%88%E6%9D%83%E9%87%8D10-%EF%BC%89"><span class="toc-number">1.5.</span> <span class="toc-text">5. 发信行为管理（权重10%）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%85%B6%E4%BB%96%E5%85%B3%E9%94%AE%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">二、其他关键问题及解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E9%82%AE%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%BB%91%E5%90%8D%E5%8D%95%E9%A3%8E%E9%99%A9"><span class="toc-number">2.1.</span> <span class="toc-text">1. 邮件服务器黑名单风险</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%90%88%E8%A7%84%E4%B8%8E%E9%9A%90%E7%A7%81"><span class="toc-number">2.2.</span> <span class="toc-text">2. 合规与隐私</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%9E%83%E5%9C%BE%E9%82%AE%E4%BB%B6%E9%99%B7%E9%98%B1%EF%BC%88Spam-Trap%EF%BC%89"><span class="toc-number">2.3.</span> <span class="toc-text">3. 垃圾邮件陷阱（Spam Trap）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E9%82%AE%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E5%85%A8"><span class="toc-number">2.4.</span> <span class="toc-text">4. 邮件服务器安全</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E9%80%81%E8%BE%BE%E7%8E%87%E7%9B%91%E6%8E%A7"><span class="toc-number">2.5.</span> <span class="toc-text">5. 送达率监控</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E9%AB%98%E8%AF%84%E5%88%86%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B"><span class="toc-number">3.</span> <span class="toc-text">三、高评分配置示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%9E%81%E7%AB%AF%E5%9C%BA%E6%99%AF%E5%BA%94%E5%AF%B9"><span class="toc-number">4.</span> <span class="toc-text">四、极端场景应对</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

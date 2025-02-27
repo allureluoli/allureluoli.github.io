@@ -5297,7 +5297,10 @@ By Kahlil Gibran（卡里·纪伯伦）. </p>
 <p>需求：允许稿件</p>
 <ul>
 <li>实现</li>
-<li></li>
+</ul>
+<p>需求：删除稿件</p>
+<ul>
+<li>将已经发表的稿件送到退稿区</li>
 </ul>
 <hr>
 <p>现在要做的，先，测试数据连接</p>
@@ -5530,6 +5533,236 @@ By Kahlil Gibran（卡里·纪伯伦）. </p>
 ]]></content>
       <tags>
         <tag>网络安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2025-2-16-密钥加密实现</title>
+    <url>/2025/02/06/2025-2-16-%E4%BC%81%E4%B8%9A%E9%82%AE%E7%AE%B1%E8%87%AA%E5%BB%BA/</url>
+    <content><![CDATA[<p>以下是提高企业邮箱 <strong>mail-tester 评分</strong>及解决自建邮局核心问题的完整方案：</p>
+<hr>
+<h3 id="一、mail-tester-评分提升策略（核心项）"><a href="#一、mail-tester-评分提升策略（核心项）" class="headerlink" title="一、mail-tester 评分提升策略（核心项）"></a><strong>一、mail-tester 评分提升策略（核心项）</strong></h3><h4 id="1-基础身份认证（权重40-）"><a href="#1-基础身份认证（权重40-）" class="headerlink" title="1. 基础身份认证（权重40%）"></a><strong>1. 基础身份认证（权重40%）</strong></h4><ul>
+<li><p><strong>SPF 记录</strong></p>
+<p>txt</p>
+<p>复制</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">v=spf1 mx ip4:你的服务器IP地址 include:_spf.google.com ~all</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>确保包含所有发信IP（如邮件服务器、第三方服务商），禁止使用<code>+all</code>。</li>
+</ul>
+</li>
+<li><p><strong>DKIM 签名</strong></p>
+<ul>
+<li>生成2048位密钥对，在DNS添加<code>selector._domainkey</code>记录（如 <code>default._domainkey</code>），确保邮件头包含有效签名。</li>
+</ul>
+</li>
+<li><p><strong>DMARC 策略</strong></p>
+<p>txt</p>
+<p>复制</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">v=DMARC1; p=quarantine; rua=mailto:dmarc@yourdomain.com; ruf=mailto:forensic@yourdomain.com; pct=100</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>初期使用<code>p=none</code>监控，稳定后升级为<code>p=quarantine</code>或<code>p=reject</code>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-反向DNS（PTR记录）"><a href="#2-反向DNS（PTR记录）" class="headerlink" title="2. 反向DNS（PTR记录）"></a><strong>2. 反向DNS（PTR记录）</strong></h4><ul>
+<li>要求ISP为邮件服务器IP设置反向解析，确保<code>IP → mail.yourdomain.com → 原IP</code>双向一致。</li>
+</ul>
+<h4 id="3-邮件内容优化（权重30-）"><a href="#3-邮件内容优化（权重30-）" class="headerlink" title="3. 邮件内容优化（权重30%）"></a><strong>3. 邮件内容优化（权重30%）</strong></h4><ul>
+<li><strong>HTML规范</strong><ul>
+<li>代码压缩至最小化，移除JavaScript和外部CSS。</li>
+<li>文字与图片比例建议≥6:4，避免纯图片邮件。</li>
+</ul>
+</li>
+<li><strong>文本兼容性</strong><ul>
+<li>必须提供纯文本版本（text&#x2F;plain），内容与HTML版本一致。</li>
+</ul>
+</li>
+<li><strong>垃圾词过滤</strong><ul>
+<li>避免使用”Free””Winner””Urgent”等高频垃圾邮件关键词。</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-基础设施优化（权重20-）"><a href="#4-基础设施优化（权重20-）" class="headerlink" title="4. 基础设施优化（权重20%）"></a><strong>4. 基础设施优化（权重20%）</strong></h4><ul>
+<li><strong>独立IP池</strong><ul>
+<li>专用IP仅用于企业邮局，不与Web服务共享。</li>
+<li>预热新IP：首周每天发送量≤100封，逐步提升。</li>
+</ul>
+</li>
+<li><strong>TLS加密</strong><ul>
+<li>强制启用TLS 1.2+，禁用SSLv3，使用Let’s Encrypt证书。</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-发信行为管理（权重10-）"><a href="#5-发信行为管理（权重10-）" class="headerlink" title="5. 发信行为管理（权重10%）"></a><strong>5. 发信行为管理（权重10%）</strong></h4><ul>
+<li><strong>发送频率限制</strong><ul>
+<li>单IP每小时发信量≤500封，突发流量需平滑控制。</li>
+</ul>
+</li>
+<li><strong>收件人验证</strong><ul>
+<li>实现实时RBL（如Spamhaus）校验，拦截无效&#x2F;高风险地址。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="二、其他关键问题及解决方案"><a href="#二、其他关键问题及解决方案" class="headerlink" title="二、其他关键问题及解决方案"></a><strong>二、其他关键问题及解决方案</strong></h3><h4 id="1-邮件服务器黑名单风险"><a href="#1-邮件服务器黑名单风险" class="headerlink" title="1. 邮件服务器黑名单风险"></a><strong>1. 邮件服务器黑名单风险</strong></h4><ul>
+<li><strong>实时监控工具</strong><ul>
+<li>部署Mxtoolbox&#x2F;Spamhaus API，自动检测IP是否进入SBL&#x2F;XBL。</li>
+<li>被列黑时，立即通过https:&#x2F;&#x2F;www.spamhaus.org&#x2F;lookup&#x2F; 提交移除请求。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-合规与隐私"><a href="#2-合规与隐私" class="headerlink" title="2. 合规与隐私"></a><strong>2. 合规与隐私</strong></h4><ul>
+<li><strong>GDPR合规</strong><ul>
+<li>邮件页脚强制包含：<strong>公司注册地址+退订链接（1-click unsubscribe）</strong>。</li>
+<li>用户数据存储加密，保留日志≤6个月。</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-垃圾邮件陷阱（Spam-Trap）"><a href="#3-垃圾邮件陷阱（Spam-Trap）" class="headerlink" title="3. 垃圾邮件陷阱（Spam Trap）"></a><strong>3. 垃圾邮件陷阱（Spam Trap）</strong></h4><ul>
+<li><strong>清洗邮件列表</strong><ul>
+<li>使用ZeroBounce或Hunter.io验证地址有效性，剔除：<ul>
+<li>无效域名（如<code>user@example.com</code>）</li>
+<li>长期未活跃账户（≥1年未打开邮件）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-邮件服务器安全"><a href="#4-邮件服务器安全" class="headerlink" title="4. 邮件服务器安全"></a><strong>4. 邮件服务器安全</strong></h4><ul>
+<li><p><strong>防开放中继</strong></p>
+<ul>
+<li><p>配置Postfix&#x2F;Sendmail仅允许认证用户发信：</p>
+<p>bash</p>
+<p>复制</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">smtpd_relay_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong>暴力破解防护</strong></p>
+<ul>
+<li>Fail2ban规则：1小时内5次密码错误封禁IP 24小时。</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-送达率监控"><a href="#5-送达率监控" class="headerlink" title="5. 送达率监控"></a><strong>5. 送达率监控</strong></h4><ul>
+<li><strong>专业工具</strong><ul>
+<li>使用Mailgenomics&#x2F;GlockApps模拟多ISP（Gmail、Outlook、Yahoo）投递测试。</li>
+<li>监控指标：进箱率（≥95%）、垃圾率（≤0.5%）、退信率（≤1%）。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="三、高评分配置示例"><a href="#三、高评分配置示例" class="headerlink" title="三、高评分配置示例"></a><strong>三、高评分配置示例</strong></h3><figure class="highlight dns"><table><tr><td class="code"><pre><span class="line"># DNS记录</span><br><span class="line">@            <span class="keyword">MX</span>    <span class="number">10</span> mail.yourdomain.com.</span><br><span class="line">mail         <span class="keyword">A</span>     [Your Server IP]</span><br><span class="line">_dmarc       <span class="keyword">TXT</span>   &quot;v=DMARC1<span class="comment">; p=none; rua=mailto:dmarc@yourdomain.com&quot;</span></span><br><span class="line">default._domainkey  <span class="keyword">TXT</span>  &quot;v=DKIM1<span class="comment">; k=rsa; p=MIIBIjANBgkqhkiG...（公钥内容）&quot;</span></span><br><span class="line">@            <span class="keyword">TXT</span>   &quot;v=spf1 mx ip<span class="number">4:12.34.56</span>.<span class="number">78</span> include:spf.protection.outlook.com -all&quot;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="四、极端场景应对"><a href="#四、极端场景应对" class="headerlink" title="四、极端场景应对"></a><strong>四、极端场景应对</strong></h3><ol>
+<li><strong>IP被大规模封禁</strong> <ul>
+<li>启用备用IP并限流，通过第三方中继服务（如Mailgun）临时发信。</li>
+</ul>
+</li>
+<li><strong>钓鱼邮件仿冒</strong><ul>
+<li>配置BIMI（Brand Indicators for Message Identification） + VMC（Verified Mark Certificate）。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h3><p>通过 <strong>三重认证（SPF+DKIM+DMARC）</strong> + <strong>反向DNS</strong> + <strong>内容合规</strong> 可确保mail-tester评分≥9&#x2F;10。同时需长期监控IP信誉、清洗名单、防御攻击，才能维持高送达率。建议使用PowerMTA或Amazon SES替代自建方案以降低运维成本。</p>
+]]></content>
+      <tags>
+        <tag>运维</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2025-2-27-数学的基本名词及其解释（一）</title>
+    <url>/2025/02/27/2025-2-27-%E6%95%B0%E5%AD%A6%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%90%8D%E8%AF%8D%E5%8F%8A%E5%85%B6%E8%A7%A3%E9%87%8A%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<h3 id="数学的基本名词及其解释（一）"><a href="#数学的基本名词及其解释（一）" class="headerlink" title="数学的基本名词及其解释（一）"></a>数学的基本名词及其解释（一）</h3><h4 id="1-向量（Vector）"><a href="#1-向量（Vector）" class="headerlink" title="1. 向量（Vector）"></a>1. <strong>向量（Vector）</strong></h4><ul>
+<li><strong>别称</strong>：矢量、欧几里得向量（Euclidean vector）</li>
+<li><strong>定义</strong>：<ul>
+<li>具有<strong>大小</strong>（模长）和<strong>方向</strong>的几何对象，满足<strong>平行四边形法则</strong>（向量加法）和<strong>标量乘法</strong>的封闭性。</li>
+<li>在坐标系中可表示为有序数组（如 v&#x3D;(v1,v2,…,vn)v&#x3D;(v1,v2,…,vn)），称为<strong>分量形式</strong>。</li>
+</ul>
+</li>
+<li><strong>核心性质</strong>：线性组合、线性无关性、基底表示。</li>
+</ul>
+<hr>
+<h4 id="2-向量空间（Vector-Space）"><a href="#2-向量空间（Vector-Space）" class="headerlink" title="2. 向量空间（Vector Space）"></a>2. <strong>向量空间（Vector Space）</strong></h4><ul>
+<li><strong>别称</strong>：线性空间</li>
+<li><strong>定义</strong>：<ul>
+<li>一个非空集合 VV，其元素（向量）满足以下两种运算的封闭性：<ol>
+<li><strong>加法</strong>：u+v∈Vu+v∈V</li>
+<li><strong>标量乘法</strong>：cv∈Vcv∈V（cc 为标量，如实数或复数）</li>
+</ol>
+</li>
+<li>必须满足<strong>八大公理</strong>（如交换律、结合律、零向量存在性等）。</li>
+</ul>
+</li>
+<li><strong>示例</strong>：<ul>
+<li>RnRn（n维实向量空间）、多项式空间、函数空间。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="3-分量数组（Component-Array）"><a href="#3-分量数组（Component-Array）" class="headerlink" title="3. 分量数组（Component Array）"></a>3. <strong>分量数组（Component Array）</strong></h4><ul>
+<li><strong>定义</strong>：向量在特定基底下的坐标表示。</li>
+<li><strong>示例</strong>：向量 v&#x3D;(3,−2,5)v&#x3D;(3,−2,5) 在三维空间中表示其在标准基底下的三个分量。</li>
+</ul>
+<hr>
+<h4 id="4-抽象线性空间（Abstract-Linear-Space）"><a href="#4-抽象线性空间（Abstract-Linear-Space）" class="headerlink" title="4. 抽象线性空间（Abstract Linear Space）"></a>4. <strong>抽象线性空间（Abstract Linear Space）</strong></h4><ul>
+<li><strong>定义</strong>：<ul>
+<li>不局限于几何向量的向量空间，可以是满足线性公理的任意集合（如矩阵、多项式、函数）。</li>
+<li>核心思想：通过公理化定义，推广线性结构的数学对象。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="5-维度（Dimension）"><a href="#5-维度（Dimension）" class="headerlink" title="5. 维度（Dimension）"></a>5. <strong>维度（Dimension）</strong></h4><ul>
+<li><strong>定义</strong>：向量空间中<strong>基底</strong>的向量个数。</li>
+<li><strong>性质</strong>：<ul>
+<li>有限维空间：维度为 nn（如 R3R3 的维度为3）。</li>
+<li>无限维空间：基底包含无限个向量（如多项式空间 R[x]R[x]）。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="6-n阶线性常微分方程"><a href="#6-n阶线性常微分方程" class="headerlink" title="6. n阶线性常微分方程"></a>6. <strong>n阶线性常微分方程</strong></h4><ul>
+<li><p><strong>定义</strong>：形如</p>
+<p>y(n)+an−1(x)y(n−1)+⋯+a1(x)y′+a0(x)y&#x3D;f(x)y(n)+an−1(x)y(n−1)+⋯+a1(x)y′+a0(x)y&#x3D;f(x)</p>
+<p>的微分方程，其解空间是维度为 nn 的向量空间。</p>
+</li>
+</ul>
+<hr>
+<h4 id="7-有限维与无限维空间"><a href="#7-有限维与无限维空间" class="headerlink" title="7. 有限维与无限维空间"></a>7. <strong>有限维与无限维空间</strong></h4><ul>
+<li><strong>有限维空间</strong>：存在有限个向量构成的基底（如 RnRn）。</li>
+<li><strong>无限维空间</strong>：基底需无限个向量生成（如连续函数空间 C([a,b])C([a,b])）。</li>
+</ul>
+<hr>
+<h4 id="8-形式描述（Formal-Description）"><a href="#8-形式描述（Formal-Description）" class="headerlink" title="8. 形式描述（Formal Description）"></a>8. <strong>形式描述（Formal Description）</strong></h4><ul>
+<li><p><strong>定义</strong>：用严格的数学符号与公理定义概念。</p>
+</li>
+<li><p><strong>示例</strong>：向量空间公理可形式化为：</p>
+<p>∀u,v∈V,∀c∈R,u+v∈V,cu∈V.∀u,v∈V,∀c∈R,u+v∈V,cu∈V.</p>
+</li>
+</ul>
+<hr>
+<h4 id="9-量子空间（Quantum-Space）"><a href="#9-量子空间（Quantum-Space）" class="headerlink" title="9. 量子空间（Quantum Space）"></a>9. <strong>量子空间（Quantum Space）</strong></h4><ul>
+<li><strong>定义</strong>：量子力学中描述粒子状态的<strong>希尔伯特空间</strong>（Hilbert Space），是无限维内积空间，满足完备性。</li>
+<li><strong>特点</strong>：波函数（量子态）是该空间中的向量。</li>
+</ul>
+<hr>
+<h4 id="10-构建复杂结构"><a href="#10-构建复杂结构" class="headerlink" title="10. 构建复杂结构"></a>10. <strong>构建复杂结构</strong></h4><ul>
+<li><strong>方法</strong>：通过向量空间的<strong>直和</strong>、<strong>张量积</strong>、<strong>商空间</strong>等操作生成更高阶结构。</li>
+<li><strong>应用</strong>：几何、物理学（如广义相对论中的流形）。</li>
+</ul>
+<hr>
+<h3 id="补充说明"><a href="#补充说明" class="headerlink" title="补充说明"></a>补充说明</h3><ul>
+<li><strong>浪漫式、哥特式和巴洛克式的元素</strong>：此描述可能为比喻，强调数学结构的多样性与复杂性，类似于建筑风格的融合。数学中不同分支（如代数、几何、分析）的“风格”相互交织，形成统一的理论框架。</li>
+<li><strong>基本构建块</strong>：通常指向量空间的<strong>基底</strong>，通过线性组合生成整个空间。</li>
+</ul>
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>从向量到抽象空间，数学通过公理化与形式化构建了描述现实与抽象世界的语言。有限维与无限维的划分、线性与非线性结构的对比，体现了数学从具体到一般、从直观到抽象的深刻统一性。</p>
+]]></content>
+      <tags>
+        <tag>数学</tag>
       </tags>
   </entry>
 </search>
