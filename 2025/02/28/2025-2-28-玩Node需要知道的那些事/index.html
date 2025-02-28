@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2025-2-28-玩Node需要知道的那些事 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,基本常识玩 Node 需要知道的那些事基本常识ECMAScript 是啥？ECMAScript（简称 ES）就是 JavaScript 的“官方标准”。它规定了 JavaScript 语言的基本语法,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2025-2-28-玩Node需要知道的那些事 - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,基本常识玩 Node 需要知道的那些事基本常识ECMAScript 是啥？ECMAScript（简称 ES）就是 JavaScript 的“官方标准”。它规定了 JavaScript 语言的基本语法,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2025-2-28-玩Node需要知道的那些事 - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,基本常识玩 Node 需要知道的那些事基本常识ECMAScript 是啥？ECMAScript（简称 ES）就是 JavaScript 的“官方标准”。它规定了 JavaScript 语言的基本语法,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://blog.curesky.site"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2025-2-28-玩Node需要知道的那些事</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2025-2-28-玩Node需要知道的那些事</h1>
+        <div class="stuff">
+            <span>二月 28, 2025</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Node-js/" rel="tag">Node.js</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="基本常识"><a href="#基本常识" class="headerlink" title="基本常识"></a>基本常识</h3><h3 id="玩-Node-需要知道的那些事"><a href="#玩-Node-需要知道的那些事" class="headerlink" title="玩 Node 需要知道的那些事"></a><strong>玩 Node 需要知道的那些事</strong></h3><h4 id="基本常识-1"><a href="#基本常识-1" class="headerlink" title="基本常识"></a><strong>基本常识</strong></h4><h5 id="ECMAScript-是啥？"><a href="#ECMAScript-是啥？" class="headerlink" title="ECMAScript 是啥？"></a><strong>ECMAScript 是啥？</strong></h5><p>ECMAScript（简称 ES）就是 JavaScript 的“官方标准”。它规定了 JavaScript 语言的基本语法，比如 <strong>变量声明（let&#x2F;const）、箭头函数（()&#x3D;&gt;{}）、解构赋值（{ a, b } &#x3D; obj）</strong> 等。</p>
+<p>每年 ES 都会更新，比如：</p>
+<ul>
+<li><strong>ES6（2015）</strong>：let&#x2F;const、箭头函数、Promise、解构赋值</li>
+<li><strong>ES7（2016）</strong>：<code>Array.prototype.includes()</code></li>
+<li><strong>ES8（2017）</strong>：<code>async/await</code>（超级重要！）</li>
+</ul>
+<p>如果你听说过 **ES6+**，它指的就是 <strong>ES6 及后续版本的统称</strong>。</p>
+<hr>
+<h5 id="回调地狱（Callback-Hell）是个啥？"><a href="#回调地狱（Callback-Hell）是个啥？" class="headerlink" title="回调地狱（Callback Hell）是个啥？"></a><strong>回调地狱（Callback Hell）是个啥？</strong></h5><p>回调地狱，就是回调函数套回调函数，再套回调函数……代码一层套一层，像“圣诞树”一样，读起来非常痛苦。😵</p>
+<p>比如这个：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">getData</span>(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">processData</span>(result, <span class="function">(<span class="params">newResult</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">saveData</span>(newResult, <span class="function">(<span class="params">finalResult</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;数据保存完成：&quot;</span>, finalResult);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>这里嵌套了 <strong>3 层回调</strong>，如果再复杂点，根本没法维护！
+这种 <strong>层层嵌套的回调函数</strong>，就叫 <strong>回调地狱（callback hell）</strong></p>
+<hr>
+<h5 id="Promise-是个啥？"><a href="#Promise-是个啥？" class="headerlink" title="Promise 是个啥？"></a><strong>Promise 是个啥？</strong></h5><p>为了解决回调地狱，ES6 引入了 <strong>Promise</strong>，它让代码更清晰，支持 <code>.then()</code> 和 <code>.catch()</code> 链式调用，比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">getData</span>()</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">result</span>) =&gt;</span> <span class="title function_">processData</span>(result))</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">newResult</span>) =&gt;</span> <span class="title function_">saveData</span>(newResult))</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">finalResult</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;数据保存完成：&quot;</span>, finalResult))</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;出错了&quot;</span>, err));</span><br></pre></td></tr></table></figure>
+
+<p>是不是比回调地狱清爽多了？ 😆</p>
+<p>但 <strong>Promise</strong> 还是有些 <strong>链式嵌套</strong> 的问题，所以……</p>
+<hr>
+<h5 id="async-await：异步编程的终极方案"><a href="#async-await：异步编程的终极方案" class="headerlink" title="async&#x2F;await：异步编程的终极方案"></a><strong>async&#x2F;await：异步编程的终极方案</strong></h5><p>ES8（2017） 引入了 <code>async/await</code>，它 <strong>彻底解决了回调地狱</strong>，让代码看起来像同步执行一样！</p>
+<p>🚀 <strong>改造后：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> result = <span class="keyword">await</span> <span class="title function_">getData</span>();</span><br><span class="line">    <span class="keyword">const</span> newResult = <span class="keyword">await</span> <span class="title function_">processData</span>(result);</span><br><span class="line">    <span class="keyword">const</span> finalResult = <span class="keyword">await</span> <span class="title function_">saveData</span>(newResult);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;数据保存完成：&quot;</span>, finalResult);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;出错了&quot;</span>, err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>是不是超级直观！</strong> 🎉
+用 <code>await</code> 让 <strong>异步代码变得像同步代码一样</strong>，可读性、可维护性 <strong>爆炸提升</strong>！</p>
+<hr>
+<h5 id="使用-Prisma：数据库操作神器"><a href="#使用-Prisma：数据库操作神器" class="headerlink" title="使用 Prisma：数据库操作神器"></a><strong>使用 Prisma：数据库操作神器</strong></h5><p>写 <strong>Node.js + 数据库</strong> 时，传统的 MySQL 需要写 SQL 语句，太麻烦了！
+于是，Prisma 作为 <strong>现代 ORM（对象关系映射）</strong> 出现了！ 🎯</p>
+<p>🚀 <strong>用 Prisma 查询数据库</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">PrismaClient</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@prisma/client&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> prisma = <span class="keyword">new</span> <span class="title class_">PrismaClient</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> users = <span class="keyword">await</span> prisma.<span class="property">user</span>.<span class="title function_">findMany</span>();</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(users);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">main</span>();</span><br></pre></td></tr></table></figure>
+
+<p><strong>不用写 SQL</strong>，直接用 <strong>JavaScript 代码</strong> 操作数据库，<strong>简洁、高效、类型安全</strong>，真香！ 😍</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">基本常识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%A9-Node-%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B"><span class="toc-number">2.</span> <span class="toc-text">玩 Node 需要知道的那些事</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86-1"><span class="toc-number">2.1.</span> <span class="toc-text">基本常识</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#ECMAScript-%E6%98%AF%E5%95%A5%EF%BC%9F"><span class="toc-number">2.1.1.</span> <span class="toc-text">ECMAScript 是啥？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9B%9E%E8%B0%83%E5%9C%B0%E7%8B%B1%EF%BC%88Callback-Hell%EF%BC%89%E6%98%AF%E4%B8%AA%E5%95%A5%EF%BC%9F"><span class="toc-number">2.1.2.</span> <span class="toc-text">回调地狱（Callback Hell）是个啥？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Promise-%E6%98%AF%E4%B8%AA%E5%95%A5%EF%BC%9F"><span class="toc-number">2.1.3.</span> <span class="toc-text">Promise 是个啥？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#async-await%EF%BC%9A%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E7%9A%84%E7%BB%88%E6%9E%81%E6%96%B9%E6%A1%88"><span class="toc-number">2.1.4.</span> <span class="toc-text">async&#x2F;await：异步编程的终极方案</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Prisma%EF%BC%9A%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C%E7%A5%9E%E5%99%A8"><span class="toc-number">2.1.5.</span> <span class="toc-text">使用 Prisma：数据库操作神器</span></a></li></ol></li></ol></li></ol>
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
