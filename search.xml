@@ -5938,4 +5938,88 @@ By Kahlil Gibran（卡里·纪伯伦）. </p>
         <tag>Node.js</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2025-3-1-ARP协议与攻击防护</title>
+    <url>/2025/03/01/2025-3-1-ARP%E5%8D%8F%E8%AE%AE%E4%B8%8E%E6%94%BB%E5%87%BB%E9%98%B2%E6%8A%A4/</url>
+    <content><![CDATA[<h4 id="ARP工作原理"><a href="#ARP工作原理" class="headerlink" title="ARP工作原理"></a>ARP工作原理</h4><p><strong>地址解析协议（ARP, Address Resolution Protocol）</strong> 是 TCP&#x2F;IP 网络中的关键协议，它用于将 <strong>IP 地址解析为 MAC 地址</strong>，以便设备能够在本地网络中通信。</p>
+<p>ARP 的基本工作流程如下：</p>
+<ol>
+<li><p><strong>主机 A 发送 ARP 请求（广播）</strong></p>
+<ul>
+<li><p>当主机 A 需要知道目标主机 B 的 MAC 地址时，它会发送一个 <strong>ARP 请求</strong>，广播到整个子网，格式如下：</p>
+<p><code>谁是 192.168.1.2？请告诉 192.168.1.1</code></p>
+</li>
+</ul>
+</li>
+</ol>
+<p>​	2.<strong>目标主机 B 发送 ARP 响应（单播）</strong></p>
+<ul>
+<li>目标主机 B（192.168.1.2）收到 ARP 请求后，查找自己的 IP 地址，并返回一个 <strong>ARP 响应</strong>，将自己的 MAC 地址发回给主机 A。</li>
+</ul>
+<ol start="3">
+<li><strong>主机 A 存储 ARP 映射</strong></li>
+</ol>
+<ul>
+<li>主机 A <strong>收到 ARP 响应后，会将目标主机 B 的 IP 和 MAC 地址存入 ARP 缓存表（ARP Cache）</strong>，避免重复查询，提高效率</li>
+</ul>
+<p><strong>示例：查看当前 ARP 缓存表</strong></p>
+<p><code>arp -a</code></p>
+<h4 id="APR欺骗攻击"><a href="#APR欺骗攻击" class="headerlink" title="APR欺骗攻击"></a>APR欺骗攻击</h4><p>ARP 没有身份验证机制，因此攻击者可以伪造 ARP 响应，欺骗网络中的其他设备，将流量重定向到自己，从而进行 <strong>中间人攻击（MITM, Man-In-The-Middle）</strong> 或者 <strong>流量窃听</strong>。</p>
+<p> <strong>ARP 欺骗的基本原理</strong></p>
+<ol>
+<li>攻击者伪造 ARP 响应，将 <strong>网关的 MAC 地址修改为自己的 MAC 地址</strong>，让受害者将数据发送给攻击者。</li>
+<li>攻击者同时向网关发送伪造的 ARP 响应，冒充受害者 IP 地址，使网关误以为攻击者是受害者。</li>
+<li>受害者与网关之间的通信都会经过攻击者，攻击者可以窃听、篡改或转发数据。</li>
+</ol>
+<h5 id="执行-ARP-欺骗攻击"><a href="#执行-ARP-欺骗攻击" class="headerlink" title="执行 ARP 欺骗攻击"></a><strong>执行 ARP 欺骗攻击</strong></h5><p>在 <strong>Kali Linux</strong> 上使用 <code>arpspoof</code> 进行 ARP 欺骗攻击：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 让目标 192.168.1.100 认为攻击者是网关 192.168.1.1</span></span><br><span class="line">arpspoof -i eth0 -t 192.168.1.100 192.168.1.1</span><br><span class="line"><span class="comment"># 让网关 192.168.1.1 认为攻击者是目标 192.168.1.100</span></span><br><span class="line">arpspoof -i eth0 -t 192.168.1.1 192.168.1.100</span><br></pre></td></tr></table></figure>
+
+<p>执行后，攻击者就成为了受害者和网关之间的“中间人”，可以拦截所有数据。</p>
+<h4 id="ARP攻击局限"><a href="#ARP攻击局限" class="headerlink" title="ARP攻击局限"></a>ARP攻击局限</h4><p>ARP 欺骗的主要局限性是 <strong>只能在同一广播域（同一局域网）内生效</strong>，因为 ARP 数据包不会跨越路由器。</p>
+<ul>
+<li>如果攻击者和受害者不在同一网段，ARP 欺骗攻击 <strong>无法直接生效</strong>。</li>
+<li>但如果可以 <strong>近源渗透</strong>（例如 WiFi 入侵、获取 VPN 接入权限），攻击者仍可以利用 ARP 欺骗进行攻击。</li>
+</ul>
+<h4 id="ARP欺骗攻击防御"><a href="#ARP欺骗攻击防御" class="headerlink" title="ARP欺骗攻击防御"></a>ARP欺骗攻击防御</h4><p>由于 ARP <strong>本身没有安全机制</strong>，所以需要采取额外的防护措施。</p>
+<p> <strong>1. 使用 ARP 静态绑定</strong></p>
+<p>最有效的防御方法是使用 <strong>静态 ARP 绑定</strong>，手动将 IP 绑定到正确的 MAC 地址：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在 Windows 上永久绑定网关 IP 和 MAC 地址</span></span><br><span class="line">arp -s 192.168.1.1 aa-bb-cc-dd-ee-ff</span><br></pre></td></tr></table></figure>
+
+<p>在 Linux&#x2F;macOS 上：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo ip neigh add 192.168.1.1 lladdr aa:bb:cc:<span class="built_in">dd</span>:ee:ff dev eth0 nud permanent</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong></p>
+<ul>
+<li><strong>静态绑定适用于小型网络</strong>，但在大型企业网络中维护难度较高。</li>
+</ul>
+<p><strong>2. 启用动态 ARP 检测（DAI）</strong></p>
+<p><strong>企业级交换机</strong>（如 Cisco、H3C）支持 <strong>动态 ARP 检测（DAI, Dynamic ARP Inspection）</strong>，可以防止 ARP 欺骗：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ip arp inspection vlan 10</span><br></pre></td></tr></table></figure>
+
+<p><strong>3. 使用防火墙检测 ARP 攻击</strong></p>
+<p>许多 <strong>防火墙</strong>（如 <code>iptables</code>）可以监测 ARP 异常流量：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">iptables -A INPUT -p arp --arp-opcode Request -m <span class="built_in">limit</span> --<span class="built_in">limit</span> 5/s -j ACCEPT</span><br><span class="line">iptables -A INPUT -p arp --arp-opcode Request -j DRO</span><br></pre></td></tr></table></figure>
+
+<p>这样可以限制 ARP 请求的频率，减少 ARP 洪水攻击的风险。</p>
+<h4 id="高级攻击-ARP洪水"><a href="#高级攻击-ARP洪水" class="headerlink" title="高级攻击-ARP洪水"></a>高级攻击-ARP洪水</h4><p>ARP 洪水攻击（ARP Flooding）是一种 <strong>DoS（拒绝服务）攻击</strong>，攻击者不断发送大量伪造的 ARP 包，使交换机的 <strong>ARP 表溢出</strong>，导致：</p>
+<ul>
+<li>交换机无法正确解析 MAC 地址，进入 <strong>Hub 模式</strong>，导致所有流量广播，增加网络拥塞。</li>
+<li>攻击者可以监听大量流量，从而获取敏感信息。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2><p>| <strong>攻击类型</strong>           | <strong>描述</strong>                                           | <strong>防御方法</strong>                                    |
+| ———————- | ————————————————– | ———————————————– |
+| <strong>ARP 欺骗</strong>           | 伪造网关&#x2F;目标 IP 的 MAC 地址，进行流量劫持         | <strong>静态 ARP 绑定</strong>，启用 <strong>DAI</strong>，使用防火墙检测 |
+| <strong>ARP 洪水</strong>           | 发送大量 ARP 数据包，导致交换机崩溃或进入 Hub 模式 | 限制 ARP 请求速率，使用防火墙规则               |
+| <strong>MITM（中间人攻击）</strong> | 拦截受害者与网关的流量，进行监听或数据篡改         | <strong>SSL&#x2F;TLS 加密</strong>，使用 VPN，使用静态 ARP        |</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a><strong>结论</strong></h2><ul>
+<li>ARP 协议是 <strong>无状态的，没有安全机制</strong>，容易受到欺骗攻击。</li>
+<li><strong>ARP 欺骗</strong> 可以用于 <strong>流量劫持、监听、数据篡改</strong>，但需要在同一广播域内。</li>
+<li><strong>ARP 洪水</strong> 可以 <strong>让交换机进入 Hub 模式，监听整个网络</strong>。</li>
+<li><strong>防御方法包括</strong>：静态 ARP 绑定、启用动态 ARP 检测（DAI）、使用防火墙过滤异常流量。</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
+      </tags>
+  </entry>
 </search>
