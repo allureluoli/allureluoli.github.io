@@ -5896,7 +5896,7 @@ By Kahlil Gibran（卡里·纪伯伦）. </p>
   <entry>
     <title>2025-2-28-玩Node需要知道的那些事</title>
     <url>/2025/02/28/2025-2-28-%E7%8E%A9Node%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/</url>
-    <content><![CDATA[<h3 id="基本常识"><a href="#基本常识" class="headerlink" title="基本常识"></a>基本常识</h3><h3 id="玩-Node-需要知道的那些事"><a href="#玩-Node-需要知道的那些事" class="headerlink" title="玩 Node 需要知道的那些事"></a><strong>玩 Node 需要知道的那些事</strong></h3><h4 id="基本常识-1"><a href="#基本常识-1" class="headerlink" title="基本常识"></a><strong>基本常识</strong></h4><h5 id="ECMAScript-是啥？"><a href="#ECMAScript-是啥？" class="headerlink" title="ECMAScript 是啥？"></a><strong>ECMAScript 是啥？</strong></h5><p>ECMAScript（简称 ES）就是 JavaScript 的“官方标准”。它规定了 JavaScript 语言的基本语法，比如 <strong>变量声明（let&#x2F;const）、箭头函数（()&#x3D;&gt;{}）、解构赋值（{ a, b } &#x3D; obj）</strong> 等。</p>
+    <content><![CDATA[<h3 id="玩-Node-需要知道的那些事"><a href="#玩-Node-需要知道的那些事" class="headerlink" title="玩 Node 需要知道的那些事"></a><strong>玩 Node 需要知道的那些事</strong></h3><h4 id="基本常识"><a href="#基本常识" class="headerlink" title="基本常识"></a><strong>基本常识</strong></h4><h5 id="ECMAScript-是啥？"><a href="#ECMAScript-是啥？" class="headerlink" title="ECMAScript 是啥？"></a><strong>ECMAScript 是啥？</strong></h5><p>ECMAScript（简称 ES）就是 JavaScript 的“官方标准”。它规定了 JavaScript 语言的基本语法，比如 <strong>变量声明（let&#x2F;const）、箭头函数（()&#x3D;&gt;{}）、解构赋值（{ a, b } &#x3D; obj）</strong> 等。</p>
 <p>每年 ES 都会更新，比如：</p>
 <ul>
 <li><strong>ES6（2015）</strong>：let&#x2F;const、箭头函数、Promise、解构赋值</li>
