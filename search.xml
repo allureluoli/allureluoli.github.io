@@ -6108,4 +6108,21 @@ By Kahlil Gibran（卡里·纪伯伦）. </p>
         <tag>英语</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2025-3-4-数据库技巧小记</title>
+    <url>/2025/03/04/2025-3-4-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%8A%80%E5%B7%A7%E5%B0%8F%E8%AE%B0/</url>
+    <content><![CDATA[<h4 id="修复过程"><a href="#修复过程" class="headerlink" title="修复过程"></a>修复过程</h4><p>测试的时候id脸滚键盘乱敲又把 <code>AUTO_INCREMENT</code> 搞绷了</p>
+<p>问了下GPT，告诉我可以用<code>ALTER TABLE table_name AUTO_INCREMENT = xxx;</code> 来修复</p>
+<p>ps：并不是因为值设置过小哦</p>
+<p>试了很多次根本没用</p>
+<p>苦找之下发现一个方法</p>
+<p><code>navicat </code>连接后先取消递增，然后保存，再把递增开，会让<code>AUTO_INCREMENT </code>初始化</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> task MODIFY <span class="keyword">COLUMN</span> id <span class="type">INT</span>;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> task MODIFY <span class="keyword">COLUMN</span> id <span class="type">INT</span> AUTO_INCREMENT;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>SQL</tag>
+        <tag>MYSQL</tag>
+      </tags>
+  </entry>
 </search>
