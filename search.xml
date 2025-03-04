@@ -6117,6 +6117,7 @@ By Kahlil Gibran（卡里·纪伯伦）. </p>
 <p>试了很多次根本没用</p>
 <p>苦找之下发现一个方法</p>
 <p><code>navicat </code>连接后先取消递增，然后保存，再把递增开，会让<code>AUTO_INCREMENT </code>初始化</p>
+<p><strong>等价 SQL 语句</strong>：</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> task MODIFY <span class="keyword">COLUMN</span> id <span class="type">INT</span>;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> task MODIFY <span class="keyword">COLUMN</span> id <span class="type">INT</span> AUTO_INCREMENT;</span><br></pre></td></tr></table></figure>
 
 ]]></content>
