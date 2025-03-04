@@ -6022,4 +6022,90 @@ By Kahlil Gibran（卡里·纪伯伦）. </p>
         <tag>网络安全</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2025-3-1-均值不等式学习</title>
+    <url>/2025/03/01/2025-3-1-%E5%9D%87%E5%80%BC%E4%B8%8D%E7%AD%89%E5%BC%8F%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<h4 id="认识"><a href="#认识" class="headerlink" title="认识"></a>认识</h4><p>什么是均值不等式呢？</p>
+<p><strong>平均数不等式</strong>，或称<strong>平均值不等式</strong>、<strong>均值不等式</strong>，是数学上的一组<a href="https://zh.wikipedia.org/wiki/%E4%B8%8D%E7%AD%89%E5%BC%8F">不等式</a>，也是算术-几何平均值不等式的推广。它是说：</p>
+<p>​                                                                                                                                <img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/82e67c40f94418803bdd85bffe13d9d952c73419"></p>
+<p>​     <img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2a31a799492ab08ebc287ec8a87ac558b93a92f9"></p>
+<p>— wikipedia.org</p>
+<h2 id="证明方法"><a href="#证明方法" class="headerlink" title="证明方法"></a>证明方法</h2><p>关于均值不等式的证明方法有很多，<a href="https://zh.wikipedia.org/wiki/%E6%95%B0%E5%AD%A6%E5%BD%92%E7%BA%B3%E6%B3%95">数学归纳法</a>（第一数学归纳法或反向归纳法）、<a href="https://zh.wikipedia.org/wiki/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E6%95%B0">拉格朗日乘数</a>法、<a href="https://zh.wikipedia.org/wiki/%E7%90%B4%E7%94%9F%E4%B8%8D%E7%AD%89%E5%BC%8F">琴生不等式</a>法、<a href="https://zh.wikipedia.org/wiki/%E6%8E%92%E5%BA%8F%E4%B8%8D%E7%AD%89%E5%BC%8F">排序不等式</a>法、<a href="https://zh.wikipedia.org/wiki/%E6%9F%AF%E8%A5%BF%E4%B8%8D%E7%AD%89%E5%BC%8F">柯西不等式</a>法等等，都可以证明均值不等式，在这里简要介绍数学归纳法证明n维形式的均值不等式的方法</p>
+]]></content>
+      <tags>
+        <tag>数学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2025-3-4-消灭英语高频词</title>
+    <url>/2025/03/04/2025-3-4-%E6%B6%88%E7%81%AD%E8%8B%B1%E8%AF%AD%E9%AB%98%E9%A2%91%E8%AF%8D/</url>
+    <content><![CDATA[<h3 id="今日高频词"><a href="#今日高频词" class="headerlink" title="今日高频词"></a>今日高频词</h3><p>| 单词   | 词意   | 音标        |
+| —— | —— | ———– |
+| get    | 得到   | <code>/get/</code>     |
+| take   | 拿     | <code>/taIm/</code>    |
+| time   | 时间   | <code>/Taim/</code>    |
+| make   | 做     | <code>/Meik/</code>    |
+| know   | 知道   | <code>/neu/</code>     |
+| see    | 看见   | <code>/si/</code>      |
+| help   | 帮助   | <code>/help/</code>    |
+| find   | 找到   | <code>/faind/</code>   |
+| other  | 其他   | <code>/ʌðə(r)/</code>  |
+| work   | 工作   | <code>/wɜːk/</code>    |
+| look   | 看     | <code>/lʊk/</code>     |
+| give   | 给     | <code>/ɡɪv/</code>     |
+| come   | 来     | <code>/kʌm/</code>     |
+| need   | 需要   | <code>/niːd/</code>    |
+| last   | 最后的 | <code> /lɑːst/</code>  |
+| talk   | 谈话   | <code>/tɔːk/</code>    |
+| start  | 开始   | <code>/stɑːt/</code>   |
+| ask    | 提问   | <code>/ɑːsk/</code>    |
+| way    | 方式   | <code>/weɪ/</code>     |
+| place  | 地方   | <code>/pleɪs/</code>   |
+| learn  | 学习   | <code>/lɜːn/</code>    |
+| use    | 使用   | <code> /juːz/</code>   |
+| call   | 打电话 | <code> /kɔːl/</code>   |
+| feel   | 感觉   | <code> /fiːl/</code>   |
+| leave  | 离开   | <code>/liːv/</code>    |
+| change | 改变   | <code>/tʃeɪndʒ/</code> |
+| life   | 生活   | <code>/laɪf/</code>    |
+| try    | 尝试   | <code>/traɪ/</code>    |
+| only   | 只有   | <code>/ˈəʊnli/</code>  |
+| tell   | 告诉   | <code>/tel/</code>     |</p>
+<hr>
+<h4 id="用法整理"><a href="#用法整理" class="headerlink" title="用法整理"></a>用法整理</h4><p>| get up                | get along        | get over             |
+| ——————— | —————- | ——————– |
+| take care             | take break       | take part            |
+| in time               | take your time   | out of time          |
+| make a decision       | make a mistake   | make progress        |
+| know well             | I don’t know     | know by heart        |
+| see you               | see a doctor     | see through          |
+| help out              | help with        | lend a hand          |
+| find out              | find a solution  | find time            |
+| on the other hand     | in other words   | the other way around |
+| work hard             | work out         | work together        |
+| look after            | look for         | look forward to      |
+| give up               | give a hand      | give it a try        |
+| come on               | come in          | come up with         |
+| need help             | no need to       | need for             |
+| last year             | last longer      | at last              |
+| talk to               | talk about       | talk over            |
+| start over            | start with       | start out            |
+| ask for               | ask about        | ask around           |
+| by the way            | in a way         | no way               |
+| take place            | in place         | out of place         |
+| learn about           | learn form       | learn by heart       |
+| use up                | make use of      | used of              |
+| call back             | call for         | call on              |
+| feel like             | feel bad         | feel free            |
+| leave behind          | leave for        | leave out            |
+| change clothes        | change your mind | change the subject   |
+| the rest of your life | for life         | life goes on         |
+| try out               | try your best    | try on               |
+| only time             | not only         | only way             |
+| tell the truth        | tell a story     | tell someone         |</p>
+]]></content>
+      <tags>
+        <tag>英语</tag>
+      </tags>
+  </entry>
 </search>
