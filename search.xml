@@ -5786,7 +5786,7 @@ By Kahlil Gibran（卡里·纪伯伦）. </p>
 </ul>
 <p>设置一个密码</p>
 <ul>
-<li><pre><code>ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED WITH mysql_native_password BY &#39;your_new_password&#39;;
+<li><pre><code>ALTER USER &#39;root&#39;@&#39;%&#39; IDENTIFIED WITH mysql_native_password BY &#39;your mysql_native_password&#39;;
 </code></pre>
 </li>
 </ul>
@@ -6124,6 +6124,164 @@ By Kahlil Gibran（卡里·纪伯伦）. </p>
       <tags>
         <tag>SQL</tag>
         <tag>MYSQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2025-03-14-hexo自动脚本</title>
+    <url>/2025/03/14/2025-03-14-hexo%E8%87%AA%E5%8A%A8%E8%84%9A%E6%9C%AC/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>2025-03-14-test</title>
+    <url>/2025/03/14/2025-03-14-test-1/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>2025-03-14-test</title>
+    <url>/2025/03/14/2025-03-14-test/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>2025-03-14-testtest</title>
+    <url>/2025/03/14/2025-03-14-testtest/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>2025-03-14-testaaaa</title>
+    <url>/2025/03/14/2025-03-14-testaaaa/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>2025-03-14-怎么回事呢</title>
+    <url>/2025/03/14/2025-03-14-%E6%80%8E%E4%B9%88%E5%9B%9E%E4%BA%8B%E5%91%A2/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>2025-03-14-测试bat脚本</title>
+    <url>/2025/03/14/2025-03-14-%E6%B5%8B%E8%AF%95bat%E8%84%9A%E6%9C%AC/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>2025-03-14-测试一下啊</title>
+    <url>/2025/03/14/2025-03-14-%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B%E5%95%8A/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>2025-3-11-数论基础</title>
+    <url>/2025/03/11/2025-3-11-%E6%95%B0%E8%AE%BA%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h3 id="数论基础"><a href="#数论基础" class="headerlink" title="数论基础"></a>数论基础</h3><p>本文为学习 初等数论(第三版) (潘承洞, 潘承彪) 的学习笔记</p>
+<p><em>基本性质</em>：研究整数</p>
+<p>base: 整除理论 - 带余数除法</p>
+<p>整除理论中心内容：算术基本定理和最大公约数理论。</p>
+]]></content>
+      <tags>
+        <tag>数学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2025-3-5-我学了什么数学?</title>
+    <url>/2025/03/05/2025-3-5-%E6%88%91%E5%AD%A6%E4%BA%86%E4%BB%80%E4%B9%88%E6%95%B0%E5%AD%A6/</url>
+    <content><![CDATA[<h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><h4 id="均值不等式"><a href="#均值不等式" class="headerlink" title="均值不等式"></a>均值不等式</h4><p><a href="https://zh.wikipedia.org/wiki/%E8%B0%83%E5%92%8C%E5%B9%B3%E5%9D%87%E6%95%B0">调和平均数</a> ≤ <a href="https://zh.wikipedia.org/wiki/%E5%87%A0%E4%BD%95%E5%B9%B3%E5%9D%87%E6%95%B0">几何平均数</a> ≤ <a href="https://zh.wikipedia.org/wiki/%E7%AE%97%E6%9C%AF%E5%B9%B3%E5%9D%87%E6%95%B0">算术平均数</a> ≤ <a href="https://zh.wikipedia.org/wiki/%E5%B9%B3%E6%96%B9%E5%B9%B3%E5%9D%87%E6%95%B0">平方平均数</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">	![&#123;\displaystyle H_&#123;n&#125;=&#123;\dfrac &#123;n&#125;&#123;\displaystyle \sum _&#123;i=1&#125;^&#123;n&#125;&#123;\dfrac &#123;1&#125;&#123;x_&#123;i&#125;&#125;&#125;&#125;&#125;=&#123;\dfrac &#123;n&#125;&#123;&#123;\dfrac &#123;1&#125;&#123;x_&#123;1&#125;&#125;&#125;+&#123;\dfrac &#123;1&#125;&#123;x_&#123;2&#125;&#125;&#125;+\cdots +&#123;\dfrac &#123;1&#125;&#123;x_&#123;n&#125;&#125;&#125;&#125;&#125;&#125;]</span><br><span class="line"></span><br><span class="line">![&#123;\displaystyle A_&#123;n&#125;=&#123;\dfrac &#123;\displaystyle \sum _&#123;i=1&#125;^&#123;n&#125;x_&#123;i&#125;&#125;&#123;n&#125;&#125;=&#123;\dfrac &#123;x_&#123;1&#125;+x_&#123;2&#125;+\cdots +x_&#123;n&#125;&#125;&#123;n&#125;&#125;&#125;]</span><br><span class="line"></span><br><span class="line">![&#123;\displaystyle G_&#123;n&#125;=&#123;\sqrt[&#123;n&#125;]&#123;\prod _&#123;i=1&#125;^&#123;n&#125;x_&#123;i&#125;&#125;&#125;=&#123;\sqrt[&#123;n&#125;]&#123;x_&#123;1&#125;x_&#123;2&#125;\cdots x_&#123;n&#125;&#125;&#125;&#125;]</span><br><span class="line"></span><br><span class="line">![&#123;\displaystyle Q_&#123;n&#125;=&#123;\sqrt &#123;\dfrac &#123;\displaystyle \sum _&#123;i=1&#125;^&#123;n&#125;x_&#123;i&#125;^&#123;2&#125;&#125;&#123;n&#125;&#125;&#125;=&#123;\sqrt &#123;\dfrac &#123;x_&#123;1&#125;^&#123;2&#125;+x_&#123;2&#125;^&#123;2&#125;+\cdots +x_&#123;n&#125;^&#123;2&#125;&#125;&#123;n&#125;&#125;&#125;&#125;]</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="放缩"><a href="#放缩" class="headerlink" title="放缩"></a>放缩</h4><p>放缩技巧：</p>
+<pre><code>- 裂项
+- 常量替换
+</code></pre>
+<p>假设有 a + b &gt; 2 (根号 ab)</p>
+<p>a&#x2F;2 的情况</p>
+<h4 id="取等条件"><a href="#取等条件" class="headerlink" title="取等条件"></a>取等条件</h4><p>注意 a &amp; b</p>
+<h4 id="公式化的数学证明"><a href="#公式化的数学证明" class="headerlink" title="公式化的数学证明"></a>公式化的数学证明</h4><h4 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h4><h4 id="映射"><a href="#映射" class="headerlink" title="映射"></a>映射</h4><h4 id="排列"><a href="#排列" class="headerlink" title="排列"></a>排列</h4><h4 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h4>]]></content>
+      <tags>
+        <tag>数学</tag>
+        <tag>数学分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2025-4-2-修改注册表实现更改默认文件打开方式</title>
+    <url>/2025/04/02/2025-4-2-%E4%BF%AE%E6%94%B9%E6%B3%A8%E5%86%8C%E8%A1%A8%E5%AE%9E%E7%8E%B0%E6%9B%B4%E6%94%B9%E9%BB%98%E8%AE%A4%E6%96%87%E4%BB%B6%E6%89%93%E5%BC%80%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[<h3 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法"></a>实现方法</h3><p>首先打开注册表</p>
+<p>然后在修改文件路由路径</p>
+<h4 id="第一处"><a href="#第一处" class="headerlink" title="第一处"></a>第一处</h4><p><code>HKEY_CLASSES_ROOT\.[扩展名]</code></p>
+<p>例如：</p>
+<p><code>HKEY_CLASSES_ROOT\.md</code></p>
+<p>从这里可以看到文件的默认类型</p>
+<p>markdown应该是 <code>Markdown File</code>  ~~我的使用中默认类型是未设置的~~</p>
+<h4 id="第二处"><a href="#第二处" class="headerlink" title="第二处"></a>第二处</h4><p>由上得出</p>
+<p>修改第二处的路径则是在</p>
+<p><code>计算机\HKEY_CLASSES_ROOT\Markdown File\shell\open\command</code></p>
+<p><code>shell open command </code> 意义非常显然 不多赘述</p>
+<p>我将 <code>command</code> 的值设置为 <code>&quot;D:\CTFINFO\Typora\Typora.exe&quot; &quot;%1&quot;</code> (请替换为你自己的路径)</p>
+<p>就此完成了修改</p>
+]]></content>
+      <tags>
+        <tag>windows</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2025-4-2-链式队列</title>
+    <url>/2025/04/02/2025-4-2-%E9%93%BE%E5%BC%8F%E9%98%9F%E5%88%97/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>2025-3-6-简单英语短文</title>
+    <url>/2025/03/06/2025-3-6-%E7%AE%80%E5%8D%95%E8%8B%B1%E8%AF%AD%E7%9F%AD%E6%96%87/</url>
+    <content><![CDATA[<h3 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h3><p>“Later!” The word, the voice, the attitude.</p>
+<p>I’d never heard anyone use”later”to say goodbye before. It sounded harsh, curt, and dismissive, spoken with the veiled in difference of people who may not care to see or hear from you again.</p>
+<p>It is the first thing I remember about him, and I can hear it still today.</p>
+<p>Later!</p>
+<h5 id="单词拆解"><a href="#单词拆解" class="headerlink" title="单词拆解"></a>单词拆解</h5><ul>
+<li><strong>about</strong>: &#x2F;about&#x2F; - 关于</li>
+<li><strong>again</strong>: &#x2F;again&#x2F; - 再次</li>
+<li><strong>and</strong>: &#x2F;and&#x2F; - 和</li>
+<li><strong>anyone</strong>: &#x2F;anyone&#x2F; - 任何人</li>
+<li><strong>attitude</strong>: &#x2F;attitude&#x2F; - 态度</li>
+<li><strong>before</strong>: &#x2F;before&#x2F; - 以前</li>
+<li><strong>can</strong>: &#x2F;can&#x2F; - 能够</li>
+<li><strong>care</strong>: &#x2F;care&#x2F; - 关心</li>
+<li><strong>curt</strong>: &#x2F;curt&#x2F; - 简短无礼的</li>
+<li><strong>dismissive</strong>: &#x2F;dismissive&#x2F; - 轻蔑的</li>
+<li><strong>first</strong>: &#x2F;first&#x2F; - 第一</li>
+<li><strong>from</strong>: &#x2F;from&#x2F; - 来自</li>
+<li><strong>goodbye</strong>: &#x2F;goodbye&#x2F; - 再见</li>
+<li><strong>harsh</strong>: &#x2F;harsh&#x2F; - 严厉的</li>
+<li><strong>hear</strong>: &#x2F;hear&#x2F; - 听见</li>
+<li><strong>heard</strong>: &#x2F;heard&#x2F; - 听见（hear的过去式）</li>
+<li><strong>him</strong>: &#x2F;him&#x2F; - 他</li>
+<li><strong>i</strong>: &#x2F;i&#x2F; - 未知</li>
+<li><strong>id</strong>: &#x2F;id&#x2F; - 我（缩写）</li>
+<li><strong>indifference</strong>: &#x2F;indifference&#x2F; - 冷漠</li>
+<li><strong>is</strong>: &#x2F;is&#x2F; - 是</li>
+<li><strong>it</strong>: &#x2F;it&#x2F; - 它</li>
+<li><strong>later</strong>: &#x2F;later&#x2F; - 稍后，再见</li>
+<li><strong>may</strong>: &#x2F;may&#x2F; - 可能</li>
+<li><strong>never</strong>: &#x2F;never&#x2F; - 从未</li>
+<li><strong>not</strong>: &#x2F;not&#x2F; - 不</li>
+<li><strong>of</strong>: &#x2F;of&#x2F; - 的</li>
+<li><strong>or</strong>: &#x2F;or&#x2F; - 或者</li>
+<li><strong>people</strong>: &#x2F;people&#x2F; - 人们</li>
+<li><strong>remember</strong>: &#x2F;remember&#x2F; - 记住</li>
+<li><strong>say</strong>: &#x2F;say&#x2F; - 说</li>
+<li><strong>see</strong>: &#x2F;see&#x2F; - 看见</li>
+<li><strong>sounded</strong>: &#x2F;sounded&#x2F; - 听起来（sound的过去式）</li>
+<li><strong>spoken</strong>: &#x2F;spoken&#x2F; - 说话（speak的过去分词）</li>
+<li><strong>still</strong>: &#x2F;still&#x2F; - 仍然</li>
+<li><strong>the</strong>: &#x2F;the&#x2F; - 这，那个</li>
+<li><strong>thing</strong>: &#x2F;thing&#x2F; - 事情</li>
+<li><strong>to</strong>: &#x2F;to&#x2F; - 去，向</li>
+<li><strong>today</strong>: &#x2F;today&#x2F; - 今天</li>
+<li><strong>use</strong>: &#x2F;use&#x2F; - 使用</li>
+<li><strong>veiled</strong>: &#x2F;veiled&#x2F; - 含蓄的</li>
+<li><strong>voice</strong>: &#x2F;voice&#x2F; - 声音</li>
+<li><strong>who</strong>: &#x2F;who&#x2F; - 谁</li>
+<li><strong>with</strong>: &#x2F;with&#x2F; - 与</li>
+<li><strong>word</strong>: &#x2F;word&#x2F; - 单词，话语</li>
+<li><strong>you</strong>: &#x2F;you&#x2F; - 你</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>英语</tag>
       </tags>
   </entry>
 </search>
