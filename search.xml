@@ -6414,4 +6414,111 @@ By Kahlil Gibran（卡里·纪伯伦）. </p>
         <tag>web3</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2025-4-8-详细解释wiresharkDNS数据包</title>
+    <url>/2025/04/08/2025-4-8-%E8%AF%A6%E7%BB%86%E8%A7%A3%E9%87%8AwiresharkDNS%E6%95%B0%E6%8D%AE%E5%8C%85/</url>
+    <content><![CDATA[<h3 id="真包刨析"><a href="#真包刨析" class="headerlink" title="真包刨析"></a>真包刨析</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Frame 2: 215 bytes on wire (1720 bits), 215 bytes captured (1720 bits) on interface \Device\NPF_&#123;CD546E7A-55BC-4A77-99F8-0D39B3221883&#125;, <span class="built_in">id</span> 0</span><br><span class="line">    Section number: 1</span><br><span class="line">    Interface <span class="built_in">id</span>: 0 (\Device\NPF_&#123;CD546E7A-55BC-4A77-99F8-0D39B3221883&#125;)</span><br><span class="line">        Interface name: \Device\NPF_&#123;CD546E7A-55BC-4A77-99F8-0D39B3221883&#125;</span><br><span class="line">        Interface description: WLAN</span><br><span class="line">    Encapsulation <span class="built_in">type</span>: Ethernet (1)</span><br><span class="line">    Arrival Time: Apr  8, 2025 07:37:29.946837000 中国标准时间</span><br><span class="line">    UTC Arrival Time: Apr  7, 2025 23:37:29.946837000 UTC</span><br><span class="line">    Epoch Arrival Time: 1744069049.946837000</span><br><span class="line">    [Time <span class="built_in">shift</span> <span class="keyword">for</span> this packet: 0.000000000 seconds]</span><br><span class="line">    [Time delta from previous captured frame: 0.040862000 seconds]</span><br><span class="line">    [Time delta from previous displayed frame: 0.040862000 seconds]</span><br><span class="line">    [Time since reference or first frame: 0.040862000 seconds]</span><br><span class="line">    Frame Number: 2</span><br><span class="line">    Frame Length: 215 bytes (1720 bits)</span><br><span class="line">    Capture Length: 215 bytes (1720 bits)</span><br><span class="line">    [Frame is marked: False]</span><br><span class="line">    [Frame is ignored: False]</span><br><span class="line">    [Protocols <span class="keyword">in</span> frame: eth:ethertype:ip:udp:dns]</span><br><span class="line">    [Coloring Rule Name: UDP]</span><br><span class="line">    [Coloring Rule String: udp]</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-帧信息（Frame-2）"><a href="#1-帧信息（Frame-2）" class="headerlink" title="1. 帧信息（Frame 2）"></a><strong>1. 帧信息（Frame 2）</strong></h3><ul>
+<li><strong>长度</strong>：215 字节（1720 比特），全部捕获。</li>
+<li>捕获时间：<ul>
+<li>UTC 时间：<code>Apr 7, 2025 23:37:29.946837000</code></li>
+<li>本地时间（中国标准时间）：<code>Apr 8, 2025 07:37:29.946837000</code></li>
+</ul>
+</li>
+<li><strong>时间差</strong>：距离前一帧 <code>0.040862</code> 秒。</li>
+<li><strong>协议栈</strong>：<code>eth:ethertype:ip:udp:dns</code>（以太网 → IPv4 → UDP → DNS）。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Ethernet II, Src: 4e:7d:05:50:45:02 (4e:7d:05:50:45:02), Dst: LiteonTechno_dd:f1:c1 (c0:35:32:dd:f1:c1)</span><br><span class="line">    Destination: LiteonTechno_dd:f1:c1 (c0:35:32:dd:f1:c1)</span><br><span class="line">        .... ..0. .... .... .... .... = LG bit: Globally unique address (factory default)</span><br><span class="line">        .... ...0 .... .... .... .... = IG bit: Individual address (unicast)</span><br><span class="line">    Source: 4e:7d:05:50:45:02 (4e:7d:05:50:45:02)</span><br><span class="line">        .... ..1. .... .... .... .... = LG bit: Locally administered address (this is NOT the factory default)</span><br><span class="line">        .... ...0 .... .... .... .... = IG bit: Individual address (unicast)</span><br><span class="line">    Type: IPv4 (0x0800)</span><br><span class="line">    [Stream index: 0]</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-以太网帧（Ethernet-II）"><a href="#2-以太网帧（Ethernet-II）" class="headerlink" title="2. 以太网帧（Ethernet II）"></a><strong>2. 以太网帧（Ethernet II）</strong></h3><ul>
+<li><p>源 MAC 地址：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">4e:7d:05:50:45:02</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>第 2 位为 <code>1</code>，表示是<strong>本地管理地址</strong>（非厂商默认地址）。</li>
+</ul>
+</li>
+<li><p>目标 MAC 地址：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">c0:35:32:dd:f1:c1</span><br></pre></td></tr></table></figure>
+
+<p>（厂商为 Liteon Technology）。</p>
+<ul>
+<li>第 2 位为 <code>0</code>，表示是<strong>全局唯一地址</strong>（厂商分配）。</li>
+</ul>
+</li>
+<li><p><strong>类型字段</strong>：<code>0x0800</code>，表示上层协议是 <strong>IPv4</strong>。</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Internet Protocol Version 4, Src: 192.168.234.75, Dst: 192.168.234.182</span><br><span class="line">    0100 .... = Version: 4</span><br><span class="line">    .... 0101 = Header Length: 20 bytes (5)</span><br><span class="line">    Differentiated Services Field: 0x00 (DSCP: CS0, ECN: Not-ECT)</span><br><span class="line">        0000 00.. = Differentiated Services Codepoint: Default (0)</span><br><span class="line">        .... ..00 = Explicit Congestion Notification: Not ECN-Capable Transport (0)</span><br><span class="line">    Total Length: 201</span><br><span class="line">    Identification: 0x995d (39261)</span><br><span class="line">    010. .... = Flags: 0x2, Don&#x27;t fragment</span><br><span class="line">        0... .... = Reserved bit: Not set</span><br><span class="line">        .1.. .... = Don&#x27;t fragment: Set</span><br><span class="line">        ..0. .... = More fragments: Not set</span><br><span class="line">    ...0 0000 0000 0000 = Fragment Offset: 0</span><br><span class="line">    Time to Live: 64</span><br><span class="line">    Protocol: UDP (17)</span><br><span class="line">    Header Checksum: 0x4a73 [validation disabled]</span><br><span class="line">    [Header checksum status: Unverified]</span><br><span class="line">    Source Address: 192.168.234.75</span><br><span class="line">    Destination Address: 192.168.234.182</span><br><span class="line">    [Stream index: 0]</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-IPv4-数据包"><a href="#3-IPv4-数据包" class="headerlink" title="3. IPv4 数据包"></a><strong>3. IPv4 数据包</strong></h3><ul>
+<li><strong>版本与头部长度</strong>：IPv4，头部 20 字节。</li>
+<li><strong>服务类型（DSCP）</strong>：<code>0x00</code>（默认优先级，未启用 QoS）。</li>
+<li><strong>标识符</strong>：<code>0x995d</code>（用于分片重组，此处未分片）。</li>
+<li><strong>标志位</strong>：<code>Don&#39;t fragment (DF)</code> 置 <code>1</code>，禁止分片。</li>
+<li><strong>TTL</strong>：<code>64</code>（常见于 Linux&#x2F;Windows 系统）。</li>
+<li><strong>协议</strong>：<code>17</code>（UDP）。</li>
+<li><strong>源 IP</strong>：<code>192.168.234.75</code>（DNS 服务器）。</li>
+<li><strong>目标 IP</strong>：<code>192.168.234.182</code>（客户端）。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">User Datagram Protocol, Src Port: 53, Dst Port: 55360</span><br><span class="line">    Source Port: 53</span><br><span class="line">    Destination Port: 55360</span><br><span class="line">    Length: 181</span><br><span class="line">    Checksum: 0x2866 [unverified]</span><br><span class="line">    [Checksum Status: Unverified]</span><br><span class="line">    [Stream index: 0]</span><br><span class="line">    [Stream Packet Number: 2]</span><br><span class="line">    [Timestamps]</span><br><span class="line">        [Time since first frame: 0.040862000 seconds]</span><br><span class="line">        [Time since previous frame: 0.040862000 seconds]</span><br><span class="line">    UDP payload (173 bytes)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-UDP-数据段"><a href="#4-UDP-数据段" class="headerlink" title="4. UDP 数据段"></a><strong>4. UDP 数据段</strong></h3><ul>
+<li><strong>源端口</strong>：<code>53</code>（DNS 服务标准端口）。</li>
+<li><strong>目标端口</strong>：<code>55360</code>（客户端随机端口）。</li>
+<li><strong>长度</strong>：<code>181</code> 字节（UDP 头部 8 字节 + 载荷 173 字节）。</li>
+<li><strong>校验和</strong>：<code>0x2866</code>（未验证）。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Domain Name System (response)</span><br><span class="line">    Transaction ID: 0x6c98</span><br><span class="line">    Flags: 0x8180 Standard query response, No error</span><br><span class="line">        1... .... .... .... = Response: Message is a response</span><br><span class="line">        .000 0... .... .... = Opcode: Standard query (0)</span><br><span class="line">        .... .0.. .... .... = Authoritative: Server is not an authority for domain</span><br><span class="line">        .... ..0. .... .... = Truncated: Message is not truncated</span><br><span class="line">        .... ...1 .... .... = Recursion desired: Do query recursively</span><br><span class="line">        .... .... 1... .... = Recursion available: Server can do recursive queries</span><br><span class="line">        .... .... .0.. .... = Z: reserved (0)</span><br><span class="line">        .... .... ..0. .... = Answer authenticated: Answer/authority portion was not authenticated by the server</span><br><span class="line">        .... .... ...0 .... = Non-authenticated data: Unacceptable</span><br><span class="line">        .... .... .... 0000 = Reply code: No error (0)</span><br><span class="line">    Questions: 1</span><br><span class="line">    Answer RRs: 8</span><br><span class="line">    Authority RRs: 0</span><br><span class="line">    Additional RRs: 0</span><br><span class="line">    Queries</span><br><span class="line">        s1.hdslb.com.w.kunlunar.com: type A, class IN</span><br><span class="line">            Name: s1.hdslb.com.w.kunlunar.com</span><br><span class="line">            [Name Length: 27]</span><br><span class="line">            [Label Count: 6]</span><br><span class="line">            Type: A (1) (Host Address)</span><br><span class="line">            Class: IN (0x0001)</span><br><span class="line">    Answers</span><br><span class="line">        s1.hdslb.com.w.kunlunar.com: type A, class IN, addr 117.21.229.243</span><br><span class="line">            Name: s1.hdslb.com.w.kunlunar.com</span><br><span class="line">            Type: A (1) (Host Address)</span><br><span class="line">            Class: IN (0x0001)</span><br><span class="line">            Time to live: 33 (33 seconds)</span><br><span class="line">            Data length: 4</span><br><span class="line">            Address: 117.21.229.243</span><br><span class="line">        s1.hdslb.com.w.kunlunar.com: type A, class IN, addr 117.21.229.244</span><br><span class="line">            Name: s1.hdslb.com.w.kunlunar.com</span><br><span class="line">            Type: A (1) (Host Address)</span><br><span class="line">            Class: IN (0x0001)</span><br><span class="line">            Time to live: 33 (33 seconds)</span><br><span class="line">            Data length: 4</span><br><span class="line">            Address: 117.21.229.244</span><br><span class="line">        s1.hdslb.com.w.kunlunar.com: type A, class IN, addr 117.21.229.231</span><br><span class="line">            Name: s1.hdslb.com.w.kunlunar.com</span><br><span class="line">            Type: A (1) (Host Address)</span><br><span class="line">            Class: IN (0x0001)</span><br><span class="line">            Time to live: 33 (33 seconds)</span><br><span class="line">            Data length: 4</span><br><span class="line">            Address: 117.21.229.231</span><br><span class="line">        s1.hdslb.com.w.kunlunar.com: type A, class IN, addr 117.21.229.241</span><br><span class="line">            Name: s1.hdslb.com.w.kunlunar.com</span><br><span class="line">            Type: A (1) (Host Address)</span><br><span class="line">            Class: IN (0x0001)</span><br><span class="line">            Time to live: 33 (33 seconds)</span><br><span class="line">            Data length: 4</span><br><span class="line">            Address: 117.21.229.241</span><br><span class="line">        s1.hdslb.com.w.kunlunar.com: type A, class IN, addr 117.21.229.242</span><br><span class="line">            Name: s1.hdslb.com.w.kunlunar.com</span><br><span class="line">            Type: A (1) (Host Address)</span><br><span class="line">            Class: IN (0x0001)</span><br><span class="line">            Time to live: 33 (33 seconds)</span><br><span class="line">            Data length: 4</span><br><span class="line">            Address: 117.21.229.242</span><br><span class="line">        s1.hdslb.com.w.kunlunar.com: type A, class IN, addr 117.21.229.248</span><br><span class="line">            Name: s1.hdslb.com.w.kunlunar.com</span><br><span class="line">            Type: A (1) (Host Address)</span><br><span class="line">            Class: IN (0x0001)</span><br><span class="line">            Time to live: 33 (33 seconds)</span><br><span class="line">            Data length: 4</span><br><span class="line">            Address: 117.21.229.248</span><br><span class="line">        s1.hdslb.com.w.kunlunar.com: type A, class IN, addr 117.21.229.249</span><br><span class="line">            Name: s1.hdslb.com.w.kunlunar.com</span><br><span class="line">            Type: A (1) (Host Address)</span><br><span class="line">            Class: IN (0x0001)</span><br><span class="line">            Time to live: 33 (33 seconds)</span><br><span class="line">            Data length: 4</span><br><span class="line">            Address: 117.21.229.249</span><br><span class="line">        s1.hdslb.com.w.kunlunar.com: type A, class IN, addr 117.21.229.232</span><br><span class="line">            Name: s1.hdslb.com.w.kunlunar.com</span><br><span class="line">            Type: A (1) (Host Address)</span><br><span class="line">            Class: IN (0x0001)</span><br><span class="line">            Time to live: 33 (33 seconds)</span><br><span class="line">            Data length: 4</span><br><span class="line">            Address: 117.21.229.232</span><br><span class="line">    [Request In: 1]</span><br><span class="line">    [Time: 0.040862000 seconds]</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-DNS-响应（核心内容）"><a href="#5-DNS-响应（核心内容）" class="headerlink" title="5. DNS 响应（核心内容）"></a><strong>5. DNS 响应（核心内容）</strong></h3><h4 id="DNS-头部"><a href="#DNS-头部" class="headerlink" title="DNS 头部"></a><strong>DNS 头部</strong></h4><ul>
+<li><p><strong>事务 ID</strong>：<code>0x6c98</code>（匹配请求与响应）。</p>
+</li>
+<li><p>标志字段</p>
+<p>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0x8180</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Response=1</code>：这是一个响应报文。</li>
+<li><code>Recursion desired=1</code>：客户端请求递归查询。</li>
+<li><code>Recursion available=1</code>：服务器支持递归查询。</li>
+<li><code>Reply code=0000</code>：无错误（No error）。</li>
+</ul>
+</li>
+<li><p>记录数</p>
+<p>：</p>
+<ul>
+<li><code>Questions: 1</code>（查询 1 个域名）。</li>
+<li><code>Answer RRs: 8</code>（返回 8 条 A 记录）。</li>
+</ul>
+</li>
+</ul>
+<h4 id="查询部分（Queries）"><a href="#查询部分（Queries）" class="headerlink" title="查询部分（Queries）"></a><strong>查询部分（Queries）</strong></h4><ul>
+<li><p>查询域名</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">s1.hdslb.com.w.kunlunar.com</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>类型：<code>A</code>（IPv4 地址）。</li>
+<li>类：<code>IN</code>（Internet）。</li>
+</ul>
+</li>
+</ul>
+<h4 id="应答部分（Answers）"><a href="#应答部分（Answers）" class="headerlink" title="应答部分（Answers）"></a><strong>应答部分（Answers）</strong></h4><p>返回了 8 条 A 记录，指向以下 IP 地址（TTL 均为 33 秒）：</p>
+<ol>
+<li><code>117.21.229.243</code></li>
+<li><code>117.21.229.244</code></li>
+<li><code>117.21.229.231</code></li>
+<li><code>117.21.229.241</code></li>
+<li><code>117.21.229.242</code></li>
+<li><code>117.21.229.248</code></li>
+<li><code>117.21.229.249</code></li>
+<li><code>117.21.229.232</code></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
 </search>
