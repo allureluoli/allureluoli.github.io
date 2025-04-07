@@ -6127,46 +6127,6 @@ By Kahlil Gibran（卡里·纪伯伦）. </p>
       </tags>
   </entry>
   <entry>
-    <title>2025-03-14-hexo自动脚本</title>
-    <url>/2025/03/14/2025-03-14-hexo%E8%87%AA%E5%8A%A8%E8%84%9A%E6%9C%AC/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>2025-03-14-test</title>
-    <url>/2025/03/14/2025-03-14-test-1/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>2025-03-14-test</title>
-    <url>/2025/03/14/2025-03-14-test/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>2025-03-14-testtest</title>
-    <url>/2025/03/14/2025-03-14-testtest/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>2025-03-14-testaaaa</title>
-    <url>/2025/03/14/2025-03-14-testaaaa/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>2025-03-14-怎么回事呢</title>
-    <url>/2025/03/14/2025-03-14-%E6%80%8E%E4%B9%88%E5%9B%9E%E4%BA%8B%E5%91%A2/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>2025-03-14-测试bat脚本</title>
-    <url>/2025/03/14/2025-03-14-%E6%B5%8B%E8%AF%95bat%E8%84%9A%E6%9C%AC/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>2025-03-14-测试一下啊</title>
-    <url>/2025/03/14/2025-03-14-%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B%E5%95%8A/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>2025-3-11-数论基础</title>
     <url>/2025/03/11/2025-3-11-%E6%95%B0%E8%AE%BA%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[<h3 id="数论基础"><a href="#数论基础" class="headerlink" title="数论基础"></a>数论基础</h3><p>本文为学习 初等数论(第三版) (潘承洞, 潘承彪) 的学习笔记</p>
@@ -6222,7 +6182,61 @@ By Kahlil Gibran（卡里·纪伯伦）. </p>
   <entry>
     <title>2025-4-2-链式队列</title>
     <url>/2025/04/02/2025-4-2-%E9%93%BE%E5%BC%8F%E9%98%9F%E5%88%97/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h2 id="1-什么是链式队列？"><a href="#1-什么是链式队列？" class="headerlink" title="1. 什么是链式队列？"></a><strong>1. 什么是链式队列？</strong></h2><p>链式队列是用 <strong>链表（Linked List）</strong> 实现的队列，符合 <strong>先进先出（FIFO）</strong> 的规则。就像现实中的排队：</p>
+<ul>
+<li><strong>入队（Enqueue）</strong>：新人排到队尾。</li>
+<li><strong>出队（Dequeue）</strong>：队头的人先离开。</li>
+</ul>
+<h3 id="链式队列-vs-数组队列"><a href="#链式队列-vs-数组队列" class="headerlink" title="链式队列 vs 数组队列"></a><strong>链式队列 vs 数组队列</strong></h3><p>| 对比项       | 链式队列               | 数组队列        |
+| ———— | ———————- | ————— |
+| <strong>存储方式</strong> | 动态分配（不连续内存） | 连续内存        |
+| <strong>扩容</strong>     | 灵活（无容量限制）     | 需手动扩容&#x2F;缩容 |
+| <strong>适用场景</strong> | 频繁增删               | 随机访问        |</p>
+<h2 id="2-链式队列的实现步骤"><a href="#2-链式队列的实现步骤" class="headerlink" title="2. 链式队列的实现步骤"></a><strong>2. 链式队列的实现步骤</strong></h2><p>我们用py代码实现</p>
+<p>先定义节点</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Node</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.front = <span class="literal">None</span></span><br><span class="line">        self.rear = <span class="literal">None</span></span><br><span class="line">        </span><br></pre></td></tr></table></figure>
+
+<p>再定义队列</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">enqueue</span>(<span class="params">self,data</span>):</span><br><span class="line">    new_node = Node(data)</span><br><span class="line">    <span class="keyword">if</span> self.rear <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        self.front = self.rear = new_node</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        self.rear.<span class="built_in">next</span> = new_node</span><br><span class="line">        self.rear = new_code</span><br><span class="line">        </span><br></pre></td></tr></table></figure>
+
+<p>出队的实现</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dequeue</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="keyword">if</span> self.front <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    temp = self.front</span><br><span class="line">    self.front = temp.<span class="built_in">next</span></span><br><span class="line">    <span class="keyword">if</span> self.front <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        self.rear = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">return</span> temp.data</span><br></pre></td></tr></table></figure>
+
+<p>检查队头是不是空的</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">is_empty</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="keyword">return</span> self.front <span class="keyword">is</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-时间复杂度分析"><a href="#4-时间复杂度分析" class="headerlink" title="4. 时间复杂度分析"></a><strong>4. 时间复杂度分析</strong></h2><p>| 操作        | 时间复杂度 | 说明                  |
+| ———– | ———- | ——————— |
+| <strong>Enqueue</strong> | O(1)       | 直接修改队尾指针      |
+| <strong>Dequeue</strong> | O(1)       | 直接修改队头指针      |
+| <strong>IsEmpty</strong> | O(1)       | 检查 <code>front</code> 是否为空 |</p>
+<h2 id="5-常见问题"><a href="#5-常见问题" class="headerlink" title="5. 常见问题"></a><strong>5. 常见问题</strong></h2><h3 id="Q1-链式队列会溢出吗？"><a href="#Q1-链式队列会溢出吗？" class="headerlink" title="Q1: 链式队列会溢出吗？"></a><strong>Q1: 链式队列会溢出吗？</strong></h3><p>不会！因为链表动态分配内存，除非系统内存耗尽。</p>
+<h3 id="Q2-如何遍历链式队列？"><a href="#Q2-如何遍历链式队列？" class="headerlink" title="Q2: 如何遍历链式队列？"></a><strong>Q2: 如何遍历链式队列？</strong></h3><p>从 <code>front</code> 开始，沿着 <code>next</code> 指针逐个访问：</p>
+<PYTHON>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">current = queue.frontwhile current:    print(current.data)    current = current.next</span><br></pre></td></tr></table></figure>
+
+<h3 id="Q3-链式队列-vs-循环队列？"><a href="#Q3-链式队列-vs-循环队列？" class="headerlink" title="Q3: 链式队列 vs 循环队列？"></a><strong>Q3: 链式队列 vs 循环队列？</strong></h3><ul>
+<li><strong>链式队列</strong>：无容量限制，但每次操作需动态分配内存。</li>
+<li><strong>循环队列</strong>：固定容量，适合已知最大长度的场景（如操作系统任务调度）。</li>
+</ul>
+<hr>
+<h2 id="6-实际应用场景"><a href="#6-实际应用场景" class="headerlink" title="6. 实际应用场景"></a><strong>6. 实际应用场景</strong></h2><ol>
+<li><strong>消息队列</strong>：RabbitMQ、Kafka 的底层实现之一。</li>
+<li><strong>CPU 任务调度</strong>：操作系统中的就绪队列。</li>
+<li><strong>广度优先搜索（BFS）</strong>：图的遍历算法。</li>
+</ol>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2><ul>
+<li><strong>链式队列</strong> &#x3D; 链表 + 队头队尾指针。</li>
+<li><strong>核心操作</strong>：<code>enqueue</code>（队尾插入）、<code>dequeue</code>（队头删除）。</li>
+<li><strong>优点</strong>：动态扩容、无需处理固定容量问题。</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Python</tag>
+        <tag>数据结构</tag>
+      </tags>
   </entry>
   <entry>
     <title>2025-3-6-简单英语短文</title>
@@ -6282,6 +6296,122 @@ By Kahlil Gibran（卡里·纪伯伦）. </p>
 ]]></content>
       <tags>
         <tag>英语</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2025-4-5-PDF解密与拆分</title>
+    <url>/2025/04/04/2025-4-5-PDF%E8%A7%A3%E5%AF%86%E4%B8%8E%E6%8B%86%E5%88%86/</url>
+    <content><![CDATA[<h1 id="PDF-解密与拆分操作指南"><a href="#PDF-解密与拆分操作指南" class="headerlink" title="PDF 解密与拆分操作指南"></a>PDF 解密与拆分操作指南</h1><h2 id="1-检查-PDF-加密状态"><a href="#1-检查-PDF-加密状态" class="headerlink" title="1. 检查 PDF 加密状态"></a><strong>1. 检查 PDF 加密状态</strong></h2><p>使用 <code>qpdf</code> 检查 PDF 文件的加密类型和权限：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">qpdf --show-encryption input.pdf</span><br></pre></td></tr></table></figure>
+
+<h3 id="输出示例"><a href="#输出示例" class="headerlink" title="输出示例"></a><strong>输出示例</strong></h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">R = 6</span><br><span class="line">P = -1324</span><br><span class="line">User password = </span><br><span class="line">extract: allowed</span><br><span class="line">print: allowed</span><br><span class="line">modify anything: not allowed</span><br><span class="line">encryption method: AESv3</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>关键信息<ul>
+<li>文件使用 <strong>AES-256（AESv3）加密</strong>。</li>
+<li>无用户密码（<code>User password =</code>），但存在权限限制（禁止修改）。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="2-解密-PDF（移除权限限制）"><a href="#2-解密-PDF（移除权限限制）" class="headerlink" title="2. 解密 PDF（移除权限限制）"></a><strong>2. 解密 PDF（移除权限限制）</strong></h2><p>用 <code>qpdf</code> 移除加密和权限限制：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">qpdf --decrypt input.pdf output_decrypted.pdf</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>效果</p>
+<ul>
+<li>生成 <code>output_decrypted.pdf</code>，文件可自由编辑、打印、复制。</li>
+</ul>
+</li>
+<li><p>验证解密成功</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">qpdf --show-encryption output_decrypted.pdf</span><br></pre></td></tr></table></figure>
+
+<p>应输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Encryption: none</span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h2 id="3-拆分-PDF-为单页"><a href="#3-拆分-PDF-为单页" class="headerlink" title="3. 拆分 PDF 为单页"></a><strong>3. 拆分 PDF 为单页</strong></h2><p>使用 <code>pdftk</code> 将解密后的 PDF 按页拆分为多个文件：</p>
+<BASH>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pdftk output_decrypted.pdf burst output page_%02d.pdf</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>输出文件<ul>
+<li><code>page_01.pdf</code>, <code>page_02.pdf</code>, …（按页码命名）。</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2025-4-8-图灵完备</title>
+    <url>/2025/04/08/2025-4-8-%E5%9B%BE%E7%81%B5%E5%AE%8C%E5%A4%87/</url>
+    <content><![CDATA[<h3 id="图灵完备性（Turing-Completeness）"><a href="#图灵完备性（Turing-Completeness）" class="headerlink" title="图灵完备性（Turing Completeness）"></a><strong>图灵完备性（Turing Completeness）</strong></h3><p><strong>定义</strong>：
+ 一个计算系统（编程语言、虚拟机、区块链等）如果能够模拟<strong>通用图灵机（Universal Turing Machine, UTM）</strong>，即可以计算任何可计算的问题（在有限时间和内存条件下），则称该系统是<strong>图灵完备的</strong>。</p>
+<p><strong>关键特征</strong>：</p>
+<ol>
+<li><strong>条件分支（if-else）</strong>：支持逻辑判断。</li>
+<li><strong>循环（loop）</strong>：允许重复执行代码（如 <code>while</code> 或递归）。</li>
+<li><strong>无限存储（理论上）</strong>：能够处理任意规模的计算（实际受物理限制）。</li>
+<li><strong>变量与状态</strong>：可修改和存储数据。</li>
+</ol>
+<p><strong>常见图灵完备系统</strong>：</p>
+<ul>
+<li>编程语言：Python、C、Java（均支持循环、递归、条件分支）。</li>
+<li>区块链：以太坊（EVM）、Solana（支持智能合约的复杂逻辑）。</li>
+</ul>
+<hr>
+<h3 id="为什么比特币不是图灵完备的？"><a href="#为什么比特币不是图灵完备的？" class="headerlink" title="为什么比特币不是图灵完备的？"></a><strong>为什么比特币不是图灵完备的？</strong></h3><p>比特币的脚本语言（<strong>Bitcoin Script</strong>）在设计上<strong>刻意限制了图灵完备性</strong>，主要出于安全性和简洁性的考虑：</p>
+<h4 id="1-缺少循环和递归"><a href="#1-缺少循环和递归" class="headerlink" title="1. 缺少循环和递归"></a>1. <strong>缺少循环和递归</strong></h4><ul>
+<li><strong>比特币 Script 没有循环语句</strong>（如 <code>for</code>、<code>while</code>），也没有递归调用。</li>
+<li>脚本的执行步骤是<strong>线性且有限的</strong>，无法实现无限循环或复杂迭代。</li>
+<li>示例：无法编写一个计算斐波那契数列的比特币脚本。</li>
+</ul>
+<h4 id="2-无动态跳转（No-Jumps）"><a href="#2-无动态跳转（No-Jumps）" class="headerlink" title="2. 无动态跳转（No Jumps）"></a>2. <strong>无动态跳转（No Jumps）</strong></h4><ul>
+<li>脚本不支持动态跳转（如 <code>goto</code> 或函数调用），只能按顺序执行操作码（opcodes）。</li>
+<li>条件分支仅通过简单的 <code>OP_IF</code>&#x2F;<code>OP_ELSE</code> 实现，且深度有限。</li>
+</ul>
+<h4 id="3-资源限制"><a href="#3-资源限制" class="headerlink" title="3. 资源限制"></a>3. <strong>资源限制</strong></h4><ul>
+<li><strong>脚本大小限制</strong>：每个交易的脚本不能超过 10KB。</li>
+<li><strong>操作码限制</strong>：禁用某些可能引发复杂计算的 opcode（如 <code>OP_MUL</code>、<code>OP_DIV</code> 早期被禁用）。</li>
+<li><strong>无状态性</strong>：脚本执行后不保存中间状态，无法实现跨交易的持续计算。</li>
+</ul>
+<h4 id="4-安全优先设计"><a href="#4-安全优先设计" class="headerlink" title="4. 安全优先设计"></a>4. <strong>安全优先设计</strong></h4><ul>
+<li>比特币的核心目标是<strong>安全、去中心化的价值转移</strong>，而非通用计算。</li>
+<li>避免图灵完备性可防止：<ul>
+<li><strong>无限循环攻击</strong>（如以太坊的 DAO 攻击曾因递归调用漏洞被利用）。</li>
+<li><strong>计算资源滥用</strong>（比特币节点需验证所有脚本，非图灵完备保证验证速度）。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="比特币-vs-以太坊（图灵完备性对比）"><a href="#比特币-vs-以太坊（图灵完备性对比）" class="headerlink" title="比特币 vs 以太坊（图灵完备性对比）"></a><strong>比特币 vs 以太坊（图灵完备性对比）</strong></h3><p>| <strong>特性</strong>       | <strong>比特币（Bitcoin Script）</strong> | <strong>以太坊（EVM）</strong>         |
+| ————– | —————————- | ————————- |
+| <strong>图灵完备性</strong> | ❌ 否                         | ✅ 是                      |
+| <strong>循环&#x2F;递归</strong>  | ❌ 不支持                     | ✅ 支持（<code>while</code>、递归）   |
+| <strong>状态存储</strong>   | ❌ 无                         | ✅ 有（合约存储）          |
+| <strong>典型用途</strong>   | 简单支付验证                 | 复杂智能合约（DeFi、NFT） |
+| <strong>安全性考虑</strong> | 避免不可预测的计算           | 需防范重入攻击等漏洞      |</p>
+<hr>
+<h3 id="为什么图灵完备性重要？"><a href="#为什么图灵完备性重要？" class="headerlink" title="为什么图灵完备性重要？"></a><strong>为什么图灵完备性重要？</strong></h3><ul>
+<li><strong>智能合约平台需要图灵完备性</strong>（如以太坊）：
+允许开发者编写任意逻辑的合约（如借贷协议、去中心化交易所）。</li>
+<li><strong>比特币不需要图灵完备性</strong>：
+其设计目标是成为“数字黄金”，脚本仅需支持基础交易验证（如多签、时间锁）。</li>
+</ul>
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h3><ul>
+<li>比特币的脚本语言<strong>故意非图灵完备</strong>，以保障安全性和确定性。</li>
+<li>以太坊等平台通过图灵完备性实现复杂智能合约，但需承担更高的安全风险（如合约漏洞）。</li>
+<li><strong>非图灵完备 ≠ 功能弱</strong>：比特币的脚本仍能实现多签、哈希锁等高级功能，只是无法运行通用程序。</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>计算机科学</tag>
+        <tag>web3</tag>
       </tags>
   </entry>
 </search>

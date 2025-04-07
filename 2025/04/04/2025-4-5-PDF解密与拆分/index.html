@@ -5,12 +5,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>2025-03-14-testtest - 二月の档案室</title>
+    <title>2025-4-5-PDF解密与拆分 - 二月の档案室</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="二月,"> 
-    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,PDF 解密与拆分操作指南1. 检查 PDF 加密状态使用 qpdf 检查 PDF 文件的加密类型和权限：
+1qpdf --show-encryption input.pdf
+
+输出示例123456,"> 
     <meta name="author" content="Allureluoli"> 
     <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -20,16 +23,22 @@
     
     
     <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="2025-03-14-testtest - 二月の档案室"/>
-    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,"/>
+    <meta name="twitter:title" content="2025-4-5-PDF解密与拆分 - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,PDF 解密与拆分操作指南1. 检查 PDF 加密状态使用 qpdf 检查 PDF 文件的加密类型和权限：
+1qpdf --show-encryption input.pdf
+
+输出示例123456,"/>
     
     
     
     
     <meta property="og:site_name" content="二月の档案室"/>
     <meta property="og:type" content="object"/>
-    <meta property="og:title" content="2025-03-14-testtest - 二月の档案室"/>
-    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,"/>
+    <meta property="og:title" content="2025-4-5-PDF解密与拆分 - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,PDF 解密与拆分操作指南1. 检查 PDF 加密状态使用 qpdf 检查 PDF 文件的加密类型和权限：
+1qpdf --show-encryption input.pdf
+
+输出示例123456,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 
@@ -47,7 +56,7 @@
     <div class="bar" style="width: 0;"></div>
     <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://blog.curesky.site"></a>
     <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">2025-03-14-testtest</h3>
+    <h3 class="subtitle">2025-4-5-PDF解密与拆分</h3>
     <div class="social">
         <div>
             <div class="share">
@@ -62,14 +71,56 @@
     <div class="section">
         <div class="article">
     <div class='main'>
-        <h1 class="title">2025-03-14-testtest</h1>
+        <h1 class="title">2025-4-5-PDF解密与拆分</h1>
         <div class="stuff">
-            <span>三月 14, 2025</span>
+            <span>四月 04, 2025</span>
             
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a></li></ul>
+
 
         </div>
         <div class="content markdown">
-            
+            <h1 id="PDF-解密与拆分操作指南"><a href="#PDF-解密与拆分操作指南" class="headerlink" title="PDF 解密与拆分操作指南"></a>PDF 解密与拆分操作指南</h1><h2 id="1-检查-PDF-加密状态"><a href="#1-检查-PDF-加密状态" class="headerlink" title="1. 检查 PDF 加密状态"></a><strong>1. 检查 PDF 加密状态</strong></h2><p>使用 <code>qpdf</code> 检查 PDF 文件的加密类型和权限：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qpdf --show-encryption input.pdf</span><br></pre></td></tr></table></figure>
+
+<h3 id="输出示例"><a href="#输出示例" class="headerlink" title="输出示例"></a><strong>输出示例</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">R = 6</span><br><span class="line">P = -1324</span><br><span class="line">User password = </span><br><span class="line">extract: allowed</span><br><span class="line">print: allowed</span><br><span class="line">modify anything: not allowed</span><br><span class="line">encryption method: AESv3</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>关键信息<ul>
+<li>文件使用 <strong>AES-256（AESv3）加密</strong>。</li>
+<li>无用户密码（<code>User password =</code>），但存在权限限制（禁止修改）。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="2-解密-PDF（移除权限限制）"><a href="#2-解密-PDF（移除权限限制）" class="headerlink" title="2. 解密 PDF（移除权限限制）"></a><strong>2. 解密 PDF（移除权限限制）</strong></h2><p>用 <code>qpdf</code> 移除加密和权限限制：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qpdf --decrypt input.pdf output_decrypted.pdf</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>效果</p>
+<ul>
+<li>生成 <code>output_decrypted.pdf</code>，文件可自由编辑、打印、复制。</li>
+</ul>
+</li>
+<li><p>验证解密成功</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qpdf --show-encryption output_decrypted.pdf</span><br></pre></td></tr></table></figure>
+
+<p>应输出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Encryption: none</span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h2 id="3-拆分-PDF-为单页"><a href="#3-拆分-PDF-为单页" class="headerlink" title="3. 拆分 PDF 为单页"></a><strong>3. 拆分 PDF 为单页</strong></h2><p>使用 <code>pdftk</code> 将解密后的 PDF 按页拆分为多个文件：</p>
+<BASH>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pdftk output_decrypted.pdf burst output page_%02d.pdf</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>输出文件<ul>
+<li><code>page_01.pdf</code>, <code>page_02.pdf</code>, …（按页码命名）。</li>
+</ul>
+</li>
+</ul>
+
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
                 <source type="audio/mpeg" src="">
@@ -101,7 +152,7 @@
     </div>
     
         <div class="side">
-            
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PDF-%E8%A7%A3%E5%AF%86%E4%B8%8E%E6%8B%86%E5%88%86%E6%93%8D%E4%BD%9C%E6%8C%87%E5%8D%97"><span class="toc-number">1.</span> <span class="toc-text">PDF 解密与拆分操作指南</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%A3%80%E6%9F%A5-PDF-%E5%8A%A0%E5%AF%86%E7%8A%B6%E6%80%81"><span class="toc-number">1.1.</span> <span class="toc-text">1. 检查 PDF 加密状态</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.1.1.</span> <span class="toc-text">输出示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%A7%A3%E5%AF%86-PDF%EF%BC%88%E7%A7%BB%E9%99%A4%E6%9D%83%E9%99%90%E9%99%90%E5%88%B6%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">2. 解密 PDF（移除权限限制）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%8B%86%E5%88%86-PDF-%E4%B8%BA%E5%8D%95%E9%A1%B5"><span class="toc-number">1.3.</span> <span class="toc-text">3. 拆分 PDF 为单页</span></a></li></ol></li></ol>
         </div>
     
 </div>
