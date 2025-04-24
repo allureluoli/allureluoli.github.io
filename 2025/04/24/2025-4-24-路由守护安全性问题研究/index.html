@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="二月,"> 
-    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,前端路由守卫的安全局限性：为什么权限验证必须依赖后端引言在现代Web开发架构中，前端路由守卫常被用于管理页面访问权限。这种机制虽然能提供良好的用户体验，但从安全角度来看存在根本性缺陷。本文将深入分析,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,前端路由守卫的安全局限性：为什么权限验证必须依赖后端前情提要我在使用Vue.js 框架开发应用时涉及到了鉴权部分，之前用的框架大都是全栈框架，以此为由，我注意到此框架自带名为路由守卫 的拦截机制，并,"> 
     <meta name="author" content="Allureluoli"> 
     <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -21,7 +21,7 @@
     
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:title" content="2025-4-24-路由守护安全性问题研究 - 二月の档案室"/>
-    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,前端路由守卫的安全局限性：为什么权限验证必须依赖后端引言在现代Web开发架构中，前端路由守卫常被用于管理页面访问权限。这种机制虽然能提供良好的用户体验，但从安全角度来看存在根本性缺陷。本文将深入分析,"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,前端路由守卫的安全局限性：为什么权限验证必须依赖后端前情提要我在使用Vue.js 框架开发应用时涉及到了鉴权部分，之前用的框架大都是全栈框架，以此为由，我注意到此框架自带名为路由守卫 的拦截机制，并,"/>
     
     
     
@@ -29,7 +29,7 @@
     <meta property="og:site_name" content="二月の档案室"/>
     <meta property="og:type" content="object"/>
     <meta property="og:title" content="2025-4-24-路由守护安全性问题研究 - 二月の档案室"/>
-    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,前端路由守卫的安全局限性：为什么权限验证必须依赖后端引言在现代Web开发架构中，前端路由守卫常被用于管理页面访问权限。这种机制虽然能提供良好的用户体验，但从安全角度来看存在根本性缺陷。本文将深入分析,"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,前端路由守卫的安全局限性：为什么权限验证必须依赖后端前情提要我在使用Vue.js 框架开发应用时涉及到了鉴权部分，之前用的框架大都是全栈框架，以此为由，我注意到此框架自带名为路由守卫 的拦截机制，并,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 
@@ -71,7 +71,8 @@
 
         </div>
         <div class="content markdown">
-            <h1 id="前端路由守卫的安全局限性：为什么权限验证必须依赖后端"><a href="#前端路由守卫的安全局限性：为什么权限验证必须依赖后端" class="headerlink" title="前端路由守卫的安全局限性：为什么权限验证必须依赖后端"></a>前端路由守卫的安全局限性：为什么权限验证必须依赖后端</h1><h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>在现代Web开发架构中，前端路由守卫常被用于管理页面访问权限。这种机制虽然能提供良好的用户体验，但从安全角度来看存在根本性缺陷。本文将深入分析前端权限控制的不可靠性，并探讨如何构建真正安全的权限验证体系。</p>
+            <h1 id="前端路由守卫的安全局限性：为什么权限验证必须依赖后端"><a href="#前端路由守卫的安全局限性：为什么权限验证必须依赖后端" class="headerlink" title="前端路由守卫的安全局限性：为什么权限验证必须依赖后端"></a>前端路由守卫的安全局限性：为什么权限验证必须依赖后端</h1><h3 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h3><p>我在使用<code>Vue.js</code> 框架开发应用时涉及到了鉴权部分，之前用的框架大都是全栈框架，以此为由，我注意到此框架自带名为<strong>路由守卫</strong> 的拦截机制，并对其原理部分和实际应用进行了深入研究。</p>
+<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>在现代Web开发架构中，前端路由守卫常被用于管理页面访问权限。这种机制虽然能提供良好的用户体验，但从安全角度来看存在根本性缺陷。本文将深入分析前端权限控制的不可靠性，并探讨如何构建真正安全的权限验证体系。</p>
 <ol>
 <li>前端路由守卫的运作机制与安全边界
 前端路由守卫通过在导航发生前执行权限检查来控制页面访问。这种机制本质上是在客户端环境中运行的，而客户端环境具有以下特点：</li>
@@ -152,7 +153,7 @@ API网关的权限检查
     </div>
     
         <div class="side">
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1%E5%AE%88%E5%8D%AB%E7%9A%84%E5%AE%89%E5%85%A8%E5%B1%80%E9%99%90%E6%80%A7%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9D%83%E9%99%90%E9%AA%8C%E8%AF%81%E5%BF%85%E9%A1%BB%E4%BE%9D%E8%B5%96%E5%90%8E%E7%AB%AF"><span class="toc-number">1.</span> <span class="toc-text">前端路由守卫的安全局限性：为什么权限验证必须依赖后端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">1.0.1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%AE%89%E5%85%A8%E8%BE%B9%E7%95%8C%E5%88%92%E5%88%86%E9%94%99%E8%AF%AF"><span class="toc-number">1.0.2.</span> <span class="toc-text">2.2 安全边界划分错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%9D%83%E9%99%90%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%9A%84%E5%88%86%E7%A6%BB"><span class="toc-number">1.0.3.</span> <span class="toc-text">2.3 权限与数据的分离</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%89%8D%E5%90%8E%E7%AB%AF%E5%8D%8F%E4%BD%9C%E7%9A%84%E5%AE%89%E5%85%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.0.4.</span> <span class="toc-text">3.2 前后端协作的安全模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E7%BA%B5%E6%B7%B1%E9%98%B2%E5%BE%A1%E7%AD%96%E7%95%A5"><span class="toc-number">1.0.5.</span> <span class="toc-text">3.3 纵深防御策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%8C%81%E7%BB%AD%E9%AA%8C%E8%AF%81%E6%9C%BA%E5%88%B6"><span class="toc-number">1.0.6.</span> <span class="toc-text">4.2 持续验证机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%AE%8C%E5%96%84%E7%9A%84%E7%9B%91%E6%8E%A7%E4%B8%8E%E5%AE%A1%E8%AE%A1"><span class="toc-number">1.0.7.</span> <span class="toc-text">4.3 完善的监控与审计</span></a></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1%E5%AE%88%E5%8D%AB%E7%9A%84%E5%AE%89%E5%85%A8%E5%B1%80%E9%99%90%E6%80%A7%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9D%83%E9%99%90%E9%AA%8C%E8%AF%81%E5%BF%85%E9%A1%BB%E4%BE%9D%E8%B5%96%E5%90%8E%E7%AB%AF"><span class="toc-number">1.</span> <span class="toc-text">前端路由守卫的安全局限性：为什么权限验证必须依赖后端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E6%83%85%E6%8F%90%E8%A6%81"><span class="toc-number">1.0.1.</span> <span class="toc-text">前情提要</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">1.0.2.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%AE%89%E5%85%A8%E8%BE%B9%E7%95%8C%E5%88%92%E5%88%86%E9%94%99%E8%AF%AF"><span class="toc-number">1.0.3.</span> <span class="toc-text">2.2 安全边界划分错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%9D%83%E9%99%90%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%9A%84%E5%88%86%E7%A6%BB"><span class="toc-number">1.0.4.</span> <span class="toc-text">2.3 权限与数据的分离</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%89%8D%E5%90%8E%E7%AB%AF%E5%8D%8F%E4%BD%9C%E7%9A%84%E5%AE%89%E5%85%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.0.5.</span> <span class="toc-text">3.2 前后端协作的安全模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E7%BA%B5%E6%B7%B1%E9%98%B2%E5%BE%A1%E7%AD%96%E7%95%A5"><span class="toc-number">1.0.6.</span> <span class="toc-text">3.3 纵深防御策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%8C%81%E7%BB%AD%E9%AA%8C%E8%AF%81%E6%9C%BA%E5%88%B6"><span class="toc-number">1.0.7.</span> <span class="toc-text">4.2 持续验证机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%AE%8C%E5%96%84%E7%9A%84%E7%9B%91%E6%8E%A7%E4%B8%8E%E5%AE%A1%E8%AE%A1"><span class="toc-number">1.0.8.</span> <span class="toc-text">4.3 完善的监控与审计</span></a></li></ol></li></ol></li></ol>
         </div>
     
 </div>
