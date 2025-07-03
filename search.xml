@@ -6610,4 +6610,27 @@ API网关的权限检查
         <tag>随笔</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2025-5-19-Hardhat速通</title>
+    <url>/2025/05/19/2025-5-19-Hardhat%E9%80%9F%E9%80%9A/</url>
+    <content><![CDATA[<h3 id="HardHat-速通"><a href="#HardHat-速通" class="headerlink" title="HardHat 速通"></a>HardHat 速通</h3>]]></content>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2025-7-4-解决路由模式BUG</title>
+    <url>/2025/07/04/2025-7-4-%E8%A7%A3%E5%86%B3%E8%B7%AF%E7%94%B1%E6%A8%A1%E5%BC%8FBUG/</url>
+    <content><![CDATA[<h3 id="in-use-BUG-fix"><a href="#in-use-BUG-fix" class="headerlink" title="in use BUG fix"></a>in use BUG fix</h3><ol>
+<li><code>编辑选项 -&gt; 设置 -&gt; 系统代理 -&gt; 绕过域/网络</code></li>
+</ol>
+<p>添加以下内容</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="string">&lt;local&gt;</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">&quot;*.bilibili.com&quot;</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">&quot;bilibili.com&quot;</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">&lt;local&gt;</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">&quot;*.b23.tv&quot;</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">&quot;b23.tv&quot;</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">&lt;local&gt;</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">&quot;bilivideo.com&quot;</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">&quot;*.bilivideo.com</span></span><br></pre></td></tr></table></figure>
+
+<p>思路：抓包查看b站api连接情况，理应b站全部内容走国内流量，但一些域名可能被解析为国外内容</p>
+]]></content>
+      <tags>
+        <tag>proxy</tag>
+      </tags>
+  </entry>
 </search>
