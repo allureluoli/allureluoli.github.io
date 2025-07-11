@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2025-7-12-尝试开发远古安卓软件 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,因为有需求 所以有了这次尝试由于种种原因（手机丢失… 卧室搬迁）
+我的 Ubuntu服务器移动了位置 ，而位于原址的网络处于停用状态。
+恢复使用的一大方案就是放置一台终端连接那边的网络，然后设置为D,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2025-7-12-尝试开发远古安卓软件 - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,因为有需求 所以有了这次尝试由于种种原因（手机丢失… 卧室搬迁）
+我的 Ubuntu服务器移动了位置 ，而位于原址的网络处于停用状态。
+恢复使用的一大方案就是放置一台终端连接那边的网络，然后设置为D,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2025-7-12-尝试开发远古安卓软件 - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,因为有需求 所以有了这次尝试由于种种原因（手机丢失… 卧室搬迁）
+我的 Ubuntu服务器移动了位置 ，而位于原址的网络处于停用状态。
+恢复使用的一大方案就是放置一台终端连接那边的网络，然后设置为D,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://blog.curesky.site"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2025-7-12-尝试开发远古安卓软件</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2025-7-12-尝试开发远古安卓软件</h1>
+        <div class="stuff">
+            <span>七月 12, 2025</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Kotlin/" rel="tag">Kotlin</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="因为有需求-所以有了这次尝试"><a href="#因为有需求-所以有了这次尝试" class="headerlink" title="因为有需求 所以有了这次尝试"></a>因为有需求 所以有了这次尝试</h3><p>由于种种原因（手机丢失… 卧室搬迁）</p>
+<p>我的 Ubuntu服务器移动了位置 ，而位于原址的网络处于停用状态。</p>
+<p>恢复使用的一大方案就是放置一台终端连接那边的网络，然后设置为DMZ主机。</p>
+<p>但是很显然，我现在不具备这个条件。</p>
+<p>所幸 2020年认识的 HLL(货拉拉)同学赠送了我一台 海信芯片(<code>Hi3798MV310</code>)的 <code>UNT402H</code></p>
+<p>此前尝试过获取<code>ROOT</code> 权限，刷入 Linux 或者启用一些终端之类的操作，均失败</p>
+<p>今天我想到了绝佳方案</p>
+<p>编译为 <code>arm</code>平台 的现成的 <code>frps</code> 完全有条件可以部署在这台设备上，然后我其他没有公网端口使用的设备向这里穿透就可以使用了。</p>
+<p>需要考虑的问题</p>
+<ul>
+<li>停电的可能 </li>
+<li>动态公网IP会重置</li>
+<li>无法直接操作此终端</li>
+</ul>
+<p>解决方案</p>
+<ul>
+<li><p>开机自启动</p>
+</li>
+<li><p>向固定域名发送<code>ip</code>地址，防止失联</p>
+</li>
+</ul>
+<p>大概折腾了五个小时</p>
+<p>先尝试 <code>adb</code> 连接，测试了<code>frps</code> 确实可行</p>
+<p>然后搞这个环境用了许久，<code>Android Studio</code> 我并不熟悉，算是踩了一点坑。</p>
+<p>这些折腾完大概花了三小时</p>
+<p>实际开发代码</p>
+<h3 id="MainActivity-kt"><a href="#MainActivity-kt" class="headerlink" title="MainActivity.kt"></a>MainActivity.kt</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.curesky.netserver</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.os.Bundle</span><br><span class="line"><span class="keyword">import</span> androidx.appcompat.app.AppCompatActivity</span><br><span class="line"><span class="keyword">import</span> java.io.File</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream</span><br><span class="line"><span class="keyword">import</span> java.io.IOException</span><br><span class="line"><span class="keyword">import</span> com.curesky.netserver.databinding.ActivityMainBinding</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MainActivity</span> : <span class="type">AppCompatActivity</span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> binding: ActivityMainBinding</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> frpsBinName = <span class="string">&quot;frps&quot;</span>      <span class="comment">// 可执行文件名</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> frpsConfigName = <span class="string">&quot;frps.ini&quot;</span> <span class="comment">// 配置文件</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        binding = ActivityMainBinding.inflate(layoutInflater)</span><br><span class="line">        setContentView(binding.root)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 初始化FRPS文件</span></span><br><span class="line">        initFrpsFiles()</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 直接执行 FRPS（不再依赖按钮点击）</span></span><br><span class="line">        runFrps()</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 可选：列出文件（调试用）</span></span><br><span class="line">        listPrivateFiles()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将assets中的frps文件复制到私有目录</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">initFrpsFiles</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 1. 创建bin目录（/data/data/包名/files/bin）</span></span><br><span class="line">            <span class="keyword">val</span> binDir = File(filesDir, <span class="string">&quot;bin&quot;</span>).apply &#123;</span><br><span class="line">                <span class="keyword">if</span> (!exists()) mkdirs()</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 2. 复制可执行文件</span></span><br><span class="line">            copyAssetToFile(frpsBinName, File(binDir, frpsBinName).apply &#123;</span><br><span class="line">                <span class="comment">// 添加执行权限（仅Linux有效）</span></span><br><span class="line">                setExecutable(<span class="literal">true</span>)</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="comment">// 3. 复制配置文件</span></span><br><span class="line">            copyAssetToFile(frpsConfigName, File(filesDir, frpsConfigName))</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e: Exception) &#123;</span><br><span class="line">            binding.textView.text = <span class="string">&quot;初始化FRPS失败: <span class="subst">$&#123;e.message&#125;</span>&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 从assets复制文件到目标位置</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">copyAssetToFile</span><span class="params">(assetName: <span class="type">String</span>, targetFile: <span class="type">File</span>)</span></span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            assets.<span class="keyword">open</span>(assetName).use &#123; input -&gt;</span><br><span class="line">                FileOutputStream(targetFile).use &#123; output -&gt;</span><br><span class="line">                    input.copyTo(output)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e: IOException) &#123;</span><br><span class="line">            <span class="keyword">throw</span> IOException(<span class="string">&quot;复制 <span class="variable">$assetName</span> 失败&quot;</span>, e)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 执行frps（需要处理权限问题）</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">runFrps</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">val</span> frpsPath = File(filesDir, <span class="string">&quot;bin/<span class="variable">$frpsBinName</span>&quot;</span>).absolutePath</span><br><span class="line">        <span class="keyword">val</span> configPath = File(filesDir, frpsConfigName).absolutePath</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 执行命令</span></span><br><span class="line"><span class="comment">//            binding.textView.append(&quot;\n\n🚀 [FRPS 服务]&quot;)</span></span><br><span class="line"></span><br><span class="line">            Runtime.getRuntime().exec(<span class="string">&quot;<span class="variable">$frpsPath</span> -c <span class="variable">$configPath</span>&quot;</span>)</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e: Exception) &#123;</span><br><span class="line">            binding.textView.append(<span class="string">&quot;\n\n❌ FRPS启动失败: <span class="subst">$&#123;e.message&#125;</span>&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 列出私有目录文件（调试用）</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">listPrivateFiles</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">val</span> sb = StringBuilder(<span class="string">&quot;📁 私有目录文件列表:\n\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 列出所有目录</span></span><br><span class="line">        listFilesInDirectory(filesDir, sb)</span><br><span class="line">        <span class="comment">// 显示结果</span></span><br><span class="line">        binding.textView.text = sb.toString()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">listFilesInDirectory</span><span class="params">(dir: <span class="type">File</span>, sb: <span class="type">StringBuilder</span>, indent: <span class="type">String</span> = <span class="string">&quot;&quot;</span>)</span></span> &#123;</span><br><span class="line">        dir.listFiles()?.forEach &#123; file -&gt;</span><br><span class="line">            <span class="keyword">val</span> prefix = <span class="keyword">if</span> (file.isDirectory) <span class="string">&quot;📂 &quot;</span> <span class="keyword">else</span> <span class="string">&quot;📄 &quot;</span></span><br><span class="line">            sb.append(<span class="string">&quot;<span class="variable">$indent</span><span class="variable">$prefix</span><span class="subst">$&#123;file.name&#125;</span>\n&quot;</span>)</span><br><span class="line">            <span class="keyword">if</span> (file.isDirectory) &#123;</span><br><span class="line">                listFilesInDirectory(file, sb, <span class="string">&quot;<span class="variable">$indent</span>    &quot;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="BootReceiver-java"><a href="#BootReceiver-java" class="headerlink" title="BootReceiver.java"></a>BootReceiver.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.curesky.netserver; <span class="comment">// 确保包名与 manifest 一致</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.content.BroadcastReceiver;</span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.content.Intent;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BootReceiver</span> <span class="keyword">extends</span> <span class="title class_">BroadcastReceiver</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onReceive</span><span class="params">(Context context, Intent intent)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) &#123;</span><br><span class="line">            <span class="comment">// 开机后启动 MainActivity</span></span><br><span class="line">            <span class="type">Intent</span> <span class="variable">launchIntent</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Intent</span>(context, MainActivity.class);</span><br><span class="line">            launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); <span class="comment">// 必须加！</span></span><br><span class="line">            context.startActivity(launchIntent);</span><br><span class="line"></span><br><span class="line">   </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="AndroidManifest-xml"><a href="#AndroidManifest-xml" class="headerlink" title="AndroidManifest.xml"></a>AndroidManifest.xml</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">manifest</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">&quot;http://schemas.android.com/tools&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">package</span>=<span class="string">&quot;com.curesky.netserver&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 权限 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.INTERNET&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.ACCESS_WIFI_STATE&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.RECEIVE_BOOT_COMPLETED&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.SYSTEM_ALERT_WINDOW&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.WRITE_SETTINGS&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">application</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:allowBackup</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:icon</span>=<span class="string">&quot;@mipmap/ic_launcher&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:label</span>=<span class="string">&quot;@string/app_name&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:theme</span>=<span class="string">&quot;@style/Theme.NetServer&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- MainActivity（入口） --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:name</span>=<span class="string">&quot;.MainActivity&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:exported</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.action.MAIN&quot;</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.category.LAUNCHER&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- 广播接收器：监听开机启动 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">receiver</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:name</span>=<span class="string">&quot;.BootReceiver&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:enabled</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:exported</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.action.BOOT_COMPLETED&quot;</span> /&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- 可选：监听用户解锁设备（某些设备需要） --&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.action.USER_PRESENT&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">receiver</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>以上三个内容基本是我开发的重点所在</p>
+<p>两个核心逻辑实现，和一个权限实现</p>
+<p>想总结些什么，但是身体还没调理好，所以仅能记录这些了。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%A0%E4%B8%BA%E6%9C%89%E9%9C%80%E6%B1%82-%E6%89%80%E4%BB%A5%E6%9C%89%E4%BA%86%E8%BF%99%E6%AC%A1%E5%B0%9D%E8%AF%95"><span class="toc-number">1.</span> <span class="toc-text">因为有需求 所以有了这次尝试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MainActivity-kt"><span class="toc-number">2.</span> <span class="toc-text">MainActivity.kt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BootReceiver-java"><span class="toc-number">3.</span> <span class="toc-text">BootReceiver.java</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AndroidManifest-xml"><span class="toc-number">4.</span> <span class="toc-text">AndroidManifest.xml</span></a></li></ol>
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
