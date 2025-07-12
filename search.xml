@@ -6675,6 +6675,68 @@ API网关的权限检查
       <tags>
         <tag>Android</tag>
         <tag>Kotlin</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2025-7-12-Android开发笔记</title>
+    <url>/2025/07/12/2025-7-12-Android%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h3 id="开发笔记"><a href="#开发笔记" class="headerlink" title="开发笔记"></a>开发笔记</h3><h2 id="🛠️-开发环境配置"><a href="#🛠️-开发环境配置" class="headerlink" title="🛠️ 开发环境配置"></a>🛠️ 开发环境配置</h2><h3 id="基础工具链"><a href="#基础工具链" class="headerlink" title="基础工具链"></a>基础工具链</h3><p>| 组件           | 版本要求       | 备注                          |
+| ————– | ————– | —————————– |
+| Android Studio | Flamingo 2022+ | 需支持 AGP 8.0                |
+| JDK            | 17+            | 推荐使用 Temurin 发行版       |
+| Gradle         | 8.0+           | 使用 Wrapper 确保版本一致     |
+| Android SDK    | API 19+        | 最低兼容 Android 4.4 (KitKat) |</p>
+<h3 id="关键依赖说明"><a href="#关键依赖说明" class="headerlink" title="关键依赖说明"></a>关键依赖说明</h3><figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">dependencies &#123;    </span><br><span class="line">    <span class="comment">// 基础框架    </span></span><br><span class="line">    implementation(libs.androidx.core.ktx)       </span><br><span class="line">    <span class="comment">// 提供 Kotlin 扩展 API    </span></span><br><span class="line">    implementation(libs.androidx.appcompat)     </span><br><span class="line">    <span class="comment">// 兼容性支持库    </span></span><br><span class="line">    implementation(libs.material)                </span><br><span class="line">    <span class="comment">// Material Design 组件    </span></span><br><span class="line">    <span class="comment">// 测试框架    </span></span><br><span class="line">    testImplementation(libs.junit)               <span class="comment">// 单元测试</span></span><br><span class="line">    androidTestImplementation(libs.androidx.junit)     <span class="comment">// 仪器化测试</span></span><br><span class="line">    androidTestImplementation(libs.androidx.espresso.core)  <span class="comment">// UI 自动化测试</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="基本的项目文件结构概况"><a href="#基本的项目文件结构概况" class="headerlink" title="基本的项目文件结构概况"></a><strong>基本的项目文件结构概况</strong></h3><p>一个标准的 Android 项目通常遵循以下目录结构（基于 <strong>Android Studio</strong> 默认模板）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">MyApp/</span><br><span class="line">├── app/                       <span class="comment"># 主模块（Module）</span></span><br><span class="line">│   ├── build.gradle           <span class="comment"># 模块级 Gradle 配置</span></span><br><span class="line">│   ├── src/</span><br><span class="line">│   │   ├── main/              <span class="comment"># 主代码和资源</span></span><br><span class="line">│   │   │   ├── AndroidManifest.xml  <span class="comment"># 应用配置入口</span></span><br><span class="line">│   │   │   ├── java/          <span class="comment"># Java/Kotlin 代码（包结构）</span></span><br><span class="line">│   │   │   ├── res/           <span class="comment"># 资源文件（布局、图片、字符串等）</span></span><br><span class="line">│   │   │   │   ├── drawable/  <span class="comment"># 图片和矢量图</span></span><br><span class="line">│   │   │   │   ├── layout/    <span class="comment"># XML 布局文件</span></span><br><span class="line">│   │   │   │   ├── values/    <span class="comment"># 字符串、颜色、样式等</span></span><br><span class="line">│   │   │   │   └── ...        </span><br><span class="line">│   │   │   └── assets/        <span class="comment"># 原始资源文件（如 JSON、字体）</span></span><br><span class="line">│   │   └── <span class="built_in">test</span>/              <span class="comment"># 单元测试代码</span></span><br><span class="line">│   └── ...</span><br><span class="line">├── gradle/                    <span class="comment"># Gradle 包装器配置</span></span><br><span class="line">├── build.gradle               <span class="comment"># 项目级 Gradle 配置</span></span><br><span class="line">└── settings.gradle            <span class="comment"># 模块管理（如引入子模块）</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-私有目录和公有目录"><a href="#1-私有目录和公有目录" class="headerlink" title="1. 私有目录和公有目录"></a><strong>1. 私有目录和公有目录</strong></h3><ul>
+<li>技术点：<ul>
+<li><strong>私有目录</strong>：<code>/data/data/&lt;package-name&gt;/</code>（内部存储），使用 <code>Context.getFilesDir()</code> 或 <code>getCacheDir()</code> 访问，无需权限，应用卸载时自动清除。</li>
+<li><strong>公有目录</strong>：如 <code>Downloads/</code>、<code>DCIM/</code> 等，通过 <code>Environment.getExternalStoragePublicDirectory()</code> 访问，需动态申请 <code>READ_EXTERNAL_STORAGE</code>&#x2F;<code>WRITE_EXTERNAL_STORAGE</code> 权限。</li>
+<li><strong>作用域存储（Scoped Storage）</strong>：Android 10+ 限制直接访问公有目录，需通过 <code>MediaStore</code> 或存储访问框架（SAF）操作文件。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-二进制文件的执行权限问题"><a href="#2-二进制文件的执行权限问题" class="headerlink" title="2. 二进制文件的执行权限问题"></a><strong>2. 二进制文件的执行权限问题</strong></h3><ul>
+<li>技术点：<ul>
+<li><strong>NDK&#x2F;JNI</strong>：原生二进制文件（如 <code>.so</code> 库）需放在 <code>jniLibs/</code> 目录，自动打包到 APK。</li>
+<li><strong>权限控制</strong>：Android 不允许直接执行外部存储中的二进制文件（如下载的 <code>.so</code> 或可执行文件），需先复制到私有目录（<code>/data/data/</code>）并通过 <code>chmod</code> 赋予执行权限。</li>
+<li><strong>安全风险</strong>：动态加载外部代码需谨慎，避免恶意代码注入。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-AndroidManifest-xml-的重要性和使用方法"><a href="#3-AndroidManifest-xml-的重要性和使用方法" class="headerlink" title="3. AndroidManifest.xml 的重要性和使用方法"></a><strong>3. AndroidManifest.xml 的重要性和使用方法</strong></h3><ul>
+<li>关键技术：<ul>
+<li><strong>四大组件声明</strong>：<code>&lt;activity&gt;</code>、<code>&lt;service&gt;</code>、<code>&lt;receiver&gt;</code>、<code>&lt;provider&gt;</code> 必须在此注册。</li>
+<li><strong>权限管理</strong>：声明应用所需权限（如 <code>&lt;uses-permission android:name=&quot;android.permission.CAMERA&quot;/&gt;</code>）。</li>
+<li><strong>Intent Filter</strong>：定义组件响应隐式 Intent 的规则（如主 Activity 的 <code>LAUNCHER</code> 类别）。</li>
+<li><strong>应用配置</strong>：包名、版本号、SDK 版本限制（<code>&lt;uses-sdk&gt;</code>）、硬件特性要求（如 <code>&lt;uses-feature&gt;</code>）。</li>
+<li><strong>特殊属性</strong>：<code>android:exported</code> 控制组件是否允许外部应用访问（Android 12+ 强化限制）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-buildFeatures-viewBinding-true"><a href="#4-buildFeatures-viewBinding-true" class="headerlink" title="4. buildFeatures { viewBinding true }"></a><strong>4. buildFeatures { viewBinding true }</strong></h3><ul>
+<li>技术点：<ul>
+<li><strong>视图绑定（ViewBinding）</strong>：替代 <code>findViewById</code>，为每个 XML 布局生成绑定类，提供类型安全的视图引用。</li>
+<li><strong>启用方式</strong>：在 <code>build.gradle</code> 中配置：</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    buildFeatures &#123;</span><br><span class="line">        viewBinding <span class="keyword">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>优势</strong>：避免空指针异常，减少模板代码；与 DataBinding 相比无性能开销（但缺少数据绑定功能）。</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> binding: ActivityMainBinding</span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">    binding = ActivityMainBinding.inflate(layoutInflater)</span><br><span class="line">    setContentView(binding.root)</span><br><span class="line">    binding.textView.text = <span class="string">&quot;Hello ViewBinding!&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>Android</tag>
+        <tag>Kotlin</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
 </search>
