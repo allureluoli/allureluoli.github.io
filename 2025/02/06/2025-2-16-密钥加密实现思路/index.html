@@ -114,9 +114,7 @@
 <li><p>用户输入序列号后，客户端采集设备指纹（非MAC&#x2F;IP）并签名，发送至服务端。</p>
 </li>
 <li><p>请求参数：</p>
-<p>json</p>
-<p>复制</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;  </span><br><span class="line">  &quot;serial_number&quot;: &quot;ABCD-1234-EFGH&quot;,  </span><br><span class="line">  &quot;device_fingerprint&quot;: &quot;&lt;TEE签名后的硬件哈希&gt;&quot;,  </span><br><span class="line">  &quot;nonce&quot;: &quot;&lt;服务端预下发的一次性随机数&gt;&quot;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure></li>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span>  </span><br><span class="line">  <span class="attr">&quot;serial_number&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ABCD-1234-EFGH&quot;</span><span class="punctuation">,</span>  </span><br><span class="line">  <span class="attr">&quot;device_fingerprint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&lt;TEE签名后的硬件哈希&gt;&quot;</span><span class="punctuation">,</span>  </span><br><span class="line">  <span class="attr">&quot;nonce&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&lt;服务端预下发的一次性随机数&gt;&quot;</span>  </span><br><span class="line"><span class="punctuation">&#125;</span>  </span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 <li><p><strong>服务端鉴权与响应</strong></p>
@@ -124,9 +122,7 @@
 <li><p>校验序列号有效性、设备指纹合法性、Nonce是否匹配。</p>
 </li>
 <li><p>通过后生成激活凭证：</p>
-<p>json</p>
-<p>复制</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;  </span><br><span class="line">  &quot;expire_time&quot;: &quot;&lt;到期时间戳&gt;&quot;,  </span><br><span class="line">  &quot;license_data&quot;: &quot;&lt;功能权限代码&gt;&quot;,  </span><br><span class="line">  &quot;signature&quot;: &quot;&lt;RSA私钥签名的(expire_time+license_data+nonce)&gt;&quot;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span>  </span><br><span class="line">  <span class="attr">&quot;expire_time&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&lt;到期时间戳&gt;&quot;</span><span class="punctuation">,</span>  </span><br><span class="line">  <span class="attr">&quot;license_data&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&lt;功能权限代码&gt;&quot;</span><span class="punctuation">,</span>  </span><br><span class="line">  <span class="attr">&quot;signature&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&lt;RSA私钥签名的(expire_time+license_data+nonce)&gt;&quot;</span>  </span><br><span class="line"><span class="punctuation">&#125;</span>  </span><br></pre></td></tr></table></figure>
 </li>
 <li><p>响应数据通过TLS 1.3加密通道返回。</p>
 </li>

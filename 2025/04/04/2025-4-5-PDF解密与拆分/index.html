@@ -81,9 +81,9 @@
         </div>
         <div class="content markdown">
             <h1 id="PDF-解密与拆分操作指南"><a href="#PDF-解密与拆分操作指南" class="headerlink" title="PDF 解密与拆分操作指南"></a>PDF 解密与拆分操作指南</h1><h2 id="1-检查-PDF-加密状态"><a href="#1-检查-PDF-加密状态" class="headerlink" title="1. 检查 PDF 加密状态"></a><strong>1. 检查 PDF 加密状态</strong></h2><p>使用 <code>qpdf</code> 检查 PDF 文件的加密类型和权限：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qpdf --show-encryption input.pdf</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qpdf --show-encryption input.pdf</span><br></pre></td></tr></table></figure>
 
-<h3 id="输出示例"><a href="#输出示例" class="headerlink" title="输出示例"></a><strong>输出示例</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">R = 6</span><br><span class="line">P = -1324</span><br><span class="line">User password = </span><br><span class="line">extract: allowed</span><br><span class="line">print: allowed</span><br><span class="line">modify anything: not allowed</span><br><span class="line">encryption method: AESv3</span><br></pre></td></tr></table></figure>
+<h3 id="输出示例"><a href="#输出示例" class="headerlink" title="输出示例"></a><strong>输出示例</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">R = 6</span><br><span class="line">P = -1324</span><br><span class="line">User password = </span><br><span class="line">extract: allowed</span><br><span class="line"><span class="built_in">print</span>: allowed</span><br><span class="line">modify anything: not allowed</span><br><span class="line">encryption method: AESv3</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>关键信息<ul>
@@ -94,7 +94,7 @@
 </ul>
 <hr>
 <h2 id="2-解密-PDF（移除权限限制）"><a href="#2-解密-PDF（移除权限限制）" class="headerlink" title="2. 解密 PDF（移除权限限制）"></a><strong>2. 解密 PDF（移除权限限制）</strong></h2><p>用 <code>qpdf</code> 移除加密和权限限制：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qpdf --decrypt input.pdf output_decrypted.pdf</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qpdf --decrypt input.pdf output_decrypted.pdf</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><p>效果</p>
@@ -103,16 +103,16 @@
 </ul>
 </li>
 <li><p>验证解密成功</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qpdf --show-encryption output_decrypted.pdf</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qpdf --show-encryption output_decrypted.pdf</span><br></pre></td></tr></table></figure>
 
 <p>应输出</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Encryption: none</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Encryption: none</span><br></pre></td></tr></table></figure></li>
 </ul>
 <hr>
 <h2 id="3-拆分-PDF-为单页"><a href="#3-拆分-PDF-为单页" class="headerlink" title="3. 拆分 PDF 为单页"></a><strong>3. 拆分 PDF 为单页</strong></h2><p>使用 <code>pdftk</code> 将解密后的 PDF 按页拆分为多个文件：</p>
 <BASH>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pdftk output_decrypted.pdf burst output page_%02d.pdf</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pdftk output_decrypted.pdf burst output page_%02d.pdf</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>输出文件<ul>
