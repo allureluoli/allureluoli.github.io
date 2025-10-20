@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2025-10-21-Uniswap-V2-工厂合约 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,工厂合约代码及其分析12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2025-10-21-Uniswap-V2-工厂合约 - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,工厂合约代码及其分析12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2025-10-21-Uniswap-V2-工厂合约 - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,工厂合约代码及其分析12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://blog.curesky.site"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2025-10-21-Uniswap-V2-工厂合约</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2025-10-21-Uniswap-V2-工厂合约</h1>
+        <div class="stuff">
+            <span>十月 20, 2025</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Solidity/" rel="tag">Solidity</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Web3/" rel="tag">Web3</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="工厂合约代码及其分析"><a href="#工厂合约代码及其分析" class="headerlink" title="工厂合约代码及其分析"></a>工厂合约代码及其分析</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity =0.5.16;</span><br><span class="line"></span><br><span class="line">import &#x27;./interfaces/IUniswapV2Factory.sol&#x27;;</span><br><span class="line">import &#x27;./UniswapV2Pair.sol&#x27;;</span><br><span class="line"></span><br><span class="line">contract UniswapV2Factory is IUniswapV2Factory &#123;</span><br><span class="line">    address public feeTo;</span><br><span class="line">    address public feeToSetter;</span><br><span class="line"></span><br><span class="line">    mapping(address =&gt; mapping(address =&gt; address)) public getPair;</span><br><span class="line">    address[] public allPairs;</span><br><span class="line"></span><br><span class="line">    event PairCreated(address indexed token0, address indexed token1, address pair, uint);</span><br><span class="line"></span><br><span class="line">    constructor(address _feeToSetter) public &#123;</span><br><span class="line">        feeToSetter = _feeToSetter;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function allPairsLength() external view returns (uint) &#123;</span><br><span class="line">        return allPairs.length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function createPair(address tokenA, address tokenB) external returns (address pair) &#123;</span><br><span class="line">        require(tokenA != tokenB, &#x27;UniswapV2: IDENTICAL_ADDRESSES&#x27;);</span><br><span class="line">        (address token0, address token1) = tokenA &lt; tokenB ? (tokenA, tokenB) : (tokenB, tokenA);</span><br><span class="line">        require(token0 != address(0), &#x27;UniswapV2: ZERO_ADDRESS&#x27;);</span><br><span class="line">        require(getPair[token0][token1] == address(0), &#x27;UniswapV2: PAIR_EXISTS&#x27;); // single check is sufficient</span><br><span class="line">        bytes memory bytecode = type(UniswapV2Pair).creationCode;</span><br><span class="line">        bytes32 salt = keccak256(abi.encodePacked(token0, token1));</span><br><span class="line">        assembly &#123;</span><br><span class="line">            pair := create2(0, add(bytecode, 32), mload(bytecode), salt)</span><br><span class="line">        &#125;</span><br><span class="line">        IUniswapV2Pair(pair).initialize(token0, token1);</span><br><span class="line">        getPair[token0][token1] = pair;</span><br><span class="line">        getPair[token1][token0] = pair; // populate mapping in the reverse direction</span><br><span class="line">        allPairs.push(pair);</span><br><span class="line">        emit PairCreated(token0, token1, pair, allPairs.length);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function setFeeTo(address _feeTo) external &#123;</span><br><span class="line">        require(msg.sender == feeToSetter, &#x27;UniswapV2: FORBIDDEN&#x27;);</span><br><span class="line">        feeTo = _feeTo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function setFeeToSetter(address _feeToSetter) external &#123;</span><br><span class="line">        require(msg.sender == feeToSetter, &#x27;UniswapV2: FORBIDDEN&#x27;);</span><br><span class="line">        feeToSetter = _feeToSetter;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-合约基础结构"><a href="#1-合约基础结构" class="headerlink" title="1. 合约基础结构"></a>1. 合约基础结构</h2><p><strong>状态变量</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">address public feeTo;          // 协议费用接收地址</span><br><span class="line"></span><br><span class="line">address public feeToSetter;    // 有权设置 feeTo 的地址</span><br><span class="line"></span><br><span class="line">mapping(address =&gt; mapping(address =&gt; address)) public getPair;  // 代币对到交易对地址的映射</span><br><span class="line"></span><br><span class="line">address[] public allPairs;     // 所有已创建交易对的数组</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-核心功能：createPair"><a href="#2-核心功能：createPair" class="headerlink" title="2. 核心功能：createPair"></a>2. 核心功能：createPair</h2><h3 id="输入验证"><a href="#输入验证" class="headerlink" title="输入验证"></a>输入验证</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">require(tokenA != tokenB, &#x27;UniswapV2: IDENTICAL_ADDRESSES&#x27;);</span><br><span class="line"></span><br><span class="line">(address token0, address token1) = tokenA &lt; tokenB ? (tokenA, tokenB) : (tokenB, tokenA);</span><br><span class="line"></span><br><span class="line">require(token0 != address(0), &#x27;UniswapV2: ZERO_ADDRESS&#x27;);</span><br><span class="line"></span><br><span class="line">require(getPair[token0][token1] == address(0), &#x27;UniswapV2: PAIR_EXISTS&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>关键设计</strong>：</p>
+<ul>
+<li>代币地址标准化排序（token0 &lt; token1）</li>
+<li>防止重复创建相同交易对</li>
+<li>零地址检查</li>
+</ul>
+<h3 id="CREATE2-确定性部署"><a href="#CREATE2-确定性部署" class="headerlink" title="CREATE2 确定性部署"></a>CREATE2 确定性部署</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">bytes memory bytecode = type(UniswapV2Pair).creationCode;</span><br><span class="line"></span><br><span class="line">bytes32 salt = keccak256(abi.encodePacked(token0, token1));</span><br><span class="line"></span><br><span class="line">assembly &#123;</span><br><span class="line"></span><br><span class="line">    pair := create2(0, add(bytecode, 32), mload(bytecode), salt)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>CREATE2 的优势</strong>：</p>
+<ul>
+<li>相同代币对总是部署到相同地址</li>
+<li>便于前端预测交易对地址</li>
+<li>节省 Gas（避免重复部署）</li>
+</ul>
+<h3 id="初始化交易对"><a href="#初始化交易对" class="headerlink" title="初始化交易对"></a>初始化交易对</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IUniswapV2Pair(pair).initialize(token0, token1);</span><br></pre></td></tr></table></figure>
+
+<h3 id="更新状态"><a href="#更新状态" class="headerlink" title="更新状态"></a>更新状态</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">getPair[token0][token1] = pair;</span><br><span class="line"></span><br><span class="line">getPair[token1][token0] = pair; // 反向映射</span><br><span class="line"></span><br><span class="line">allPairs.push(pair);</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-费用管理机制"><a href="#3-费用管理机制" class="headerlink" title="3. 费用管理机制"></a>3. 费用管理机制</h2><h3 id="设置协议费用接收地址"><a href="#设置协议费用接收地址" class="headerlink" title="设置协议费用接收地址"></a>设置协议费用接收地址</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function setFeeTo(address _feeTo) external &#123;</span><br><span class="line"></span><br><span class="line">    require(msg.sender == feeToSetter, &#x27;UniswapV2: FORBIDDEN&#x27;);</span><br><span class="line"></span><br><span class="line">    feeTo = _feeTo;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="转移权限管理"><a href="#转移权限管理" class="headerlink" title="转移权限管理"></a>转移权限管理</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function setFeeToSetter(address _feeToSetter) external &#123;</span><br><span class="line"></span><br><span class="line">    require(msg.sender == feeToSetter, &#x27;UniswapV2: FORBIDDEN&#x27;);</span><br><span class="line"></span><br><span class="line">    feeToSetter = _feeToSetter;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>权限模型</strong>：</p>
+<ul>
+<li>只有 <code>feeToSetter</code> 可以设置 <code>feeTo</code></li>
+<li><code>feeToSetter</code> 可以将权限转移给其他地址</li>
+</ul>
+<h2 id="4-查询功能"><a href="#4-查询功能" class="headerlink" title="4. 查询功能"></a>4. 查询功能</h2><h3 id="获取交易对数量"><a href="#获取交易对数量" class="headerlink" title="获取交易对数量"></a>获取交易对数量</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function allPairsLength() external view returns (uint) &#123;</span><br><span class="line"></span><br><span class="line">    return allPairs.length;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="通过代币地址查询交易对"><a href="#通过代币地址查询交易对" class="headerlink" title="通过代币地址查询交易对"></a>通过代币地址查询交易对</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 通过 public mapping 自动生成查询函数</span><br><span class="line"></span><br><span class="line">getPair[token0][token1]  // 返回交易对地址</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-核心设计特点"><a href="#5-核心设计特点" class="headerlink" title="5. 核心设计特点"></a>5. 核心设计特点</h2><h3 id="确定性地址计算"><a href="#确定性地址计算" class="headerlink" title="确定性地址计算"></a>确定性地址计算</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 交易对地址计算公式：</span><br><span class="line"></span><br><span class="line">address = create2(0, bytecode, salt)</span><br><span class="line"></span><br><span class="line">salt = keccak256(abi.encodePacked(token0, token1))</span><br></pre></td></tr></table></figure>
+
+<h3 id="双向映射支持"><a href="#双向映射支持" class="headerlink" title="双向映射支持"></a>双向映射支持</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">getPair[token0][token1] = pair;</span><br><span class="line"></span><br><span class="line">getPair[token1][token0] = pair; // 支持反向查询</span><br></pre></td></tr></table></figure>
+
+<h3 id="最小权限原则"><a href="#最小权限原则" class="headerlink" title="最小权限原则"></a>最小权限原则</h3><ul>
+<li>只有工厂合约可以创建交易对</li>
+<li>只有 <code>feeToSetter</code> 可以修改费用设置</li>
+</ul>
+<h2 id="6-与交易对合约的交互"><a href="#6-与交易对合约的交互" class="headerlink" title="6. 与交易对合约的交互"></a>6. 与交易对合约的交互</h2><p>当交易对合约需要查询费用设置时：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 在 UniswapV2Pair 的 _mintFee 函数中</span><br><span class="line"></span><br><span class="line">address feeTo = IUniswapV2Factory(factory).feeTo();</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-安全性考虑"><a href="#7-安全性考虑" class="headerlink" title="7. 安全性考虑"></a>7. 安全性考虑</h2><p><strong>重放攻击防护</strong>：通过映射检查确保每个交易对只创建一次</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require(getPair[token0][token1] == address(0), &#x27;UniswapV2: PAIR_EXISTS&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>权限控制</strong>：严格的权限验证防止未授权操作</p>
+<p><strong>输入验证</strong>：全面的参数检查确保合约状态一致性</p>
+<p>这个工厂合约是 Uniswap V2 生态系统的核心枢纽，负责管理所有交易对的创建和协议级别的费用设置。其简洁而强大的设计为整个 DEX 提供了可靠的基础设施。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%8E%82%E5%90%88%E7%BA%A6%E4%BB%A3%E7%A0%81%E5%8F%8A%E5%85%B6%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">工厂合约代码及其分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%90%88%E7%BA%A6%E5%9F%BA%E7%A1%80%E7%BB%93%E6%9E%84"><span class="toc-number"></span> <span class="toc-text">1. 合约基础结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD%EF%BC%9AcreatePair"><span class="toc-number"></span> <span class="toc-text">2. 核心功能：createPair</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E9%AA%8C%E8%AF%81"><span class="toc-number">1.</span> <span class="toc-text">输入验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CREATE2-%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%83%A8%E7%BD%B2"><span class="toc-number">2.</span> <span class="toc-text">CREATE2 确定性部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E4%BA%A4%E6%98%93%E5%AF%B9"><span class="toc-number">3.</span> <span class="toc-text">初始化交易对</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E7%8A%B6%E6%80%81"><span class="toc-number">4.</span> <span class="toc-text">更新状态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%B4%B9%E7%94%A8%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6"><span class="toc-number"></span> <span class="toc-text">3. 费用管理机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%8D%8F%E8%AE%AE%E8%B4%B9%E7%94%A8%E6%8E%A5%E6%94%B6%E5%9C%B0%E5%9D%80"><span class="toc-number">1.</span> <span class="toc-text">设置协议费用接收地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E7%A7%BB%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">转移权限管理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%9F%A5%E8%AF%A2%E5%8A%9F%E8%83%BD"><span class="toc-number"></span> <span class="toc-text">4. 查询功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E4%BA%A4%E6%98%93%E5%AF%B9%E6%95%B0%E9%87%8F"><span class="toc-number">1.</span> <span class="toc-text">获取交易对数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E4%BB%A3%E5%B8%81%E5%9C%B0%E5%9D%80%E6%9F%A5%E8%AF%A2%E4%BA%A4%E6%98%93%E5%AF%B9"><span class="toc-number">2.</span> <span class="toc-text">通过代币地址查询交易对</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%A0%B8%E5%BF%83%E8%AE%BE%E8%AE%A1%E7%89%B9%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">5. 核心设计特点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A1%AE%E5%AE%9A%E6%80%A7%E5%9C%B0%E5%9D%80%E8%AE%A1%E7%AE%97"><span class="toc-number">1.</span> <span class="toc-text">确定性地址计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E5%90%91%E6%98%A0%E5%B0%84%E6%94%AF%E6%8C%81"><span class="toc-number">2.</span> <span class="toc-text">双向映射支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E6%9D%83%E9%99%90%E5%8E%9F%E5%88%99"><span class="toc-number">3.</span> <span class="toc-text">最小权限原则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E4%B8%8E%E4%BA%A4%E6%98%93%E5%AF%B9%E5%90%88%E7%BA%A6%E7%9A%84%E4%BA%A4%E4%BA%92"><span class="toc-number"></span> <span class="toc-text">6. 与交易对合约的交互</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%AE%89%E5%85%A8%E6%80%A7%E8%80%83%E8%99%91"><span class="toc-number"></span> <span class="toc-text">7. 安全性考虑</span></a>
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
