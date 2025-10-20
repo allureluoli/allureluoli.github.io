@@ -6761,4 +6761,73 @@ API网关的权限检查
         <tag>Rust</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2025-9-3-市赛wp</title>
+    <url>/2025/09/03/2025-9-3-%E5%B8%82%E8%B5%9Bwp/</url>
+    <content><![CDATA[<h3 id="CRACKME-WP"><a href="#CRACKME-WP" class="headerlink" title="CRACKME WP"></a>CRACKME WP</h3><p>这题是逆向题</p>
+<p>我们先下载拿到题目 4.crackme.exe</p>
+<p><img src="/img/image/%E5%9B%BE%E7%89%871.png" alt="img"></p>
+<p>导入IDA后进入题目</p>
+<p><img src="/img/image/%E5%9B%BE%E7%89%872.png" alt="img"></p>
+<p>观察题目发现是对比字符串</p>
+<p>猜测密文就是flag</p>
+<p>观察流程图</p>
+<p><img src="/img/image/%E5%9B%BE%E7%89%873.png" alt="img"></p>
+<p>观察汇编代码</p>
+<p>我们尝试搜索字符串</p>
+<p><img src="/img/image/%E5%9B%BE%E7%89%874.png" alt="img"></p>
+<p>确定代码</p>
+<p><img src="/img/image/%E5%9B%BE%E7%89%875.png" alt="img"></p>
+<p>生成伪C代码</p>
+<p><img src="/img/image/%E5%9B%BE%E7%89%876.png" alt="img"></p>
+<p>发现加密后的密文 :C T2V&lt;S7\+[4U&gt;Z*A</p>
+<p>但加密是可逆的</p>
+<p>重点观察函数encrypt</p>
+<p><img src="/img/image/%E5%9B%BE%E7%89%877.png" alt="img"></p>
+<p>根据逻辑写出解密代码</p>
+<p>这个是 ****流密码加密****，使用前一个字节的加密结果作为下一个字节的密钥</p>
+<p><img src="/img/image/%E5%9B%BE%E7%89%878.png" alt="img"></p>
+<p>破解代码</p>
+<p>运行得到flag</p>
+<p> <img src="/img/image/%E5%9B%BE%E7%89%879.png" alt="img"></p>
+<p> 注意修改 \ 为x 符合flag提交格式</p>
+<h3 id="量子迷宫"><a href="#量子迷宫" class="headerlink" title="量子迷宫"></a>量子迷宫</h3><p>解压题目发现两个文件</p>
+<p> <img src="/img/image/%E5%9B%BE%E7%89%8710.png" alt="img"></p>
+<p>文件内容：</p>
+<p> <img src="/img/image/%E5%9B%BE%E7%89%8711.png" alt="img"></p>
+<p>阅读文件内容</p>
+<p><code>The full basis sequence is stored in the quantum system, but only a portion is revealed here as a hint.</code></p>
+<p>告诉我们完整的量子态密码在系统中</p>
+<p>我猜测在pdf的元数据中</p>
+<p>使用 exiftool 查看元数据</p>
+<p> <img src="/img/image/%E5%9B%BE%E7%89%8712.png" alt="img"></p>
+<p>找到了关键信息 </p>
+<p>1011100001101111100011100011101111011000011101101000100101001100110111100101011101010001100011110100</p>
+<p>题目提示这个关键序列是一部分</p>
+<p>所以 从量子系统推导出的基序列（1000位）应该与这个片段部分匹配</p>
+<p>去搜了搜关键算法</p>
+<p><strong>1.</strong> ****从*<em><strong>quantum_system.bin</strong></em>*推导基序列****：
+每个字节（量子态）对应一个基：</p>
+<p>o 如果量子态值为0或1（即Z基编码），则基为0（Z基）。</p>
+<p>o 如果量子态值为2或3（即X基编码），则基为1（X基）。</p>
+<p><strong>2.</strong> ****解码量子态得到原始密钥比特****：
+对于每个量子态（索引i）：</p>
+<p>o 如果基序列[i]为0（Z基）：</p>
+<p>§ 量子态&#x3D;0 → 比特0</p>
+<p>§ 量子态&#x3D;1 → 比特1</p>
+<p>o 如果基序列[i]为1（X基）：</p>
+<p>§ 量子态&#x3D;2 → 比特0</p>
+<p>§ 量子态&#x3D;3 → 比特1</p>
+<p>根据算法写出解密脚本</p>
+<p>完整脚本截图如下</p>
+<p> <img src="/img/image/%E5%9B%BE%E7%89%8713.png" alt="img"></p>
+<p> <img src="/img/image/%E5%9B%BE%E7%89%8714.png" alt="img"></p>
+<p>运行脚本得到flag</p>
+<p> <img src="/img/image/%E5%9B%BE%E7%89%8715.png" alt="img"></p>
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>CTF</tag>
+      </tags>
+  </entry>
 </search>
