@@ -6989,7 +6989,7 @@ API网关的权限检查
 <p>使用两个工具</p>
 <ul>
 <li>fastcoll<ul>
-<li>FastColl 是一个专门用于生成MD5碰撞的著名工具，由Marc Stevens开发。它可以快速生成两个具有相同MD5哈希值但内容不同的文件。</li>
+<li>FastColl 是一个专门用于生成MD5碰撞的著名工具，由Marc Stevens（埃因霍芬理工大学）开发。它可以快速生成两个具有相同MD5哈希值但内容不同的文件。</li>
 </ul>
 </li>
 <li>tail<ul>
@@ -7028,6 +7028,52 @@ API网关的权限检查
       <tags>
         <tag>网络安全</tag>
         <tag>php</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2025-10-25-Python实现TOTP</title>
+    <url>/2025/10/25/2025-10-25-Python%E5%AE%9E%E7%8E%B0TOTP/</url>
+    <content><![CDATA[<h3 id="用-Python-实现-TOTP（基于时间的一次性密码）"><a href="#用-Python-实现-TOTP（基于时间的一次性密码）" class="headerlink" title="用 Python 实现 TOTP（基于时间的一次性密码）"></a>用 Python 实现 TOTP（基于时间的一次性密码）</h3><p>一、什么是 TOTP？TOTP 是 基于时间的一次性密码，其核心思想是：</p>
+<ul>
+<li>共享密钥（Shared Secret）：用户与服务端共享一个 Base32 编码的密钥。</li>
+<li>当前时间：以 30 秒为一个时间步（interval）。</li>
+<li>HMAC-SHA1 算法：将时间计数器与密钥进行 HMAC 运算，生成动态验证码。</li>
+</ul>
+<p>公式：<code>TOTP = HOTP(K, T)</code>，其中<code> T = floor((当前时间 - T0) / 30)</code></p>
+<p>二、完整代码实现</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> hmac</span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"><span class="comment"># 非此次重点</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">base32_decode</span>(<span class="params">secret_b32</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Base32 解码实现&quot;&quot;&quot;</span></span><br><span class="line">    base32_chars = <span class="string">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ234567&quot;</span></span><br><span class="line">    base32_map = &#123;char: i <span class="keyword">for</span> i, char <span class="keyword">in</span> <span class="built_in">enumerate</span>(base32_chars)&#125;</span><br><span class="line">    </span><br><span class="line">    secret_b32 = secret_b32.upper().replace(<span class="string">&#x27;=&#x27;</span>, <span class="string">&#x27;&#x27;</span>).replace(<span class="string">&#x27; &#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(secret_b32) % <span class="number">8</span> != <span class="number">0</span>:</span><br><span class="line">        secret_b32 += <span class="string">&#x27;=&#x27;</span> * (<span class="number">8</span> - <span class="built_in">len</span>(secret_b32) % <span class="number">8</span>)</span><br><span class="line">    </span><br><span class="line">    binary_str = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> char <span class="keyword">in</span> secret_b32:</span><br><span class="line">        <span class="keyword">if</span> char == <span class="string">&#x27;=&#x27;</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        binary_str += <span class="built_in">format</span>(base32_map[char], <span class="string">&#x27;05b&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    result = <span class="built_in">bytearray</span>()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(binary_str), <span class="number">8</span>):</span><br><span class="line">        byte_str = binary_str[i:i+<span class="number">8</span>]</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(byte_str) == <span class="number">8</span>:</span><br><span class="line">            result.append(<span class="built_in">int</span>(byte_str, <span class="number">2</span>))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">bytes</span>(result)</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ul>
+<li>Base32 使用 A-Z 和 2-7 共 32 个字符。</li>
+<li>每 5 位表示 1 字节，8 个字符 &#x3D; 40 位 &#x3D; 5 字节。</li>
+<li>去除 &#x3D; 填充后补齐为 8 的倍数。</li>
+</ul>
+<p>TOTP 主类</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">TOTP</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, secret_b32, digits=<span class="number">6</span>, interval=<span class="number">30</span>, digest=hashlib.sha1</span>):</span><br><span class="line">        self.secret = base32_decode(secret_b32)  <span class="comment"># 解码为字节</span></span><br><span class="line">        self.digits = digits</span><br><span class="line">        self.interval = interval</span><br><span class="line">        self.digest = digest</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">timecode</span>(<span class="params">self, for_time=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;计算时间计数器 T = floor(unix_time / interval)&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> for_time <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            for_time = datetime.now()</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">hasattr</span>(for_time, <span class="string">&#x27;timestamp&#x27;</span>):</span><br><span class="line">            timestamp = for_time.timestamp()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            timestamp = time.mktime(for_time.timetuple())</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">int</span>(timestamp // self.interval)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">generate_otp</span>(<span class="params">self, counter</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;HOTP 算法核心：HMAC + 动态截断&quot;&quot;&quot;</span></span><br><span class="line">        counter_bytes = struct.pack(<span class="string">&#x27;&gt;Q&#x27;</span>, counter)  <span class="comment"># 8字节大端</span></span><br><span class="line">        </span><br><span class="line">        hmac_result = hmac.new(self.secret, counter_bytes, self.digest).digest()</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 动态截断（RFC 4226）</span></span><br><span class="line">        offset = hmac_result[-<span class="number">1</span>] &amp; <span class="number">0x0F</span></span><br><span class="line">        binary_code = (</span><br><span class="line">            ((hmac_result[offset] &amp; <span class="number">0x7F</span>) &lt;&lt; <span class="number">24</span>) |</span><br><span class="line">            ((hmac_result[offset + <span class="number">1</span>] &amp; <span class="number">0xFF</span>) &lt;&lt; <span class="number">16</span>) |</span><br><span class="line">            ((hmac_result[offset + <span class="number">2</span>] &amp; <span class="number">0xFF</span>) &lt;&lt; <span class="number">8</span>) |</span><br><span class="line">            (hmac_result[offset + <span class="number">3</span>] &amp; <span class="number">0xFF</span>)</span><br><span class="line">        )</span><br><span class="line">        </span><br><span class="line">        otp = binary_code % (<span class="number">10</span> ** self.digits)</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">str</span>(otp).zfill(self.digits)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">now</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;生成当前时间的 OTP&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> self.generate_otp(self.timecode())</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>测试函数</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_totp</span>():</span><br><span class="line">    secret_b32 = <span class="string">&quot;4SPZZBDHH77F3XEYBXM7BB2CQWSI56DM&quot;</span></span><br><span class="line">    totp = TOTP(secret_b32)</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;TOTP 测试结果:&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;密钥 Base32: <span class="subst">&#123;secret_b32&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;密钥字节: <span class="subst">&#123;totp.secret.<span class="built_in">hex</span>()&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;当前时间计数器: <span class="subst">&#123;totp.timecode()&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;当前 OTP: <span class="subst">&#123;totp.now()&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    test_totp()</span><br></pre></td></tr></table></figure>
+
+<p>三、运行结果示例</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">(base) ┌──(cure㉿LAPTOP<span class="literal">-CMAM5D0J</span>)-[/<span class="type">mnt</span>/<span class="type">e</span>/<span class="type">ctf</span>/<span class="type">smallcode</span>/<span class="type">TOTP</span>]</span><br><span class="line">└─<span class="variable">$</span> python self.py</span><br><span class="line">TOTP 测试结果:</span><br><span class="line">密钥 Base32: <span class="number">4</span>SPZZBDHH77F3XEYBXM7BB2CQWSI56DM</span><br><span class="line">密钥字节: e49f9c84673ffe5ddc980dd9f0874285a48ef86c</span><br><span class="line">当前时间计数器: <span class="number">58712664</span></span><br><span class="line">当前 OTP: <span class="number">782045</span></span><br></pre></td></tr></table></figure>
+
+<p>四、核心算法详解</p>
+<p>| 步骤          | 说明                          |
+| ————- | —————————– |
+| 1. 时间计数器 | T &#x3D; floor((now - 1970) &#x2F; 30)  |
+| 2. 编码       | T → 8字节大端整数             |
+| 3. HMAC-SHA1  | HMAC(K, T)                    |
+| 4. 动态截断   | 取最后一个字节低4位作为偏移量 |
+| 5. 取4字节    | 构造31位整数（最高位清零）    |
+| 6. 取模       | code % 10^6                   |
+| 7. 补零       | 补足6位                       |</p>
+]]></content>
+      <tags>
+        <tag>Python</tag>
+        <tag>密码</tag>
       </tags>
   </entry>
 </search>

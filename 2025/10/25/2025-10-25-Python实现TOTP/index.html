@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2025-10-25-Python实现TOTP - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,用 Python 实现 TOTP（基于时间的一次性密码）一、什么是 TOTP？TOTP 是 基于时间的一次性密码，其核心思想是：
+
+共享密钥（Shared Secret）：用户与服务端共享一个 Ba,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2025-10-25-Python实现TOTP - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,用 Python 实现 TOTP（基于时间的一次性密码）一、什么是 TOTP？TOTP 是 基于时间的一次性密码，其核心思想是：
+
+共享密钥（Shared Secret）：用户与服务端共享一个 Ba,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2025-10-25-Python实现TOTP - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,用 Python 实现 TOTP（基于时间的一次性密码）一、什么是 TOTP？TOTP 是 基于时间的一次性密码，其核心思想是：
+
+共享密钥（Shared Secret）：用户与服务端共享一个 Ba,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://blog.curesky.site"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2025-10-25-Python实现TOTP</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2025-10-25-Python实现TOTP</h1>
+        <div class="stuff">
+            <span>十月 25, 2025</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E5%AF%86%E7%A0%81/" rel="tag">密码</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="用-Python-实现-TOTP（基于时间的一次性密码）"><a href="#用-Python-实现-TOTP（基于时间的一次性密码）" class="headerlink" title="用 Python 实现 TOTP（基于时间的一次性密码）"></a>用 Python 实现 TOTP（基于时间的一次性密码）</h3><p>一、什么是 TOTP？TOTP 是 基于时间的一次性密码，其核心思想是：</p>
+<ul>
+<li>共享密钥（Shared Secret）：用户与服务端共享一个 Base32 编码的密钥。</li>
+<li>当前时间：以 30 秒为一个时间步（interval）。</li>
+<li>HMAC-SHA1 算法：将时间计数器与密钥进行 HMAC 运算，生成动态验证码。</li>
+</ul>
+<p>公式：<code>TOTP = HOTP(K, T)</code>，其中<code> T = floor((当前时间 - T0) / 30)</code></p>
+<p>二、完整代码实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> hmac</span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"><span class="comment"># 非此次重点</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">base32_decode</span>(<span class="params">secret_b32</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Base32 解码实现&quot;&quot;&quot;</span></span><br><span class="line">    base32_chars = <span class="string">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ234567&quot;</span></span><br><span class="line">    base32_map = &#123;char: i <span class="keyword">for</span> i, char <span class="keyword">in</span> <span class="built_in">enumerate</span>(base32_chars)&#125;</span><br><span class="line">    </span><br><span class="line">    secret_b32 = secret_b32.upper().replace(<span class="string">&#x27;=&#x27;</span>, <span class="string">&#x27;&#x27;</span>).replace(<span class="string">&#x27; &#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(secret_b32) % <span class="number">8</span> != <span class="number">0</span>:</span><br><span class="line">        secret_b32 += <span class="string">&#x27;=&#x27;</span> * (<span class="number">8</span> - <span class="built_in">len</span>(secret_b32) % <span class="number">8</span>)</span><br><span class="line">    </span><br><span class="line">    binary_str = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> char <span class="keyword">in</span> secret_b32:</span><br><span class="line">        <span class="keyword">if</span> char == <span class="string">&#x27;=&#x27;</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        binary_str += <span class="built_in">format</span>(base32_map[char], <span class="string">&#x27;05b&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    result = <span class="built_in">bytearray</span>()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(binary_str), <span class="number">8</span>):</span><br><span class="line">        byte_str = binary_str[i:i+<span class="number">8</span>]</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(byte_str) == <span class="number">8</span>:</span><br><span class="line">            result.append(<span class="built_in">int</span>(byte_str, <span class="number">2</span>))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">bytes</span>(result)</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ul>
+<li>Base32 使用 A-Z 和 2-7 共 32 个字符。</li>
+<li>每 5 位表示 1 字节，8 个字符 &#x3D; 40 位 &#x3D; 5 字节。</li>
+<li>去除 &#x3D; 填充后补齐为 8 的倍数。</li>
+</ul>
+<p>TOTP 主类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">TOTP</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, secret_b32, digits=<span class="number">6</span>, interval=<span class="number">30</span>, digest=hashlib.sha1</span>):</span><br><span class="line">        self.secret = base32_decode(secret_b32)  <span class="comment"># 解码为字节</span></span><br><span class="line">        self.digits = digits</span><br><span class="line">        self.interval = interval</span><br><span class="line">        self.digest = digest</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">timecode</span>(<span class="params">self, for_time=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;计算时间计数器 T = floor(unix_time / interval)&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> for_time <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            for_time = datetime.now()</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">hasattr</span>(for_time, <span class="string">&#x27;timestamp&#x27;</span>):</span><br><span class="line">            timestamp = for_time.timestamp()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            timestamp = time.mktime(for_time.timetuple())</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">int</span>(timestamp // self.interval)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">generate_otp</span>(<span class="params">self, counter</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;HOTP 算法核心：HMAC + 动态截断&quot;&quot;&quot;</span></span><br><span class="line">        counter_bytes = struct.pack(<span class="string">&#x27;&gt;Q&#x27;</span>, counter)  <span class="comment"># 8字节大端</span></span><br><span class="line">        </span><br><span class="line">        hmac_result = hmac.new(self.secret, counter_bytes, self.digest).digest()</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 动态截断（RFC 4226）</span></span><br><span class="line">        offset = hmac_result[-<span class="number">1</span>] &amp; <span class="number">0x0F</span></span><br><span class="line">        binary_code = (</span><br><span class="line">            ((hmac_result[offset] &amp; <span class="number">0x7F</span>) &lt;&lt; <span class="number">24</span>) |</span><br><span class="line">            ((hmac_result[offset + <span class="number">1</span>] &amp; <span class="number">0xFF</span>) &lt;&lt; <span class="number">16</span>) |</span><br><span class="line">            ((hmac_result[offset + <span class="number">2</span>] &amp; <span class="number">0xFF</span>) &lt;&lt; <span class="number">8</span>) |</span><br><span class="line">            (hmac_result[offset + <span class="number">3</span>] &amp; <span class="number">0xFF</span>)</span><br><span class="line">        )</span><br><span class="line">        </span><br><span class="line">        otp = binary_code % (<span class="number">10</span> ** self.digits)</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">str</span>(otp).zfill(self.digits)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">now</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;生成当前时间的 OTP&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> self.generate_otp(self.timecode())</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>测试函数</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_totp</span>():</span><br><span class="line">    secret_b32 = <span class="string">&quot;4SPZZBDHH77F3XEYBXM7BB2CQWSI56DM&quot;</span></span><br><span class="line">    totp = TOTP(secret_b32)</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;TOTP 测试结果:&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;密钥 Base32: <span class="subst">&#123;secret_b32&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;密钥字节: <span class="subst">&#123;totp.secret.<span class="built_in">hex</span>()&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;当前时间计数器: <span class="subst">&#123;totp.timecode()&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;当前 OTP: <span class="subst">&#123;totp.now()&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    test_totp()</span><br></pre></td></tr></table></figure>
+
+<p>三、运行结果示例</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(base) ┌──(cure㉿LAPTOP<span class="literal">-CMAM5D0J</span>)-[/<span class="type">mnt</span>/<span class="type">e</span>/<span class="type">ctf</span>/<span class="type">smallcode</span>/<span class="type">TOTP</span>]</span><br><span class="line">└─<span class="variable">$</span> python self.py</span><br><span class="line">TOTP 测试结果:</span><br><span class="line">密钥 Base32: <span class="number">4</span>SPZZBDHH77F3XEYBXM7BB2CQWSI56DM</span><br><span class="line">密钥字节: e49f9c84673ffe5ddc980dd9f0874285a48ef86c</span><br><span class="line">当前时间计数器: <span class="number">58712664</span></span><br><span class="line">当前 OTP: <span class="number">782045</span></span><br></pre></td></tr></table></figure>
+
+<p>四、核心算法详解</p>
+<p>| 步骤          | 说明                          |
+| ————- | —————————– |
+| 1. 时间计数器 | T &#x3D; floor((now - 1970) &#x2F; 30)  |
+| 2. 编码       | T → 8字节大端整数             |
+| 3. HMAC-SHA1  | HMAC(K, T)                    |
+| 4. 动态截断   | 取最后一个字节低4位作为偏移量 |
+| 5. 取4字节    | 构造31位整数（最高位清零）    |
+| 6. 取模       | code % 10^6                   |
+| 7. 补零       | 补足6位                       |</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8-Python-%E5%AE%9E%E7%8E%B0-TOTP%EF%BC%88%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E7%9A%84%E4%B8%80%E6%AC%A1%E6%80%A7%E5%AF%86%E7%A0%81%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">用 Python 实现 TOTP（基于时间的一次性密码）</span></a></li></ol>
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
