@@ -7116,4 +7116,47 @@ API网关的权限检查
         <tag>php</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2025-10-31-壳</title>
+    <url>/2025/10/31/2025-10-31-%E5%A3%B3/</url>
+    <content><![CDATA[<h3 id="什么是壳"><a href="#什么是壳" class="headerlink" title="什么是壳"></a>什么是壳</h3><p><strong>Packing</strong>  在网络安全领域加壳是一种对软件保护或恶意逃过软件检测是手段。加壳通过将原始可执行文件（如EXE、DLL或APK）包裹在一层外部代码中，来混淆、加密或压缩原始程序，从而使其难以被分析、逆向工程或检测。</p>
+<ul>
+<li><strong>壳的本质</strong>：壳是一种附加在程序外层的代码层，它在程序运行时首先执行，负责解密、解压缩或激活原始代码。这类似于给程序穿上一件“外衣”，隐藏其真实内容。</li>
+</ul>
+<p>例如使用UPX（Ultimate Packer for eXecutables）压缩可执行文件</p>
+<ul>
+<li><strong>壳的主要类型</strong><ul>
+<li>压缩壳：<strong>UPX</strong>，<strong>ASPack，…</strong></li>
+<li>加密壳：<strong>Themida</strong>，<strong>VMProtect，…</strong></li>
+<li>混淆壳：<strong>Ollie</strong>，…</li>
+</ul>
+</li>
+</ul>
+<h4 id="壳的工作原理"><a href="#壳的工作原理" class="headerlink" title="壳的工作原理"></a><strong>壳的工作原理</strong></h4><ol>
+<li><strong>加载阶段</strong>：当用户运行加壳程序时，操作系统先加载壳代码（而非原始程序）。壳代码通常存储在文件头部或附加段中。</li>
+<li><strong>解密&#x2F;解压阶段</strong>：壳代码在内存中执行，使用内置算法（如AES、ZLIB）解密或解压缩原始代码。这个过程可能涉及动态内存分配，以避免将原始代码暴露在磁盘上。</li>
+<li><strong>修复导入表</strong>：壳会重建原始程序的导入地址表（IAT），确保外部函数调用正常工作。</li>
+<li><strong>跳转到原始入口点（OEP）</strong>：壳将控制权转移给解密后的原始代码，程序开始正常执行。</li>
+<li><strong>反检测机制</strong>：壳可能集成反调试代码（如检测OllyDbg）、反虚拟机代码（如检测VMware）或代码自修改，以阻碍分析。</li>
+</ol>
+<h4 id="查壳方法"><a href="#查壳方法" class="headerlink" title="查壳方法"></a>查壳方法</h4><ul>
+<li><strong>静态分析</strong>：使用工具如PEiD、Exeinfo PE或file命令检测常见壳签名。但自定义壳可能逃避检测。</li>
+<li><strong>动态分析</strong>：在沙箱或调试器（如OllyDbg、x64dbg）中运行程序，观察内存变化和行为。工具如Process Monitor可以监控文件活动。</li>
+<li><strong>启发式分析</strong>：杀毒软件使用行为检测（如异常API调用）来识别加壳程序</li>
+</ul>
+<p><strong>脱壳技术</strong>：</p>
+<ul>
+<li><strong>自动脱壳</strong>：工具如UPX自带脱壳功能，或使用通用脱壳器（如Unpacker）。</li>
+<li><strong>手动脱壳</strong>：在调试器中设置断点、转储内存并修复OEP。这需要汇编语言和逆向工程知识。</li>
+<li><strong>内存分析</strong>：使用Volatility（用于内存取证）直接提取解密后的代码</li>
+</ul>
+<hr>
+<p>实例： 通过binwalk 查看upx壳</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(langchain-env) ┌──(cure㉿LAPTOP-CMAM5D0J)-[~/ctf_god/upx_file]</span><br><span class="line">└─$ binwalk attachment</span><br><span class="line"></span><br><span class="line">DECIMAL       HEXADECIMAL     DESCRIPTION</span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line">0             0x0             ELF, 32-bit LSB executable, Intel 80386, version 1 (GNU/Linux)</span><br><span class="line">267368        0x41468         Copyright string: <span class="string">&quot;Copyright (C) 1996-2018 the UPX Team. All Rights Reserved. $&quot;</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
+      </tags>
+  </entry>
 </search>
