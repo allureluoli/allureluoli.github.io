@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2025-10-31-php伪协议深入刨析 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,PHP伪协议本质例：
+1&amp;lt;?php include($_GET[&amp;#x27;url&amp;#x27;]);?&amp;gt; 
+
+传入url=php://input 消息载体为 &amp;lt;?php syste,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2025-10-31-php伪协议深入刨析 - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,PHP伪协议本质例：
+1&amp;lt;?php include($_GET[&amp;#x27;url&amp;#x27;]);?&amp;gt; 
+
+传入url=php://input 消息载体为 &amp;lt;?php syste,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2025-10-31-php伪协议深入刨析 - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,PHP伪协议本质例：
+1&amp;lt;?php include($_GET[&amp;#x27;url&amp;#x27;]);?&amp;gt; 
+
+传入url=php://input 消息载体为 &amp;lt;?php syste,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://blog.curesky.site"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2025-10-31-php伪协议深入刨析</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2025-10-31-php伪协议深入刨析</h1>
+        <div class="stuff">
+            <span>十月 31, 2025</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/php/" rel="tag">php</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="tag">网络安全</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="PHP伪协议本质"><a href="#PHP伪协议本质" class="headerlink" title="PHP伪协议本质"></a>PHP伪协议本质</h3><p>例：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="keyword">include</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;url&#x27;</span>]);<span class="meta">?&gt;</span> </span><br></pre></td></tr></table></figure>
+
+<p>传入<code>url=php://input</code> 消息载体为 <code>&lt;?php system(&quot;xxx&quot;);?&gt;</code> 即可执行命令</p>
+<p>为什么可以？</p>
+<p>php伪协议是 PHP内置的流包装器</p>
+<ul>
+<li>通过URL传递 <code>?url=php://input</code> 并在请求体中传入 <code>&lt;?php system(&quot;xxx);?&gt;</code> 时，<code>include</code> 函数会执行请求体中的内容作为PHP代码</li>
+</ul>
+<p>过程：</p>
+<ul>
+<li><p><code>php://input</code> 流读取了HTTP请求体中的原始数据（即 <code>&lt;?php system(&quot;xxx&quot;);?&gt;</code>）。</p>
+</li>
+<li><p><code>include</code> 函数将这些数据当作PHP文件执行，因此 <code>system(&quot;xxx&quot;)</code> 命令被运行，并将结果返回。</p>
+</li>
+</ul>
+<h3 id="日志包含漏洞"><a href="#日志包含漏洞" class="headerlink" title="日志包含漏洞"></a>日志包含漏洞</h3><p>本质上就是把危险的php代码注入到日志中，然后把日志作为php代码解析进去（因为文件包含可以包含到日志文件）</p>
+<p>例如 CTF秀的 web4</p>
+<p>众所周知，Linux系统下，日志位置是：<code>/var/log/nginx/access.log</code></p>
+<p>题目提示是：    <code>&lt;?php include($_GET[&#39;url&#39;]);?&gt;</code>     文件包含这个<code>url</code>&#x3D; 什么</p>
+<p>他的日志格式是这样的</p>
+<p><code>172.12.109.181 - - [31/Oct/2025:08:03:09 +0000] &quot;GET / HTTP/1.1&quot; 200 715 &quot;https://ctf.show/&quot; &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:144.0) Gecko/20100101 Firefox/144.0&quot;</code></p>
+<p><code>Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:144.0) </code> 是来自客户端的信息，也就是我的浏览器，这个我可以任意更改，我直接改成木马，然后让其包含，就getshell了。</p>
+<h3 id="MD5-判断-绕过"><a href="#MD5-判断-绕过" class="headerlink" title="MD5 判断 绕过"></a>MD5 判断 绕过</h3><p>依然继续在CTF秀中学知识</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="variable">$flag</span>=<span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="variable">$v1</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;v1&#x27;</span>];</span><br><span class="line">    <span class="variable">$v2</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;v2&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$v1</span>) &amp;&amp; <span class="keyword">isset</span>(<span class="variable">$v2</span>))&#123;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="title function_ invoke__">ctype_alpha</span>(<span class="variable">$v1</span>))&#123; <span class="comment">// 只有字母</span></span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&quot;v1 error&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="title function_ invoke__">is_numeric</span>(<span class="variable">$v2</span>))&#123; <span class="comment">// 只有数字</span></span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&quot;v2 error&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$v1</span>)==<span class="title function_ invoke__">md5</span>(<span class="variable">$v2</span>))&#123; <span class="comment">// 注意这里不是严格检查 不是 ===</span></span><br><span class="line">            <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;where is flag?&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>1.md5比较使用松散比较。在PHP中，松散比较（&#x3D;&#x3D;）会进行类型转换。如果两个md5哈希值在比较时被转换为数字或其它类型，<strong>就有问题！</strong></p>
+<p>2.如果！ md5加密后密文都以 0e 开头，PHP会当作科学计数法来处理，也就是0的n次方，因此会实现绕过！</p>
+<p>以下是一些著名的数值</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">字符串: 240610708 | MD5: 0e462097431906509019562988736854</span><br><span class="line">字符串: 314282422 | MD5: 0e990995504821699494520356953734</span><br><span class="line">字符串: QNKCDZO | MD5: 0e830400451993494058024219903391</span><br><span class="line">字符串: aabg7XSs | MD5: 0e087386482136013740957780965295</span><br><span class="line">字符串: aabC9RqS | MD5: 0e041022518165728065344349536299</span><br><span class="line"></span><br><span class="line">ps:</span><br><span class="line">aaK1STfY sha1() 0e76658526655756207688271159624026011393</span><br><span class="line">aaO8zKZF sha1() 0e89257456677279068558073954252716165668</span><br></pre></td></tr></table></figure>
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP%E4%BC%AA%E5%8D%8F%E8%AE%AE%E6%9C%AC%E8%B4%A8"><span class="toc-number">1.</span> <span class="toc-text">PHP伪协议本质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.</span> <span class="toc-text">日志包含漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MD5-%E5%88%A4%E6%96%AD-%E7%BB%95%E8%BF%87"><span class="toc-number">3.</span> <span class="toc-text">MD5 判断 绕过</span></a></li></ol>
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

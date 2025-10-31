@@ -7076,4 +7076,44 @@ API网关的权限检查
         <tag>密码</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2025-10-31-php伪协议深入刨析</title>
+    <url>/2025/10/31/2025-10-31-php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E6%B7%B1%E5%85%A5%E5%88%A8%E6%9E%90/</url>
+    <content><![CDATA[<h3 id="PHP伪协议本质"><a href="#PHP伪协议本质" class="headerlink" title="PHP伪协议本质"></a>PHP伪协议本质</h3><p>例：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="keyword">include</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;url&#x27;</span>]);<span class="meta">?&gt;</span> </span><br></pre></td></tr></table></figure>
+
+<p>传入<code>url=php://input</code> 消息载体为 <code>&lt;?php system(&quot;xxx&quot;);?&gt;</code> 即可执行命令</p>
+<p>为什么可以？</p>
+<p>php伪协议是 PHP内置的流包装器</p>
+<ul>
+<li>通过URL传递 <code>?url=php://input</code> 并在请求体中传入 <code>&lt;?php system(&quot;xxx);?&gt;</code> 时，<code>include</code> 函数会执行请求体中的内容作为PHP代码</li>
+</ul>
+<p>过程：</p>
+<ul>
+<li><p><code>php://input</code> 流读取了HTTP请求体中的原始数据（即 <code>&lt;?php system(&quot;xxx&quot;);?&gt;</code>）。</p>
+</li>
+<li><p><code>include</code> 函数将这些数据当作PHP文件执行，因此 <code>system(&quot;xxx&quot;)</code> 命令被运行，并将结果返回。</p>
+</li>
+</ul>
+<h3 id="日志包含漏洞"><a href="#日志包含漏洞" class="headerlink" title="日志包含漏洞"></a>日志包含漏洞</h3><p>本质上就是把危险的php代码注入到日志中，然后把日志作为php代码解析进去（因为文件包含可以包含到日志文件）</p>
+<p>例如 CTF秀的 web4</p>
+<p>众所周知，Linux系统下，日志位置是：<code>/var/log/nginx/access.log</code></p>
+<p>题目提示是：    <code>&lt;?php include($_GET[&#39;url&#39;]);?&gt;</code>     文件包含这个<code>url</code>&#x3D; 什么</p>
+<p>他的日志格式是这样的</p>
+<p><code>172.12.109.181 - - [31/Oct/2025:08:03:09 +0000] &quot;GET / HTTP/1.1&quot; 200 715 &quot;https://ctf.show/&quot; &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:144.0) Gecko/20100101 Firefox/144.0&quot;</code></p>
+<p><code>Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:144.0) </code> 是来自客户端的信息，也就是我的浏览器，这个我可以任意更改，我直接改成木马，然后让其包含，就getshell了。</p>
+<h3 id="MD5-判断-绕过"><a href="#MD5-判断-绕过" class="headerlink" title="MD5 判断 绕过"></a>MD5 判断 绕过</h3><p>依然继续在CTF秀中学知识</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="variable">$flag</span>=<span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="variable">$v1</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;v1&#x27;</span>];</span><br><span class="line">    <span class="variable">$v2</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;v2&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$v1</span>) &amp;&amp; <span class="keyword">isset</span>(<span class="variable">$v2</span>))&#123;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="title function_ invoke__">ctype_alpha</span>(<span class="variable">$v1</span>))&#123; <span class="comment">// 只有字母</span></span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&quot;v1 error&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="title function_ invoke__">is_numeric</span>(<span class="variable">$v2</span>))&#123; <span class="comment">// 只有数字</span></span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&quot;v2 error&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$v1</span>)==<span class="title function_ invoke__">md5</span>(<span class="variable">$v2</span>))&#123; <span class="comment">// 注意这里不是严格检查 不是 ===</span></span><br><span class="line">            <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;where is flag?&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>1.md5比较使用松散比较。在PHP中，松散比较（&#x3D;&#x3D;）会进行类型转换。如果两个md5哈希值在比较时被转换为数字或其它类型，<strong>就有问题！</strong></p>
+<p>2.如果！ md5加密后密文都以 0e 开头，PHP会当作科学计数法来处理，也就是0的n次方，因此会实现绕过！</p>
+<p>以下是一些著名的数值</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">字符串: 240610708 | MD5: 0e462097431906509019562988736854</span><br><span class="line">字符串: 314282422 | MD5: 0e990995504821699494520356953734</span><br><span class="line">字符串: QNKCDZO | MD5: 0e830400451993494058024219903391</span><br><span class="line">字符串: aabg7XSs | MD5: 0e087386482136013740957780965295</span><br><span class="line">字符串: aabC9RqS | MD5: 0e041022518165728065344349536299</span><br><span class="line"></span><br><span class="line">ps:</span><br><span class="line">aaK1STfY sha1() 0e76658526655756207688271159624026011393</span><br><span class="line">aaO8zKZF sha1() 0e89257456677279068558073954252716165668</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>php</tag>
+      </tags>
+  </entry>
 </search>
