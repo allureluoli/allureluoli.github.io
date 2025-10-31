@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.curesky.site/about/index.html</loc>
+    
+    <lastmod>2025-10-31</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.curesky.site/2025/10/31/2025-10-31-%E5%A3%B3/</loc>
     
     <lastmod>2025-10-31</lastmod>
@@ -329,15 +338,6 @@
     <loc>https://blog.curesky.site/2025/01/24/2025-1-24-poem/</loc>
     
     <lastmod>2025-01-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.curesky.site/about/index.html</loc>
-    
-    <lastmod>2025-01-22</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
