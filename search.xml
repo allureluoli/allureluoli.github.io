@@ -7279,4 +7279,86 @@ API网关的权限检查
         <tag>逆向</tag>
       </tags>
   </entry>
+  <entry>
+    <title></title>
+    <url>/2025/11/10/1.url%20=%20httpswww.baidu.com%20GET/</url>
+    <content><![CDATA[<p>1.url &#x3D; https:&#x2F;&#x2F;www.baidu.com GET</p>
+<p>&#x2F;&#x2F; 服务器 访问 baidu.com </p>
+<p>直接把数据 返回给我们</p>
+<p>&#x2F;&#x2F; </p>
+<ol start="2">
+<li>重定向访问</li>
+<li>已知：flag位置 http:&#x2F;&#x2F;5000-4a2fb514-5ce4-4056-abb1-80ae1e33c1ee.challenge.ctfplus.cn&#x2F;flag</li>
+<li>Access Denied </li>
+<li>猜测： 这个flag资源只能被内网请求 （） 127.0.0.1 是一个特殊的IPv4 地址，称为本地回环地址或 localhost，用于指代“本计算机”</li>
+<li>尝试：</li>
+<li>http:&#x2F;&#x2F;5000-4a2fb514-5ce4-4056-abb1-80ae1e33c1ee.challenge.ctfplus.cn&#x2F;fetch?url&#x3D;http:&#x2F;&#x2F;127.0.0.1:5000&#x2F;flag </li>
+<li>内网地址重入 攻击获取 flag</li>
+<li>黑名单过滤 ，loacl , 127.. , </li>
+<li>手动实现dns </li>
+<li>baidu.com &gt; ip </li>
+<li>a.curesky.site &gt; 127.0.0.1</li>
+<li>5000</li>
+</ol>
+<p> http:&#x2F;&#x2F;5000-4a2fb514-5ce4-4056-abb1-80ae1e33c1ee.challenge.ctfplus.cn&#x2F;fetch?url&#x3D;http:&#x2F;&#x2F;a.curesky.site:5000&#x2F;flag</p>
+<hr>
+<p>scanf </p>
+<p>input</p>
+<p>fgets(Buffer, 100, v4);  -&gt; sanf </p>
+]]></content>
+  </entry>
+  <entry>
+    <title>2025-11-13-组网术语分解笔记</title>
+    <url>/2025/11/13/2025-11-13-%E7%BB%84%E7%BD%91%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%AF%E8%AF%AD/</url>
+    <content><![CDATA[<h1 id="组网术语分解笔记"><a href="#组网术语分解笔记" class="headerlink" title="组网术语分解笔记"></a>组网术语分解笔记</h1><p>Gi ：GigabitEthernet  千兆以太网接口</p>
+<p>Gi 3&#x2F;0：</p>
+<ul>
+<li><code>3</code>： 第3号插槽或模块。</li>
+<li><code>0</code>： 该模块上的第0号端口</li>
+</ul>
+<hr>
+<p>HGE：Huawei Gigabit Ethernet  <strong>华为公司生产的、支持千兆以太网标准的网络设备接口</strong></p>
+<ul>
+<li><p>1&#x2F;0&#x2F;1</p>
+<p>： 表示  “设备号&#x2F;插槽号&#x2F;端口号”</p>
+<p>（在堆叠或框式设备中常见）。</p>
+<ul>
+<li><code>1</code>： 第1台设备（在堆叠中）。</li>
+<li><code>0</code>： 该设备上的第0号插槽或模块。</li>
+<li><code>1</code>： 该模块上的第1号端口。</li>
+</ul>
+</li>
+</ul>
+<p> 堆叠中第1台设备的第0槽位上的第1个万兆&#x2F;高速以太网接口。</p>
+<hr>
+<p>e0：</p>
+<ul>
+<li><strong>e</strong> 或 <strong>E</strong>： <strong>E</strong>thernet 的缩写，即十兆以太网接口。这是非常古老的接口类型，现在主要用于管理或连接非常老的设备。</li>
+<li><strong>0</strong>： 端口号0</li>
+</ul>
+<hr>
+<p>H3cvSW：<strong>H3C 虚拟交换机</strong></p>
+<ul>
+<li><strong>H3C</strong>： 指品牌 <strong>新华三技术有限公司</strong>，是中国主流的网络设备提供商。</li>
+<li><strong>v</strong>： 是 <strong>Virtual</strong> 的缩写，意为“虚拟的”。</li>
+<li><strong>SW</strong>： 是 <strong>SWitch</strong> 的缩写，意为“交换机”。</li>
+</ul>
+<hr>
+<p>eth0：</p>
+<ul>
+<li>**<code>eth</code>**： 是 <strong>Ethernet</strong> 的缩写，代表“以太网”，即最常见的有线网络技术。</li>
+<li>**<code>0</code>**： 是序号，代表第一个接口。</li>
+</ul>
+<p>所以，<code>eth0</code> 直接翻译就是“第0号以太网接口”。</p>
+<hr>
+<p><strong>H3CvSR1000-1</strong> </p>
+<ul>
+<li><strong>H3C SR1000-1 是新华三技术有限公司推出的一款面向中小型企业和分支机构的高性能安全路由器</strong>。</li>
+<li>1 机器号</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
 </search>
