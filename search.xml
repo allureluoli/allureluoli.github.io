@@ -7280,34 +7280,6 @@ API网关的权限检查
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/2025/11/10/1.url%20=%20httpswww.baidu.com%20GET/</url>
-    <content><![CDATA[<p>1.url &#x3D; https:&#x2F;&#x2F;www.baidu.com GET</p>
-<p>&#x2F;&#x2F; 服务器 访问 baidu.com </p>
-<p>直接把数据 返回给我们</p>
-<p>&#x2F;&#x2F; </p>
-<ol start="2">
-<li>重定向访问</li>
-<li>已知：flag位置 http:&#x2F;&#x2F;5000-4a2fb514-5ce4-4056-abb1-80ae1e33c1ee.challenge.ctfplus.cn&#x2F;flag</li>
-<li>Access Denied </li>
-<li>猜测： 这个flag资源只能被内网请求 （） 127.0.0.1 是一个特殊的IPv4 地址，称为本地回环地址或 localhost，用于指代“本计算机”</li>
-<li>尝试：</li>
-<li>http:&#x2F;&#x2F;5000-4a2fb514-5ce4-4056-abb1-80ae1e33c1ee.challenge.ctfplus.cn&#x2F;fetch?url&#x3D;http:&#x2F;&#x2F;127.0.0.1:5000&#x2F;flag </li>
-<li>内网地址重入 攻击获取 flag</li>
-<li>黑名单过滤 ，loacl , 127.. , </li>
-<li>手动实现dns </li>
-<li>baidu.com &gt; ip </li>
-<li>a.curesky.site &gt; 127.0.0.1</li>
-<li>5000</li>
-</ol>
-<p> http:&#x2F;&#x2F;5000-4a2fb514-5ce4-4056-abb1-80ae1e33c1ee.challenge.ctfplus.cn&#x2F;fetch?url&#x3D;http:&#x2F;&#x2F;a.curesky.site:5000&#x2F;flag</p>
-<hr>
-<p>scanf </p>
-<p>input</p>
-<p>fgets(Buffer, 100, v4);  -&gt; sanf </p>
-]]></content>
-  </entry>
-  <entry>
     <title>2025-11-13-组网术语分解笔记</title>
     <url>/2025/11/13/2025-11-13-%E7%BB%84%E7%BD%91%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%AF%E8%AF%AD/</url>
     <content><![CDATA[<h1 id="组网术语分解笔记"><a href="#组网术语分解笔记" class="headerlink" title="组网术语分解笔记"></a>组网术语分解笔记</h1><p>Gi ：GigabitEthernet  千兆以太网接口</p>
@@ -7401,6 +7373,27 @@ API网关的权限检查
 <p>于是我手动DNS了一个域名指向本地地址</p>
 <p>xxx.xxx.xx&#x2F;flag</p>
 <p>然后让构造访问，直接拿到flag</p>
+<hr>
+<p>不过找到了当时做的笔记</p>
+<p>1.url &#x3D; https:&#x2F;&#x2F;www.baidu.com GET</p>
+<p>&#x2F;&#x2F; 服务器 访问 baidu.com </p>
+<p>直接把数据 返回给我们</p>
+<p>&#x2F;&#x2F; </p>
+<ol>
+<li>重定向访问</li>
+<li>已知：flag位置 http:&#x2F;&#x2F;5000-4a2fb514-5ce4-4056-abb1-80ae1e33c1ee.challenge.ctfplus.cn&#x2F;flag</li>
+<li>Access Denied </li>
+<li>猜测： 这个flag资源只能被内网请求 （） 127.0.0.1 是一个特殊的IPv4 地址，称为本地回环地址或 localhost，用于指代“本计算机”</li>
+<li>尝试：</li>
+<li>http:&#x2F;&#x2F;5000-4a2fb514-5ce4-4056-abb1-80ae1e33c1ee.challenge.ctfplus.cn&#x2F;fetch?url&#x3D;http:&#x2F;&#x2F;127.0.0.1:5000&#x2F;flag </li>
+<li>内网地址重入 攻击获取 flag</li>
+<li>黑名单过滤 ，loacl , 127.. , </li>
+<li>手动实现dns </li>
+<li>baidu.com &gt; ip </li>
+<li>a.curesky.site &gt; 127.0.0.1</li>
+<li>5000</li>
+</ol>
+<p> http:&#x2F;&#x2F;5000-4a2fb514-5ce4-4056-abb1-80ae1e33c1ee.challenge.ctfplus.cn&#x2F;fetch?url&#x3D;http:&#x2F;&#x2F;a.curesky.site:5000&#x2F;flag</p>
 <h3 id="诸神的三试炼"><a href="#诸神的三试炼" class="headerlink" title="诸神的三试炼"></a>诸神的三试炼</h3><p>第一段flag</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">_BOOL8 __fastcall <span class="title function_">flag1</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *a1)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> buf[<span class="number">32</span>]; <span class="comment">// [rsp+40h] [rbp-20h] BYREF</span></span><br><span class="line"></span><br><span class="line">  _mingw_snprintf(</span><br><span class="line">    buf,</span><br><span class="line">    <span class="number">0x14</span>ui64,</span><br><span class="line">    <span class="string">&quot;%s%s%s%s&quot;</span>,</span><br><span class="line">    (<span class="type">const</span> <span class="type">char</span> *)f_str,</span><br><span class="line">    (<span class="type">const</span> <span class="type">char</span> *)l_str,</span><br><span class="line">    (<span class="type">const</span> <span class="type">char</span> *)open_brace,</span><br><span class="line">    G00d_str);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">strcmp</span>(a1, buf) == <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
