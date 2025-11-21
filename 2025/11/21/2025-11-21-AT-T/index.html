@@ -1,0 +1,307 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2025-11-21-AT&amp;T - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,学习 AT&amp;amp;T 为了 pwn由于 objdump 反汇编的二进制程序使用 AT&amp;amp;T语法，我必须好好学习
+此汇编语法有如下特点
+
+操作数顺序：源 在前  目的 在后
+mov %rsp,,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2025-11-21-AT&amp;T - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,学习 AT&amp;amp;T 为了 pwn由于 objdump 反汇编的二进制程序使用 AT&amp;amp;T语法，我必须好好学习
+此汇编语法有如下特点
+
+操作数顺序：源 在前  目的 在后
+mov %rsp,,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2025-11-21-AT&amp;T - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,学习 AT&amp;amp;T 为了 pwn由于 objdump 反汇编的二进制程序使用 AT&amp;amp;T语法，我必须好好学习
+此汇编语法有如下特点
+
+操作数顺序：源 在前  目的 在后
+mov %rsp,,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://blog.curesky.site"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2025-11-21-AT&T</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2025-11-21-AT&T</h1>
+        <div class="stuff">
+            <span>十一月 21, 2025</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/pwn/" rel="tag">pwn</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E6%B1%87%E7%BC%96/" rel="tag">汇编</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="tag">网络安全</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="学习-AT-T-为了-pwn"><a href="#学习-AT-T-为了-pwn" class="headerlink" title="学习 AT&amp;T 为了 pwn"></a>学习 AT&amp;T 为了 pwn</h3><p>由于 objdump 反汇编的二进制程序使用 AT&amp;T语法，我必须好好学习</p>
+<p>此汇编语法有如下特点</p>
+<ul>
+<li>操作数顺序：源 在前  目的 在后<ul>
+<li><code>mov %rsp, %sbp</code> 表示把rsp的值移动到rbp</li>
+</ul>
+</li>
+<li>寄存器以 % 为前缀， 立即数以 <code>$</code> 前缀</li>
+<li>函数调用时，参数通过寄存器传递：<ul>
+<li>rdi 第一个</li>
+<li>rsi 第二个</li>
+<li>rdx 第三个</li>
+</ul>
+</li>
+<li>常见指令：<ul>
+<li>栈操作：<code>push</code>、<code>pop</code></li>
+<li>数据移动：<code>mov</code></li>
+<li>函数调用：<code>call</code></li>
+<li>返回：<code>ret</code></li>
+</ul>
+</li>
+</ul>
+<p>概念：</p>
+<ul>
+<li><strong>函数序言</strong>：在函数开始时执行，用于设置堆栈帧（stack frame）。通常包括保存旧的基指针（%rbp）、设置新的基指针（指向当前堆栈顶部），以及可选的堆栈空间分配。这确保了函数在执行期间有独立的局部变量空间和调用上下文。</li>
+<li><strong>函数尾声</strong>：在函数结束时执行，用于清理堆栈帧并返回调用者。通常包括恢复旧的基指针、释放堆栈空间（如果有分配），并执行返回指令。</li>
+</ul>
+<hr>
+<p>例题：warmup_csaw_2016</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">40060d:       55                      push   %rbp</span><br><span class="line">40060e:       48 89 e5                mov    %rsp,%rbp</span><br><span class="line">400611:       bf 34 07 40 00          mov    $0x400734,%edi</span><br><span class="line">400616:       e8 b5 fe ff ff          call   4004d0 &lt;system@plt&gt;</span><br><span class="line">40061b:       5d                      pop    %rbp</span><br><span class="line">40061c:       c3                      ret</span><br></pre></td></tr></table></figure>
+
+<p>这个代码是一个独立的函数</p>
+<p>有标准的 prologue 和 epilogue</p>
+<ul>
+<li>函数序言：<ul>
+<li><code>push %rbp</code>  将旧的基指针压入堆栈，保存调用函数的堆栈帧基地址。</li>
+<li><code>mov %rsp,%rbp</code>  将堆栈指针的值移动到基指针 堆栈用于保存上下文</li>
+</ul>
+</li>
+<li>尾声：<ul>
+<li><code>pop %rbp</code> 从堆栈中弹出之前保存的旧基指针值，恢复%rbp 到调用函数的状态</li>
+<li><code>ret</code> 从函数返回，将控制权交还给调用者， 并可能清理堆栈</li>
+</ul>
+</li>
+</ul>
+<p>代码：</p>
+<ul>
+<li><code>pusb %rbp</code>  旧基地址入栈</li>
+<li><code>mov  %rsp,%rbp</code> 堆指针数值&gt;基指针</li>
+<li><code>mov $0x400734,%edi</code> 将立即数 0x400734 移动到edi寄存器，x86-64中，edi用于传递函数的第一个参数，这里准备调用system函数。<code>0x400734</code> 很可能是一个字符串的地址。 二进制中，字符串常存放在制度数据段(.rodata) 可推特 0x400734只指向一个系统命令</li>
+<li><code>call 4004d0 &lt;system@plt&gt;</code> 通过 过程链接表 (PLT)  调用<code>system</code> 函数，<code>system</code> 函数会执行<code>edi</code> 中的字符串作为系统命令</li>
+<li><code>pop %rbp</code> 从栈中弹出旧基地址，恢复rbp的值</li>
+<li><code>ret</code> 从函数返回，控制流回到调用者</li>
+</ul>
+<hr>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">40061d:       55                      push   %rbp</span><br><span class="line">40061e:       48 89 e5                mov    %rsp,%rbp</span><br><span class="line">400621:       48 83 c4 80             add    $0xffffffffffffff80,%rsp</span><br><span class="line">400625:       ba 0a 00 00 00          mov    $0xa,%edx</span><br><span class="line">40062a:       be 41 07 40 00          mov    $0x400741,%esi</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>push %rbp  ,  move %rsp, %rbp</code>  建立新栈帧</li>
+<li><code>add $0xffffffffffffff80, %rsp</code> <ul>
+<li>0x0xffffffffffffff80 在补码表示中是 -128，等价于 <code>sub $0x80, %rsp</code> 可能用于局部变量或缓冲区</li>
+<li><code>mov $0xa, $edx</code> 将edx设置为10 edx 通常用于第三个参数或长度值</li>
+<li><code>move $0x400741, $esi</code>：将esi 设置为<code>0x400741</code> 可能是另一个字符串地址</li>
+</ul>
+</li>
+</ul>
+<hr>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">400651:       ba 0d 06 40 00          mov    $0x40060d,%edx</span><br><span class="line">400656:       be 51 07 40 00          mov    $0x400751,%esi</span><br><span class="line">40065b:       48 89 c7                mov    %rax,%rdi</span><br><span class="line">40065e:       b8 00 00 00 00          mov    $0x0,%eax</span><br><span class="line">400663:       e8 a8 fe ff ff          call   400510 &lt;sprintf@plt&gt;</span><br><span class="line">400668:       48 8d 45 80             lea    -0x80(%rbp),%rax</span><br><span class="line">40066c:       ba 09 00 00 00          mov    $0x9,%edx</span><br><span class="line">400671:       48 89 c6                mov    %rax,%rsi</span><br><span class="line">400674:       bf 01 00 00 00          mov    $0x1,%edi</span><br><span class="line">400679:       e8 42 fe ff ff          call   4004c0 &lt;write@plt&gt;</span><br><span class="line">40067e:       ba 01 00 00 00          mov    $0x1,%edx</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>  mov $0x40060d,%edx</code>  将 edx设置为 0x40060d</p>
+</li>
+<li><p><code> mov $0x400751,%esi</code> 将esi设置为 0x400751 AI说可能是一个格式化字符串地址 例如 <code>%s</code>， <code>%p</code></p>
+</li>
+<li><p><code>mov %rax,%rdi</code> 把 rdi的值设置成rax的值，这里可能指向一个缓冲区（例如 栈上的空间） rdi是 sprintf的第一个参数</p>
+</li>
+<li><p><code>mov %0x0,%eax </code> 把eax清零了 </p>
+<ul>
+<li>在x86-64中，这常用于可变参数函数（如<code>sprintf</code>），表示没有浮点参数</li>
+</ul>
+</li>
+<li><p><code>call 400510 &lt;sprintf@plt&gt;</code> 通过过程链接表调用 sprintf函数，参数是 </p>
+<ul>
+<li>rdi :目标缓冲区 地址来自rax</li>
+<li>rsi ：格式化字符串 0x400751</li>
+<li>rdx：可变参数 也就是 0x40060d</li>
+</ul>
+</li>
+</ul>
+<p>所以，这行代码可能将地址<code>0x40060d</code>格式化为字符串并存储到缓冲区</p>
+<p>如果格式字符串是<code>&quot;%p&quot;</code>，它会将地址转换为字符串表示。</p>
+<ul>
+<li><p><code>lea -0x80(%rbp), %rax</code> 加载有效地址，计算 <code>rbp - 0x80</code> 到 rax </p>
+<ul>
+<li>这确认了缓冲区在栈上的位置</li>
+</ul>
+</li>
+<li><p><code>mov $0x9, %edx</code> 把edx设置为9</p>
+</li>
+<li><p><code>mov %rax, %rsi</code> 将 rax移动到 rsi ， rsi是<code>write</code>的第二个参数（数据缓冲区）</p>
+</li>
+<li><p><code>mov $0x1, %rsi</code> 将 edi设置为1，这是文件描述符 (1表示标准输出stdout)</p>
+</li>
+<li><p><code>call 4004c0 &lt;write@plt&gt;</code> 调用 write函数 向stdout输出9字节的数据从缓冲区</p>
+</li>
+<li><p><code>mov $0x1, %edx</code> 把edx设置成1 可能用于后续操作</p>
+</li>
+</ul>
+<p><strong>总结这部分</strong>：代码使用<code>sprintf</code>将函数地址<code>0x40060d</code>格式化为字符串，存储到栈缓冲区，然后通过<code>write</code>输出前9字节到屏幕。这可能是为了泄漏地址（在CTF中常见），帮助攻击者计算偏移或绕过ASLR。</p>
+<p>不仅是pwn 想打好二进制安全 汇编肯定要学的多多的，而且要多学几种，例如 nasm，还有2024 中科大比赛的时候出现的uxntal ，这个指令集我就不会。</p>
+<p>所以你们到底怎么学的啊怎么什么都会！</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0-AT-T-%E4%B8%BA%E4%BA%86-pwn"><span class="toc-number">1.</span> <span class="toc-text">学习 AT&amp;T 为了 pwn</span></a></li></ol>
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
