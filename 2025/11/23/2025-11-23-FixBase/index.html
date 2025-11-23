@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2025-11-23-FixBase - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,修复基础今天从 pwnable.kr 来修补一下我那可怜的基础。
+先通过ssh连接上去
+12fd@ubuntu:~$ lsfd  fd.c  flag
+
+看到三个文件
+fd是二进制程序，fd.c是源,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2025-11-23-FixBase - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,修复基础今天从 pwnable.kr 来修补一下我那可怜的基础。
+先通过ssh连接上去
+12fd@ubuntu:~$ lsfd  fd.c  flag
+
+看到三个文件
+fd是二进制程序，fd.c是源,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2025-11-23-FixBase - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,修复基础今天从 pwnable.kr 来修补一下我那可怜的基础。
+先通过ssh连接上去
+12fd@ubuntu:~$ lsfd  fd.c  flag
+
+看到三个文件
+fd是二进制程序，fd.c是源,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://blog.curesky.site"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2025-11-23-FixBase</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2025-11-23-FixBase</h1>
+        <div class="stuff">
+            <span>十一月 23, 2025</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/pwn/" rel="tag">pwn</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="tag">网络安全</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="修复基础"><a href="#修复基础" class="headerlink" title="修复基础"></a>修复基础</h3><p>今天从 pwnable.kr 来修补一下我那可怜的基础。</p>
+<p>先通过ssh连接上去</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fd@ubuntu:~$ <span class="built_in">ls</span></span><br><span class="line">fd  fd.c  flag</span><br></pre></td></tr></table></figure>
+
+<p>看到三个文件</p>
+<p>fd是二进制程序，fd.c是源代码，flag是我们没权限获得的文件，得利用一下这个二进制文件来获得flag的内容。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">char</span> buf[<span class="number">32</span>];</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[], <span class="type">char</span>* envp[])</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;pass argv[1] a number\n&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> fd = atoi( argv[<span class="number">1</span>] ) - <span class="number">0x1234</span>;</span><br><span class="line">        <span class="type">int</span> len = <span class="number">0</span>;</span><br><span class="line">        len = read(fd, buf, <span class="number">32</span>);</span><br><span class="line">        <span class="keyword">if</span>(!<span class="built_in">strcmp</span>(<span class="string">&quot;LETMEWIN\n&quot;</span>, buf))&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;good job :)\n&quot;</span>);</span><br><span class="line">                setregid(getegid(), getegid());</span><br><span class="line">                system(<span class="string">&quot;/bin/cat flag&quot;</span>);</span><br><span class="line">                <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;learn about Linux file IO\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这题主要考点是文件描述符，也就是<code>fd</code></p>
+<p>前置知识：</p>
+<p>文件描述符的五个编号</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 0 -&gt; stdin ✓</span></span><br><span class="line"><span class="comment"># 1 -&gt; stdout</span></span><br><span class="line"><span class="comment"># 2 -&gt; stderr  </span></span><br><span class="line"><span class="comment"># 3 -&gt; 可能打开的文件</span></span><br><span class="line"><span class="comment"># 4 -&gt; 可能打开的文件</span></span><br></pre></td></tr></table></figure>
+
+<p>我们需要的是 <code>stdin</code> </p>
+<p>Linux 中 <code>0=stdin, 1=stdout, 2=stderr </code>已被占用（被系统提前分配）。</p>
+<p>OK现在什么都不缺了，开始做题</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> fd = atoi( argv[<span class="number">1</span>] ) - <span class="number">0x1234</span>;</span><br><span class="line"><span class="type">int</span> len = <span class="number">0</span>;</span><br><span class="line">len = read(fd, buf, <span class="number">32</span>);</span><br></pre></td></tr></table></figure>
+
+<p>关键代码是这三行</p>
+<p>我们需要知道 <code>	read</code> 函数读取 <code>fd</code>这个文件描述符来确认是用那种，而这里这个文件描述符我们可以控制。</p>
+<p>只要让<code>fd=0</code> 我们就可以从键盘输入</p>
+<p>然后通过<code>if(!strcmp(&quot;LETMEWIN\n&quot;, buf))</code>的检查，进入其中拿到flag。</p>
+<p>我们通过计算 十六进制的 0x1234 的十进制是 4660 所以我们输入4660 让其从键盘获取输入，然后输入 LETMEWIN 回车，就能拿到flag了。</p>
+<hr>
+<p>继续</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">col@ubuntu:~$ <span class="built_in">ls</span></span><br><span class="line">col  col.c  flag</span><br></pre></td></tr></table></figure>
+
+<p>源代码如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> hashcode = <span class="number">0x21DD09EC</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检查密码</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> <span class="title function_">check_password</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* p)</span>&#123;</span><br><span class="line">    	</span><br><span class="line">        <span class="type">int</span>* ip = (<span class="type">int</span>*)p; </span><br><span class="line">    	<span class="comment">// 将输入的字符指针 p 强制转换为整型指针 ip</span></span><br><span class="line">        <span class="type">int</span> i;</span><br><span class="line">        <span class="type">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">5</span>; i++)&#123;</span><br><span class="line">                res += ip[i]; <span class="comment">// 累加</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;usage : %s [passcode]\n&quot;</span>, argv[<span class="number">0</span>]);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">strlen</span>(argv[<span class="number">1</span>]) != <span class="number">20</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;passcode length should be 20 bytes\n&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(hashcode == check_password( argv[<span class="number">1</span>] ))&#123;</span><br><span class="line">                setregid(getegid(), getegid());</span><br><span class="line">                system(<span class="string">&quot;/bin/cat flag&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;wrong passcode.\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这题目呢，考的是整数溢出碰撞</p>
+<p>前置知识了解一下 signed int 溢出</p>
+<p>看一下代码逻辑：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">long</span> hashcode = <span class="number">0x21DD09EC</span>;   <span class="comment">// 目标值：十六进制 21DD09EC</span></span><br><span class="line"></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> <span class="title function_">check_password</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* p)</span>&#123;</span><br><span class="line">    <span class="type">int</span>* ip = (<span class="type">int</span>*)p;      <span class="comment">// 把密码强行按 4 字节一组拆成 int</span></span><br><span class="line">    <span class="type">int</span> res=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">5</span>; i++)&#123;</span><br><span class="line">        res += ip[i];       <span class="comment">// 把 5 个 int 加起来，存到 res（有符号32位）</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;             <span class="comment">// 返回最终结果（但实际会自动变成 unsigned long 比较）</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>然后这里设置了 res是 int类型，所以res是有符号的int 也就是 signed 32位</li>
+<li>signed int 范围：-2147483648 ～ +2147483647</li>
+<li>0x21DD09EC &#x3D; 568134124（十进制） → 明明超过 2147483647！</li>
+<li>C语言 signed int 加法会溢出，溢出后自动模 2^32（绕一圈）！</li>
+</ul>
+<p>所以我们需要 ，让五个数加起来正好绕一圈回来，然后就会停留在0x21DD09EC</p>
+<p>数学上，理论，我们只要让 5 个数之和 &#x3D; 0x21DD09EC + 4294967296 &#x3D; 4864101420（十进制）</p>
+<p>4864101420 ÷ 5 &#x3D; 972820284（正好整除）</p>
+<p>972820284 的十六进制 &#x3D; 0x3A0E37A4 </p>
+<p>就可以了，但是不行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">col@ubuntu:~$ ./col $(<span class="built_in">printf</span> <span class="string">&#x27;\xa4\x37\x0e\x3a\xa4\x37\x0e\x3a\xa4\x37\x0e\x3a\xa4\x37\x0e\x3a\xa4\x37\x0e\x3a&#x27;</span>)</span><br><span class="line">wrong passcode.</span><br></pre></td></tr></table></figure>
+
+<p>因为 972820284（0x3A0E37A4）太大，单个 int 已经严重正溢出，加到 res 时会立刻溢出多次，最终结果根本对不上 0x21DD09EC！</p>
+<ul>
+<li>结论</li>
+</ul>
+<p>平均分在数学上可行，但在 C 语言 signed int 溢出语义下不稳定，会被编译器坑死。 出题人特意挑选了 4×0x06C5CEC8 + 1×0x06C5CECC 这组“安全、稳定、只溢出一圈”的魔法数字，就是为了让只有懂溢出原理的人能过。</p>
+<p>所以我们换一个解法</p>
+<h3 id="经典解法：4个一样，1个补差值"><a href="#经典解法：4个一样，1个补差值" class="headerlink" title="经典解法：4个一样，1个补差值"></a>经典解法：4个一样，1个补差值</h3><p>最简单做法： 先算平均值：0x21DD09EC ÷ 5 ≈ 0x0675C13B.8</p>
+<p>所以我们用 4 个 0x06C5CEC8 再用 1 个 0x06C5CECC（刚好多4）来补齐</p>
+<p>AI写的计算：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  06C5CEC8</span><br><span class="line">×          4</span><br><span class="line">────────────</span><br><span class="line">  1B173B20    ← 4个相加</span><br><span class="line">+ 06C5CECC    ← 第5个</span><br><span class="line">────────────</span><br><span class="line">  21DD09EC    ← 完全相等！而且在加的过程中会溢出一次</span><br></pre></td></tr></table></figure>
+
+<p>32 位 signed int 里加的过程（十进制演示）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">开始 res = 0</span><br><span class="line">+ 0x06C5CEC8 (1819042504) → res = 1819042504</span><br><span class="line">+ 0x06C5CEC8               → res = 3638085008  → 溢出！减去 2^32 → -656882488</span><br><span class="line">+ 0x06C5CEC8               → res = -656882488 + 1819042504 = 1162160016</span><br><span class="line">+ 0x06C5CEC8               → res = 1162160016 + 1819042504 = 2981202512 → 又溢出 → -1313764784</span><br><span class="line">+ 0x06C5CECC (1819042508) → res = -1313764784 + 1819042508 = 505277724</span><br></pre></td></tr></table></figure>
+
+<p>最后函数返回 505277724，但 C 会自动把 signed 转 unsigned long → 0x1E1E1E1C？</p>
+<p>但，题目里 return (unsigned long)res，溢出后最终正好是 0x21DD09EC（真实环境验证过）</p>
+<p>x86 是小端序（低字节放低地址）</p>
+<p>所以一个 int 0x06C5CEC8 在内存里是：<code> c8 ce c5 06</code></p>
+<p>0x06C5CECC 在内存里是： <code>cc ce c5 06</code></p>
+<p>所以完整 20 字节 payload 就是：</p>
+<p><code>c8 ce c5 06    c8 ce c5 06    c8 ce c5 06    c8 ce c5 06    cc ce c5 06</code></p>
+<p>get flag</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./col $(<span class="built_in">printf</span> <span class="string">&#x27;\xc8\xce\xc5\x06\xc8\xce\xc5\x06\xc8\xce\xc5\x06\xc8\xce\xc5\x06\xcc\xce\xc5\x06&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E5%A4%8D%E5%9F%BA%E7%A1%80"><span class="toc-number">1.</span> <span class="toc-text">修复基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E8%A7%A3%E6%B3%95%EF%BC%9A4%E4%B8%AA%E4%B8%80%E6%A0%B7%EF%BC%8C1%E4%B8%AA%E8%A1%A5%E5%B7%AE%E5%80%BC"><span class="toc-number">2.</span> <span class="toc-text">经典解法：4个一样，1个补差值</span></a></li></ol>
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
