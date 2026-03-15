@@ -105,7 +105,7 @@
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">dialogue_1 = on_message(priority=<span class="number">100</span>)<span class="comment">#这里优先级的大小是数值越大便越小</span></span><br><span class="line"><span class="meta">@dialogue_1.handle() </span><span class="comment">#出错</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot,event:GroupMessageEvent</span>):</span><br><span class="line">   jsq = zd_1.get(<span class="built_in">str</span>(event.get_message()))</span><br><span class="line">   <span class="keyword">try</span>:</span><br><span class="line">       <span class="keyword">await</span> dialogue_1.send(jsq)</span><br><span class="line">   <span class="keyword">except</span>:</span><br><span class="line">       <span class="built_in">print</span>(<span class="string">&quot;不行喵&quot;</span>)</span><br></pre></td></tr></table></figure>
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
-            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
             </audio>
             
