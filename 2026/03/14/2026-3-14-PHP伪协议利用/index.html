@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026-3-14-PHP伪协议利用 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,PHP伪协议利用主要研究CTF方向伪协议利用
+常见利用伪协议
+
+php://filter/read=convert.base64-encode/resource=a.php
+
+php://filte,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2026-3-14-PHP伪协议利用 - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,PHP伪协议利用主要研究CTF方向伪协议利用
+常见利用伪协议
+
+php://filter/read=convert.base64-encode/resource=a.php
+
+php://filte,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2026-3-14-PHP伪协议利用 - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,PHP伪协议利用主要研究CTF方向伪协议利用
+常见利用伪协议
+
+php://filter/read=convert.base64-encode/resource=a.php
+
+php://filte,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://blog.curesky.site"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2026-3-14-PHP伪协议利用</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2026-3-14-PHP伪协议利用</h1>
+        <div class="stuff">
+            <span>三月 14, 2026</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/php/" rel="tag">php</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="tag">网络安全</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="PHP伪协议利用"><a href="#PHP伪协议利用" class="headerlink" title="PHP伪协议利用"></a>PHP伪协议利用</h3><p>主要研究CTF方向伪协议利用</p>
+<p>常见利用伪协议</p>
+<ul>
+<li><p><code>php://filter/read=convert.base64-encode/resource=a.php</code></p>
+</li>
+<li><p><code>php://filter/write=convert.base64-decode/resource=a.php</code></p>
+</li>
+<li><p><code>php://filter/write=string.strip_tags|convert.base64-decode/resource=a.php </code></p>
+</li>
+</ul>
+<p>摘录官方文档：</p>
+<p>php:&#x2F;&#x2F;filter 是一种元封装器，设计用于数据流打开时的<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/filters.php">筛选过滤</a>应用。    这对于一体式（all-in-one）的文件函数非常有用，类似 <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.readfile.php">readfile()</a><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.file.php">file()</a> 和 <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.file-get-contents.php">file_get_contents()</a>，    在数据流内容读取之前没有机会应用其他过滤器。   </p>
+<p>| 名称                        | 描述                                                         |
+| ————————— | ———————————————————— |
+| <code>resource=&lt;要过滤的数据流&gt;</code> | 这个参数是必须的。它指定了你要筛选过滤的数据流。             |
+| <code>read=&lt;读链的筛选列表&gt;</code>     | 该参数可选。可以设定一个或多个过滤器名称，以管道符（<code>|</code>）分隔。 |
+| <code>write=&lt;写链的筛选列表&gt;</code>    | 该参数可选。可以设定一个或多个过滤器名称，以管道符（<code>|</code>）分隔。 |
+| <code>&lt;；两个链的筛选列表&gt;</code>      | 任何没有以 <code>read=</code> 或 <code>write=</code> 作前缀         的筛选器列表会视情况应用于读或写链。 |</p>
+<h3 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h3><p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/filters.string.php">字符串过滤器</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/filters.convert.php">转换过滤器</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/filters.compression.php">压缩过滤器</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/filters.encryption.php">加密过滤器</a></p>
+<p>php协议利用流有诸多过滤器</p>
+<p>过滤器主要是在输入内容被限制或者混淆时使用，过滤掉部分内容使其达到预期输入。</p>
+<h3 id="其他的支持协议"><a href="#其他的支持协议" class="headerlink" title="其他的支持协议"></a>其他的支持协议</h3><p>‘<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/wrappers.file.php">file:&#x2F;&#x2F;</a> — 访问本地文件系统</p>
+<p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/wrappers.http.php">http:&#x2F;&#x2F;</a> — 访问 HTTP(s) 网址</p>
+<p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/wrappers.ftp.php">ftp:&#x2F;&#x2F;</a> — 访问 FTP(s) URLs</p>
+<p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/wrappers.php.php">php:&#x2F;&#x2F;</a> — 访问各个输入&#x2F;输出流（I&#x2F;O streams）</p>
+<p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/wrappers.compression.php">zlib:&#x2F;&#x2F;</a> — 压缩流</p>
+<p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/wrappers.data.php">data:&#x2F;&#x2F;</a> — 数据（RFC 2397）</p>
+<p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/wrappers.glob.php">glob:&#x2F;&#x2F;</a> — 查找匹配的文件路径模式</p>
+<p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/wrappers.phar.php">phar:&#x2F;&#x2F;</a> — PHP 归档</p>
+<p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/wrappers.ssh2.php">ssh2:&#x2F;&#x2F;</a> — 安全外壳协议 2</p>
+<p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/wrappers.rar.php">rar:&#x2F;&#x2F;</a> — RAR</p>
+<p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/wrappers.audio.php">ogg:&#x2F;&#x2F;</a> — 音频流</p>
+<p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/wrappers.expect.php">expect:&#x2F;&#x2F;</a> — 处理交互式的流</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP%E4%BC%AA%E5%8D%8F%E8%AE%AE%E5%88%A9%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">PHP伪协议利用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">过滤器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%9A%84%E6%94%AF%E6%8C%81%E5%8D%8F%E8%AE%AE"><span class="toc-number">3.</span> <span class="toc-text">其他的支持协议</span></a></li></ol>
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
