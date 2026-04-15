@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026-4-14-栈迁移 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,栈迁移栈迁移题目分析
+第一步，为什么要栈迁移？
+栈迁移因为可写缓冲区也就是buff 不足以支持完整的RPO链
+我们只能将RPO链放到 .bss
+
+ .bss解释：
+.bss是内存上一块内存区域，它的,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2026-4-14-栈迁移 - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,栈迁移栈迁移题目分析
+第一步，为什么要栈迁移？
+栈迁移因为可写缓冲区也就是buff 不足以支持完整的RPO链
+我们只能将RPO链放到 .bss
+
+ .bss解释：
+.bss是内存上一块内存区域，它的,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2026-4-14-栈迁移 - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,栈迁移栈迁移题目分析
+第一步，为什么要栈迁移？
+栈迁移因为可写缓冲区也就是buff 不足以支持完整的RPO链
+我们只能将RPO链放到 .bss
+
+ .bss解释：
+.bss是内存上一块内存区域，它的,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://blog.curesky.site"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2026-4-14-栈迁移</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2026-4-14-栈迁移</h1>
+        <div class="stuff">
+            <span>四月 14, 2026</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/KingOfStackMigrate/" rel="tag">KingOfStackMigrate</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/pwn/" rel="tag">pwn</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="tag">网络安全</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="栈迁移"><a href="#栈迁移" class="headerlink" title="栈迁移"></a>栈迁移</h3><p>栈迁移题目分析</p>
+<p>第一步，为什么要栈迁移？</p>
+<p>栈迁移因为可写缓冲区也就是buff 不足以支持完整的RPO链</p>
+<p>我们只能将RPO链放到<code> .bss</code></p>
+<ul>
+<li><code> .bss</code>解释：<ul>
+<li><code>.bss</code>是内存上一块内存区域，它的存在是编译器预留了存放未初始化的全局变量&#x2F;静态变量的位置</li>
+<li>这也是我们平时写代码，为什么存在了未使用的变量会导致报错的原因。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">; Attributes: bp-based frame</span><br><span class="line"></span><br><span class="line">; __int64 __fastcall main(int, char **, char **)</span><br><span class="line">main proc near</span><br><span class="line"></span><br><span class="line">buf= byte ptr -80h</span><br><span class="line"></span><br><span class="line">; __unwind &#123;</span><br><span class="line">push    rbp</span><br><span class="line">mov     rbp, rsp</span><br><span class="line">add     rsp, 0FFFFFFFFFFFFFF80h</span><br><span class="line">mov     rax, cs:stdin</span><br><span class="line">mov     esi, 0          ; buf</span><br><span class="line">mov     rdi, rax        ; stream</span><br><span class="line">call    _setbuf</span><br><span class="line">mov     rax, cs:stdout</span><br><span class="line">mov     esi, 0          ; buf</span><br><span class="line">mov     rdi, rax        ; stream</span><br><span class="line">call    _setbuf</span><br><span class="line">mov     rax, cs:stderr</span><br><span class="line">mov     esi, 0          ; buf</span><br><span class="line">mov     rdi, rax        ; stream</span><br><span class="line">call    _setbuf</span><br><span class="line">lea     rax, s          ; &quot;Are you the king of stack migrate?&quot;</span><br><span class="line">mov     rdi, rax        ; s</span><br><span class="line">call    _puts</span><br><span class="line">lea     rax, [rbp+buf]</span><br><span class="line">mov     edx, 90h        ; nbytes</span><br><span class="line">mov     rsi, rax        ; buf</span><br><span class="line">mov     edi, 0          ; fd</span><br><span class="line">call    _read</span><br><span class="line">lea     rax, aGoodLuck  ; &quot;Good luck.&quot;</span><br><span class="line">mov     rdi, rax        ; s</span><br><span class="line">call    _puts</span><br><span class="line">mov     eax, 0</span><br><span class="line">leave</span><br><span class="line">retn</span><br><span class="line">; &#125; // starts at 40114B</span><br><span class="line">main endp</span><br><span class="line"></span><br><span class="line">_text ends</span><br></pre></td></tr></table></figure>
+
+<p>这段汇编代码中，你可能认为<code>buf</code>是<code>.bss</code>地址，这是个常见的错误。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">; __unwind &#123;</span><br><span class="line">push    rbp</span><br><span class="line">mov     rbp, rsp</span><br><span class="line">add     rsp, 0FFFFFFFFFFFFFF80h</span><br><span class="line">mov     rax, cs:stdin</span><br><span class="line">mov     esi, 0          ; buf</span><br><span class="line">mov     rdi, rax        ; stream</span><br></pre></td></tr></table></figure>
+
+<p><code>buf</code> 没有被程序主动初始化，既没有清零，也没有赋值，但并不属于.bss，因为其在栈上。</p>
+<p>pwntools工具可以直接寻找，不需要手动找</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(elf.bss()))</span><br></pre></td></tr></table></figure>
+
+<p>output:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(base) ┌──(.venv)(cure㉿LAPTOP-CMAM5D0J)-[~/CTF/pwn/19]</span><br><span class="line">└─$ /home/cure/miniconda3/bin/python /home/cure/CTF/pwn/19/exp2.py</span><br><span class="line">[*] <span class="string">&#x27;/home/cure/CTF/pwn/19/pwn&#x27;</span></span><br><span class="line">    Arch:       amd64-64-little</span><br><span class="line">    RELRO:      Full RELRO</span><br><span class="line">    Stack:      No canary found</span><br><span class="line">    NX:         NX enabled</span><br><span class="line">    PIE:        No PIE (0x400000)</span><br><span class="line">0x404020</span><br></pre></td></tr></table></figure>
+
+<p><code>.bss</code>&#x3D;0x404020</p>
+<p>然后我们即可开始第二步，伪造假栈，迁移原栈</p>
+<p>首先我们必须知道 <code>fake_rpb</code> 也就是假栈的地址，是交给<code>leave; ret </code> 去执行的</p>
+<p>我们需要让<code>rsp</code>精确落到伪造好的假栈开头</p>
+<p>行为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">leave        ; mov rsp, rbp ; pop rbp</span><br><span class="line">ret          ; pop rip</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">leave_ret = <span class="number">0x4011c8</span> </span><br><span class="line">fake_stack = <span class="number">0x404800</span></span><br></pre></td></tr></table></figure>
+
+<p>假栈内容</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fake_stack  = p64(<span class="number">0</span>)              <span class="comment"># 新 rbp</span></span><br><span class="line">fake_stack += p64(<span class="number">0x401146</span>)       <span class="comment"># pop rdi ; ret</span></span><br><span class="line">fake_stack += p64(<span class="number">0x404900</span>)       <span class="comment"># 参数</span></span><br><span class="line">fake_stack += p64(<span class="number">0x401030</span>)       <span class="comment"># puts@plt</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fake_rbp = fake_stack_addr = <span class="number">0x401146</span></span><br></pre></td></tr></table></figure>
+
+<p>ruler &#x3D;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[fake_rbp + 0x00] = new_rbp</span><br><span class="line">[fake_rbp + 0x08] = 第一个 gadget / 返回地址</span><br><span class="line">[fake_rbp + 0x10] = 后续参数或 gadget	</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<hr>
+<h3 id="利用流程总结"><a href="#利用流程总结" class="headerlink" title="利用流程总结"></a>利用流程总结</h3><p>本题的整体思路如下：</p>
+<h4 id="1-确认栈空间不足"><a href="#1-确认栈空间不足" class="headerlink" title="1. 确认栈空间不足"></a>1. 确认栈空间不足</h4><p>当前 <code>buf</code> 只有 <code>0x80</code>，不足以支撑完整 ROP 链。</p>
+<h4 id="2-寻找可写区域"><a href="#2-寻找可写区域" class="headerlink" title="2. 寻找可写区域"></a>2. 寻找可写区域</h4><p>使用 <code>.bss</code> 作为假栈区域。</p>
+<h4 id="3-找到-bss-地址"><a href="#3-找到-bss-地址" class="headerlink" title="3. 找到 .bss 地址"></a>3. 找到 <code>.bss</code> 地址</h4><p>通过 <code>elf.bss()</code> 获取 <code>.bss</code> 起始地址，再偏移一段距离作为真正使用的假栈区域。</p>
+<h4 id="4-伪造假栈内容"><a href="#4-伪造假栈内容" class="headerlink" title="4. 伪造假栈内容"></a>4. 伪造假栈内容</h4><p>在 <code>.bss</code> 中布置：</p>
+<ul>
+<li>新 rbp</li>
+<li>第一个 gadget</li>
+<li>后续参数</li>
+<li>后续 ROP 链</li>
+</ul>
+<h4 id="5-控制-saved-rbp"><a href="#5-控制-saved-rbp" class="headerlink" title="5. 控制 saved rbp"></a>5. 控制 <code>saved rbp</code></h4><p>把它改成 <code>fake_rbp</code></p>
+<h4 id="6-控制返回地址"><a href="#6-控制返回地址" class="headerlink" title="6. 控制返回地址"></a>6. 控制返回地址</h4><p>把返回地址改成 <code>leave; ret</code></p>
+<h4 id="7-执行栈迁移"><a href="#7-执行栈迁移" class="headerlink" title="7. 执行栈迁移"></a>7. 执行栈迁移</h4><p>当 <code>leave; ret</code> 执行后，<code>rsp</code> 就会落到 <code>.bss</code> 上，开始从假栈继续执行。</p>
+<hr>
+<h3 id="一句话总结"><a href="#一句话总结" class="headerlink" title="一句话总结"></a>一句话总结</h3><p>栈迁移的本质就是：</p>
+<p><strong>当前栈空间不够用，于是把 <code>rsp</code> 迁移到 <code>.bss</code> 这种更大、可写的区域中，再从那里继续执行 ROP 链。</strong></p>
+<p>而 <code>fake_rbp</code> 的本质，就是：</p>
+<p><strong>你希望下一次 <code>leave</code> 执行时，<code>rsp</code> 落到的那个地址。</strong></p>
+<p>最近要去准备开发类的比赛了暂放CTF，预留AI补充的思路过程暂时收尾此博客。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%88%E8%BF%81%E7%A7%BB"><span class="toc-number">1.</span> <span class="toc-text">栈迁移</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%B5%81%E7%A8%8B%E6%80%BB%E7%BB%93"><span class="toc-number">2.</span> <span class="toc-text">利用流程总结</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%A1%AE%E8%AE%A4%E6%A0%88%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3"><span class="toc-number">2.1.</span> <span class="toc-text">1. 确认栈空间不足</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%AF%BB%E6%89%BE%E5%8F%AF%E5%86%99%E5%8C%BA%E5%9F%9F"><span class="toc-number">2.2.</span> <span class="toc-text">2. 寻找可写区域</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%89%BE%E5%88%B0-bss-%E5%9C%B0%E5%9D%80"><span class="toc-number">2.3.</span> <span class="toc-text">3. 找到 .bss 地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E4%BC%AA%E9%80%A0%E5%81%87%E6%A0%88%E5%86%85%E5%AE%B9"><span class="toc-number">2.4.</span> <span class="toc-text">4. 伪造假栈内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E6%8E%A7%E5%88%B6-saved-rbp"><span class="toc-number">2.5.</span> <span class="toc-text">5. 控制 saved rbp</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E6%8E%A7%E5%88%B6%E8%BF%94%E5%9B%9E%E5%9C%B0%E5%9D%80"><span class="toc-number">2.6.</span> <span class="toc-text">6. 控制返回地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-%E6%89%A7%E8%A1%8C%E6%A0%88%E8%BF%81%E7%A7%BB"><span class="toc-number">2.7.</span> <span class="toc-text">7. 执行栈迁移</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">一句话总结</span></a></li></ol>
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

