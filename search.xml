@@ -8031,4 +8031,56 @@ API网关的权限检查
         <tag>网络安全</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2026-9-29-zip伪协议</title>
+    <url>/2026/09/29/2026-9-29-zip%E4%BC%AA%E5%8D%8F%E8%AE%AE/</url>
+    <content><![CDATA[<h3 id="zip伪协议"><a href="#zip伪协议" class="headerlink" title="zip伪协议"></a>zip伪协议</h3><p>原题 https:&#x2F;&#x2F;www.ctfplus.cn&#x2F;problem-detail&#x2F;1836247027114053632&#x2F;description</p>
+<p>极客大挑战2023-web-famale_imp_l0ve</p>
+<p>做题步骤</p>
+<p>上传提交到  upload_file.php 但是发现一行注释： include.php 已废弃,只接受上传文件 暗示了文件包含点</p>
+<p>访问 include.php 直接泄露自身源码(highlight_file):</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$file</span>) &amp;&amp; <span class="title function_ invoke__">strtolower</span>(<span class="title function_ invoke__">substr</span>(<span class="variable">$file</span>, -<span class="number">4</span>)) == <span class="string">&quot;.jpg&quot;</span>)&#123;</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$file</span>);   <span class="comment">// 只包含以 .jpg 结尾的文件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上传文件只接受以zip为后缀的文件</p>
+<h4 id="漏洞点"><a href="#漏洞点" class="headerlink" title="漏洞点"></a>漏洞点</h4><p>include() 支持 zip:&#x2F;&#x2F; 伪协议,可以直接从 zip 包内读取文件并执行 PHP</p>
+<p>include.php 的 .jpg 后缀检查,对伪协议无用:只要让 file 参数末尾是 “.jpg” 就能过</p>
+<h4 id="攻击链"><a href="#攻击链" class="headerlink" title="攻击链"></a>攻击链</h4><p>zip:&#x2F;&#x2F;&#x2F;var&#x2F;www&#x2F;upload&#x2F;shell.zip#shell.jpg</p>
+<p>构造的zip文件中包含一个webshell</p>
+<p>include.php 的 include() 支持 zip:&#x2F;&#x2F; 伪协议 → ?file&#x3D;zip:&#x2F;&#x2F;&#x2F;var&#x2F;www&#x2F;upload&#x2F;xxx.zip%23shell.jpg</p>
+<p>末尾 “.jpg” 过了 include 的后缀检查,include 实际执行了 zip 里的 PHP → RCE → 读 &#x2F;flag</p>
+<h3 id="漏洞题目源码"><a href="#漏洞题目源码" class="headerlink" title="漏洞题目源码"></a>漏洞题目源码</h3><p>通过RCE拿到</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">header</span>(<span class="string">&quot;Content-type:text/html;charset=utf-8&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 允许上传的文件扩展名（白名单）</span></span><br><span class="line"><span class="variable">$ext_arr</span> = <span class="keyword">array</span>(<span class="string">&#x27;zip&#x27;</span>);</span><br><span class="line"><span class="variable">$file_ext</span> = <span class="title function_ invoke__">substr</span>(<span class="variable">$_FILES</span>[<span class="string">&#x27;file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>], <span class="title function_ invoke__">strrpos</span>(<span class="variable">$_FILES</span>[<span class="string">&#x27;file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>], <span class="string">&quot;.&quot;</span>) + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断filename是否为空</span></span><br><span class="line"><span class="variable">$file</span> = <span class="keyword">empty</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;filename&#x27;</span>]) ? <span class="variable">$_FILES</span>[<span class="string">&#x27;file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>] : <span class="variable">$_POST</span>[<span class="string">&#x27;filename&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检查filename的后缀是否符合要求</span></span><br><span class="line"><span class="variable">$name</span> = <span class="title function_ invoke__">basename</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;filename&#x27;</span>]);</span><br><span class="line"><span class="variable">$filename_ext</span> = <span class="title function_ invoke__">pathinfo</span>(<span class="variable">$name</span>, PATHINFO_EXTENSION);</span><br><span class="line"><span class="variable">$filename</span> = <span class="variable">$_FILES</span>[<span class="string">&#x27;file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检查文件扩展名是否在白名单内</span></span><br><span class="line"><span class="keyword">if</span> (<span class="title function_ invoke__">in_array</span>(<span class="variable">$file_ext</span>, <span class="variable">$ext_arr</span>)) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;后缀过了&lt;br&gt;&quot;</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 检查文件是否已存在</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_ invoke__">file_exists</span>(<span class="string">&quot;upload/&quot;</span> . <span class="variable">$_FILES</span>[<span class="string">&quot;file&quot;</span>][<span class="string">&quot;name&quot;</span>])) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$_FILES</span>[<span class="string">&quot;file&quot;</span>][<span class="string">&quot;name&quot;</span>] . <span class="string">&quot; 文件已经存在。&quot;</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 将文件移动到 upload 目录</span></span><br><span class="line">        <span class="title function_ invoke__">move_uploaded_file</span>(<span class="variable">$_FILES</span>[<span class="string">&quot;file&quot;</span>][<span class="string">&quot;tmp_name&quot;</span>], <span class="string">&quot;upload/&quot;</span> . <span class="variable">$_FILES</span>[<span class="string">&quot;file&quot;</span>][<span class="string">&quot;name&quot;</span>]);</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;文件存储在: &quot;</span> . <span class="string">&quot;upload/&quot;</span> . <span class="variable">$filename</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;必须上传.zip哦&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="漏洞分析报告"><a href="#漏洞分析报告" class="headerlink" title="漏洞分析报告"></a>漏洞分析报告</h3><p>漏洞 1(核心):第 4-5 行 + 第 13 行 —— 只查后缀、不查内容</p>
+<ul>
+<li>第 4 行 $ext_arr &#x3D; array(‘zip’) 是白名单,只有 zip。</li>
+<li>第 5 行取扩展名:strrpos(name, “.”) + 1 拿到最后一个点后面的字符串。</li>
+<li>第 13 行 in_array($file_ext, $ext_arr) 判断扩展名是不是 zip。</li>
+</ul>
+<p>问题:这只是”文件名后缀”检查,完全不看文件真实内容&#x2F;MIME。而且它还有个隐藏 bug——没做 strtolower,是大小写敏感的(传 .ZIP 会直接进 else 报”必须上传.zip哦”)。这就是出题人嘲讽的”压缩了一定安全”:开发者以为”只让传 zip 就安全了”,但 zip 恰恰能被 zip:&#x2F;&#x2F; 伪协议包起来执行 PHP。</p>
+<p>漏洞 2:第 24 行 —— 文件名用户可控,直接拼进路径</p>
+<p>move_uploaded_file($_FILES[“file”][“tmp_name”], “upload&#x2F;“ . $_FILES[“file”][“name”]);</p>
+<p>存储路径用了 $_FILES[“file”]”name”,没有做路径清洗。虽然本题没走到路径穿越,但这是典型的”文件名可控 + 拼接路径”隐患。</p>
+<p>漏洞 3(代码质量暴露的烂摊子):第 7-11 行的死代码</p>
+<ul>
+<li>第 7 行 $file &#x3D; … $_POST[‘filename’] 引用了前端已经被注释掉的 filename 字段</li>
+<li>第 9 行 $name &#x3D; basename($_POST[‘filename’]) —— 此时 $_POST[‘filename’] 根本不存在(表单里没有这个字段),是 undefined</li>
+<li>第 10 行 $filename_ext 算了也没用</li>
+<li>第 11 行 $filename &#x3D; $_FILES[‘file’][‘name’] 才真正赋值</li>
+</ul>
+<p>这几行是开发者改了一半留下的残骸:前端注释掉 filename 输入框(“懒得换前端了😋”),后端却还留着处理 filename 的代码,$file&#x2F;$name&#x2F;$filename_ext 全是死变量。这本身不是可利用点,但强烈暗示”后端和前端不同步、改得仓促”——这也是 CTF 里常见的出题信号。</p>
+<p>三、include.php 的漏洞(上一题已确认,这里补全)</p>
+<p>$file &#x3D; $_GET[‘file’];
+if(isset($file) &amp;&amp; strtolower(substr($file, -4)) &#x3D;&#x3D; “.jpg”){
+    include($file);      &#x2F;&#x2F; ← 第 7 行,任意文件包含
+}</p>
+<p>include($file) 是任意文件包含;.jpg 后缀检查被 zip:&#x2F;&#x2F; 伪协议绕过。</p>
+<p>四、两洞串联</p>
+<p>上传 zip(过 upload_file.php 的后缀白名单)→ include.php 用 zip:&#x2F;&#x2F;&#x2F;var&#x2F;www&#x2F;upload&#x2F;readsrc.zip#r.jpg 包含(末尾 .jpg 过检查)→ 执行 zip 里的 PHP → RCE。</p>
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>PHP</tag>
+      </tags>
+  </entry>
 </search>
