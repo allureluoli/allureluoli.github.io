@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.curesky.site/2026/10/17/2026-10-17-WPFUIGallery/</loc>
+    
+    <lastmod>2026-10-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.curesky.site/2026/10/16/2026-10-16-DockingCheck/</loc>
     
     <lastmod>2026-10-16</lastmod>
@@ -1989,6 +1998,13 @@
   
   <url>
     <loc>https://blog.curesky.site/tags/RE/</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.curesky.site/tags/WPF/</loc>
     <lastmod>2026-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
