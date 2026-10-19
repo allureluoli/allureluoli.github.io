@@ -8337,4 +8337,42 @@ curl -s -i -X POST http:&#x2F;&#x2F;&lt;目标&gt;&#x2F;register -d “email&#x3
         <tag>WPF</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2026-10-18-WPFUIGallery2</title>
+    <url>/2026/10/18/2026-10-18-WPFUIGallery2/</url>
+    <content><![CDATA[<h3 id="WPFUIGallery2"><a href="#WPFUIGallery2" class="headerlink" title="WPFUIGallery2"></a>WPFUIGallery2</h3><p>WPF中有一个重要概念<code>Trigger</code> 俗称：触发器</p>
+<p>可以根据状态来自动的改变外观。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;Style x:Key=&quot;NameInputStyle&quot; TargetType=&quot;TextBox&quot;&gt;</span><br><span class="line">    &lt;Setter Property=&quot;BorderThickness&quot; Value=&quot;2&quot;/&gt;</span><br><span class="line">    &lt;Style.Triggers&gt;</span><br><span class="line">        &lt;Trigger Property=&quot;Text&quot; Value=&quot;&quot;&gt;</span><br><span class="line">            &lt;Setter Property=&quot;BorderBrush&quot; Value=&quot;DarkOrange&quot;/&gt;</span><br><span class="line">            &lt;Setter Property=&quot;ToolTip&quot; Value=&quot;请输入姓名&quot;/&gt;</span><br><span class="line">        &lt;/Trigger&gt;</span><br><span class="line">    &lt;/Style.Triggers&gt;</span><br><span class="line">&lt;/Style&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>BorderThickness</code> Setter的属性 边框粗细</li>
+<li><code>BorderBrush</code> 边框画刷 也就是颜色 这里定义 DarkOrange 深橙色</li>
+<li><code>ToolTip</code> 定义tip~</li>
+</ul>
+<h3 id="C-绑定对象"><a href="#C-绑定对象" class="headerlink" title="C#绑定对象"></a>C#绑定对象</h3><p>先新建一个文件 我命名为<code>ProfileViewModel.cs</code></p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">WpfUiDemo</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ProfileViewModel</span></span><br><span class="line">&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="built_in">string</span> DisplayName &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125; = <span class="string">&quot;WPF Studyer&quot;</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="built_in">string</span> Description &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125; = <span class="string">&quot;Today now study C# binding object&quot;</span>;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>&#123;get; set;&#125;</code>的写法叫自动实现属性，编译器会帮你生成一个隐藏字段来保存值，所以不用自己写存储逻辑。</li>
+</ul>
+<p>等价于</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="built_in">string</span> _displayName = <span class="string">&quot;WPF Studyer&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="built_in">string</span> DisplayName</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">get</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> _displayName; <span class="comment">// 读取时返回保存的值</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">set</span></span><br><span class="line">    &#123;</span><br><span class="line">        _displayName = <span class="keyword">value</span>; <span class="comment">// 修改时保存传进来的新值</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后修改<code>MainWindows.xaml.cs</code> 初始化后加载这个类</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">MainWindow</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    InitializeComponent();</span><br><span class="line"></span><br><span class="line">    DataContext = <span class="keyword">new</span> ProfileViewModel();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样在xaml中就能用了</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;TextBlock Text=&quot;&#123;Binding DisplayName&#125;&quot;</span><br><span class="line">           FontSize=&quot;18&quot;</span><br><span class="line">           Margin=&quot;0,0,0,8&quot; /&gt;</span><br><span class="line"></span><br><span class="line">&lt;TextBlock Text=&quot;&#123;Binding Description&#125;&quot;</span><br><span class="line">           Margin=&quot;0,0,0,16&quot; /&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="写法对比"><a href="#写法对比" class="headerlink" title="写法对比"></a>写法对比</h5><p>去哪里寻找数据</p>
+<ul>
+<li><code>&#123;Binding ElementName=NameInput, Path=Text&#125;</code>名为 <code>NameInput</code> 的控件</li>
+<li><code>&#123;Binding DisplayName&#125;</code>当前 <code>DataContext</code> 对象的 <code>DisplayName</code> 属性</li>
+</ul>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3>]]></content>
+      <tags>
+        <tag>C#</tag>
+        <tag>WPF</tag>
+      </tags>
+  </entry>
 </search>
