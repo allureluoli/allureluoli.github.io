@@ -17,7 +17,7 @@
         doc.style.colorScheme = mode;
         try { localStorage.setItem('february-theme', mode); } catch (e) {}
         var meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) meta.setAttribute('content', mode === 'dark' ? '#0c0814' : '#f8f5f3');
+        if (meta) meta.setAttribute('content', mode === 'dark' ? '#262624' : '#faf9f5');
     }
 
     var themeBtn = $('#f-theme');
