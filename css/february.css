@@ -1694,6 +1694,16 @@ html[data-theme="dark"] .comment .gt-container .gt-comment-content { border: 1px
     color: var(--ink-2);
 }
 
+.f-footer-quote-zh { display: block; }
+
+.f-footer-quote-en {
+    display: block;
+    margin-top: 5px;
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: var(--ink-3);
+}
+
 .f-footer-links {
     display: flex;
     flex-wrap: wrap;

@@ -542,6 +542,17 @@
     color: rgba(247, 245, 239, .45);
 }
 
+.ab-creed-en {
+    margin-top: 10px;
+    padding-left: 14px;
+    border-left: 1px solid rgba(247, 245, 239, .22);
+    font-family: var(--serif);
+    font-size: .95em;
+    font-style: italic;
+    line-height: 1.9;
+    color: rgba(247, 245, 239, .6);
+}
+
 /* ------------------------------ 技能 ------------------------------- */
 .ab-skills {
     display: grid;
