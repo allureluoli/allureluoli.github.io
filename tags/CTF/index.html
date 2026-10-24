@@ -3,6 +3,20 @@
 <html lang="zh" class="loading">
 <head>
     <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Tag: CTF - 二月の档案室</title>
@@ -32,7 +46,9 @@
     <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
 
+    <meta name="theme-color" content="#120a1e" />
     <script>window.searchDbPath = "/search.xml";</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,138 +58,305 @@
 <body class="loading">
     <span id="config-title" style="display:none">二月の档案室</span>
     <div id="loader"></div>
-    <div class="nav">
-    <ul id="menu-menu" class="menu">
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <span class="f-brand-mark" aria-hidden="true">月</span>
+        <span class="f-brand-text">二月の档案室<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
         
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="//" title="首页" target="_blank" rel="noopener">首页</a>
-        </li>
+        <a href="//">首页</a>
         
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/categories/" title="分类" target="_blank" rel="noopener">分类</a>
-        </li>
+        <a href="/categories/">分类</a>
         
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/tags/" title="标签" target="_blank" rel="noopener">标签</a>
-        </li>
+        <a href="/tags/" class=&#34;is-active&#34;>标签</a>
         
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/archives/" title="归档" target="_blank" rel="noopener">归档</a>
-        </li>
+        <a href="/archives/">归档</a>
         
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/about/" title="关于" target="_blank" rel="noopener">关于</a>
-        </li>
+        <a href="/about/">关于</a>
         
-    </ul>
-	<span class="target"></span>
-	<center>
-	<div class="hitokoto">
-		<span class="typed" id="hitokoto" data-st="true"></span>
-	</div>
-	</center>
-	
-	<p class="footerlinks">
-		<a href="#" class="iconfont icon-null"></a>
-		
-            <a href="/" title="facebook" class="iconfont icon-facebook" target="_blank" rel="noopener"> </a>
+    </nav>
+
+    <div class="f-dock-actions">
         
-            <a href="https://x.com/DevilC1875" title="twitter" class="iconfont icon-twitter" target="_blank" rel="noopener"> </a>
+
         
-            <a href="https://github.com/allureluoli/" title="github" class="iconfont icon-github" target="_blank" rel="noopener"> </a>
-        
-            <a href="weixin://dl/chat?moonfebruarymoon" title="wechat" class="iconfont icon-wechat" target="_blank" rel="noopener"> </a>
-        
-            <a href="mailto:3345483363@qq.com" title="email" class="iconfont icon-email" target="_blank" rel="noopener"> </a>
-        
-		<a href="#" class="iconfont icon-null"></a>
-	</p>
-	
-    <p id="copyright">
-        &copy; 2026 Allureluoli.
-        <span> | </span>Powered by <a href="https://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
-        <span> | </span>Theme <a href="https://github.com/Fechin/hexo-theme-diaspora" title="Diaspora" target="_blank" rel="noopener">Diaspora</a> by Fechin
-		
-		<span> | </span><a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
-		
-    </p>
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="//" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「所感所想，所言所行，我将以文字记录我自己。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
 </div>
 
-<div id="container">
+
     
-<div id="screen">
+<div id="container" class="f-home">
+    
+<section id="screen" class="f-hero f-hero--taxo">
     <div id="mark">
         <div class="layer" data-depth="0.4">
             <img src="/img/welcome-cover.jpg" id="cover" crossorigin="anonymous" width="1920" height="1080">
         </div>
     </div>
-    <div id="vibrant">
-        <svg viewbox="0 0 2880 1620" height="100%" preserveaspectratio="xMaxYMax slice">
-            <polygon opacity="0.7" points="2000,1620 0,1620 0,0 600,0 "/>
-        </svg>
-        <div></div>
-    </div>
-    <div id="header">
-        <div>
-            <a class="image-logo" href="/"></a>
-			
-            <div class="iconfont icon-menu switchmenu"></div>
+    <div id="vibrant"><div></div></div>
+    <div class="f-hero-veil"></div>
+    <div class="f-hero-stars" id="f-stars" aria-hidden="true"></div>
+    <span class="f-hero-kanji" aria-hidden="true">#</span>
+
+    <div class="f-hero-inner">
+        
+        <p class="f-hero-kicker"><span class="f-pulse"></span>TAGGED</p>
+        <h1 class="f-hero-title"><span class="f-hero-cn">CTF</span></h1>
+        <p class="f-hero-sub">该标签下共 3 篇文章</p>
+        <div class="f-hero-actions">
+            <a class="f-btn-ghost" href="/tags/">全部标签</a>
+            <a class="f-btn-ghost" href="/categories/">全部分类</a>
         </div>
+        
+
+        
+
+        <a class="f-scroll-cue" href="#latest" aria-label="向下浏览">
+            <span class="f-mouse" aria-hidden="true"></span>
+            <span class="f-scroll-text">SCROLL</span>
+        </a>
     </div>
-    
-    <div id="post0">
-        <p>四月 14, 2026</p>
-        <h2><a href="/2026/04/14/2026-4-14-%E6%A0%88%E8%BF%81%E7%A7%BB/" title="2026-4-14-栈迁移" class="posttitle">2026-4-14-栈迁移</a></h2>
-        <p class="summary">栈迁移栈迁移题目分析
+
+    <script type="application/json" id="f-typing-data">["所感所想，所言所行，我将以文字记录我自己。","一个在代码与梦境之间徘徊的人。","技术笔记 · 生活杂感 · 一堆胡话。","呐呐呐，这里是二月哦~"]</script>
+</section>
+
+
+    <section class="f-sec" id="latest">
+        <div class="f-sec-head" data-reveal>
+            <span class="f-sec-index">01</span>
+            <h2 class="f-sec-title">#CTF<em>TAGGED</em></h2>
+            <p class="f-sec-desc">
+                共 3 篇，按时间倒序排列。
+            </p>
+        </div>
+
+        <div id="primary" class="f-grid">
+            
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2026/04/14/2026-4-14-%E6%A0%88%E8%BF%81%E7%A7%BB/" title="2026-4-14-栈迁移" tabindex="-1">
+        <img src="/img/tu%20(15).png" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        
+    </a>
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2026-04-14T07:07:33.000Z">2026-04-14</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>5 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#网络安全</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2026/04/14/2026-4-14-%E6%A0%88%E8%BF%81%E7%A7%BB/" title="2026-4-14-栈迁移" class="posttitle">2026-4-14-栈迁移</a></h3>
+        <p class="f-card-desc">栈迁移栈迁移题目分析
 第一步，为什么要栈迁移？
 栈迁移因为可写缓冲区也就是buff 不足以支持完整的RPO链
-我们...</p>
-    </div>
-    
-</div>
+我们只能将RPO链放到 .bss
 
-    <div id="primary">
+ .bss解释：
+.bss是内存上一…</p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
+    </div>
+</article>
+
+
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2026/04/09/2026-4-9-0XGAME-ROP2/" title="2026-4-9_0XGAME_ROP2" tabindex="-1">
+        <img src="/img/tu%20(30).jpg" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
         
-<div class="post">
-    <a href="/2026/04/09/2026-4-9-0XGAME-ROP2/" title="2026-4-9_0XGAME_ROP2">
-        <img src="/img/cover.jpg" class="cover" width="680" height="440">
     </a>
-    <div class="else">
-        <p>四月 09, 2026</p>
-        <h3><a href="/2026/04/09/2026-4-9-0XGAME-ROP2/" title="2026-4-9_0XGAME_ROP2" class="posttitle">2026-4-9_0XGAME_ROP2</a></h3>
-        <p>神奇的$0题目信息:
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2026-04-09T06:18:57.000Z">2026-04-09</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>6 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#网络安全</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2026/04/09/2026-4-9-0XGAME-ROP2/" title="2026-4-9_0XGAME_ROP2" class="posttitle">2026-4-9_0XGAME_ROP2</a></h3>
+        <p class="f-card-desc">神奇的$0题目信息:
 ROP2
 
-看来你已经知道怎么控制参数除了sh,在unix&#x2F;linux中还有一个神奇的参数也能达到rce的效果你能找到它吗...</p>
+看来你已经知道怎么控制参数除了sh,在unix&#x2F;linux中还有一个神奇的参数也能达到rce的效果你能找到它吗?
+
+首先看题
+12345(…</p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
     </div>
-</div>
+</article>
 
 
-<div class="post">
-    <a href="/2025/09/03/2025-9-3-%E5%B8%82%E8%B5%9Bwp/" title="2025-9-3-市赛wp">
-        <img src="/img/cover.jpg" class="cover" width="680" height="440">
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2025/09/03/2025-9-3-%E5%B8%82%E8%B5%9Bwp/" title="2025-9-3-市赛wp" tabindex="-1">
+        <img src="/img/tu%20(34).jpg" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        
     </a>
-    <div class="else">
-        <p>九月 03, 2025</p>
-        <h3><a href="/2025/09/03/2025-9-3-%E5%B8%82%E8%B5%9Bwp/" title="2025-9-3-市赛wp" class="posttitle">2025-9-3-市赛wp</a></h3>
-        <p>CRACKME WP这题是逆向题
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2025-09-03T06:22:06.000Z">2025-09-03</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>2 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#网络安全</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2025/09/03/2025-9-3-%E5%B8%82%E8%B5%9Bwp/" title="2025-9-3-市赛wp" class="posttitle">2025-9-3-市赛wp</a></h3>
+        <p class="f-card-desc">CRACKME WP这题是逆向题
 我们先下载拿到题目 4.crackme.exe
 
 导入IDA后进入题目
 
 观察题目发现是对比字符串
-猜测密文就是flag...</p>
+猜测密文就是flag
+观察流程图
+
+观察汇编代码…</p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
     </div>
-</div>
+</article>
 
 
-    </div>
-    
+        </div>
+
+        
+
+        
+    </section>
 </div>
 <div id="preview"></div>
 
 
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <span class="f-footer-mark" aria-hidden="true">月</span>
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
 
+        <p class="f-footer-quote">所感所想，所言所行，我将以文字记录我自己。</p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
 </body>
 
 <script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
@@ -183,6 +366,7 @@ ROP2
 <script src="/js/plugin.js"></script>
 <script src="/js/typed.js"></script>
 <script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
 
 
 <link rel="stylesheet" href="/photoswipe/photoswipe.css">

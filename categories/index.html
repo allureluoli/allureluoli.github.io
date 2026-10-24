@@ -3,6 +3,20 @@
 <html lang="zh" class="loading">
 <head>
     <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>二月の档案室 - 秘密基地哦~</title>
@@ -32,7 +46,9 @@
     <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
 
+    <meta name="theme-color" content="#120a1e" />
     <script>window.searchDbPath = "/search.xml";</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,27 +58,299 @@
 <body class="loading">
     <span id="config-title" style="display:none">二月の档案室</span>
     <div id="loader"></div>
-    <div id="single" class="page">
-    <div id="top">
-        <a class="iconfont icon-left image-icon" href="javascript:history.back()"></a>
-    </div>
-    <div class="section">
-        <div class="article">
-            <div class="main">
-                <div class="content">
-                
-                    <div class="set">
-  <h2>分类</h2>
-  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web/">Web</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%8B%B1%E8%AF%AD/">英语</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9A%8F%E7%AC%94/">随笔</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LOVE%E9%85%B1/">LOVE酱</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/">计算机网络技术</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/engine/">engine</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nonebot/">Nonebot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%84%9F%E6%82%9F/">感悟</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AF%BB%E5%BF%83/">寻心</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Blog/">Blog</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C#</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%99%E7%A8%8B/">教程</a><span class="category-list-count">1</span></li></ul>
-</div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
 
-                
-                </div>
-            </div>
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <span class="f-brand-mark" aria-hidden="true">月</span>
+        <span class="f-brand-text">二月の档案室<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="//">首页</a>
+        
+        <a href="/categories/" class=&#34;is-active&#34;>分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="//" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「所感所想，所言所行，我将以文字记录我自己。」</span>
         </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
     </div>
 </div>
 
+
+    <div id="single" class="f-page">
+    
+    <header class="f-page-hero">
+        <p class="f-hero-kicker"><span class="f-pulse"></span>INDEX</p>
+        <h1 class="f-page-title">分类索引</h1>
+        <p class="f-page-sub">共 <b>21</b> 个分类。</p>
+    </header>
+    <div class="f-page-body">
+        
+<div class="f-cat-grid">
+    
+    <a class="f-cat-card" href="/categories/Python/" style="--h:190">
+        <span class="f-cat-name">Python</span>
+        <span class="f-cat-count">13 篇</span>
+        <span class="f-cat-arrow" aria-hidden="true">↗</span>
+    </a>
+    
+    <a class="f-cat-card" href="/categories/Web/" style="--h:243">
+        <span class="f-cat-name">Web</span>
+        <span class="f-cat-count">10 篇</span>
+        <span class="f-cat-arrow" aria-hidden="true">↗</span>
+    </a>
+    
+    <a class="f-cat-card" href="/categories/JavaScript/" style="--h:296">
+        <span class="f-cat-name">JavaScript</span>
+        <span class="f-cat-count">7 篇</span>
+        <span class="f-cat-arrow" aria-hidden="true">↗</span>
+    </a>
+    
+    <a class="f-cat-card" href="/categories/C/" style="--h:349">
+        <span class="f-cat-name">C++</span>
+        <span class="f-cat-count">5 篇</span>
+        <span class="f-cat-arrow" aria-hidden="true">↗</span>
+    </a>
+    
+    <a class="f-cat-card" href="/categories/%E8%8B%B1%E8%AF%AD/" style="--h:42">
+        <span class="f-cat-name">英语</span>
+        <span class="f-cat-count">4 篇</span>
+        <span class="f-cat-arrow" aria-hidden="true">↗</span>
+    </a>
+    
+    <a class="f-cat-card" href="/categories/%E9%9A%8F%E7%AC%94/" style="--h:95">
+        <span class="f-cat-name">随笔</span>
+        <span class="f-cat-count">4 篇</span>
+        <span class="f-cat-arrow" aria-hidden="true">↗</span>
+    </a>
+    
+    <a class="f-cat-card" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" style="--h:148">
+        <span class="f-cat-name">网络安全</span>
+        <span class="f-cat-count">3 篇</span>
+        <span class="f-cat-arrow" aria-hidden="true">↗</span>
+    </a>
+    
+    <a class="f-cat-card" href="/categories/Linux/" style="--h:201">
+        <span class="f-cat-name">Linux</span>
+        <span class="f-cat-count">3 篇</span>
+        <span class="f-cat-arrow" aria-hidden="true">↗</span>
+    </a>
+    
+    <a class="f-cat-card" href="/categories/JAVA/" style="--h:254">
+        <span class="f-cat-name">JAVA</span>
+        <span class="f-cat-count">2 篇</span>
+        <span class="f-cat-arrow" aria-hidden="true">↗</span>
+    </a>
+    
+    <a class="f-cat-card" href="/categories/Android/" style="--h:307">
+        <span class="f-cat-name">Android</span>
+        <span class="f-cat-count">2 篇</span>
+        <span class="f-cat-arrow" aria-hidden="true">↗</span>
+    </a>
+    
+    <a class="f-cat-card" href="/categories/CSS/" style="--h:0">
+        <span class="f-cat-name">CSS</span>
+        <span class="f-cat-count">1 篇</span>
+        <span class="f-cat-arrow" aria-hidden="true">↗</span>
+    </a>
+    
+    <a class="f-cat-card" href="/categories/LOVE%E9%85%B1/" style="--h:53">
+        <span class="f-cat-name">LOVE酱</span>
+        <span class="f-cat-count">1 篇</span>
+        <span class="f-cat-arrow" aria-hidden="true">↗</span>
+    </a>
+    
+    <a class="f-cat-card" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" style="--h:106">
+        <span class="f-cat-name">计算机网络技术</span>
+        <span class="f-cat-count">1 篇</span>
+        <span class="f-cat-arrow" aria-hidden="true">↗</span>
+    </a>
+    
+    <a class="f-cat-card" href="/categories/engine/" style="--h:159">
+        <span class="f-cat-name">engine</span>
+        <span class="f-cat-count">1 篇</span>
+        <span class="f-cat-arrow" aria-hidden="true">↗</span>
+    </a>
+    
+    <a class="f-cat-card" href="/categories/Nonebot/" style="--h:212">
+        <span class="f-cat-name">Nonebot</span>
+        <span class="f-cat-count">1 篇</span>
+        <span class="f-cat-arrow" aria-hidden="true">↗</span>
+    </a>
+    
+    <a class="f-cat-card" href="/categories/%E6%84%9F%E6%82%9F/" style="--h:265">
+        <span class="f-cat-name">感悟</span>
+        <span class="f-cat-count">1 篇</span>
+        <span class="f-cat-arrow" aria-hidden="true">↗</span>
+    </a>
+    
+    <a class="f-cat-card" href="/categories/%E5%AF%BB%E5%BF%83/" style="--h:318">
+        <span class="f-cat-name">寻心</span>
+        <span class="f-cat-count">1 篇</span>
+        <span class="f-cat-arrow" aria-hidden="true">↗</span>
+    </a>
+    
+    <a class="f-cat-card" href="/categories/%E5%89%8D%E7%AB%AF/" style="--h:11">
+        <span class="f-cat-name">前端</span>
+        <span class="f-cat-count">1 篇</span>
+        <span class="f-cat-arrow" aria-hidden="true">↗</span>
+    </a>
+    
+    <a class="f-cat-card" href="/categories/Blog/" style="--h:64">
+        <span class="f-cat-name">Blog</span>
+        <span class="f-cat-count">1 篇</span>
+        <span class="f-cat-arrow" aria-hidden="true">↗</span>
+    </a>
+    
+    <a class="f-cat-card" href="/categories/C/" style="--h:117">
+        <span class="f-cat-name">C#</span>
+        <span class="f-cat-count">1 篇</span>
+        <span class="f-cat-arrow" aria-hidden="true">↗</span>
+    </a>
+    
+    <a class="f-cat-card" href="/categories/%E6%95%99%E7%A8%8B/" style="--h:170">
+        <span class="f-cat-name">教程</span>
+        <span class="f-cat-count">1 篇</span>
+        <span class="f-cat-arrow" aria-hidden="true">↗</span>
+    </a>
+    
+</div>
+
+    </div>
+
+    
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <span class="f-footer-mark" aria-hidden="true">月</span>
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">所感所想，所言所行，我将以文字记录我自己。</p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
 </body>
 
 <script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
@@ -72,6 +360,7 @@
 <script src="/js/plugin.js"></script>
 <script src="/js/typed.js"></script>
 <script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
 
 
 <link rel="stylesheet" href="/photoswipe/photoswipe.css">

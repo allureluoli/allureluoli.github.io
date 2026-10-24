@@ -3,6 +3,20 @@
 <html lang="zh" class="loading">
 <head>
     <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Tag: Python - 二月の档案室</title>
@@ -32,7 +46,9 @@
     <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
 
+    <meta name="theme-color" content="#120a1e" />
     <script>window.searchDbPath = "/search.xml";</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,247 +58,487 @@
 <body class="loading">
     <span id="config-title" style="display:none">二月の档案室</span>
     <div id="loader"></div>
-    <div class="nav">
-    <ul id="menu-menu" class="menu">
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <span class="f-brand-mark" aria-hidden="true">月</span>
+        <span class="f-brand-text">二月の档案室<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
         
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="//" title="首页" target="_blank" rel="noopener">首页</a>
-        </li>
+        <a href="//">首页</a>
         
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/categories/" title="分类" target="_blank" rel="noopener">分类</a>
-        </li>
+        <a href="/categories/">分类</a>
         
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/tags/" title="标签" target="_blank" rel="noopener">标签</a>
-        </li>
+        <a href="/tags/" class=&#34;is-active&#34;>标签</a>
         
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/archives/" title="归档" target="_blank" rel="noopener">归档</a>
-        </li>
+        <a href="/archives/">归档</a>
         
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/about/" title="关于" target="_blank" rel="noopener">关于</a>
-        </li>
+        <a href="/about/">关于</a>
         
-    </ul>
-	<span class="target"></span>
-	<center>
-	<div class="hitokoto">
-		<span class="typed" id="hitokoto" data-st="true"></span>
-	</div>
-	</center>
-	
-	<p class="footerlinks">
-		<a href="#" class="iconfont icon-null"></a>
-		
-            <a href="/" title="facebook" class="iconfont icon-facebook" target="_blank" rel="noopener"> </a>
+    </nav>
+
+    <div class="f-dock-actions">
         
-            <a href="https://x.com/DevilC1875" title="twitter" class="iconfont icon-twitter" target="_blank" rel="noopener"> </a>
+
         
-            <a href="https://github.com/allureluoli/" title="github" class="iconfont icon-github" target="_blank" rel="noopener"> </a>
-        
-            <a href="weixin://dl/chat?moonfebruarymoon" title="wechat" class="iconfont icon-wechat" target="_blank" rel="noopener"> </a>
-        
-            <a href="mailto:3345483363@qq.com" title="email" class="iconfont icon-email" target="_blank" rel="noopener"> </a>
-        
-		<a href="#" class="iconfont icon-null"></a>
-	</p>
-	
-    <p id="copyright">
-        &copy; 2026 Allureluoli.
-        <span> | </span>Powered by <a href="https://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
-        <span> | </span>Theme <a href="https://github.com/Fechin/hexo-theme-diaspora" title="Diaspora" target="_blank" rel="noopener">Diaspora</a> by Fechin
-		
-		<span> | </span><a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
-		
-    </p>
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="//" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「所感所想，所言所行，我将以文字记录我自己。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
 </div>
 
-<div id="container">
+
     
-<div id="screen">
+<div id="container" class="f-home">
+    
+<section id="screen" class="f-hero f-hero--taxo">
     <div id="mark">
         <div class="layer" data-depth="0.4">
             <img src="/img/welcome-cover.jpg" id="cover" crossorigin="anonymous" width="1920" height="1080">
         </div>
     </div>
-    <div id="vibrant">
-        <svg viewbox="0 0 2880 1620" height="100%" preserveaspectratio="xMaxYMax slice">
-            <polygon opacity="0.7" points="2000,1620 0,1620 0,0 600,0 "/>
-        </svg>
-        <div></div>
-    </div>
-    <div id="header">
-        <div>
-            <a class="image-logo" href="/"></a>
-			
-            <div class="iconfont icon-menu switchmenu"></div>
-        </div>
-    </div>
-    
-    <div id="post0">
-        <p>七月 06, 2023</p>
-        <h2><a href="/2023/07/06/2023-7-6-Flask-5/" title="Flask[相逢]" class="posttitle">Flask[相逢]</a></h2>
-        <p class="summary">表单用户使用表单向服务器提交信息，例如最常见的登录。
-那么如何在html页面里提交表单，以及flask如何处理表单...</p>
-    </div>
-    
-</div>
+    <div id="vibrant"><div></div></div>
+    <div class="f-hero-veil"></div>
+    <div class="f-hero-stars" id="f-stars" aria-hidden="true"></div>
+    <span class="f-hero-kanji" aria-hidden="true">#</span>
 
-    <div id="primary">
+    <div class="f-hero-inner">
         
-<div class="post">
-    <a href="/2023/07/06/2023-7-6-Flask-5/" title="Flask[相逢]">
-        <img src="/img/DSCF6725.jpg" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>七月 06, 2023</p>
-        <h3><a href="/2023/07/06/2023-7-6-Flask-5/" title="Flask[相逢]" class="posttitle">Flask[相逢]</a></h3>
-        <p>表单用户使用表单向服务器提交信息，例如最常见的登录。
-那么如何在html页面里提交表单，以及flask如何处理表单数据？以及表单敏感信息如何存储。
-HTM...</p>
+        <p class="f-hero-kicker"><span class="f-pulse"></span>TAGGED</p>
+        <h1 class="f-hero-title"><span class="f-hero-cn">Python</span></h1>
+        <p class="f-hero-sub">该标签下共 10 篇文章</p>
+        <div class="f-hero-actions">
+            <a class="f-btn-ghost" href="/tags/">全部标签</a>
+            <a class="f-btn-ghost" href="/categories/">全部分类</a>
+        </div>
+        
+
+        
+
+        <a class="f-scroll-cue" href="#latest" aria-label="向下浏览">
+            <span class="f-mouse" aria-hidden="true"></span>
+            <span class="f-scroll-text">SCROLL</span>
+        </a>
     </div>
-</div>
+
+    <script type="application/json" id="f-typing-data">["所感所想，所言所行，我将以文字记录我自己。","一个在代码与梦境之间徘徊的人。","技术笔记 · 生活杂感 · 一堆胡话。","呐呐呐，这里是二月哦~"]</script>
+</section>
 
 
-<div class="post">
-    <a href="/2023/07/04/2023-7-4-Flask-4/" title="Flask[寻觅]">
-        <img src="/img/DSCF6725.jpg" class="cover" width="680" height="440">
+    <section class="f-sec" id="latest">
+        <div class="f-sec-head" data-reveal>
+            <span class="f-sec-index">01</span>
+            <h2 class="f-sec-title">#Python<em>TAGGED</em></h2>
+            <p class="f-sec-desc">
+                共 10 篇，按时间倒序排列。
+            </p>
+        </div>
+
+        <div id="primary" class="f-grid">
+            
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2023/07/06/2023-7-6-Flask-5/" title="Flask[相逢]" tabindex="-1">
+        <img src="/img/tu%20(69).jpg" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        <span class="f-card-cat">Web</span>
     </a>
-    <div class="else">
-        <p>七月 04, 2023</p>
-        <h3><a href="/2023/07/04/2023-7-4-Flask-4/" title="Flask[寻觅]" class="posttitle">Flask[寻觅]</a></h3>
-        <p>模板作用
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2023-07-06T09:16:00.000Z">2023-07-06</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>5 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#Python</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2023/07/06/2023-7-6-Flask-5/" title="Flask[相逢]" class="posttitle">Flask[相逢]</a></h3>
+        <p class="f-card-desc">表单用户使用表单向服务器提交信息，例如最常见的登录。
+那么如何在html页面里提交表单，以及flask如何处理表单数据？以及表单敏感信息如何存储。
+HTML登录页面中的form表单
+…</p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
+    </div>
+</article>
+
+
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2023/07/04/2023-7-4-Flask-4/" title="Flask[寻觅]" tabindex="-1">
+        <img src="/img/DSCF6725.jpg" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        <span class="f-card-cat">Web</span>
+    </a>
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2023-07-04T10:46:00.000Z">2023-07-04</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>12 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#Python</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2023/07/04/2023-7-4-Flask-4/" title="Flask[寻觅]" class="posttitle">Flask[寻觅]</a></h3>
+        <p class="f-card-desc">模板作用
 HTML代码复用
 网页内容动态显示
 
-使用模板技术，可以将那些可共用的代码放在基础模板里，其他的网页可以继承这个基础模板，也可以用include...</p>
+使用模板技术，可以将那些可共用的代码放在基础模板里，其他的网页可以继承这个基础模板，也可以用include的方式加载进来。
+@COOL…</p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
     </div>
-</div>
+</article>
 
 
-<div class="post">
-    <a href="/2023/07/04/2023-7-4-Flask-3/" title="Flask[探索]">
-        <img src="/img/tu%20(22).gif" class="cover" width="680" height="440">
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2023/07/04/2023-7-4-Flask-3/" title="Flask[探索]" tabindex="-1">
+        <img src="/img/image%20(3).jpg" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        <span class="f-card-cat">Web</span>
     </a>
-    <div class="else">
-        <p>七月 04, 2023</p>
-        <h3><a href="/2023/07/04/2023-7-4-Flask-3/" title="Flask[探索]" class="posttitle">Flask[探索]</a></h3>
-        <p>请求对象request介绍request是flask框架的全局对象，可以通过它来获得当前进入的请求数据。
-而在多线程环境下，flask可以保证所使用的re...</p>
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2023-07-04T08:46:00.000Z">2023-07-04</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>7 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#Python</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2023/07/04/2023-7-4-Flask-3/" title="Flask[探索]" class="posttitle">Flask[探索]</a></h3>
+        <p class="f-card-desc">请求对象request介绍request是flask框架的全局对象，可以通过它来获得当前进入的请求数据。
+而在多线程环境下，flask可以保证所使用的request对象为当前这个线程…</p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
     </div>
-</div>
+</article>
 
 
-<div class="post">
-    <a href="/2023/07/03/2023-7-3-Flask-2/" title="Flask[相识]">
-        <img src="/img/tu%20(42).jpg" class="cover" width="680" height="440">
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2023/07/03/2023-7-3-Flask-2/" title="Flask[相识]" tabindex="-1">
+        <img src="/img/tu%20(30).jpg" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        <span class="f-card-cat">Web</span>
     </a>
-    <div class="else">
-        <p>七月 03, 2023</p>
-        <h3><a href="/2023/07/03/2023-7-3-Flask-2/" title="Flask[相识]" class="posttitle">Flask[相识]</a></h3>
-        <p>路由规则管理一般情况有两种添加路由规则的方式
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2023-07-03T00:40:00.000Z">2023-07-03</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>5 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#Python</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2023/07/03/2023-7-3-Flask-2/" title="Flask[相识]" class="posttitle">Flask[相识]</a></h3>
+        <p class="f-card-desc">路由规则管理一般情况有两种添加路由规则的方式
 1、使用route添加路由规则
-123@app.route(&#x27;/add_url&#x27;)def...</p>
+123@app.route(&#x27;/add_url&#x27;)def add_rule():  …</p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
     </div>
-</div>
+</article>
 
 
-<div class="post">
-    <a href="/2023/07/03/2023-7-3-Flask-1/" title="Flask[初见]">
-        <img src="/img/tu%20(30).jpg" class="cover" width="680" height="440">
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2023/07/03/2023-7-3-Flask-1/" title="Flask[初见]" tabindex="-1">
+        <img src="/img/tu%20(15).png" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        <span class="f-card-cat">Web</span>
     </a>
-    <div class="else">
-        <p>七月 03, 2023</p>
-        <h3><a href="/2023/07/03/2023-7-3-Flask-1/" title="Flask[初见]" class="posttitle">Flask[初见]</a></h3>
-        <p>什么是Flask?  Flask是一个使用 Python 编写的轻量级 Web 应用框架。其 WSGI 工具箱采用 Werkzeug ，模板引擎则使用 J...</p>
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2023-07-03T00:00:00.000Z">2023-07-03</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>6 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#Python</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2023/07/03/2023-7-3-Flask-1/" title="Flask[初见]" class="posttitle">Flask[初见]</a></h3>
+        <p class="f-card-desc">什么是Flask?  Flask是一个使用 Python 编写的轻量级 Web 应用框架。其 WSGI 工具箱采用 Werkzeug ，模板引擎则使用 Jinja2 。Flask使用…</p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
     </div>
-</div>
+</article>
 
 
-<div class="post">
-    <a href="/2023/03/24/2023-3-24-%5BNonebot%5D-%E4%BD%BF%E7%94%A8got%E8%A3%85%E9%A5%B0%E5%99%A8%E5%88%B6%E4%BD%9C%E6%AF%94%E8%B5%9B%E6%8A%BD%E5%9B%BE%E7%B3%BB%E7%BB%9F/" title="使用got装饰器制作比赛抽图系统">
-        <img src="/img/cover.jpg" class="cover" width="680" height="440">
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2023/03/24/2023-3-24-%5BNonebot%5D-%E4%BD%BF%E7%94%A8got%E8%A3%85%E9%A5%B0%E5%99%A8%E5%88%B6%E4%BD%9C%E6%AF%94%E8%B5%9B%E6%8A%BD%E5%9B%BE%E7%B3%BB%E7%BB%9F/" title="使用got装饰器制作比赛抽图系统" tabindex="-1">
+        <img src="/img/tu%20(15).png" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        <span class="f-card-cat">Python</span>
     </a>
-    <div class="else">
-        <p>三月 24, 2023</p>
-        <h3><a href="/2023/03/24/2023-3-24-%5BNonebot%5D-%E4%BD%BF%E7%94%A8got%E8%A3%85%E9%A5%B0%E5%99%A8%E5%88%B6%E4%BD%9C%E6%AF%94%E8%B5%9B%E6%8A%BD%E5%9B%BE%E7%B3%BB%E7%BB%9F/" title="使用got装饰器制作比赛抽图系统" class="posttitle">使用got装饰器制作比赛抽图系统</a></h3>
-        <p>反思说实话，这段代码并不完美，got装饰器有专门的获取消息的方法，而我仍然在使用获取事件消息的方式。
-而这种实现方法最明显的缺陷就是无法在群聊以外的环境中...</p>
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2023-03-24T04:00:00.000Z">2023-03-24</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>5 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#Python</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2023/03/24/2023-3-24-%5BNonebot%5D-%E4%BD%BF%E7%94%A8got%E8%A3%85%E9%A5%B0%E5%99%A8%E5%88%B6%E4%BD%9C%E6%AF%94%E8%B5%9B%E6%8A%BD%E5%9B%BE%E7%B3%BB%E7%BB%9F/" title="使用got装饰器制作比赛抽图系统" class="posttitle">使用got装饰器制作比赛抽图系统</a></h3>
+        <p class="f-card-desc">反思说实话，这段代码并不完美，got装饰器有专门的获取消息的方法，而我仍然在使用获取事件消息的方式。
+而这种实现方法最明显的缺陷就是无法在群聊以外的环境中使用。
+阅读了其他人的代码后…</p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
     </div>
-</div>
+</article>
 
 
-<div class="post">
-    <a href="/2023/03/19/2023-3-19-%E8%A2%ABif%E8%AF%AD%E5%8F%A5%E7%BB%99%E4%BA%88%E4%B8%80%E7%82%B9%E5%B0%8F%E5%B0%8F%E9%9C%87%E6%92%BC/" title="被if语句给予一点小小震撼">
-        <img src="/img/tu%20(69).jpg" class="cover" width="680" height="440">
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2023/03/19/2023-3-19-%E8%A2%ABif%E8%AF%AD%E5%8F%A5%E7%BB%99%E4%BA%88%E4%B8%80%E7%82%B9%E5%B0%8F%E5%B0%8F%E9%9C%87%E6%92%BC/" title="被if语句给予一点小小震撼" tabindex="-1">
+        <img src="/img/tu%20(22).gif" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        <span class="f-card-cat">Python</span>
     </a>
-    <div class="else">
-        <p>三月 19, 2023</p>
-        <h3><a href="/2023/03/19/2023-3-19-%E8%A2%ABif%E8%AF%AD%E5%8F%A5%E7%BB%99%E4%BA%88%E4%B8%80%E7%82%B9%E5%B0%8F%E5%B0%8F%E9%9C%87%E6%92%BC/" title="被if语句给予一点小小震撼" class="posttitle">被if语句给予一点小小震撼</a></h3>
-        <p>#被if语句给予一点小小震撼
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2023-03-19T13:15:00.000Z">2023-03-19</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>1 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#基础</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2023/03/19/2023-3-19-%E8%A2%ABif%E8%AF%AD%E5%8F%A5%E7%BB%99%E4%BA%88%E4%B8%80%E7%82%B9%E5%B0%8F%E5%B0%8F%E9%9C%87%E6%92%BC/" title="被if语句给予一点小小震撼" class="posttitle">被if语句给予一点小小震撼</a></h3>
+        <p class="f-card-desc">#被if语句给予一点小小震撼
 为什么是and 而不是or?
-123QQ=1252if int(QQ) != 3345483363 or int(QQ) !...</p>
+123QQ=1252if int(QQ) != 3345483363 or int(QQ) != 2060598058:
+…</p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
     </div>
-</div>
+</article>
 
 
-<div class="post">
-    <a href="/2023/03/08/2023-3-8-Nonebot%E5%88%9B%E5%BB%BA%E8%81%8A%E5%A4%A9%E6%95%99%E5%AD%A6%E5%8A%9F%E8%83%BD/" title="Nonebot创建聊天教学功能">
-        <img src="/img/image%20(2).jpg" class="cover" width="680" height="440">
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2023/03/08/2023-3-8-Nonebot%E5%88%9B%E5%BB%BA%E8%81%8A%E5%A4%A9%E6%95%99%E5%AD%A6%E5%8A%9F%E8%83%BD/" title="Nonebot创建聊天教学功能" tabindex="-1">
+        <img src="/img/tu%20(22).gif" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        <span class="f-card-cat">Python</span>
     </a>
-    <div class="else">
-        <p>三月 08, 2023</p>
-        <h3><a href="/2023/03/08/2023-3-8-Nonebot%E5%88%9B%E5%BB%BA%E8%81%8A%E5%A4%A9%E6%95%99%E5%AD%A6%E5%8A%9F%E8%83%BD/" title="Nonebot创建聊天教学功能" class="posttitle">Nonebot创建聊天教学功能</a></h3>
-        <p>起因  在阅读前辈代码的时候我发现前辈们会专门的分出一个类专门进行数据处理相关的操作，于是我便顺着这个想法改进了我的代码。
-  这使我项目代码的结构更为规...</p>
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2023-03-08T08:20:00.000Z">2023-03-08</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>11 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#Python</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2023/03/08/2023-3-8-Nonebot%E5%88%9B%E5%BB%BA%E8%81%8A%E5%A4%A9%E6%95%99%E5%AD%A6%E5%8A%9F%E8%83%BD/" title="Nonebot创建聊天教学功能" class="posttitle">Nonebot创建聊天教学功能</a></h3>
+        <p class="f-card-desc">起因  在阅读前辈代码的时候我发现前辈们会专门的分出一个类专门进行数据处理相关的操作，于是我便顺着这个想法改进了我的代码。
+  这使我项目代码的结构更为规整和简化，也提高了代码的可读…</p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
     </div>
-</div>
+</article>
 
 
-<div class="post">
-    <a href="/2023/03/06/2023-3-6%20234624-Python%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" title="Python 模块重载">
-        <img src="/img/welcome-cover.jpg" class="cover" width="680" height="440">
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2023/03/06/2023-3-6%20234624-Python%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" title="Python 模块重载" tabindex="-1">
+        <img src="/img/image%20(3).jpg" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        <span class="f-card-cat">Python</span>
     </a>
-    <div class="else">
-        <p>三月 06, 2023</p>
-        <h3><a href="/2023/03/06/2023-3-6%20234624-Python%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" title="Python 模块重载" class="posttitle">Python 模块重载</a></h3>
-        <p>在使用Nonebot框架进行的开发中，我接触到了许多新的概念，也了解了更多知识。
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2023-03-06T15:46:24.000Z">2023-03-06</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>1 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#基础</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2023/03/06/2023-3-6%20234624-Python%E7%9A%84%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" title="Python 模块重载" class="posttitle">Python 模块重载</a></h3>
+        <p class="f-card-desc">在使用Nonebot框架进行的开发中，我接触到了许多新的概念，也了解了更多知识。
 大概有，如下：
 
 async 异步语句
-python程序模块化的更深概念...</p>
+python程序模块化的更深概念
+线程的阻塞
+装饰器
+jso…</p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
     </div>
-</div>
+</article>
 
 
-<div class="post">
-    <a href="/2023/02/20/2023-2-20-%E5%89%8D%E5%90%8E%E7%AB%AF%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93/" title="前后端数据交流的实现方法">
-        <img src="/img/tu%20(42).jpg" class="cover" width="680" height="440">
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2023/02/20/2023-2-20-%E5%89%8D%E5%90%8E%E7%AB%AF%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93/" title="前后端数据交流的实现方法" tabindex="-1">
+        <img src="/img/image%20(1).jpg" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        <span class="f-card-cat">前端</span>
     </a>
-    <div class="else">
-        <p>二月 20, 2023</p>
-        <h3><a href="/2023/02/20/2023-2-20-%E5%89%8D%E5%90%8E%E7%AB%AF%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93/" title="前后端数据交流的实现方法" class="posttitle">前后端数据交流的实现方法</a></h3>
-        <p>前后端数据交流的实现方法
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2023-02-19T16:00:00.000Z">2023-02-20</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>2 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#前端</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2023/02/20/2023-2-20-%E5%89%8D%E5%90%8E%E7%AB%AF%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93/" title="前后端数据交流的实现方法" class="posttitle">前后端数据交流的实现方法</a></h3>
+        <p class="f-card-desc">前后端数据交流的实现方法
 【关于笨蛋想出来的跨域请求的前后端方法】
 这种方法比较笨，理解起来也不太容易。
 第一步：
 先通过web服务器部署一个前端页面。
-...</p>
+可以使用apache,ngi…</p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
     </div>
-</div>
+</article>
 
 
-    </div>
-    
-    <div id="pager"><a href="/tags/Python/page/3/" class="more">加载更多</a></div>
-    
+        </div>
+
+        
+        <div id="pager" data-total="3">
+            
+            <a href="/tags/Python/page/3/" class="more" data-page="1">加载更多</a>
+            
+        </div>
+        
+
+        
+    </section>
 </div>
 <div id="preview"></div>
 
 
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <span class="f-footer-mark" aria-hidden="true">月</span>
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
 
+        <p class="f-footer-quote">所感所想，所言所行，我将以文字记录我自己。</p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
 </body>
 
 <script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
@@ -292,6 +548,7 @@ python程序模块化的更深概念...</p>
 <script src="/js/plugin.js"></script>
 <script src="/js/typed.js"></script>
 <script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
 
 
 <link rel="stylesheet" href="/photoswipe/photoswipe.css">

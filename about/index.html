@@ -3,6 +3,20 @@
 <html lang="zh" class="loading">
 <head>
     <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>二月の档案室 - 秘密基地哦~</title>
@@ -32,7 +46,9 @@
     <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
 
+    <meta name="theme-color" content="#120a1e" />
     <script>window.searchDbPath = "/search.xml";</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,57 +58,733 @@
 <body class="loading">
     <span id="config-title" style="display:none">二月の档案室</span>
     <div id="loader"></div>
-    <div id="single" class="page">
-    <div id="top">
-        <a class="iconfont icon-left image-icon" href="javascript:history.back()"></a>
-    </div>
-    <div class="section">
-        <div class="article">
-            <div class="main">
-                <div class="content">
-                
-                        <p><strong>呐呐呐这里是二月哦~</strong></p>
-<h1 id="友情链接"><a href="#友情链接" class="headerlink" title="友情链接"></a>友情链接</h1><p><a target="_blank" rel="noopener" href="https://jdsalingzx.top/">绫中之书</a>：书中自有黄金屋，欢迎来到绫中之书，JDSALing的博客！</p>
-<p><a target="_blank" rel="noopener" href="https://blog.tianscar.com/">碳酸天剑</a>：永远十八岁的碳酸天剑的博客！</p>
-<p><a target="_blank" rel="noopener" href="https://blog.nranp.com/">日想录</a>:记录思考，多少或能慰藉自身。若是哪天重阅旧文，能对这时的自己心生悲悯，便是万幸万幸。</p>
-<p><a target="_blank" rel="noopener" href="https://daiyunyang.github.io/">ydy的梦想殿堂</a>:不是每个人都应该像我这样去建造一座水晶大教堂，但是每个人都应该拥有自己的梦想，设计自己的梦想，追求自己的梦想，实现自己的梦想。</p>
-<p><a target="_blank" rel="noopener" href="https://shellymon.github.io/">周易酱哦~</a>：周易酱的Blog~</p>
-<p><a target="_blank" rel="noopener" href="http://81.68.235.163:4000/">若梦の小酒馆</a>：若梦の小酒馆：我有酒，你有故事吗？</p>
-<p><a target="_blank" rel="noopener" href="https://blog.someo.top/">幻想の日常</a>:  心随幻想，梦行无疆 </p>
-<p><a target="_blank" rel="noopener" href="https://blog.tmaize.net/">TMaize Blog</a>: TMaize的个人博客 </p>
-<p><a target="_blank" rel="noopener" href="https://myrvyn.github.io/">myrvyn</a>: myrvyn的个人博客</p>
-<h2 id="感谢！"><a href="#感谢！" class="headerlink" title="感谢！"></a>感谢！</h2><p>Linux运维、Nonebot、Termux、C#，RW-HPS等圈子的网友给予我的帮助！</p>
-<p>点名：</p>
-<p>Nonebot - 货拉拉</p>
-<p>Nonebot - 津轻年回</p>
-<p>Nonebot - 小提琴头像的美国老哥</p>
-<p>Nonebot - everyone</p>
-<p>好朋友 - 周易 ，科星</p>
-<p>RW-HPS - Dr</p>
-<p>Linux运维 - 老哥</p>
-<p>魔法师 - JDSALing</p>
-<p>Termux - 可爱美少女群主</p>
-<p>C# - 诺尔姐姐</p>
-<p>AnsdoShip -    <a target="_blank" rel="noopener" href="https://github.com/Tianscar">Tianscar</a></p>
-<p>JAVA大神 - WUNAME</p>
-<p>狂热的外包接单人 - 大年</p>
-<p>我的徒弟 - 血月</p>
-<p>御用专属美少女画师 - THILAK</p>
-<p>银狼爱好者 - 机械师（bilibili: Python银狼编程）</p>
-<p>某摆烂人 - 永恒天心</p>
-<p>RW.LAB - Tobby</p>
-<p>RW.LAB - 😈</p>
-<h2 id="关于开源："><a href="#关于开源：" class="headerlink" title="关于开源："></a>关于开源：</h2><p>前人栽树，后人乘凉。二月对开源此类无私的行为是百分百支持，也因为经常使用开源项目，希望在日后也能为开源社区做出一份贡献。</p>
-<h2 id="关于二月厨的一些角色："><a href="#关于二月厨的一些角色：" class="headerlink" title="关于二月厨的一些角色："></a>关于二月厨的一些角色：</h2><p>御坂美琴、梓喵、清姬、Saber、Miku、洛天依、琪露诺、芙兰朵露、东海帝皇、重炮、目白麦昆、米浴、八六、丛雨、柴郡、莫德雷德、小鸟游六花、春日野穹、TTT喵、有栖nama、长门有希、响、立华奏、艾拉、奇犽·揍敌客、小南、泉此方、亚托莉、东海帝皇、米浴、目白麦昆、小鸟游星野、重炮、黑塔、银狼、符玄……
-关于作者的联系方式：QQ：3345483363</p>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
 
-                
-                </div>
-            </div>
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <span class="f-brand-mark" aria-hidden="true">月</span>
+        <span class="f-brand-text">二月の档案室<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="//">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/" class=&#34;is-active&#34;>关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="//" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「所感所想，所言所行，我将以文字记录我自己。」</span>
         </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
     </div>
 </div>
 
+
+    
+<div id="single" class="page about-page">
+    <link rel="stylesheet" href="/css/about.css">
+
+    <!-- ============ HERO ============ -->
+    <header class="ab-hero" style="--ab-cover:url('/img/welcome-cover.jpg')">
+        <div class="ab-hero-bg"></div>
+        <div class="ab-hero-veil"></div>
+        <span class="ab-hero-kanji" aria-hidden="true">月</span>
+        <div class="ab-hero-sparks" id="ab-sparks" aria-hidden="true"></div>
+
+        <div class="ab-hero-inner">
+            <div class="ab-avatar">
+                <span class="ab-avatar-ring" aria-hidden="true"></span>
+                <span class="ab-avatar-img">
+                    <img src="/img/avatar.jpg" alt="二月 的头像" width="140" height="140">
+                </span>
+                <span class="ab-avatar-badge">二月</span>
+            </div>
+
+            <p class="ab-hero-kicker"><span class="ab-pulse"></span>FEBRUARY&nbsp;·&nbsp;ARCHIVE</p>
+
+            <h1 class="ab-hero-name">
+                <span class="ab-name-cn">二月</span>
+                <span class="ab-name-en">/ February</span>
+            </h1>
+
+            <p class="ab-hero-handle">@Allureluoli</p>
+
+            <p class="ab-typing"><span id="ab-typing"></span><i class="ab-caret" aria-hidden="true"></i></p>
+
+            
+            <ul class="ab-hero-tags">
+                <li>Web 安全</li><li>二进制 &amp; Pwn</li><li>Python / C / Rust</li><li>Nonebot</li><li>二次元</li><li>记录者</li>
+            </ul>
+            
+
+            
+            <div class="ab-hero-social">
+                
+                <a href="https://github.com/allureluoli/" target="_blank" rel="noopener nofollow" class="ab-btn-ghost">
+                    <span>GitHub</span><i aria-hidden="true">↗</i>
+                </a>
+                
+                <a href="https://x.com/DevilC1875" target="_blank" rel="noopener nofollow" class="ab-btn-ghost">
+                    <span>X / Twitter</span><i aria-hidden="true">↗</i>
+                </a>
+                
+                <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener nofollow" class="ab-btn-ghost">
+                    <span>Email</span><i aria-hidden="true">↗</i>
+                </a>
+                
+                <a href="/atom.xml" target="_blank" rel="noopener nofollow" class="ab-btn-ghost">
+                    <span>RSS</span><i aria-hidden="true">↗</i>
+                </a>
+                
+            </div>
+            
+
+            <a class="ab-scroll-cue" href="#ab-intro" aria-label="向下滚动">
+                <span class="ab-scroll-line"></span>
+                <span class="ab-scroll-text">SCROLL</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- ============ 悬浮导航 ============ -->
+    <nav class="ab-nav" id="ab-nav" aria-label="页面章节导航">
+        
+        <a href="#ab-about" data-target="ab-about" class=&#34;is-active&#34;>关于</a>
+        
+        <a href="#ab-skill" data-target="ab-skill">技能</a>
+        
+        <a href="#ab-timeline" data-target="ab-timeline">时间线</a>
+        
+        <a href="#ab-friends" data-target="ab-friends">友链</a>
+        
+        <a href="#ab-thanks" data-target="ab-thanks">致谢</a>
+        
+        <a href="#ab-contact" data-target="ab-contact">联系</a>
+        
+    </nav>
+
+    <!-- ============ 数据条 ============ -->
+    <div class="ab-stats-wrap">
+        <div class="ab-stats">
+            
+            <div class="ab-stat">
+                <div class="ab-stat-num">
+                    <span class="ab-count" data-value="144" data-decimals="0">0</span>
+                </div>
+                <div class="ab-stat-label">文章<em>POSTS</em></div>
+            </div>
+            
+            <div class="ab-stat">
+                <div class="ab-stat-num">
+                    <span class="ab-count" data-value="99" data-decimals="0">0</span>
+                </div>
+                <div class="ab-stat-label">标签<em>TAGS</em></div>
+            </div>
+            
+            <div class="ab-stat">
+                <div class="ab-stat-num">
+                    <span class="ab-count" data-value="21" data-decimals="0">0</span>
+                </div>
+                <div class="ab-stat-label">分类<em>CATEGORY</em></div>
+            </div>
+            
+            <div class="ab-stat">
+                <div class="ab-stat-num">
+                    <span class="ab-count" data-value="1557" data-decimals="0">0</span><em class="ab-unit">天</em>
+                </div>
+                <div class="ab-stat-label">运行<em>DAYS</em></div>
+            </div>
+            
+            <div class="ab-stat">
+                <div class="ab-stat-num">
+                    <span class="ab-count" data-value="67.9" data-decimals="1">0</span><em class="ab-unit">k</em>
+                </div>
+                <div class="ab-stat-label">字数<em>WORDS</em></div>
+            </div>
+            
+        </div>
+    </div>
+
+    <main class="ab-main">
+
+        <!-- ============ 关于 ============ -->
+        <section class="ab-sec" id="ab-about">
+            <div class="ab-sec-head reveal">
+                <span class="ab-sec-index">01</span>
+                <h2 class="ab-sec-title">关于我<em>ABOUT</em></h2>
+                <p class="ab-sec-desc">呐呐呐这里是二月哦~ 一个把技术、杂文和胡话都塞进同一个档案室的人。</p>
+            </div>
+
+            <div class="ab-bento">
+                
+                
+                <article class="ab-card ab-card--wide reveal" data-spot>
+                    <span class="ab-card-tag">WHO AM I</span>
+                    <h3 class="ab-card-title">我是二月</h3>
+                    <p class="ab-card-text">白天和键盘较劲，晚上和梦境较劲。喜欢把学到的东西写下来，哪怕写得笨拙，也算给自己留一条回头的路。这个博客叫「二月的档案室」，装的是技术笔记、生活杂感，以及一些不知道该放哪里的句子。</p>
+                </article>
+                
+                <article class="ab-card ab-card--narrow reveal" data-spot>
+                    <span class="ab-card-tag">OPEN SOURCE</span>
+                    <h3 class="ab-card-title">关于开源</h3>
+                    <p class="ab-card-text">前人栽树，后人乘凉。二月对开源这类无私的行为百分百支持，也因为经常使用开源项目，希望日后也能为开源社区做出一份贡献。</p>
+                </article>
+                
+                <article class="ab-card ab-card--half reveal" data-spot>
+                    <span class="ab-card-tag">STACK</span>
+                    <h3 class="ab-card-title">手里常驻的家伙</h3>
+                    <p class="ab-card-text">Python 与 Nonebot 是日常，C/C++ 用来靠近底层，Rust 用来怀疑人生；Burp、IDA、pwntools 在安全这边常驻。开发侧写点 Flask、Next.js，偶尔用 Godot / SDL2 做点小玩意儿。</p>
+                </article>
+                
+                <article class="ab-card ab-card--half reveal" data-spot>
+                    <span class="ab-card-tag">BELIEF</span>
+                    <h3 class="ab-card-title">我信的几件事</h3>
+                    <p class="ab-card-text">一是「记录下来才算真的学会」；二是「把原理搞懂比把工具跑通重要」；三是「温柔一点，互联网已经够吵了」。</p>
+                </article>
+                
+                
+
+                
+                <article class="ab-card ab-card--half reveal" data-spot>
+                    <span class="ab-card-tag">NOW</span>
+                    <h3 class="ab-card-title">最近在做</h3>
+                    <ul class="ab-dots">
+                        <li>啃二进制：栈溢出、Canary、栈迁移</li><li>继续补 PHP 伪协议与反序列化</li><li>学数学，顺便被数学教育</li><li>折腾 WPF 与桌面端 UI</li><li>把没写完的稿子写完（大概）</li>
+                    </ul>
+                </article>
+                
+
+                <article class="ab-card ab-card--half ab-clock-card reveal" data-spot>
+                    <span class="ab-card-tag">LOCAL TIME</span>
+                    <h3 class="ab-card-title">此刻的二月</h3>
+                    <div class="ab-clock" id="ab-clock">--:--:--</div>
+                    <p class="ab-clock-sub">Asia/Shanghai · GMT+8</p>
+                </article>
+
+                
+                <article class="ab-card ab-card--full ab-creed reveal">
+                    <span class="ab-quote-mark" aria-hidden="true">“</span>
+                    <p class="ab-creed-text">所感所想，所言所行，我将以文字记录我自己。若是哪天重阅旧文，能对这时的自己心生悲悯，便是万幸万幸。</p>
+                    <p class="ab-creed-sign">— 二月</p>
+                </article>
+                
+            </div>
+        </section>
+
+        <!-- ============ 技能 ============ -->
+        
+        <section class="ab-sec" id="ab-skill">
+            <div class="ab-sec-head reveal">
+                <span class="ab-sec-index">02</span>
+                <h2 class="ab-sec-title">技能树<em>SKILLS</em></h2>
+                <p class="ab-sec-desc">一直在点亮的技能条，进度条永远比格子里的数字诚实。</p>
+            </div>
+
+            <div class="ab-skills">
+                
+                <div class="ab-skill reveal" style="--v:86%;transition-delay:0ms">
+                    <div class="ab-skill-top">
+                        <span class="ab-skill-name">Web 安全 / 渗透测试</span>
+                        <span class="ab-skill-lv">86%</span>
+                    </div>
+                    <div class="ab-track"><span class="ab-bar"></span></div>
+                    <p class="ab-skill-note">SQL 注入、反序列化、伪协议、JWT 与各类逻辑漏洞</p>
+                </div>
+                
+                <div class="ab-skill reveal" style="--v:78%;transition-delay:60ms">
+                    <div class="ab-skill-top">
+                        <span class="ab-skill-name">二进制 &amp; 逆向</span>
+                        <span class="ab-skill-lv">78%</span>
+                    </div>
+                    <div class="ab-track"><span class="ab-bar"></span></div>
+                    <p class="ab-skill-note">栈溢出、ROP、Canary 绕过、脱壳与静态分析</p>
+                </div>
+                
+                <div class="ab-skill reveal" style="--v:82%;transition-delay:120ms">
+                    <div class="ab-skill-top">
+                        <span class="ab-skill-name">Python</span>
+                        <span class="ab-skill-lv">82%</span>
+                    </div>
+                    <div class="ab-track"><span class="ab-bar"></span></div>
+                    <p class="ab-skill-note">Nonebot 插件、脚本工具、自动化与爬虫</p>
+                </div>
+                
+                <div class="ab-skill reveal" style="--v:76%;transition-delay:180ms">
+                    <div class="ab-skill-top">
+                        <span class="ab-skill-name">C / C++</span>
+                        <span class="ab-skill-lv">76%</span>
+                    </div>
+                    <div class="ab-track"><span class="ab-bar"></span></div>
+                    <p class="ab-skill-note">库函数、WinAPI、SDL2、MSVC 踩坑记录</p>
+                </div>
+                
+                <div class="ab-skill reveal" style="--v:72%;transition-delay:240ms">
+                    <div class="ab-skill-top">
+                        <span class="ab-skill-name">Linux 运维</span>
+                        <span class="ab-skill-lv">72%</span>
+                    </div>
+                    <div class="ab-track"><span class="ab-bar"></span></div>
+                    <p class="ab-skill-note">Ubuntu、Docker、MySQL、Nginx 与自建服务</p>
+                </div>
+                
+                <div class="ab-skill reveal" style="--v:66%;transition-delay:300ms">
+                    <div class="ab-skill-top">
+                        <span class="ab-skill-name">前端 / Node</span>
+                        <span class="ab-skill-lv">66%</span>
+                    </div>
+                    <div class="ab-track"><span class="ab-bar"></span></div>
+                    <p class="ab-skill-note">Flask、Next.js、小程序与 Hexo 主题魔改</p>
+                </div>
+                
+                <div class="ab-skill reveal" style="--v:58%;transition-delay:0ms">
+                    <div class="ab-skill-top">
+                        <span class="ab-skill-name">数学</span>
+                        <span class="ab-skill-lv">58%</span>
+                    </div>
+                    <div class="ab-track"><span class="ab-bar"></span></div>
+                    <p class="ab-skill-note">数论、均值不等式、归纳法，边学边写</p>
+                </div>
+                
+                <div class="ab-skill reveal" style="--v:62%;transition-delay:60ms">
+                    <div class="ab-skill-top">
+                        <span class="ab-skill-name">游戏 / 创意开发</span>
+                        <span class="ab-skill-lv">62%</span>
+                    </div>
+                    <div class="ab-track"><span class="ab-bar"></span></div>
+                    <p class="ab-skill-note">Godot、SDL2、RW-HPS 联机折腾</p>
+                </div>
+                
+            </div>
+        </section>
+        
+
+        <!-- ============ 时间线 ============ -->
+        
+        <section class="ab-sec" id="ab-timeline">
+            <div class="ab-sec-head reveal">
+                <span class="ab-sec-index">03</span>
+                <h2 class="ab-sec-title">时间线<em>JOURNEY</em></h2>
+                <p class="ab-sec-desc">从第一篇笔记开始，把走过的路摊开来看。</p>
+            </div>
+
+            <ol class="ab-timeline">
+                
+                <li class="ab-tl-item reveal" style="transition-delay:0ms">
+                    <span class="ab-tl-year">2022</span>
+                    <h3 class="ab-tl-title">第一篇笔记，从一个 C++ 的坑开始</h3>
+                    <p class="ab-tl-text">7 月 20 日写下「这是爷的笔记」，之后一路是 Python 复习、CSS/HTML、Nonebot 配置，以及一堆现在看来很想删掉的旧文。</p>
+                </li>
+                
+                <li class="ab-tl-item reveal" style="transition-delay:70ms">
+                    <span class="ab-tl-year">2023</span>
+                    <h3 class="ab-tl-title">Nonebot 与前后端</h3>
+                    <p class="ab-tl-text">给机器人写抽图系统、聊天教学，开始碰 Flask 与 Next.js，第一次意识到「能跑」和「写得对」是两件事。</p>
+                </li>
+                
+                <li class="ab-tl-item reveal" style="transition-delay:140ms">
+                    <span class="ab-tl-year">2024</span>
+                    <h3 class="ab-tl-title">靠近底层：C 库函数、SDL2、Godot、MSVC</h3>
+                    <p class="ab-tl-text">学 C 库函数与 WinAPI，用 SDL2 和 Godot 做小游戏，顺手记下寨板 X99 的 BIOS、SQL 注入基操和长城杯的 WP。</p>
+                </li>
+                
+                <li class="ab-tl-item reveal" style="transition-delay:210ms">
+                    <span class="ab-tl-year">2025</span>
+                    <h3 class="ab-tl-title">数学、网络与安卓</h3>
+                    <p class="ab-tl-text">数论、均值不等式、图灵完备；ARP、路由、Wireshark、DNS；还有 Rust 的 Cow、PDF 解密和远古安卓开发。</p>
+                </li>
+                
+                <li class="ab-tl-item reveal" style="transition-delay:280ms">
+                    <span class="ab-tl-year">2026</span>
+                    <h3 class="ab-tl-title">二进制与 Web 漏洞深水区</h3>
+                    <p class="ab-tl-text">Pwn 的栈溢出、Canary、栈迁移，PHP 伪协议与反序列化，JWT、SSTI、zip 伪协议，以及 WPF 的 UI 折腾。</p>
+                </li>
+                
+            </ol>
+        </section>
+        
+
+        <!-- ============ 友链 ============ -->
+        
+        <section class="ab-sec" id="ab-friends">
+            <div class="ab-sec-head reveal">
+                <span class="ab-sec-index">04</span>
+                <h2 class="ab-sec-title">友情链接<em>FRIENDS</em></h2>
+                <p class="ab-sec-desc">互联网上散落的光，互相照一照就成了银河。</p>
+            </div>
+
+            <div class="ab-friends">
+                
+                <a class="ab-friend reveal" href="https://jdsalingzx.top/" target="_blank" rel="noopener nofollow"
+                   style="--h:200;transition-delay:0ms" data-spot>
+                    <span class="ab-friend-avatar" aria-hidden="true">绫</span>
+                    <span class="ab-friend-body">
+                        <span class="ab-friend-name">绫中之书<i aria-hidden="true">↗</i></span>
+                        <span class="ab-friend-desc">书中自有黄金屋，欢迎来到绫中之书，JDSALing 的博客！</span>
+                    </span>
+                </a>
+                
+                <a class="ab-friend reveal" href="https://blog.tianscar.com/" target="_blank" rel="noopener nofollow"
+                   style="--h:247;transition-delay:70ms" data-spot>
+                    <span class="ab-friend-avatar" aria-hidden="true">碳</span>
+                    <span class="ab-friend-body">
+                        <span class="ab-friend-name">碳酸天剑<i aria-hidden="true">↗</i></span>
+                        <span class="ab-friend-desc">永远十八岁的碳酸天剑的博客！</span>
+                    </span>
+                </a>
+                
+                <a class="ab-friend reveal" href="https://blog.nranp.com/" target="_blank" rel="noopener nofollow"
+                   style="--h:294;transition-delay:140ms" data-spot>
+                    <span class="ab-friend-avatar" aria-hidden="true">日</span>
+                    <span class="ab-friend-body">
+                        <span class="ab-friend-name">日想录<i aria-hidden="true">↗</i></span>
+                        <span class="ab-friend-desc">记录思考，多少或能慰藉自身。若是哪天重阅旧文，能对这时的自己心生悲悯，便是万幸万幸。</span>
+                    </span>
+                </a>
+                
+                <a class="ab-friend reveal" href="https://daiyunyang.github.io/" target="_blank" rel="noopener nofollow"
+                   style="--h:341;transition-delay:0ms" data-spot>
+                    <span class="ab-friend-avatar" aria-hidden="true">y</span>
+                    <span class="ab-friend-body">
+                        <span class="ab-friend-name">ydy的梦想殿堂<i aria-hidden="true">↗</i></span>
+                        <span class="ab-friend-desc">不是每个人都应该去建造一座水晶大教堂，但每个人都应该拥有自己的梦想。</span>
+                    </span>
+                </a>
+                
+                <a class="ab-friend reveal" href="https://shellymon.github.io/" target="_blank" rel="noopener nofollow"
+                   style="--h:28;transition-delay:70ms" data-spot>
+                    <span class="ab-friend-avatar" aria-hidden="true">周</span>
+                    <span class="ab-friend-body">
+                        <span class="ab-friend-name">周易酱哦~<i aria-hidden="true">↗</i></span>
+                        <span class="ab-friend-desc">周易酱的 Blog~</span>
+                    </span>
+                </a>
+                
+                <a class="ab-friend reveal" href="http://81.68.235.163:4000/" target="_blank" rel="noopener nofollow"
+                   style="--h:75;transition-delay:140ms" data-spot>
+                    <span class="ab-friend-avatar" aria-hidden="true">若</span>
+                    <span class="ab-friend-body">
+                        <span class="ab-friend-name">若梦の小酒馆<i aria-hidden="true">↗</i></span>
+                        <span class="ab-friend-desc">我有酒，你有故事吗？</span>
+                    </span>
+                </a>
+                
+                <a class="ab-friend reveal" href="https://blog.someo.top" target="_blank" rel="noopener nofollow"
+                   style="--h:122;transition-delay:0ms" data-spot>
+                    <span class="ab-friend-avatar" aria-hidden="true">幻</span>
+                    <span class="ab-friend-body">
+                        <span class="ab-friend-name">幻想の日常<i aria-hidden="true">↗</i></span>
+                        <span class="ab-friend-desc">心随幻想，梦行无疆。</span>
+                    </span>
+                </a>
+                
+                <a class="ab-friend reveal" href="https://blog.tmaize.net" target="_blank" rel="noopener nofollow"
+                   style="--h:169;transition-delay:70ms" data-spot>
+                    <span class="ab-friend-avatar" aria-hidden="true">T</span>
+                    <span class="ab-friend-body">
+                        <span class="ab-friend-name">TMaize Blog<i aria-hidden="true">↗</i></span>
+                        <span class="ab-friend-desc">TMaize 的个人博客。</span>
+                    </span>
+                </a>
+                
+                <a class="ab-friend reveal" href="https://myrvyn.github.io/" target="_blank" rel="noopener nofollow"
+                   style="--h:216;transition-delay:140ms" data-spot>
+                    <span class="ab-friend-avatar" aria-hidden="true">m</span>
+                    <span class="ab-friend-body">
+                        <span class="ab-friend-name">myrvyn<i aria-hidden="true">↗</i></span>
+                        <span class="ab-friend-desc">myrvyn 的个人博客。</span>
+                    </span>
+                </a>
+                
+            </div>
+
+            <p class="ab-friend-tip reveal">想交换友链？在评论区或 <a href="mailto:3345483363@qq.com">邮件</a> 里喊一声二月就好。</p>
+        </section>
+        
+
+        <!-- ============ 致谢 ============ -->
+        
+        <section class="ab-sec" id="ab-thanks">
+            <div class="ab-sec-head reveal">
+                <span class="ab-sec-index">05</span>
+                <h2 class="ab-sec-title">感谢墙<em>THANKS</em></h2>
+                <p class="ab-sec-desc">Linux 运维、Nonebot、Termux、C#、RW-HPS……每个圈子里都有人拉过我一把。</p>
+            </div>
+
+            <div class="ab-thanks">
+                
+                <div class="ab-thank reveal" style="transition-delay:0ms">
+                    <span class="ab-thank-role">Nonebot</span>
+                    <span class="ab-thank-name">货拉拉</span>
+                </div>
+                
+                <div class="ab-thank reveal" style="transition-delay:45ms">
+                    <span class="ab-thank-role">Nonebot</span>
+                    <span class="ab-thank-name">津轻年回</span>
+                </div>
+                
+                <div class="ab-thank reveal" style="transition-delay:90ms">
+                    <span class="ab-thank-role">Nonebot</span>
+                    <span class="ab-thank-name">小提琴头像的美国老哥</span>
+                </div>
+                
+                <div class="ab-thank reveal" style="transition-delay:135ms">
+                    <span class="ab-thank-role">Nonebot</span>
+                    <span class="ab-thank-name">everyone</span>
+                </div>
+                
+                <div class="ab-thank reveal" style="transition-delay:180ms">
+                    <span class="ab-thank-role">好朋友</span>
+                    <span class="ab-thank-name">周易、科星</span>
+                </div>
+                
+                <div class="ab-thank reveal" style="transition-delay:225ms">
+                    <span class="ab-thank-role">RW-HPS</span>
+                    <span class="ab-thank-name">Dr</span>
+                </div>
+                
+                <div class="ab-thank reveal" style="transition-delay:270ms">
+                    <span class="ab-thank-role">Linux 运维</span>
+                    <span class="ab-thank-name">老哥</span>
+                </div>
+                
+                <div class="ab-thank reveal" style="transition-delay:315ms">
+                    <span class="ab-thank-role">魔法师</span>
+                    <span class="ab-thank-name">JDSALing</span>
+                </div>
+                
+                <div class="ab-thank reveal" style="transition-delay:0ms">
+                    <span class="ab-thank-role">Termux</span>
+                    <span class="ab-thank-name">可爱美少女群主</span>
+                </div>
+                
+                <div class="ab-thank reveal" style="transition-delay:45ms">
+                    <span class="ab-thank-role">C#</span>
+                    <span class="ab-thank-name">诺尔姐姐</span>
+                </div>
+                
+                <div class="ab-thank reveal" style="transition-delay:90ms">
+                    <span class="ab-thank-role">AnsdoShip</span>
+                    <span class="ab-thank-name">Tianscar</span>
+                </div>
+                
+                <div class="ab-thank reveal" style="transition-delay:135ms">
+                    <span class="ab-thank-role">JAVA 大神</span>
+                    <span class="ab-thank-name">WUNAME</span>
+                </div>
+                
+                <div class="ab-thank reveal" style="transition-delay:180ms">
+                    <span class="ab-thank-role">狂热的外包接单人</span>
+                    <span class="ab-thank-name">大年</span>
+                </div>
+                
+                <div class="ab-thank reveal" style="transition-delay:225ms">
+                    <span class="ab-thank-role">我的徒弟</span>
+                    <span class="ab-thank-name">血月</span>
+                </div>
+                
+                <div class="ab-thank reveal" style="transition-delay:270ms">
+                    <span class="ab-thank-role">御用专属美少女画师</span>
+                    <span class="ab-thank-name">THILAK</span>
+                </div>
+                
+                <div class="ab-thank reveal" style="transition-delay:315ms">
+                    <span class="ab-thank-role">银狼爱好者</span>
+                    <span class="ab-thank-name">机械师（B站：Python银狼编程）</span>
+                </div>
+                
+                <div class="ab-thank reveal" style="transition-delay:0ms">
+                    <span class="ab-thank-role">某摆烂人</span>
+                    <span class="ab-thank-name">永恒天心</span>
+                </div>
+                
+                <div class="ab-thank reveal" style="transition-delay:45ms">
+                    <span class="ab-thank-role">RW.LAB</span>
+                    <span class="ab-thank-name">Tobby</span>
+                </div>
+                
+                <div class="ab-thank reveal" style="transition-delay:90ms">
+                    <span class="ab-thank-role">RW.LAB</span>
+                    <span class="ab-thank-name">😈</span>
+                </div>
+                
+            </div>
+
+            
+            <div class="ab-loves reveal">
+                <p class="ab-loves-title">二月厨的角色们</p>
+                <div class="ab-marquee" aria-label="喜欢的角色">
+                    <div class="ab-marquee-track">
+                        
+                        <span class="ab-love">御坂美琴</span><span class="ab-love">梓喵</span><span class="ab-love">清姬</span><span class="ab-love">Saber</span><span class="ab-love">Miku</span><span class="ab-love">洛天依</span><span class="ab-love">琪露诺</span><span class="ab-love">芙兰朵露</span><span class="ab-love">东海帝皇</span><span class="ab-love">重炮</span><span class="ab-love">目白麦昆</span><span class="ab-love">米浴</span><span class="ab-love">八六</span><span class="ab-love">丛雨</span><span class="ab-love">柴郡</span><span class="ab-love">莫德雷德</span><span class="ab-love">小鸟游六花</span><span class="ab-love">春日野穹</span><span class="ab-love">TTT喵</span><span class="ab-love">有栖nama</span><span class="ab-love">长门有希</span><span class="ab-love">响</span><span class="ab-love">立华奏</span><span class="ab-love">艾拉</span><span class="ab-love">奇犽·揍敌客</span><span class="ab-love">小南</span><span class="ab-love">泉此方</span><span class="ab-love">亚托莉</span><span class="ab-love">小鸟游星野</span><span class="ab-love">黑塔</span><span class="ab-love">银狼</span><span class="ab-love">符玄</span>
+                        
+                        <span class="ab-love">御坂美琴</span><span class="ab-love">梓喵</span><span class="ab-love">清姬</span><span class="ab-love">Saber</span><span class="ab-love">Miku</span><span class="ab-love">洛天依</span><span class="ab-love">琪露诺</span><span class="ab-love">芙兰朵露</span><span class="ab-love">东海帝皇</span><span class="ab-love">重炮</span><span class="ab-love">目白麦昆</span><span class="ab-love">米浴</span><span class="ab-love">八六</span><span class="ab-love">丛雨</span><span class="ab-love">柴郡</span><span class="ab-love">莫德雷德</span><span class="ab-love">小鸟游六花</span><span class="ab-love">春日野穹</span><span class="ab-love">TTT喵</span><span class="ab-love">有栖nama</span><span class="ab-love">长门有希</span><span class="ab-love">响</span><span class="ab-love">立华奏</span><span class="ab-love">艾拉</span><span class="ab-love">奇犽·揍敌客</span><span class="ab-love">小南</span><span class="ab-love">泉此方</span><span class="ab-love">亚托莉</span><span class="ab-love">小鸟游星野</span><span class="ab-love">黑塔</span><span class="ab-love">银狼</span><span class="ab-love">符玄</span>
+                        
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+        
+
+        <!-- ============ 联系 ============ -->
+        <section class="ab-sec" id="ab-contact">
+            <div class="ab-contact reveal">
+                <span class="ab-contact-glow" aria-hidden="true"></span>
+                <div class="ab-contact-inner">
+                    <p class="ab-contact-kicker">SAY&nbsp;HI</p>
+                    <h2 class="ab-contact-title">来聊点什么吧</h2>
+                    <p class="ab-contact-text">
+                        技术、番剧、数学、梦境、或者只是路过的一句晚安，二月都在。
+                    </p>
+                    <div class="ab-contact-actions">
+                        <a class="ab-btn-primary" href="mailto:3345483363@qq.com">写封信给我</a>
+                        <a class="ab-btn-ghost ab-btn-ghost--light" href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+                        <a class="ab-btn-ghost ab-btn-ghost--light" href="https://x.com/DevilC1875" target="_blank" rel="noopener">X / Twitter</a>
+                    </div>
+                    <p class="ab-contact-meta">QQ 3345483363 · WeChat moonfebruarymoon</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="ab-footer">
+            <p>二月 · February — 所感所想，所言所行，我将以文字记录我自己。</p>
+            <p class="ab-footer-sub">Powered by Hexo · Theme Diaspora · Customized with ♡</p>
+        </footer>
+    </main>
+
+    <script>
+        window.__AB_DATA = {"typing":["一个在代码与梦境之间徘徊的人","渗透测试 / 二进制 / 全栈开发","用文字记录所感所想，所言所行","二次元浓度超标的野生安全研究员","呐呐呐，这里是二月哦~"],"nav":["ab-about","ab-skill","ab-timeline","ab-friends","ab-thanks","ab-contact"]};
+    </script>
+    <script src="/js/about.js" defer></script>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <span class="f-footer-mark" aria-hidden="true">月</span>
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">所感所想，所言所行，我将以文字记录我自己。</p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
 </body>
 
 <script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
@@ -102,6 +794,7 @@
 <script src="/js/plugin.js"></script>
 <script src="/js/typed.js"></script>
 <script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
 
 
 <link rel="stylesheet" href="/photoswipe/photoswipe.css">

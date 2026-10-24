@@ -3,6 +3,20 @@
 <html lang="zh" class="loading">
 <head>
     <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>二月の档案室 - 秘密基地哦~</title>
@@ -32,7 +46,9 @@
     <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
 
+    <meta name="theme-color" content="#120a1e" />
     <script>window.searchDbPath = "/search.xml";</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,223 +58,547 @@
 <body class="loading">
     <span id="config-title" style="display:none">二月の档案室</span>
     <div id="loader"></div>
-    <div class="nav">
-    <ul id="menu-menu" class="menu">
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <span class="f-brand-mark" aria-hidden="true">月</span>
+        <span class="f-brand-text">二月の档案室<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
         
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="//" title="首页" target="_blank" rel="noopener">首页</a>
-        </li>
+        <a href="//">首页</a>
         
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/categories/" title="分类" target="_blank" rel="noopener">分类</a>
-        </li>
+        <a href="/categories/">分类</a>
         
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/tags/" title="标签" target="_blank" rel="noopener">标签</a>
-        </li>
+        <a href="/tags/">标签</a>
         
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/archives/" title="归档" target="_blank" rel="noopener">归档</a>
-        </li>
+        <a href="/archives/">归档</a>
         
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/about/" title="关于" target="_blank" rel="noopener">关于</a>
-        </li>
+        <a href="/about/">关于</a>
         
-    </ul>
-	<span class="target"></span>
-	<center>
-	<div class="hitokoto">
-		<span class="typed" id="hitokoto" data-st="true"></span>
-	</div>
-	</center>
-	
-	<p class="footerlinks">
-		<a href="#" class="iconfont icon-null"></a>
-		
-            <a href="/" title="facebook" class="iconfont icon-facebook" target="_blank" rel="noopener"> </a>
+    </nav>
+
+    <div class="f-dock-actions">
         
-            <a href="https://x.com/DevilC1875" title="twitter" class="iconfont icon-twitter" target="_blank" rel="noopener"> </a>
+
         
-            <a href="https://github.com/allureluoli/" title="github" class="iconfont icon-github" target="_blank" rel="noopener"> </a>
-        
-            <a href="weixin://dl/chat?moonfebruarymoon" title="wechat" class="iconfont icon-wechat" target="_blank" rel="noopener"> </a>
-        
-            <a href="mailto:3345483363@qq.com" title="email" class="iconfont icon-email" target="_blank" rel="noopener"> </a>
-        
-		<a href="#" class="iconfont icon-null"></a>
-	</p>
-	
-    <p id="copyright">
-        &copy; 2026 Allureluoli.
-        <span> | </span>Powered by <a href="https://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
-        <span> | </span>Theme <a href="https://github.com/Fechin/hexo-theme-diaspora" title="Diaspora" target="_blank" rel="noopener">Diaspora</a> by Fechin
-		
-		<span> | </span><a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
-		
-    </p>
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="//" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「所感所想，所言所行，我将以文字记录我自己。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
 </div>
 
-<div id="container">
+
     
-<div id="screen">
+<div id="container" class="f-home">
+    
+<section id="screen" class="f-hero">
     <div id="mark">
         <div class="layer" data-depth="0.4">
             <img src="/img/welcome-cover.jpg" id="cover" crossorigin="anonymous" width="1920" height="1080">
         </div>
     </div>
-    <div id="vibrant">
-        <svg viewbox="0 0 2880 1620" height="100%" preserveaspectratio="xMaxYMax slice">
-            <polygon opacity="0.7" points="2000,1620 0,1620 0,0 600,0 "/>
-        </svg>
-        <div></div>
-    </div>
-    <div id="header">
-        <div>
-            <a class="image-logo" href="/"></a>
-			
-            <div class="iconfont icon-menu switchmenu"></div>
-        </div>
-    </div>
-    
-    <div id="post0">
-        <p>十月 21, 2026</p>
-        <h2><a href="/2026/10/21/2026-10-21-php2shell/" title="2026-10-21-php2shell" class="posttitle">2026-10-21-php2shell</a></h2>
-        <p class="summary">php2shell：我把它从一个「未授权 RCE」跑成了一个段错误这几天 X 和几个群里都在传 php2shell...</p>
-    </div>
-    
-</div>
+    <div id="vibrant"><div></div></div>
+    <div class="f-hero-veil"></div>
+    <div class="f-hero-stars" id="f-stars" aria-hidden="true"></div>
+    <span class="f-hero-kanji" aria-hidden="true">月</span>
 
-    <div id="primary">
+    <div class="f-hero-inner">
         
-<div class="post">
-    <a href="/2026/10/19/2026-10-19-WPFUIGallery3/" title="2026-10-19-WPFUIGallery3">
-        <img src="/img/image%20(1).jpg" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>十月 19, 2026</p>
-        <h3><a href="/2026/10/19/2026-10-19-WPFUIGallery3/" title="2026-10-19-WPFUIGallery3" class="posttitle">2026-10-19-WPFUIGallery3</a></h3>
-        <p></p>
+        <p class="f-hero-kicker"><span class="f-pulse"></span>FEBRUARY · ARCHIVE</p>
+        <h1 class="f-hero-title">
+            <span class="f-hero-cn">二月の档案室</span>
+            <span class="f-hero-en">FEBRUARY</span>
+        </h1>
+        <p class="f-hero-sub">秘密基地哦~</p>
+        <p class="f-typing"><span id="f-typing"></span><i class="f-caret" aria-hidden="true"></i></p>
+
+        <ul class="f-hero-stats">
+            <li><b data-count="144">0</b><span>文章</span></li>
+            <li><b data-count="99">0</b><span>标签</span></li>
+            <li><b data-count="21">0</b><span>分类</span></li>
+            <li><b data-count="1557">0</b><span>天</span></li>
+        </ul>
+
+        <div class="f-hero-actions">
+            <a class="f-btn-primary" href="#latest">开始阅读</a>
+            <a class="f-btn-ghost" href="/about/">关于二月</a>
+            <a class="f-btn-ghost" href="/archives/">时间线</a>
+        </div>
+        
+
+        
+        <a class="f-hero-latest" href="/2026/10/21/2026-10-21-php2shell/" title="2026-10-21-php2shell">
+            <span class="f-hero-latest-label">最新</span>
+            <span class="f-hero-latest-title">2026-10-21-php2shell</span>
+            <span class="f-hero-latest-date">10-21</span>
+        </a>
+        
+
+        <a class="f-scroll-cue" href="#latest" aria-label="向下浏览">
+            <span class="f-mouse" aria-hidden="true"></span>
+            <span class="f-scroll-text">SCROLL</span>
+        </a>
     </div>
-</div>
+
+    <script type="application/json" id="f-typing-data">["所感所想，所言所行，我将以文字记录我自己。","一个在代码与梦境之间徘徊的人。","技术笔记 · 生活杂感 · 一堆胡话。","呐呐呐，这里是二月哦~"]</script>
+</section>
 
 
-<div class="post">
-    <a href="/2026/10/18/2026-10-18-WPFUIGallery2/" title="2026-10-18-WPFUIGallery2">
-        <img src="/img/image%20(4).jpg" class="cover" width="680" height="440">
+    <section class="f-sec" id="latest">
+        <div class="f-sec-head" data-reveal>
+            <span class="f-sec-index">01</span>
+            <h2 class="f-sec-title">最新文章<em>LATESTS</em></h2>
+            <p class="f-sec-desc">
+                把散落在时间里的东西按顺序摆好，方便某天回来看看。
+            </p>
+        </div>
+
+        <div id="primary" class="f-grid">
+            
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2026/10/21/2026-10-21-php2shell/" title="2026-10-21-php2shell" tabindex="-1">
+        <img src="/img/image%20(1).jpg" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        
     </a>
-    <div class="else">
-        <p>十月 18, 2026</p>
-        <h3><a href="/2026/10/18/2026-10-18-WPFUIGallery2/" title="2026-10-18-WPFUIGallery2" class="posttitle">2026-10-18-WPFUIGallery2</a></h3>
-        <p>WPFUIGallery2WPF中有一个重要概念Trigger 俗称：触发器
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2026-10-21T15:50:00.000Z">2026-10-21</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>8 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#PHP</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2026/10/21/2026-10-21-php2shell/" title="2026-10-21-php2shell" class="posttitle">2026-10-21-php2shell</a></h3>
+        <p class="f-card-desc">php2shell：我把它从一个「未授权 RCE」跑成了一个段错误这几天 X 和几个群里都在传 php2shell，CVE-2026-109618 &#x2F; CVE-2026-1…</p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
+    </div>
+</article>
+
+
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2026/10/19/2026-10-19-WPFUIGallery3/" title="2026-10-19-WPFUIGallery3" tabindex="-1">
+        <img src="/img/image%20(3).jpg" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        
+    </a>
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2026-10-19T07:06:24.000Z">2026-10-19</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>1 min</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2026/10/19/2026-10-19-WPFUIGallery3/" title="2026-10-19-WPFUIGallery3" class="posttitle">2026-10-19-WPFUIGallery3</a></h3>
+        <p class="f-card-desc"></p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
+    </div>
+</article>
+
+
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2026/10/18/2026-10-18-WPFUIGallery2/" title="2026-10-18-WPFUIGallery2" tabindex="-1">
+        <img src="/img/image%20(4).jpg" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        
+    </a>
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2026-10-18T11:21:23.000Z">2026-10-18</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>3 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#C#</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2026/10/18/2026-10-18-WPFUIGallery2/" title="2026-10-18-WPFUIGallery2" class="posttitle">2026-10-18-WPFUIGallery2</a></h3>
+        <p class="f-card-desc">WPFUIGallery2WPF中有一个重要概念Trigger 俗称：触发器
 可以根据状态来自动的改变外观。
-123456789&lt;Style x:K...</p>
+123456789&lt;Style x:Key=&quot;NameI…</p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
     </div>
-</div>
+</article>
 
 
-<div class="post">
-    <a href="/2026/10/17/2026-10-17-WPFUIGallery/" title="2026-10-17-WPFUIGallery">
-        <img src="/img/tu%20(22).gif" class="cover" width="680" height="440">
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2026/10/17/2026-10-17-WPFUIGallery/" title="2026-10-17-WPFUIGallery" tabindex="-1">
+        <img src="/img/welcome-cover.jpg" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        
     </a>
-    <div class="else">
-        <p>十月 17, 2026</p>
-        <h3><a href="/2026/10/17/2026-10-17-WPFUIGallery/" title="2026-10-17-WPFUIGallery" class="posttitle">2026-10-17-WPFUIGallery</a></h3>
-        <p>WPFUIGalleryFluent风格UI框架库学习，作为我初入WPF UI的学习第一站。
-什么是Fluent风格Fluent 风格就是微软的一套界面设...</p>
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2026-10-17T08:33:36.000Z">2026-10-17</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>21 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#C#</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2026/10/17/2026-10-17-WPFUIGallery/" title="2026-10-17-WPFUIGallery" class="posttitle">2026-10-17-WPFUIGallery</a></h3>
+        <p class="f-card-desc">WPFUIGalleryFluent风格UI框架库学习，作为我初入WPF UI的学习第一站。
+什么是Fluent风格Fluent 风格就是微软的一套界面设计语言，Windows 11…</p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
     </div>
-</div>
+</article>
 
 
-<div class="post">
-    <a href="/2026/10/16/2026-10-16-DockingCheck/" title="2026-10-16-DockingCheck">
-        <img src="/img/tu%20(75).jpg" class="cover" width="680" height="440">
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2026/10/16/2026-10-16-DockingCheck/" title="2026-10-16-DockingCheck" tabindex="-1">
+        <img src="/img/tu%20(30).jpg" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        
     </a>
-    <div class="else">
-        <p>十月 16, 2026</p>
-        <h3><a href="/2026/10/16/2026-10-16-DockingCheck/" title="2026-10-16-DockingCheck" class="posttitle">2026-10-16-DockingCheck</a></h3>
-        <p>DockingCheck题目地址：https:&#x2F;&#x2F;www.ctfplus.cn&#x2F;problem-detail&#x2F;20...</p>
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2026-10-16T02:55:44.000Z">2026-10-16</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>45 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#网络安全</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2026/10/16/2026-10-16-DockingCheck/" title="2026-10-16-DockingCheck" class="posttitle">2026-10-16-DockingCheck</a></h3>
+        <p class="f-card-desc">DockingCheck题目地址：https:&#x2F;&#x2F;www.ctfplus.cn&#x2F;problem-detail&#x2F;2059190657041305…</p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
     </div>
-</div>
+</article>
 
 
-<div class="post">
-    <a href="/2026/10/13/2026-10-13-JWT/" title="2026-10-13-JWT">
-        <img src="/img/tu%20(15).png" class="cover" width="680" height="440">
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2026/10/13/2026-10-13-JWT/" title="2026-10-13-JWT" tabindex="-1">
+        <img src="/img/DSCF6725.jpg" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        
     </a>
-    <div class="else">
-        <p>十月 13, 2026</p>
-        <h3><a href="/2026/10/13/2026-10-13-JWT/" title="2026-10-13-JWT" class="posttitle">2026-10-13-JWT</a></h3>
-        <p>第 0 步 · 侦察
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2026-10-13T06:30:46.378Z">2026-10-13</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>5 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#PHP</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2026/10/13/2026-10-13-JWT/" title="2026-10-13-JWT" class="posttitle">2026-10-13-JWT</a></h3>
+        <p class="f-card-desc">第 0 步 · 侦察
 curl -s -i http:&#x2F;&#x2F;&lt;目标&gt;&#x2F; | head -40
-结果：200，tex...</p>
+结果：200，text&#x2F;html，ET…</p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
     </div>
-</div>
+</article>
 
 
-<div class="post">
-    <a href="/2026/09/29/2026-9-29-zip%E4%BC%AA%E5%8D%8F%E8%AE%AE/" title="2026-9-29-zip伪协议">
-        <img src="/img/tu%20(22).gif" class="cover" width="680" height="440">
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2026/09/29/2026-9-29-zip%E4%BC%AA%E5%8D%8F%E8%AE%AE/" title="2026-9-29-zip伪协议" tabindex="-1">
+        <img src="/img/DSCF6725.jpg" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        
     </a>
-    <div class="else">
-        <p>九月 29, 2026</p>
-        <h3><a href="/2026/09/29/2026-9-29-zip%E4%BC%AA%E5%8D%8F%E8%AE%AE/" title="2026-9-29-zip伪协议" class="posttitle">2026-9-29-zip伪协议</a></h3>
-        <p>zip伪协议原题 https:&#x2F;&#x2F;www.ctfplus.cn&#x2F;problem-detail&#x2F;1836247027...</p>
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2026-09-28T23:07:59.000Z">2026-09-29</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>7 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#PHP</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2026/09/29/2026-9-29-zip%E4%BC%AA%E5%8D%8F%E8%AE%AE/" title="2026-9-29-zip伪协议" class="posttitle">2026-9-29-zip伪协议</a></h3>
+        <p class="f-card-desc">zip伪协议原题 https:&#x2F;&#x2F;www.ctfplus.cn&#x2F;problem-detail&#x2F;1836247027114053632&#x2F…</p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
     </div>
-</div>
+</article>
 
 
-<div class="post">
-    <a href="/2026/08/14/2026-8-14-SSTI/" title="2026-8-14-SSTI">
-        <img src="/img/image%20(4).jpg" class="cover" width="680" height="440">
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2026/08/14/2026-8-14-SSTI/" title="2026-8-14-SSTI" tabindex="-1">
+        <img src="/img/image%20(1).jpg" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        
     </a>
-    <div class="else">
-        <p>八月 14, 2026</p>
-        <h3><a href="/2026/08/14/2026-8-14-SSTI/" title="2026-8-14-SSTI" class="posttitle">2026-8-14-SSTI</a></h3>
-        <p>SSTI1234567891011121314151617181920212223242526272829303132333435363738394041...</p>
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2026-08-14T14:15:39.000Z">2026-08-14</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>9 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#Python</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2026/08/14/2026-8-14-SSTI/" title="2026-8-14-SSTI" class="posttitle">2026-8-14-SSTI</a></h3>
+        <p class="f-card-desc">SSTI123456789101112131415161718192021222324252627282930313233343536373839404142from flask i…</p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
     </div>
-</div>
+</article>
 
 
-<div class="post">
-    <a href="/2026/08/11/2026-8-11-DarkSword/" title="2026-8-11-DarkSword">
-        <img src="/img/tu%20(34).jpg" class="cover" width="680" height="440">
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2026/08/11/2026-8-11-DarkSword/" title="2026-8-11-DarkSword" tabindex="-1">
+        <img src="/img/tu%20(22).gif" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        
     </a>
-    <div class="else">
-        <p>八月 11, 2026</p>
-        <h3><a href="/2026/08/11/2026-8-11-DarkSword/" title="2026-8-11-DarkSword" class="posttitle">2026-8-11-DarkSword</a></h3>
-        <p>DarkSword待更新
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2026-08-11T13:10:50.000Z">2026-08-11</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>1 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#网络安全</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2026/08/11/2026-8-11-DarkSword/" title="2026-8-11-DarkSword" class="posttitle">2026-8-11-DarkSword</a></h3>
+        <p class="f-card-desc">DarkSword待更新
 </p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
     </div>
-</div>
+</article>
 
 
-<div class="post">
-    <a href="/2026/04/14/2026-4-14-%E6%A0%88%E8%BF%81%E7%A7%BB/" title="2026-4-14-栈迁移">
-        <img src="/img/image%20(4).jpg" class="cover" width="680" height="440">
+
+<article class="post f-card">
+    <a class="f-card-cover" href="/2026/04/14/2026-4-14-%E6%A0%88%E8%BF%81%E7%A7%BB/" title="2026-4-14-栈迁移" tabindex="-1">
+        <img src="/img/tu%20(42).jpg" class="cover" width="800" height="450" loading="lazy">
+        <span class="f-card-shade" aria-hidden="true"></span>
+        
     </a>
-    <div class="else">
-        <p>四月 14, 2026</p>
-        <h3><a href="/2026/04/14/2026-4-14-%E6%A0%88%E8%BF%81%E7%A7%BB/" title="2026-4-14-栈迁移" class="posttitle">2026-4-14-栈迁移</a></h3>
-        <p>栈迁移栈迁移题目分析
+    <div class="f-card-body">
+        <div class="f-card-meta">
+            <time datetime="2026-04-14T07:07:33.000Z">2026-04-14</time>
+            <span class="f-dot" aria-hidden="true"></span>
+            <span>5 min</span>
+            
+            <span class="f-dot" aria-hidden="true"></span>
+            <span class="f-card-tag">#网络安全</span>
+            
+        </div>
+        <h3 class="f-card-title"><a href="/2026/04/14/2026-4-14-%E6%A0%88%E8%BF%81%E7%A7%BB/" title="2026-4-14-栈迁移" class="posttitle">2026-4-14-栈迁移</a></h3>
+        <p class="f-card-desc">栈迁移栈迁移题目分析
 第一步，为什么要栈迁移？
 栈迁移因为可写缓冲区也就是buff 不足以支持完整的RPO链
 我们只能将RPO链放到 .bss
 
- .bs...</p>
+ .bss解释：
+.bss是内存上一…</p>
+        <span class="f-card-more" aria-hidden="true">阅读全文<i>→</i></span>
     </div>
-</div>
+</article>
 
 
-    </div>
-    
-    <div id="pager"><a href="/page/2/" class="more">加载更多</a></div>
-    
+        </div>
+
+        
+        <div id="pager" data-total="15">
+            
+            <a href="/page/2/" class="more" data-page="1">加载更多</a>
+            
+        </div>
+        
+
+        
+        <div class="f-explore" data-reveal>
+            <div class="f-explore-col">
+                <p class="f-explore-title">标签云 <em>TAGS</em></p>
+                <div class="f-chips f-chips--sm">
+                    
+                    <a class="f-chip" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">#网络安全<em>30</em></a>
+                    
+                    <a class="f-chip" href="/tags/Python/">#Python<em>24</em></a>
+                    
+                    <a class="f-chip" href="/tags/%E5%9F%BA%E7%A1%80/">#基础<em>19</em></a>
+                    
+                    <a class="f-chip" href="/tags/Flask/">#Flask<em>10</em></a>
+                    
+                    <a class="f-chip" href="/tags/C/">#C#<em>7</em></a>
+                    
+                    <a class="f-chip" href="/tags/Next-js/">#Next.js<em>7</em></a>
+                    
+                    <a class="f-chip" href="/tags/React/">#React<em>6</em></a>
+                    
+                    <a class="f-chip" href="/tags/PHP/">#PHP<em>5</em></a>
+                    
+                    <a class="f-chip" href="/tags/SQL/">#SQL<em>5</em></a>
+                    
+                    <a class="f-chip" href="/tags/C/">#C++<em>5</em></a>
+                    
+                    <a class="f-chip" href="/tags/pwn/">#pwn<em>5</em></a>
+                    
+                    <a class="f-chip" href="/tags/%E6%95%B0%E5%AD%A6/">#数学<em>5</em></a>
+                    
+                    <a class="f-chip" href="/tags/Bot/">#Bot<em>4</em></a>
+                    
+                    <a class="f-chip" href="/tags/%E8%8B%B1%E8%AF%AD/">#英语<em>4</em></a>
+                    
+                    <a class="f-chip f-chip--ghost" href="/tags/">全部 →</a>
+                </div>
+            </div>
+            <div class="f-explore-col">
+                <p class="f-explore-title">分类 <em>CATEGORIES</em></p>
+                <div class="f-chips f-chips--sm">
+                    
+                    <a class="f-chip" href="/categories/Python/">Python<em>13</em></a>
+                    
+                    <a class="f-chip" href="/categories/Web/">Web<em>10</em></a>
+                    
+                    <a class="f-chip" href="/categories/JavaScript/">JavaScript<em>7</em></a>
+                    
+                    <a class="f-chip" href="/categories/C/">C++<em>5</em></a>
+                    
+                    <a class="f-chip" href="/categories/%E8%8B%B1%E8%AF%AD/">英语<em>4</em></a>
+                    
+                    <a class="f-chip" href="/categories/%E9%9A%8F%E7%AC%94/">随笔<em>4</em></a>
+                    
+                    <a class="f-chip" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全<em>3</em></a>
+                    
+                    <a class="f-chip" href="/categories/Linux/">Linux<em>3</em></a>
+                    
+                    <a class="f-chip f-chip--ghost" href="/categories/">全部 →</a>
+                </div>
+            </div>
+        </div>
+        
+    </section>
 </div>
 <div id="preview"></div>
 
 
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <span class="f-footer-mark" aria-hidden="true">月</span>
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
 
+        <p class="f-footer-quote">所感所想，所言所行，我将以文字记录我自己。</p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
 </body>
 
 <script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
@@ -268,6 +608,7 @@ curl -s -i http:&#x2F;&#x2F;&lt;目标&gt;&#x2F; | head -40
 <script src="/js/plugin.js"></script>
 <script src="/js/typed.js"></script>
 <script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
 
 
 <link rel="stylesheet" href="/photoswipe/photoswipe.css">

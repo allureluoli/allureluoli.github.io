@@ -3,6 +3,20 @@
 <html lang="zh" class="loading">
 <head>
     <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Next学习手册（三）- Essential JavaScript - 二月の档案室</title>
@@ -35,7 +49,9 @@
 如果你很,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
 
+    <meta name="theme-color" content="#120a1e" />
     <script>window.searchDbPath = "/search.xml";</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,36 +61,175 @@
 <body class="loading">
     <span id="config-title" style="display:none">二月の档案室</span>
     <div id="loader"></div>
-    <div id="single">
-    <div id="top" style="display: block;">
-    <div class="bar" style="width: 0;"></div>
-    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://blog.curesky.site"></a>
-    <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">Next学习手册（三）- Essential JavaScript</h3>
-    <div class="social">
-        <div>
-            <div class="share">
-                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
-            </div>
-            <div id="qr"></div>
-        </div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <span class="f-brand-mark" aria-hidden="true">月</span>
+        <span class="f-brand-text">二月の档案室<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="//">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
     </div>
-    <div class="scrollbar"></div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="//" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「所感所想，所言所行，我将以文字记录我自己。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
 </div>
 
-    <div class="section">
-        <div class="article">
-    <div class='main'>
-        <h1 class="title">Next学习手册（三）- Essential JavaScript</h1>
-        <div class="stuff">
-            <span>九月 26, 2023</span>
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
             
-  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Next-js/" rel="tag">Next.js</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/React/" rel="tag">React</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/jsx/" rel="tag">jsx</a></li></ul>
+            <a href="/categories/JavaScript/">JavaScript</a>
+            <span aria-hidden="true">/</span>
+            
+            <span class="f-crumb-cur">正文</span>
+        </nav>
 
+        <h1 class="f-post-title">Next学习手册（三）- Essential JavaScript</h1>
 
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2023-09-26T00:09:35.000Z">2023-09-26</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                81 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                36.4k 字
+            </span>
+            
+            <a class="f-meta-item f-meta-cat" href="/categories/JavaScript/">JavaScript</a>
+            
         </div>
-        <div class="content markdown">
-            <h3 id="基本JavaScript"><a href="#基本JavaScript" class="headerlink" title="基本JavaScript"></a>基本JavaScript</h3><p>熟悉JavaScript可以帮助我们更好的学习React，本章主要讲一些基本的JavaScript，以防止因为缺少JavaScript知识导致对后面的内容难以理解。</p>
+
+        
+        <div class="f-post-tags">
+            
+            <a class="f-tag" href="/tags/Next-js/">#Next.js</a>
+            
+            <a class="f-tag" href="/tags/React/">#React</a>
+            
+            <a class="f-tag" href="/tags/jsx/">#jsx</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <h3 id="基本JavaScript"><a href="#基本JavaScript" class="headerlink" title="基本JavaScript"></a>基本JavaScript</h3><p>熟悉JavaScript可以帮助我们更好的学习React，本章主要讲一些基本的JavaScript，以防止因为缺少JavaScript知识导致对后面的内容难以理解。</p>
 <p>如果你很熟悉JavaScript可以跳过此节。</p>
 <p>JavaScript的用途非常广泛，也非常的庞大，我们从以下几个角度开始学习基本的JavaScript：</p>
 <ul>
@@ -709,43 +864,123 @@
 <p>因此，近年来，有必要开始考虑提供一种<strong>将 JavaScript 程序拆分为可按需导入的单独模块</strong>的机制。Node.js 已经提供这个能力很长时间了，还有很多的 JavaScript 库和框架已经开始了模块的使用（例如，<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/CommonJS">CommonJS</a> 和基于 <a target="_blank" rel="noopener" href="https://github.com/amdjs/amdjs-api/blob/master/AMD.md">AMD</a> 的其他模块系统 如 <a target="_blank" rel="noopener" href="https://requirejs.org/">RequireJS</a>，以及最新的 <a target="_blank" rel="noopener" href="https://webpack.github.io/">Webpack</a> 和 <a target="_blank" rel="noopener" href="https://babeljs.io/">Babel</a>）。</p>
 <p>好消息是，最新的浏览器开始原生支持模块功能了，这是本文要重点讲述的。这会是一个好事情 —- 浏览器能够最优化加载模块，使它比使用库更有效率：使用库通常需要做额外的客户端处理。</p>
 
-            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
-            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
-                <source type="audio/mpeg" src="">
-            </audio>
-            
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
                 <ul id="audio-list" style="display:none">
                     
-                        
-                            <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
-                        
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
                     
                 </ul>
+                
+            </div>
+
             
-        </div>
-        
-        
-    <div id="gitalk-container" class="comment link"
-		data-enable="true"
-        data-ae="true"
-        data-ci="10a7f71656553fd4676c"
-        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
-        data-r="allureluoli.github.io"
-        data-o="allureluoli"
-        data-a="allureluoli"
-        data-d="false"
-    >查看评论</div>
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/2023/09/26/2023-9-26-Next%E5%AD%A6%E4%B9%A0%E6%89%8B%E5%86%8C%EF%BC%88%E4%B8%89%EF%BC%89-%20Essential-JavaScript/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
 
 
-    </div>
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
     
-        <div class="side">
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%ACJavaScript"><span class="toc-number">1.</span> <span class="toc-text">基本JavaScript</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%92%8C%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0"><span class="toc-number"></span> <span class="toc-text">函数和箭头函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E"><span class="toc-number">1.</span> <span class="toc-text">函数声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">函数表达式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0"><span class="toc-number"></span> <span class="toc-text">箭头函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">基础语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E8%AF%AD%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">高级语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B2%A1%E6%9C%89%E5%8D%95%E7%8B%AC%E7%9A%84this"><span class="toc-number">3.</span> <span class="toc-text">没有单独的this</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8E%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">3.1.</span> <span class="toc-text">与严格模式的关系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-call-%E6%88%96-apply-%E8%B0%83%E7%94%A8"><span class="toc-number">3.2.</span> <span class="toc-text">通过 call 或 apply 调用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E7%BB%91%E5%AE%9Aarguments"><span class="toc-number">4.</span> <span class="toc-text">不绑定arguments</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E6%96%B9%E6%B3%95"><span class="toc-number">5.</span> <span class="toc-text">使用箭头函数作为方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-new-%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="toc-number">6.</span> <span class="toc-text">使用 new 操作符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8prototype%E5%B1%9E%E6%80%A7"><span class="toc-number">7.</span> <span class="toc-text">使用prototype属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-yield-%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-number">8.</span> <span class="toc-text">使用 yield 关键字</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E4%BD%93"><span class="toc-number"></span> <span class="toc-text">函数体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E5%AF%B9%E8%B1%A1%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="toc-number"></span> <span class="toc-text">返回对象字面量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8D%A2%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">换行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E9%A1%BA%E5%BA%8F"><span class="toc-number"></span> <span class="toc-text">解析顺序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Object%EF%BC%88%E5%AF%B9%E8%B1%A1%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">Object（对象）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%8F%E8%BF%B0"><span class="toc-number"></span> <span class="toc-text">描述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E5%8E%9F%E5%9E%8B%E5%B1%9E%E6%80%A7"><span class="toc-number">1.</span> <span class="toc-text">对象原型属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E5%AF%B9%E8%B1%A1%E4%B8%AD%E5%88%A0%E9%99%A4%E5%B1%9E%E6%80%A7"><span class="toc-number">2.</span> <span class="toc-text">从对象中删除属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null-%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1"><span class="toc-number">3.</span> <span class="toc-text">null 原型对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E5%BC%BA%E5%88%B6%E8%BD%AC%E6%8D%A2"><span class="toc-number">4.</span> <span class="toc-text">对象强制转换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number"></span> <span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95"><span class="toc-number"></span> <span class="toc-text">静态方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E5%B1%9E%E6%80%A7"><span class="toc-number"></span> <span class="toc-text">实例属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95"><span class="toc-number"></span> <span class="toc-text">实例方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number"></span> <span class="toc-text">示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E7%A9%BA%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.</span> <span class="toc-text">构造空对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Object-%E7%94%9F%E6%88%90%E5%B8%83%E5%B0%94%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.</span> <span class="toc-text">使用 Object 生成布尔对象</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Array-%E6%95%B0%E7%BB%84"><span class="toc-number"></span> <span class="toc-text">Array(数组)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%8F%E8%BF%B0-1"><span class="toc-number"></span> <span class="toc-text">描述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E4%B8%8B%E6%A0%87"><span class="toc-number">1.</span> <span class="toc-text">数组下标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%BF%E5%BA%A6%E4%B8%8E%E6%95%B0%E5%80%BC%E5%B1%9E%E6%80%A7%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">2.</span> <span class="toc-text">长度与数值属性的关系</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC"><span class="toc-number"></span> <span class="toc-text">解构赋值</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number"></span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%8F%E8%BF%B0-2"><span class="toc-number"></span> <span class="toc-text">描述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%91%E5%AE%9A%E4%B8%8E%E8%B5%8B%E5%80%BC"><span class="toc-number">1.</span> <span class="toc-text">绑定与赋值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E5%80%BC"><span class="toc-number">2.</span> <span class="toc-text">默认值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%A9%E4%BD%99%E5%B1%9E%E6%80%A7"><span class="toc-number">3.</span> <span class="toc-text">剩余属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E8%A7%A3%E6%9E%84%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">使用其他语法解构模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="toc-number"></span> <span class="toc-text">示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%9E%84%E6%95%B0%E7%BB%84"><span class="toc-number">1.</span> <span class="toc-text">解构数组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%8F%98%E9%87%8F%E8%B5%8B%E5%80%BC"><span class="toc-number">1.1.</span> <span class="toc-text">基本变量赋值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%84%E6%AF%94%E6%BA%90%E6%9B%B4%E5%A4%9A%E7%9A%84%E5%85%83%E7%B4%A0"><span class="toc-number">1.2.</span> <span class="toc-text">解构比源更多的元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%A4%E6%8D%A2%E5%8F%98%E9%87%8F"><span class="toc-number">1.3.</span> <span class="toc-text">交换变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E4%B8%80%E4%B8%AA%E4%BB%8E%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E7%9A%84%E6%95%B0%E7%BB%84"><span class="toc-number">1.4.</span> <span class="toc-text">解析一个从函数返回的数组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BF%BD%E7%95%A5%E6%9F%90%E4%BA%9B%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-number">1.5.</span> <span class="toc-text">忽略某些返回值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E7%BB%91%E5%AE%9A%E6%A8%A1%E5%BC%8F%E4%BD%9C%E4%B8%BA%E5%89%A9%E4%BD%99%E5%B1%9E%E6%80%A7"><span class="toc-number">1.6.</span> <span class="toc-text">使用绑定模式作为剩余属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8E%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%B9%E9%85%8D%E9%A1%B9%E4%B8%AD%E6%8F%90%E5%8F%96%E5%80%BC"><span class="toc-number">1.7.</span> <span class="toc-text">从正则表达式匹配项中提取值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%A8%E4%BB%BB%E4%BD%95%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1%E4%B8%8A%E4%BD%BF%E7%94%A8%E6%95%B0%E7%BB%84%E8%A7%A3%E6%9E%84"><span class="toc-number">1.8.</span> <span class="toc-text">在任何可迭代对象上使用数组解构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%9E%84%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.</span> <span class="toc-text">解构对象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E8%B5%8B%E5%80%BC"><span class="toc-number">2.1.</span> <span class="toc-text">基本赋值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B5%8B%E5%80%BC%E7%BB%99%E6%96%B0%E7%9A%84%E5%8F%98%E9%87%8F%E5%90%8D"><span class="toc-number">2.2.</span> <span class="toc-text">赋值给新的变量名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B5%8B%E5%80%BC%E5%88%B0%E6%96%B0%E7%9A%84%E5%8F%98%E9%87%8F%E5%90%8D%E5%B9%B6%E6%8F%90%E4%BE%9B%E9%BB%98%E8%AE%A4%E5%80%BC"><span class="toc-number">2.3.</span> <span class="toc-text">赋值到新的变量名并提供默认值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8E%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92%E7%9A%84%E5%AF%B9%E8%B1%A1%E4%B8%AD%E6%8F%90%E5%8F%96%E5%B1%9E%E6%80%A7"><span class="toc-number">2.4.</span> <span class="toc-text">从作为函数参数传递的对象中提取属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC"><span class="toc-number">2.5.</span> <span class="toc-text">设置函数参数的默认值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%84%E5%B5%8C%E5%A5%97%E5%AF%B9%E8%B1%A1%E5%92%8C%E6%95%B0%E7%BB%84"><span class="toc-number">2.6.</span> <span class="toc-text">解构嵌套对象和数组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#For-of-%E8%BF%AD%E4%BB%A3%E5%92%8C%E8%A7%A3%E6%9E%84"><span class="toc-number">2.7.</span> <span class="toc-text">For of 迭代和解构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7%E8%AE%A1%E7%AE%97%E5%90%8D%E5%92%8C%E8%A7%A3%E6%9E%84"><span class="toc-number">2.8.</span> <span class="toc-text">对象属性计算名和解构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A0%E6%95%88%E7%9A%84-JavaScript-%E6%A0%87%E8%AF%86%E7%AC%A6%E4%BD%9C%E4%B8%BA%E5%B1%9E%E6%80%A7%E5%90%8D%E7%A7%B0"><span class="toc-number">2.9.</span> <span class="toc-text">无效的 JavaScript 标识符作为属性名称</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%9E%84%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.</span> <span class="toc-text">解构基本类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%84%E5%90%88%E6%95%B0%E7%BB%84%E5%92%8C%E5%AF%B9%E8%B1%A1%E8%A7%A3%E6%9E%84"><span class="toc-number">3.1.</span> <span class="toc-text">组合数组和对象解构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%84%E5%AF%B9%E8%B1%A1%E6%97%B6%E6%9F%A5%E6%89%BE%E5%8E%9F%E5%9E%8B%E9%93%BE"><span class="toc-number">3.2.</span> <span class="toc-text">解构对象时查找原型链</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%84%E8%8C%83"><span class="toc-number"></span> <span class="toc-text">规范</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number"></span> <span class="toc-text">模板字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-1"><span class="toc-number"></span> <span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%8F%E8%BF%B0-3"><span class="toc-number"></span> <span class="toc-text">描述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E8%A1%8C%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.</span> <span class="toc-text">多行字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8F%92%E5%80%BC"><span class="toc-number">2.</span> <span class="toc-text">字符串插值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97%E6%A8%A1%E6%9D%BF"><span class="toc-number">3.</span> <span class="toc-text">嵌套模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%A6%E6%A0%87%E7%AD%BE%E7%9A%84%E6%A8%A1%E6%9D%BF"><span class="toc-number">4.</span> <span class="toc-text">带标签的模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E5%A7%8B%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">5.</span> <span class="toc-text">原始字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%A6%E6%A0%87%E7%AD%BE%E7%9A%84%E6%A8%A1%E6%9D%BF%E5%AD%97%E9%9D%A2%E9%87%8F%E5%8F%8A%E8%BD%AC%E4%B9%89%E5%BA%8F%E5%88%97"><span class="toc-number">6.</span> <span class="toc-text">带标签的模板字面量及转义序列</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%84%E8%8C%83-1"><span class="toc-number"></span> <span class="toc-text">规范</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%EF%BC%88%E4%B8%89%E5%85%83%EF%BC%89%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number"></span> <span class="toc-text">条件（三元）运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-2"><span class="toc-number"></span> <span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0-1"><span class="toc-number">1.</span> <span class="toc-text">参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%8F%E8%BF%B0-4"><span class="toc-number"></span> <span class="toc-text">描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="toc-number"></span> <span class="toc-text">示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.</span> <span class="toc-text">简单的例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%84%E7%90%86-null-%E5%80%BC"><span class="toc-number">2.</span> <span class="toc-text">处理 null 值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E9%93%BE"><span class="toc-number">3.</span> <span class="toc-text">条件链</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%84%E8%8C%83-2"><span class="toc-number"></span> <span class="toc-text">规范</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JavaScript-%E6%A8%A1%E5%9D%97"><span class="toc-number"></span> <span class="toc-text">JavaScript 模块</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96%E7%9A%84%E8%83%8C%E6%99%AF"><span class="toc-number"></span> <span class="toc-text">模块化的背景</span></a>
+    <a class="f-pn-card f-pn-prev" href="/2023/09/25/2023-9-25-Next%E5%AD%A6%E4%B9%A0%E6%89%8B%E5%86%8C%EF%BC%88%E4%BA%8C%EF%BC%89-%20React/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">Next学习手册（二）- React</span>
+        <span class="f-pn-date">2023-09-25</span>
+    </a>
+    
+    
+    <a class="f-pn-card f-pn-next" href="/2023/09/28/2023-9-28-Next%E5%AD%A6%E4%B9%A0%E6%89%8B%E5%86%8C%EF%BC%88%E5%9B%9B%EF%BC%89-%20React-Core-Concepts/">
+        <span class="f-pn-label">更早的文章 →</span>
+        <span class="f-pn-title">Next学习手册（四）- React Core Concepts</span>
+        <span class="f-pn-date">2023-09-28</span>
+    </a>
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%ACJavaScript"><span class="toc-text">基本JavaScript</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%92%8C%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0"><span class="toc-text">函数和箭头函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E"><span class="toc-text">函数声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">函数表达式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0"><span class="toc-text">箭头函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="toc-text">基础语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E8%AF%AD%E6%B3%95"><span class="toc-text">高级语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B2%A1%E6%9C%89%E5%8D%95%E7%8B%AC%E7%9A%84this"><span class="toc-text">没有单独的this</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8E%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">与严格模式的关系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-call-%E6%88%96-apply-%E8%B0%83%E7%94%A8"><span class="toc-text">通过 call 或 apply 调用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E7%BB%91%E5%AE%9Aarguments"><span class="toc-text">不绑定arguments</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E6%96%B9%E6%B3%95"><span class="toc-text">使用箭头函数作为方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-new-%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="toc-text">使用 new 操作符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8prototype%E5%B1%9E%E6%80%A7"><span class="toc-text">使用prototype属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-yield-%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-text">使用 yield 关键字</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E4%BD%93"><span class="toc-text">函数体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E5%AF%B9%E8%B1%A1%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="toc-text">返回对象字面量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8D%A2%E8%A1%8C"><span class="toc-text">换行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E9%A1%BA%E5%BA%8F"><span class="toc-text">解析顺序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Object%EF%BC%88%E5%AF%B9%E8%B1%A1%EF%BC%89"><span class="toc-text">Object（对象）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%8F%E8%BF%B0"><span class="toc-text">描述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E5%8E%9F%E5%9E%8B%E5%B1%9E%E6%80%A7"><span class="toc-text">对象原型属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E5%AF%B9%E8%B1%A1%E4%B8%AD%E5%88%A0%E9%99%A4%E5%B1%9E%E6%80%A7"><span class="toc-text">从对象中删除属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null-%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1"><span class="toc-text">null 原型对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E5%BC%BA%E5%88%B6%E8%BD%AC%E6%8D%A2"><span class="toc-text">对象强制转换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95"><span class="toc-text">静态方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E5%B1%9E%E6%80%A7"><span class="toc-text">实例属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95"><span class="toc-text">实例方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-text">示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E7%A9%BA%E5%AF%B9%E8%B1%A1"><span class="toc-text">构造空对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Object-%E7%94%9F%E6%88%90%E5%B8%83%E5%B0%94%E5%AF%B9%E8%B1%A1"><span class="toc-text">使用 Object 生成布尔对象</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Array-%E6%95%B0%E7%BB%84"><span class="toc-text">Array(数组)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%8F%E8%BF%B0-1"><span class="toc-text">描述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E4%B8%8B%E6%A0%87"><span class="toc-text">数组下标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%BF%E5%BA%A6%E4%B8%8E%E6%95%B0%E5%80%BC%E5%B1%9E%E6%80%A7%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">长度与数值属性的关系</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC"><span class="toc-text">解构赋值</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%8F%E8%BF%B0-2"><span class="toc-text">描述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%91%E5%AE%9A%E4%B8%8E%E8%B5%8B%E5%80%BC"><span class="toc-text">绑定与赋值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E5%80%BC"><span class="toc-text">默认值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%A9%E4%BD%99%E5%B1%9E%E6%80%A7"><span class="toc-text">剩余属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E8%A7%A3%E6%9E%84%E6%A8%A1%E5%BC%8F"><span class="toc-text">使用其他语法解构模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="toc-text">示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%9E%84%E6%95%B0%E7%BB%84"><span class="toc-text">解构数组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%8F%98%E9%87%8F%E8%B5%8B%E5%80%BC"><span class="toc-text">基本变量赋值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%84%E6%AF%94%E6%BA%90%E6%9B%B4%E5%A4%9A%E7%9A%84%E5%85%83%E7%B4%A0"><span class="toc-text">解构比源更多的元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%A4%E6%8D%A2%E5%8F%98%E9%87%8F"><span class="toc-text">交换变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E4%B8%80%E4%B8%AA%E4%BB%8E%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E7%9A%84%E6%95%B0%E7%BB%84"><span class="toc-text">解析一个从函数返回的数组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BF%BD%E7%95%A5%E6%9F%90%E4%BA%9B%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-text">忽略某些返回值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E7%BB%91%E5%AE%9A%E6%A8%A1%E5%BC%8F%E4%BD%9C%E4%B8%BA%E5%89%A9%E4%BD%99%E5%B1%9E%E6%80%A7"><span class="toc-text">使用绑定模式作为剩余属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8E%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%B9%E9%85%8D%E9%A1%B9%E4%B8%AD%E6%8F%90%E5%8F%96%E5%80%BC"><span class="toc-text">从正则表达式匹配项中提取值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%A8%E4%BB%BB%E4%BD%95%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1%E4%B8%8A%E4%BD%BF%E7%94%A8%E6%95%B0%E7%BB%84%E8%A7%A3%E6%9E%84"><span class="toc-text">在任何可迭代对象上使用数组解构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%9E%84%E5%AF%B9%E8%B1%A1"><span class="toc-text">解构对象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E8%B5%8B%E5%80%BC"><span class="toc-text">基本赋值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B5%8B%E5%80%BC%E7%BB%99%E6%96%B0%E7%9A%84%E5%8F%98%E9%87%8F%E5%90%8D"><span class="toc-text">赋值给新的变量名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B5%8B%E5%80%BC%E5%88%B0%E6%96%B0%E7%9A%84%E5%8F%98%E9%87%8F%E5%90%8D%E5%B9%B6%E6%8F%90%E4%BE%9B%E9%BB%98%E8%AE%A4%E5%80%BC"><span class="toc-text">赋值到新的变量名并提供默认值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8E%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92%E7%9A%84%E5%AF%B9%E8%B1%A1%E4%B8%AD%E6%8F%90%E5%8F%96%E5%B1%9E%E6%80%A7"><span class="toc-text">从作为函数参数传递的对象中提取属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC"><span class="toc-text">设置函数参数的默认值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%84%E5%B5%8C%E5%A5%97%E5%AF%B9%E8%B1%A1%E5%92%8C%E6%95%B0%E7%BB%84"><span class="toc-text">解构嵌套对象和数组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#For-of-%E8%BF%AD%E4%BB%A3%E5%92%8C%E8%A7%A3%E6%9E%84"><span class="toc-text">For of 迭代和解构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7%E8%AE%A1%E7%AE%97%E5%90%8D%E5%92%8C%E8%A7%A3%E6%9E%84"><span class="toc-text">对象属性计算名和解构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A0%E6%95%88%E7%9A%84-JavaScript-%E6%A0%87%E8%AF%86%E7%AC%A6%E4%BD%9C%E4%B8%BA%E5%B1%9E%E6%80%A7%E5%90%8D%E7%A7%B0"><span class="toc-text">无效的 JavaScript 标识符作为属性名称</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%9E%84%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B"><span class="toc-text">解构基本类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%84%E5%90%88%E6%95%B0%E7%BB%84%E5%92%8C%E5%AF%B9%E8%B1%A1%E8%A7%A3%E6%9E%84"><span class="toc-text">组合数组和对象解构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%84%E5%AF%B9%E8%B1%A1%E6%97%B6%E6%9F%A5%E6%89%BE%E5%8E%9F%E5%9E%8B%E9%93%BE"><span class="toc-text">解构对象时查找原型链</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%84%E8%8C%83"><span class="toc-text">规范</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text">模板字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-1"><span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0"><span class="toc-text">参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%8F%E8%BF%B0-3"><span class="toc-text">描述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E8%A1%8C%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text">多行字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8F%92%E5%80%BC"><span class="toc-text">字符串插值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97%E6%A8%A1%E6%9D%BF"><span class="toc-text">嵌套模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%A6%E6%A0%87%E7%AD%BE%E7%9A%84%E6%A8%A1%E6%9D%BF"><span class="toc-text">带标签的模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E5%A7%8B%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text">原始字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%A6%E6%A0%87%E7%AD%BE%E7%9A%84%E6%A8%A1%E6%9D%BF%E5%AD%97%E9%9D%A2%E9%87%8F%E5%8F%8A%E8%BD%AC%E4%B9%89%E5%BA%8F%E5%88%97"><span class="toc-text">带标签的模板字面量及转义序列</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%84%E8%8C%83-1"><span class="toc-text">规范</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%EF%BC%88%E4%B8%89%E5%85%83%EF%BC%89%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">条件（三元）运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-2"><span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0-1"><span class="toc-text">参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%8F%E8%BF%B0-4"><span class="toc-text">描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="toc-text">示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-text">简单的例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%84%E7%90%86-null-%E5%80%BC"><span class="toc-text">处理 null 值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E9%93%BE"><span class="toc-text">条件链</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%84%E8%8C%83-2"><span class="toc-text">规范</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JavaScript-%E6%A8%A1%E5%9D%97"><span class="toc-text">JavaScript 模块</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96%E7%9A%84%E8%83%8C%E6%99%AF"><span class="toc-text">模块化的背景</span></a></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <span class="f-footer-mark" aria-hidden="true">月</span>
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">所感所想，所言所行，我将以文字记录我自己。</p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
         </div>
-    
-</div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
     </div>
-</div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
 </body>
 
 <script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
@@ -755,6 +990,7 @@
 <script src="/js/plugin.js"></script>
 <script src="/js/typed.js"></script>
 <script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
 
 
 <link rel="stylesheet" href="/photoswipe/photoswipe.css">

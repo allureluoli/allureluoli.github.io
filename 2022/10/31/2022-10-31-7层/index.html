@@ -3,6 +3,20 @@
 <html lang="zh" class="loading">
 <head>
     <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>网络七层协议OSI - 二月の档案室</title>
@@ -32,7 +46,9 @@
     <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,物理层（或称物理层，Physical Layer）  是计算机网络OSI模型中最低的一层。物理层规定:为传输数据所需要的物理链路创建、维持、拆除，而提供具有机械的，电子的，功能的和规范的特性。简单的,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
 
+    <meta name="theme-color" content="#120a1e" />
     <script>window.searchDbPath = "/search.xml";</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,36 +58,173 @@
 <body class="loading">
     <span id="config-title" style="display:none">二月の档案室</span>
     <div id="loader"></div>
-    <div id="single">
-    <div id="top" style="display: block;">
-    <div class="bar" style="width: 0;"></div>
-    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://blog.curesky.site"></a>
-    <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">网络七层协议OSI</h3>
-    <div class="social">
-        <div>
-            <div class="share">
-                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
-            </div>
-            <div id="qr"></div>
-        </div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <span class="f-brand-mark" aria-hidden="true">月</span>
+        <span class="f-brand-text">二月の档案室<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="//">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
     </div>
-    <div class="scrollbar"></div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="//" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「所感所想，所言所行，我将以文字记录我自己。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
 </div>
 
-    <div class="section">
-        <div class="article">
-    <div class='main'>
-        <h1 class="title">网络七层协议OSI</h1>
-        <div class="stuff">
-            <span>十月 31, 2022</span>
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
             
-  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E5%8D%8F%E8%AE%AE/" rel="tag">协议</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a></li></ul>
+            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/">计算机网络技术</a>
+            <span aria-hidden="true">/</span>
+            
+            <span class="f-crumb-cur">正文</span>
+        </nav>
 
+        <h1 class="f-post-title">网络七层协议OSI</h1>
 
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2022-10-30T16:00:00.000Z">2022-10-31</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                4 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                1.7k 字
+            </span>
+            
+            <a class="f-meta-item f-meta-cat" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/">计算机网络技术</a>
+            
         </div>
-        <div class="content markdown">
-            <h2 id="物理层（或称物理层，Physical-Layer）"><a href="#物理层（或称物理层，Physical-Layer）" class="headerlink" title="物理层（或称物理层，Physical Layer）"></a>物理层（或称物理层，Physical Layer）</h2><p>  是计算机网络OSI模型中最低的一层。物理层规定:为传输数据所需要的物理链路创建、维持、拆除，而提供具有机械的，电子的，功能的和规范的特性。简单的说，物理层确保原始的数据可在各种物理媒体上传输。局域网与广域网皆属第1、2层。物理层是OSI的第一层，它虽然处于最底层，却是整个开放系统的基础。物理层为设备之间的数据通信提供传输媒体及互连设备，为数据传输提供可靠的环境。如果您想要用尽量少的词来记住这个第一层，那就是“信号和介质”。OSI采纳了各种现成的协议，其中有RS-232、RS-449、X.21、V.35、ISDN、以及FDDI、IEEE802.3、IEEE802.4、和IEEE802.5的物理层协议。 </p>
+
+        
+        <div class="f-post-tags">
+            
+            <a class="f-tag" href="/tags/%E5%9F%BA%E7%A1%80/">#基础</a>
+            
+            <a class="f-tag" href="/tags/%E5%8D%8F%E8%AE%AE/">#协议</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <h2 id="物理层（或称物理层，Physical-Layer）"><a href="#物理层（或称物理层，Physical-Layer）" class="headerlink" title="物理层（或称物理层，Physical Layer）"></a>物理层（或称物理层，Physical Layer）</h2><p>  是计算机网络OSI模型中最低的一层。物理层规定:为传输数据所需要的物理链路创建、维持、拆除，而提供具有机械的，电子的，功能的和规范的特性。简单的说，物理层确保原始的数据可在各种物理媒体上传输。局域网与广域网皆属第1、2层。物理层是OSI的第一层，它虽然处于最底层，却是整个开放系统的基础。物理层为设备之间的数据通信提供传输媒体及互连设备，为数据传输提供可靠的环境。如果您想要用尽量少的词来记住这个第一层，那就是“信号和介质”。OSI采纳了各种现成的协议，其中有RS-232、RS-449、X.21、V.35、ISDN、以及FDDI、IEEE802.3、IEEE802.4、和IEEE802.5的物理层协议。 </p>
 <h2 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h2><p>  定义了在单个链路上如何传输数据。这些协议与被讨论的各种介质有关。示例：ATM，FDDI等。数据链路层必须具备一系列相应的功能，主要有：如何将数据组合成数据块，在数据链路层中称这种数据块为帧，帧是数据链路层的传送单位；如何控制帧在物理信道上的传输，包括如何处理传输差错，如何调节发送速率以使与接收方相匹配；以及在两个网络实体之间提供数据链路通路的建立、维持和释放的管理。
 物理链路（物理线路）：是由传输介质与设备组成的。原始的物理传输线路是指没有采用高层差错控制的基本的物理传输介质与设备。
 数据链路（逻辑线路）：在一条物理线路之上，通过一些规程或协议来控制这些数据的传输，以保证被传输数据的正确性。实现这些规程或协议的硬件和软件加到物理线路，这样就构成了数据链路，从数据发送点到数据接收点所经过的传输途径。当采用复用技术时，一条物理链路上可以有多条数据链路。</p>
@@ -81,43 +234,123 @@
 <h2 id="表示层"><a href="#表示层" class="headerlink" title="表示层"></a>表示层</h2><p>  位于OSI分层结构的第六层，它的主要作用之一是为异种机通信提供一种公共语言，以便能进行互操作。这种类型的服务之所以需要，是因为不同的计算机体系结构使用的数据表示法不同。与第五层提供透明的数据运输不同，表示层是处理所有与数据表示及运输有关的问题，包括转换、加密和压缩。每台计算机可能有它自己的表示数据的内部方法，例如，ASCII码与EBCDIC码，所以需要表示层协定来保证不同的计算机可以彼此理解。</p>
 <h2 id="网络七层协议（Open-System-Interconnection）"><a href="#网络七层协议（Open-System-Interconnection）" class="headerlink" title="网络七层协议（Open System Interconnection）"></a>网络七层协议（Open System Interconnection）</h2><p>  简称OSI，是一个开放性的通行系统互连参考模型，他是一个定义的非常好的协议规范。OSI模型有7层结构，每层都可以有几个子层。 OSI的7层从上到下分别是 7 应用层 6 表示层 5 会话层 4 传输层 3 网络层 2 数据链路层 1 物理层 其中高层，即7、6、5、4层定义了应用程序的功能，下面3层，即3、2、1层主要面向通过网络的端到端的数据流。</p>
 
-            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
-            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
-                <source type="audio/mpeg" src="">
-            </audio>
-            
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
                 <ul id="audio-list" style="display:none">
                     
-                        
-                            <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
-                        
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
                     
                 </ul>
+                
+            </div>
+
             
-        </div>
-        
-        
-    <div id="gitalk-container" class="comment link"
-		data-enable="true"
-        data-ae="true"
-        data-ci="10a7f71656553fd4676c"
-        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
-        data-r="allureluoli.github.io"
-        data-o="allureluoli"
-        data-a="allureluoli"
-        data-d="false"
-    >查看评论</div>
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/2022/10/31/2022-10-31-7%E5%B1%82/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
 
 
-    </div>
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
     
-        <div class="side">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%EF%BC%88%E6%88%96%E7%A7%B0%E7%89%A9%E7%90%86%E5%B1%82%EF%BC%8CPhysical-Layer%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">物理层（或称物理层，Physical Layer）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82"><span class="toc-number">2.</span> <span class="toc-text">数据链路层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="toc-number">3.</span> <span class="toc-text">网络层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%A0%E8%BE%93"><span class="toc-number">4.</span> <span class="toc-text">传输</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%9A%E8%AF%9D%E5%B1%82-%E8%A1%A8%E7%A4%BA%E5%B1%82-%E5%BA%94%E7%94%A8%E5%B1%82"><span class="toc-number">5.</span> <span class="toc-text">会话层,表示层,应用层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E7%A4%BA%E5%B1%82"><span class="toc-number">6.</span> <span class="toc-text">表示层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E4%B8%83%E5%B1%82%E5%8D%8F%E8%AE%AE%EF%BC%88Open-System-Interconnection%EF%BC%89"><span class="toc-number">7.</span> <span class="toc-text">网络七层协议（Open System Interconnection）</span></a></li></ol>
+    <a class="f-pn-card f-pn-prev" href="/2022/10/31/2022-10-31-Python%20%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">Python 复习笔记（三）</span>
+        <span class="f-pn-date">2022-10-31</span>
+    </a>
+    
+    
+    <a class="f-pn-card f-pn-next" href="/2022/11/01/2022-11-1-Nonebot%E8%AF%BB%E5%8F%96%E7%8C%AB%E7%8C%AB%E8%AF%8D%E5%BA%93%E6%96%B9%E6%B3%95/">
+        <span class="f-pn-label">更早的文章 →</span>
+        <span class="f-pn-title">NoneBot读取猫猫词库方法</span>
+        <span class="f-pn-date">2022-11-01</span>
+    </a>
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%EF%BC%88%E6%88%96%E7%A7%B0%E7%89%A9%E7%90%86%E5%B1%82%EF%BC%8CPhysical-Layer%EF%BC%89"><span class="toc-text">物理层（或称物理层，Physical Layer）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82"><span class="toc-text">数据链路层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="toc-text">网络层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%A0%E8%BE%93"><span class="toc-text">传输</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%9A%E8%AF%9D%E5%B1%82-%E8%A1%A8%E7%A4%BA%E5%B1%82-%E5%BA%94%E7%94%A8%E5%B1%82"><span class="toc-text">会话层,表示层,应用层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E7%A4%BA%E5%B1%82"><span class="toc-text">表示层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E4%B8%83%E5%B1%82%E5%8D%8F%E8%AE%AE%EF%BC%88Open-System-Interconnection%EF%BC%89"><span class="toc-text">网络七层协议（Open System Interconnection）</span></a></li></ol></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <span class="f-footer-mark" aria-hidden="true">月</span>
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">所感所想，所言所行，我将以文字记录我自己。</p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
         </div>
-    
-</div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
     </div>
-</div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
 </body>
 
 <script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
@@ -127,6 +360,7 @@
 <script src="/js/plugin.js"></script>
 <script src="/js/typed.js"></script>
 <script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
 
 
 <link rel="stylesheet" href="/photoswipe/photoswipe.css">

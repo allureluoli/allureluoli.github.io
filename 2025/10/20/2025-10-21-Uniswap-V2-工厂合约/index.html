@@ -3,6 +3,20 @@
 <html lang="zh" class="loading">
 <head>
     <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>2025-10-21-Uniswap-V2-工厂合约 - 二月の档案室</title>
@@ -32,7 +46,9 @@
     <meta property="og:description" content="所感所想，所言所行，我将以文字记录我自己。,工厂合约代码及其分析12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
 
+    <meta name="theme-color" content="#120a1e" />
     <script>window.searchDbPath = "/search.xml";</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,36 +58,168 @@
 <body class="loading">
     <span id="config-title" style="display:none">二月の档案室</span>
     <div id="loader"></div>
-    <div id="single">
-    <div id="top" style="display: block;">
-    <div class="bar" style="width: 0;"></div>
-    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://blog.curesky.site"></a>
-    <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">2025-10-21-Uniswap-V2-工厂合约</h3>
-    <div class="social">
-        <div>
-            <div class="share">
-                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
-            </div>
-            <div id="qr"></div>
-        </div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <span class="f-brand-mark" aria-hidden="true">月</span>
+        <span class="f-brand-text">二月の档案室<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="//">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
     </div>
-    <div class="scrollbar"></div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="//" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「所感所想，所言所行，我将以文字记录我自己。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
 </div>
 
-    <div class="section">
-        <div class="article">
-    <div class='main'>
-        <h1 class="title">2025-10-21-Uniswap-V2-工厂合约</h1>
-        <div class="stuff">
-            <span>十月 20, 2025</span>
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
             
-  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Solidity/" rel="tag">Solidity</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Web3/" rel="tag">Web3</a></li></ul>
+            <span class="f-crumb-cur">正文</span>
+        </nav>
 
+        <h1 class="f-post-title">2025-10-21-Uniswap-V2-工厂合约</h1>
 
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2025-10-20T07:24:06.000Z">2025-10-20</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                8 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                3.8k 字
+            </span>
+            
         </div>
-        <div class="content markdown">
-            <h3 id="工厂合约代码及其分析"><a href="#工厂合约代码及其分析" class="headerlink" title="工厂合约代码及其分析"></a>工厂合约代码及其分析</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity =0.5.16;</span><br><span class="line"></span><br><span class="line">import &#x27;./interfaces/IUniswapV2Factory.sol&#x27;;</span><br><span class="line">import &#x27;./UniswapV2Pair.sol&#x27;;</span><br><span class="line"></span><br><span class="line">contract UniswapV2Factory is IUniswapV2Factory &#123;</span><br><span class="line">    address public feeTo;</span><br><span class="line">    address public feeToSetter;</span><br><span class="line"></span><br><span class="line">    mapping(address =&gt; mapping(address =&gt; address)) public getPair;</span><br><span class="line">    address[] public allPairs;</span><br><span class="line"></span><br><span class="line">    event PairCreated(address indexed token0, address indexed token1, address pair, uint);</span><br><span class="line"></span><br><span class="line">    constructor(address _feeToSetter) public &#123;</span><br><span class="line">        feeToSetter = _feeToSetter;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function allPairsLength() external view returns (uint) &#123;</span><br><span class="line">        return allPairs.length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function createPair(address tokenA, address tokenB) external returns (address pair) &#123;</span><br><span class="line">        require(tokenA != tokenB, &#x27;UniswapV2: IDENTICAL_ADDRESSES&#x27;);</span><br><span class="line">        (address token0, address token1) = tokenA &lt; tokenB ? (tokenA, tokenB) : (tokenB, tokenA);</span><br><span class="line">        require(token0 != address(0), &#x27;UniswapV2: ZERO_ADDRESS&#x27;);</span><br><span class="line">        require(getPair[token0][token1] == address(0), &#x27;UniswapV2: PAIR_EXISTS&#x27;); // single check is sufficient</span><br><span class="line">        bytes memory bytecode = type(UniswapV2Pair).creationCode;</span><br><span class="line">        bytes32 salt = keccak256(abi.encodePacked(token0, token1));</span><br><span class="line">        assembly &#123;</span><br><span class="line">            pair := create2(0, add(bytecode, 32), mload(bytecode), salt)</span><br><span class="line">        &#125;</span><br><span class="line">        IUniswapV2Pair(pair).initialize(token0, token1);</span><br><span class="line">        getPair[token0][token1] = pair;</span><br><span class="line">        getPair[token1][token0] = pair; // populate mapping in the reverse direction</span><br><span class="line">        allPairs.push(pair);</span><br><span class="line">        emit PairCreated(token0, token1, pair, allPairs.length);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function setFeeTo(address _feeTo) external &#123;</span><br><span class="line">        require(msg.sender == feeToSetter, &#x27;UniswapV2: FORBIDDEN&#x27;);</span><br><span class="line">        feeTo = _feeTo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function setFeeToSetter(address _feeToSetter) external &#123;</span><br><span class="line">        require(msg.sender == feeToSetter, &#x27;UniswapV2: FORBIDDEN&#x27;);</span><br><span class="line">        feeToSetter = _feeToSetter;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        
+        <div class="f-post-tags">
+            
+            <a class="f-tag" href="/tags/Solidity/">#Solidity</a>
+            
+            <a class="f-tag" href="/tags/Web3/">#Web3</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <h3 id="工厂合约代码及其分析"><a href="#工厂合约代码及其分析" class="headerlink" title="工厂合约代码及其分析"></a>工厂合约代码及其分析</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity =0.5.16;</span><br><span class="line"></span><br><span class="line">import &#x27;./interfaces/IUniswapV2Factory.sol&#x27;;</span><br><span class="line">import &#x27;./UniswapV2Pair.sol&#x27;;</span><br><span class="line"></span><br><span class="line">contract UniswapV2Factory is IUniswapV2Factory &#123;</span><br><span class="line">    address public feeTo;</span><br><span class="line">    address public feeToSetter;</span><br><span class="line"></span><br><span class="line">    mapping(address =&gt; mapping(address =&gt; address)) public getPair;</span><br><span class="line">    address[] public allPairs;</span><br><span class="line"></span><br><span class="line">    event PairCreated(address indexed token0, address indexed token1, address pair, uint);</span><br><span class="line"></span><br><span class="line">    constructor(address _feeToSetter) public &#123;</span><br><span class="line">        feeToSetter = _feeToSetter;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function allPairsLength() external view returns (uint) &#123;</span><br><span class="line">        return allPairs.length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function createPair(address tokenA, address tokenB) external returns (address pair) &#123;</span><br><span class="line">        require(tokenA != tokenB, &#x27;UniswapV2: IDENTICAL_ADDRESSES&#x27;);</span><br><span class="line">        (address token0, address token1) = tokenA &lt; tokenB ? (tokenA, tokenB) : (tokenB, tokenA);</span><br><span class="line">        require(token0 != address(0), &#x27;UniswapV2: ZERO_ADDRESS&#x27;);</span><br><span class="line">        require(getPair[token0][token1] == address(0), &#x27;UniswapV2: PAIR_EXISTS&#x27;); // single check is sufficient</span><br><span class="line">        bytes memory bytecode = type(UniswapV2Pair).creationCode;</span><br><span class="line">        bytes32 salt = keccak256(abi.encodePacked(token0, token1));</span><br><span class="line">        assembly &#123;</span><br><span class="line">            pair := create2(0, add(bytecode, 32), mload(bytecode), salt)</span><br><span class="line">        &#125;</span><br><span class="line">        IUniswapV2Pair(pair).initialize(token0, token1);</span><br><span class="line">        getPair[token0][token1] = pair;</span><br><span class="line">        getPair[token1][token0] = pair; // populate mapping in the reverse direction</span><br><span class="line">        allPairs.push(pair);</span><br><span class="line">        emit PairCreated(token0, token1, pair, allPairs.length);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function setFeeTo(address _feeTo) external &#123;</span><br><span class="line">        require(msg.sender == feeToSetter, &#x27;UniswapV2: FORBIDDEN&#x27;);</span><br><span class="line">        feeTo = _feeTo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function setFeeToSetter(address _feeToSetter) external &#123;</span><br><span class="line">        require(msg.sender == feeToSetter, &#x27;UniswapV2: FORBIDDEN&#x27;);</span><br><span class="line">        feeToSetter = _feeToSetter;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="1-合约基础结构"><a href="#1-合约基础结构" class="headerlink" title="1. 合约基础结构"></a>1. 合约基础结构</h2><p><strong>状态变量</strong>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">address public feeTo;          // 协议费用接收地址</span><br><span class="line"></span><br><span class="line">address public feeToSetter;    // 有权设置 feeTo 的地址</span><br><span class="line"></span><br><span class="line">mapping(address =&gt; mapping(address =&gt; address)) public getPair;  // 代币对到交易对地址的映射</span><br><span class="line"></span><br><span class="line">address[] public allPairs;     // 所有已创建交易对的数组</span><br></pre></td></tr></table></figure>
@@ -127,43 +275,123 @@
 <p><strong>输入验证</strong>：全面的参数检查确保合约状态一致性</p>
 <p>这个工厂合约是 Uniswap V2 生态系统的核心枢纽，负责管理所有交易对的创建和协议级别的费用设置。其简洁而强大的设计为整个 DEX 提供了可靠的基础设施。</p>
 
-            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
-            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
-                <source type="audio/mpeg" src="">
-            </audio>
-            
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
                 <ul id="audio-list" style="display:none">
                     
-                        
-                            <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
-                        
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
                     
                 </ul>
+                
+            </div>
+
             
-        </div>
-        
-        
-    <div id="gitalk-container" class="comment link"
-		data-enable="true"
-        data-ae="true"
-        data-ci="10a7f71656553fd4676c"
-        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
-        data-r="allureluoli.github.io"
-        data-o="allureluoli"
-        data-a="allureluoli"
-        data-d="false"
-    >查看评论</div>
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/2025/10/20/2025-10-21-Uniswap-V2-%E5%B7%A5%E5%8E%82%E5%90%88%E7%BA%A6/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
 
 
-    </div>
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
     
-        <div class="side">
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%8E%82%E5%90%88%E7%BA%A6%E4%BB%A3%E7%A0%81%E5%8F%8A%E5%85%B6%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">工厂合约代码及其分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%90%88%E7%BA%A6%E5%9F%BA%E7%A1%80%E7%BB%93%E6%9E%84"><span class="toc-number"></span> <span class="toc-text">1. 合约基础结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD%EF%BC%9AcreatePair"><span class="toc-number"></span> <span class="toc-text">2. 核心功能：createPair</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E9%AA%8C%E8%AF%81"><span class="toc-number">1.</span> <span class="toc-text">输入验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CREATE2-%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%83%A8%E7%BD%B2"><span class="toc-number">2.</span> <span class="toc-text">CREATE2 确定性部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E4%BA%A4%E6%98%93%E5%AF%B9"><span class="toc-number">3.</span> <span class="toc-text">初始化交易对</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E7%8A%B6%E6%80%81"><span class="toc-number">4.</span> <span class="toc-text">更新状态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%B4%B9%E7%94%A8%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6"><span class="toc-number"></span> <span class="toc-text">3. 费用管理机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%8D%8F%E8%AE%AE%E8%B4%B9%E7%94%A8%E6%8E%A5%E6%94%B6%E5%9C%B0%E5%9D%80"><span class="toc-number">1.</span> <span class="toc-text">设置协议费用接收地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E7%A7%BB%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">转移权限管理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%9F%A5%E8%AF%A2%E5%8A%9F%E8%83%BD"><span class="toc-number"></span> <span class="toc-text">4. 查询功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E4%BA%A4%E6%98%93%E5%AF%B9%E6%95%B0%E9%87%8F"><span class="toc-number">1.</span> <span class="toc-text">获取交易对数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E4%BB%A3%E5%B8%81%E5%9C%B0%E5%9D%80%E6%9F%A5%E8%AF%A2%E4%BA%A4%E6%98%93%E5%AF%B9"><span class="toc-number">2.</span> <span class="toc-text">通过代币地址查询交易对</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%A0%B8%E5%BF%83%E8%AE%BE%E8%AE%A1%E7%89%B9%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">5. 核心设计特点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A1%AE%E5%AE%9A%E6%80%A7%E5%9C%B0%E5%9D%80%E8%AE%A1%E7%AE%97"><span class="toc-number">1.</span> <span class="toc-text">确定性地址计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E5%90%91%E6%98%A0%E5%B0%84%E6%94%AF%E6%8C%81"><span class="toc-number">2.</span> <span class="toc-text">双向映射支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E6%9D%83%E9%99%90%E5%8E%9F%E5%88%99"><span class="toc-number">3.</span> <span class="toc-text">最小权限原则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E4%B8%8E%E4%BA%A4%E6%98%93%E5%AF%B9%E5%90%88%E7%BA%A6%E7%9A%84%E4%BA%A4%E4%BA%92"><span class="toc-number"></span> <span class="toc-text">6. 与交易对合约的交互</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%AE%89%E5%85%A8%E6%80%A7%E8%80%83%E8%99%91"><span class="toc-number"></span> <span class="toc-text">7. 安全性考虑</span></a>
+    <a class="f-pn-card f-pn-prev" href="/2025/10/20/2025-10-20-SimpleContract-test/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">2025-10-20-SimpleContract&amp;test</span>
+        <span class="f-pn-date">2025-10-20</span>
+    </a>
+    
+    
+    <a class="f-pn-card f-pn-next" href="/2025/10/24/2025-10-24-web2-hash-WP/">
+        <span class="f-pn-label">更早的文章 →</span>
+        <span class="f-pn-title">2025-10-24-web2_hash_WP</span>
+        <span class="f-pn-date">2025-10-24</span>
+    </a>
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%8E%82%E5%90%88%E7%BA%A6%E4%BB%A3%E7%A0%81%E5%8F%8A%E5%85%B6%E5%88%86%E6%9E%90"><span class="toc-text">工厂合约代码及其分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%90%88%E7%BA%A6%E5%9F%BA%E7%A1%80%E7%BB%93%E6%9E%84"><span class="toc-text">1. 合约基础结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD%EF%BC%9AcreatePair"><span class="toc-text">2. 核心功能：createPair</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E9%AA%8C%E8%AF%81"><span class="toc-text">输入验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CREATE2-%E7%A1%AE%E5%AE%9A%E6%80%A7%E9%83%A8%E7%BD%B2"><span class="toc-text">CREATE2 确定性部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E4%BA%A4%E6%98%93%E5%AF%B9"><span class="toc-text">初始化交易对</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E7%8A%B6%E6%80%81"><span class="toc-text">更新状态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%B4%B9%E7%94%A8%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6"><span class="toc-text">3. 费用管理机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%8D%8F%E8%AE%AE%E8%B4%B9%E7%94%A8%E6%8E%A5%E6%94%B6%E5%9C%B0%E5%9D%80"><span class="toc-text">设置协议费用接收地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E7%A7%BB%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86"><span class="toc-text">转移权限管理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%9F%A5%E8%AF%A2%E5%8A%9F%E8%83%BD"><span class="toc-text">4. 查询功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E4%BA%A4%E6%98%93%E5%AF%B9%E6%95%B0%E9%87%8F"><span class="toc-text">获取交易对数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E4%BB%A3%E5%B8%81%E5%9C%B0%E5%9D%80%E6%9F%A5%E8%AF%A2%E4%BA%A4%E6%98%93%E5%AF%B9"><span class="toc-text">通过代币地址查询交易对</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%A0%B8%E5%BF%83%E8%AE%BE%E8%AE%A1%E7%89%B9%E7%82%B9"><span class="toc-text">5. 核心设计特点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A1%AE%E5%AE%9A%E6%80%A7%E5%9C%B0%E5%9D%80%E8%AE%A1%E7%AE%97"><span class="toc-text">确定性地址计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E5%90%91%E6%98%A0%E5%B0%84%E6%94%AF%E6%8C%81"><span class="toc-text">双向映射支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E6%9D%83%E9%99%90%E5%8E%9F%E5%88%99"><span class="toc-text">最小权限原则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E4%B8%8E%E4%BA%A4%E6%98%93%E5%AF%B9%E5%90%88%E7%BA%A6%E7%9A%84%E4%BA%A4%E4%BA%92"><span class="toc-text">6. 与交易对合约的交互</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%AE%89%E5%85%A8%E6%80%A7%E8%80%83%E8%99%91"><span class="toc-text">7. 安全性考虑</span></a></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <span class="f-footer-mark" aria-hidden="true">月</span>
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">所感所想，所言所行，我将以文字记录我自己。</p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
         </div>
-    
-</div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
     </div>
-</div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
 </body>
 
 <script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
@@ -173,6 +401,7 @@
 <script src="/js/plugin.js"></script>
 <script src="/js/typed.js"></script>
 <script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
 
 
 <link rel="stylesheet" href="/photoswipe/photoswipe.css">

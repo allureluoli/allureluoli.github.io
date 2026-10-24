@@ -3,6 +3,20 @@
 <html lang="zh" class="loading">
 <head>
     <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>2026-8-11-DarkSword - 二月の档案室</title>
@@ -35,7 +49,9 @@
 "/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
 
+    <meta name="theme-color" content="#120a1e" />
     <script>window.searchDbPath = "/search.xml";</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,74 +61,284 @@
 <body class="loading">
     <span id="config-title" style="display:none">二月の档案室</span>
     <div id="loader"></div>
-    <div id="single">
-    <div id="top" style="display: block;">
-    <div class="bar" style="width: 0;"></div>
-    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://blog.curesky.site"></a>
-    <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">2026-8-11-DarkSword</h3>
-    <div class="social">
-        <div>
-            <div class="share">
-                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
-            </div>
-            <div id="qr"></div>
-        </div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <span class="f-brand-mark" aria-hidden="true">月</span>
+        <span class="f-brand-text">二月の档案室<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="//">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
     </div>
-    <div class="scrollbar"></div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="//" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「所感所想，所言所行，我将以文字记录我自己。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
 </div>
 
-    <div class="section">
-        <div class="article">
-    <div class='main'>
-        <h1 class="title">2026-8-11-DarkSword</h1>
-        <div class="stuff">
-            <span>八月 11, 2026</span>
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
             
-  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="tag">网络安全</a></li></ul>
+            <span class="f-crumb-cur">正文</span>
+        </nav>
 
+        <h1 class="f-post-title">2026-8-11-DarkSword</h1>
 
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2026-08-11T13:10:50.000Z">2026-08-11</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                1 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                0.0k 字
+            </span>
+            
         </div>
-        <div class="content markdown">
-            <h3 id="DarkSword"><a href="#DarkSword" class="headerlink" title="DarkSword"></a>DarkSword</h3><p>待更新</p>
 
-            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
-            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
-                <source type="audio/mpeg" src="">
-            </audio>
+        
+        <div class="f-post-tags">
             
+            <a class="f-tag" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">#网络安全</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <h3 id="DarkSword"><a href="#DarkSword" class="headerlink" title="DarkSword"></a>DarkSword</h3><p>待更新</p>
+
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
                 <ul id="audio-list" style="display:none">
                     
-                        
-                            <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
-                        
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
                     
                 </ul>
+                
+            </div>
+
             
-        </div>
-        
-        
-    <div id="gitalk-container" class="comment link"
-		data-enable="true"
-        data-ae="true"
-        data-ci="10a7f71656553fd4676c"
-        data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
-        data-r="allureluoli.github.io"
-        data-o="allureluoli"
-        data-a="allureluoli"
-        data-d="false"
-    >查看评论</div>
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/2026/08/11/2026-8-11-DarkSword/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
 
 
-    </div>
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
     
-        <div class="side">
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#DarkSword"><span class="toc-number">1.</span> <span class="toc-text">DarkSword</span></a></li></ol>
+    <a class="f-pn-card f-pn-prev" href="/2026/04/14/2026-4-14-%E6%A0%88%E8%BF%81%E7%A7%BB/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">2026-4-14-栈迁移</span>
+        <span class="f-pn-date">2026-04-14</span>
+    </a>
+    
+    
+    <a class="f-pn-card f-pn-next" href="/2026/08/14/2026-8-14-SSTI/">
+        <span class="f-pn-label">更早的文章 →</span>
+        <span class="f-pn-title">2026-8-14-SSTI</span>
+        <span class="f-pn-date">2026-08-14</span>
+    </a>
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#DarkSword"><span class="toc-text">DarkSword</span></a></li></ol></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <span class="f-footer-mark" aria-hidden="true">月</span>
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">所感所想，所言所行，我将以文字记录我自己。</p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
         </div>
-    
-</div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
     </div>
-</div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
 </body>
 
 <script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
@@ -122,6 +348,7 @@
 <script src="/js/plugin.js"></script>
 <script src="/js/typed.js"></script>
 <script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
 
 
 <link rel="stylesheet" href="/photoswipe/photoswipe.css">
