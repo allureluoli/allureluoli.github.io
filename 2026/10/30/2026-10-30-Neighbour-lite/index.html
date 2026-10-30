@@ -1,0 +1,500 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026-10-30-Neighbour-lite - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,Neighbour-lite题目来源：Sudocrypt v16.0
+这比赛… 一言难尽！
+附件只有一个加密 RAR，解开是个 Go 客户端，flag 只能跟服务器要。
+顺序记一下：剥壳 → 看二进,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2026-10-30-Neighbour-lite - 二月の档案室"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,Neighbour-lite题目来源：Sudocrypt v16.0
+这比赛… 一言难尽！
+附件只有一个加密 RAR，解开是个 Go 客户端，flag 只能跟服务器要。
+顺序记一下：剥壳 → 看二进,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2026-10-30-Neighbour-lite - 二月の档案室"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,Neighbour-lite题目来源：Sudocrypt v16.0
+这比赛… 一言难尽！
+附件只有一个加密 RAR，解开是个 Go 客户端，flag 只能跟服务器要。
+顺序记一下：剥壳 → 看二进,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
+
+    <meta name="theme-color" content="#faf9f5" />
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <img class="f-brand-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="28" height="28">
+        <span class="f-brand-text">二月<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="/">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="/" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「我不相信命运，且我将在醉生梦死中追寻真正的自我。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
+</div>
+
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
+            
+            <span class="f-crumb-cur">正文</span>
+        </nav>
+
+        <h1 class="f-post-title">2026-10-30-Neighbour-lite</h1>
+
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2026-10-30T15:59:10.000Z">2026-10-30</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                12 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                5.5k 字
+            </span>
+            
+        </div>
+
+        
+        <div class="f-post-tags">
+            
+            <a class="f-tag" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">#网络安全</a>
+            
+            <a class="f-tag" href="/tags/CTF/">#CTF</a>
+            
+            <a class="f-tag" href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">#逆向工程</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <h3 id="Neighbour-lite"><a href="#Neighbour-lite" class="headerlink" title="Neighbour-lite"></a>Neighbour-lite</h3><p>题目来源：Sudocrypt v16.0</p>
+<p>这比赛… 一言难尽！</p>
+<p>附件只有一个加密 RAR，解开是个 Go 客户端，flag 只能跟服务器要。</p>
+<p>顺序记一下：剥壳 → 看二进制 → 抓协议 → 把签名和 PoW 自己写出来 → 伪造”观测” → 最后让官方客户端替我交答案。</p>
+<p><img src="/img/images/neighbour2026-1-protocol.png" alt="四步协议"></p>
+<h4 id="第一步-·-连文件名都不给的-RAR"><a href="#第一步-·-连文件名都不给的-RAR" class="headerlink" title="第一步 · 连文件名都不给的 RAR"></a>第一步 · 连文件名都不给的 RAR</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">00000000: 5261 7221 1a07 0100 07e4 bf50 2104 0000  Rar!.......P!...</span><br><span class="line">00000010: 010f 08d1 0ef2 08d0 7c17 c630 feca d8a1  ........|..0.....</span><br></pre></td></tr></table></figure>
+
+<p><code>1a07 0100</code> 是 RAR5，紧接着的 <code>...04</code> 是 HEAD_ENCRYPTION —— 头加密（<code>-hp</code>），所以 <code>7z l</code> 连文件列表都要密码。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rar2john Neighbour-lite.rar</span><br><span class="line"><span class="comment"># $rar5$16$08d10ef208d07c17c630fecad8a16e88$15$d76d82ec58bacd1f9ec5958bf7a5cc7b$8$cc91cd1fc4c72582</span></span><br><span class="line"></span><br><span class="line">hashcat -m 13000 -a 0 n.hash rockyou.txt --backend-ignore-cuda -O -w 3</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Speed.#1.........:    37791 H/s</span><br><span class="line">Progress.........: 786432/14344385 (5.48%)</span><br><span class="line">$rar5$16$...:nguyen</span><br></pre></td></tr></table></figure>
+
+<p>22 秒，密码 <code>nguyen</code>。解出来两个同源文件：<code>neighbor-agent.exe</code>（7.3 MB）、<code>neighbor-agent-linux</code>（7.1 MB）。</p>
+<h4 id="第二步-·-二进制里不用逆也能看到的东西"><a href="#第二步-·-二进制里不用逆也能看到的东西" class="headerlink" title="第二步 · 二进制里不用逆也能看到的东西"></a>第二步 · 二进制里不用逆也能看到的东西</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ./neighbor-agent.exe</span><br><span class="line">[*] Solving Proof of Work...</span><br><span class="line">[-] Failed: bad observation</span><br></pre></td></tr></table></figure>
+
+<p>Go 1.27.3 编译，<code>-ldflags=&quot;-s -w&quot;</code> 去了符号，但 Go 自带的 pclntab 还在，函数名一抓一大把：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">main.main  main.solvePoW  main.measureRTT  main.observeLAN  main.postSigned  main.isDebuggerPresent</span><br></pre></td></tr></table></figure>
+
+<p>连源码路径都留在里面：<code>D:/chall/agent/main_windows.go</code>。</p>
+<p>再加上字符串里的 JSON tag —— <code>pow_challenge</code>、<code>observation&#123;gateway_mac,nic_ipv6_ll,nic_mac,rtt_ns&#125;</code>、<code>enc_flag</code>、<code>session_key</code>、<code>final_flag</code>、<code>memory_hash</code>、<code>X-Signature</code> —— 这题在干什么基本就清楚了：<strong>客户端观测本机所在局域网，签名后交给服务器判定</strong>。</p>
+<p>顺手记一下：GoReSym 跑这个 exe 直接 <code>no valid pclntab found</code>（它只认到 1.2x），所以别在符号恢复上花时间，<code>strings</code> + 抓包更快。</p>
+<h4 id="第三步-·-让它连我的假服务器"><a href="#第三步-·-让它连我的假服务器" class="headerlink" title="第三步 · 让它连我的假服务器"></a>第三步 · 让它连我的假服务器</h4><p>客户端有 <code>-server</code> 参数，先丢给本地 8080 的假服务器，让它把请求原样打出来：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">POST /register      <span class="punctuation">&#123;</span><span class="attr">&quot;pubkey&quot;</span><span class="punctuation">:</span><span class="string">&quot;&lt;64 hex&gt;&quot;</span><span class="punctuation">&#125;</span></span><br><span class="line">POST /run/start     <span class="punctuation">&#123;</span><span class="punctuation">&#125;</span></span><br><span class="line">POST /gate/<span class="number">1</span>/submit <span class="punctuation">&#123;</span><span class="attr">&quot;observation&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span><span class="attr">&quot;gateway_mac&quot;</span><span class="punctuation">:</span><span class="string">&quot;02:00:00:00:51:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">                                    <span class="attr">&quot;nic_ipv6_ll&quot;</span><span class="punctuation">:</span><span class="string">&quot;fe80::2b5:a39c:3e46:82a6&quot;</span><span class="punctuation">,</span></span><br><span class="line">                                    <span class="attr">&quot;nic_mac&quot;</span><span class="punctuation">:</span><span class="string">&quot;00:15:5d:ba:e8:d2&quot;</span><span class="punctuation">,</span></span><br><span class="line">                                    <span class="attr">&quot;nonce&quot;</span><span class="punctuation">:</span><span class="string">&quot;&lt;64 hex&gt;&quot;</span><span class="punctuation">,</span><span class="attr">&quot;rtt_ns&quot;</span><span class="punctuation">:</span><span class="number">1598400</span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">                     <span class="attr">&quot;pow_nonce&quot;</span><span class="punctuation">:</span><span class="string">&quot;5875&quot;</span><span class="punctuation">,</span><span class="attr">&quot;run_id&quot;</span><span class="punctuation">:</span><span class="string">&quot;&lt;uuid&gt;&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>每个请求带三个头：<code>X-Agent-Pubkey</code>（每次运行新生成的 ed25519 公钥）、<code>X-Client-Auth: Neighbor-Go-Client-v3</code>、<code>X-Signature</code>。</p>
+<p>想要真服务器的响应，就再套一层 HTTP→HTTPS 转发代理：客户端以为在说明文，代理帮我转给真服务，两头的请求&#x2F;响应都落盘。真服务器回的是：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">POST /run/start -&gt; <span class="punctuation">&#123;</span><span class="attr">&quot;nonce&quot;</span><span class="punctuation">:</span><span class="string">&quot;44a3be45...&quot;</span><span class="punctuation">,</span><span class="attr">&quot;ok&quot;</span><span class="punctuation">:</span><span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;pow_challenge&quot;</span><span class="punctuation">:</span><span class="string">&quot;04da53b8b46cdda9920c402fb5db701a&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;run_id&quot;</span><span class="punctuation">:</span><span class="string">&quot;55c4a4db-4d58-48cd-9bba-b28811950b02&quot;</span><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line">POST /gate/<span class="number">1</span>/submit -&gt; <span class="number">403</span> <span class="punctuation">&#123;</span><span class="attr">&quot;err&quot;</span><span class="punctuation">:</span><span class="string">&quot;bad observation&quot;</span><span class="punctuation">,</span><span class="attr">&quot;ok&quot;</span><span class="punctuation">:</span><span class="literal"><span class="keyword">false</span></span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="第四步-·-签名和-PoW-自己复现"><a href="#第四步-·-签名和-PoW-自己复现" class="headerlink" title="第四步 · 签名和 PoW 自己复现"></a>第四步 · 签名和 PoW 自己复现</h4><p>签名缺了会回 <code>&#123;&quot;err&quot;:&quot;auth&quot;&#125;</code>，说明必须带。被签的串不用猜，拿一条真实的 <code>(pubkey, path, body, signature)</code> 在<strong>本地</strong>用公钥枚举验签就行，两分钟就中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sign( &quot;POST /run/start &quot; + sha256(body).hexdigest() )</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msg = <span class="string">f&quot;<span class="subst">&#123;method&#125;</span> <span class="subst">&#123;path&#125;</span> <span class="subst">&#123;sha256(body_bytes).hexdigest()&#125;</span>&quot;</span>.encode()</span><br><span class="line">sig = sk.sign(msg)          <span class="comment"># -&gt; X-Signature</span></span><br></pre></td></tr></table></figure>
+
+<p>PoW 同理，用抓到的 <code>(challenge=04da53b8..., pow_nonce=5875)</code> 反推构造：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sha256(raw_challenge + uint64_le(nonce)) = 0000ebe864762e62...   # 前 16 bit 为 0</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">solve_pow</span>(<span class="params">challenge_hex, bits=<span class="number">16</span></span>):</span><br><span class="line">    raw, nb, n = <span class="built_in">bytes</span>.fromhex(challenge_hex), bits // <span class="number">8</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">if</span> sha256(raw + struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, n)).digest()[:nb] == <span class="string">b&quot;\x00&quot;</span> * nb:</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">str</span>(n)</span><br><span class="line">        n += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>另外 <code>/run/start</code> 的 body 永远是 <code>&#123;&#125;</code>，签名里又没有时间戳&#x2F;随机数 —— 抓一次就能无限重放。等于白送签名能力。</p>
+<p>到这儿我已经是个”合法客户端”了，body 想写什么写什么。</p>
+<h4 id="第五步-·-服务器只认真的邻居"><a href="#第五步-·-服务器只认真的邻居" class="headerlink" title="第五步 · 服务器只认真的邻居"></a>第五步 · 服务器只认真的邻居</h4><p>服务器只会回 <code>bad observation</code>，不告诉你哪里错，所以每次换一项，一次一个新 run（换 run + 解 PoW 大约 1 秒）：</p>
+<p><img src="/img/images/neighbour2026-2-oracle.png" alt="观测矩阵"></p>
+<p>结论三条：</p>
+<ol>
+<li><code>nic_mac</code> 必须是<strong>全球管理</strong>单播 MAC —— 本地管理位（首字节 0x02）和 Hyper-V 的 <code>00:15:5d</code> 全挂；</li>
+<li><code>nic_ipv6_ll</code> 必须是 <code>nic_mac</code> 推出来的 <strong>EUI-64</strong>：<code>mac[0]^0x02</code> + <code>mac[1:3]</code> + <code>ff:fe</code> + <code>mac[3:]</code>；</li>
+<li><code>gateway_mac</code> 同样要全球管理，虚拟网关 <code>02:00:00:00:51:00</code> 不行；<code>rtt_ns</code> 合理即可，<code>nonce</code> 必须用下发的值。</li>
+</ol>
+<p>第 2 条是题眼 —— 题目叫 Neighbour，考的就是”你到底有没有在看局域网的 IPv6 邻居”。虚拟机里的网卡是虚拟 OUI、link-local 是隐私地址，所以官方客户端在本机跑一万次也是 403。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">eui64</span>(<span class="params">mac</span>):                    <span class="comment"># &quot;00:1a:2b:3c:4d:5e&quot; -&gt; &quot;fe80::21a:2bff:fe3c:4d5e&quot;</span></span><br><span class="line">    b = <span class="built_in">bytes</span>.fromhex(mac.replace(<span class="string">&quot;:&quot;</span>, <span class="string">&quot;&quot;</span>))</span><br><span class="line">    b = <span class="built_in">bytes</span>([b[<span class="number">0</span>] ^ <span class="number">0x02</span>]) + b[<span class="number">1</span>:]</span><br><span class="line">    h = (b[:<span class="number">3</span>] + <span class="string">b&quot;\xff\xfe&quot;</span> + b[<span class="number">3</span>:]).<span class="built_in">hex</span>()</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;fe80::&quot;</span> + h[<span class="number">0</span>:<span class="number">4</span>] + <span class="string">&quot;:&quot;</span> + h[<span class="number">4</span>:<span class="number">8</span>] + <span class="string">&quot;:&quot;</span> + h[<span class="number">8</span>:<span class="number">12</span>] + <span class="string">&quot;:&quot;</span> + h[<span class="number">12</span>:<span class="number">16</span>]</span><br></pre></td></tr></table></figure>
+
+<p>通过的那一次：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;ok&quot;</span><span class="punctuation">:</span><span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line"> <span class="attr">&quot;enc_flag&quot;</span><span class="punctuation">:</span><span class="string">&quot;7355fed1d2d437ca12255cb57cff8f2c5f64ef8ce1f9088e77324c&quot;</span><span class="punctuation">,</span></span><br><span class="line"> <span class="attr">&quot;offset&quot;</span><span class="punctuation">:</span><span class="number">12647653</span><span class="punctuation">,</span></span><br><span class="line"> <span class="attr">&quot;session_key&quot;</span><span class="punctuation">:</span><span class="string">&quot;00009ae191a66eba465e318611cffd55&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="第六步-·-先吃一个诱饵"><a href="#第六步-·-先吃一个诱饵" class="headerlink" title="第六步 · 先吃一个诱饵"></a>第六步 · 先吃一个诱饵</h4><p><code>enc_flag</code> 27 字节，<code>session_key</code> 16 字节，按 session_key 循环异或：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pt = <span class="built_in">bytes</span>(c ^ sk[i % <span class="built_in">len</span>(sk)] <span class="keyword">for</span> i, c <span class="keyword">in</span> <span class="built_in">enumerate</span>(enc_flag))</span><br><span class="line"><span class="comment"># sUd0CrYpT&#123;m3m0ry_dump_f41l&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>排版完美、格式全对，但语义是 “memory dump fail” —— 这是留给”想直接从内存里抠 flag”的人的假答案，交上去就是错的。</p>
+<h4 id="第七步-·-让官方客户端自己交答案"><a href="#第七步-·-让官方客户端自己交答案" class="headerlink" title="第七步 · 让官方客户端自己交答案"></a>第七步 · 让官方客户端自己交答案</h4><p>客户端在 <code>/gate/1/submit</code> 之后还有一步：<code>[+] Syncing state with server (computing memory proof)...</code>，算完 <code>memory_hash</code> 就往 <code>/gate/2/verify</code> 提交 <code>final_flag</code>。</p>
+<p><code>memory_hash</code> 我没打算逆（它是跟 <code>offset</code> 绑的内存证明），于是换个思路：<strong>写个假服务器，把真服务器那条 200 原样回给它</strong>。客户端校验、解密、计算全都自己做，最后把结果塞进自己的请求里，我只管打日志：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/gate/2/verify</span><br><span class="line">&#123;&quot;final_flag&quot;:&quot;sUd0CrYpT&#123;l0c4l_n3tw0rk_n1nj4&#125;&quot;,</span><br><span class="line"> &quot;memory_hash&quot;:&quot;d99b4954d0076b42ee803ea4dca7718330564582c39bf772b1e4ae5894cd9898&quot;,</span><br><span class="line"> &quot;run_id&quot;:&quot;...&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为了确认这个值不是”客户端随手编的”，再做一次对照：把 <code>enc_flag</code>、<code>session_key</code> 全置 0，<code>offset</code> 改成 0 ——</p>
+<ul>
+<li><code>final_flag</code> <strong>一个字都没变</strong> → 它是客户端里硬编码的（而且混淆过，<code>strings</code> 搜 <code>sUd0CrYpT</code>&#x2F;<code>l0c4l</code> 都搜不到）；</li>
+<li><code>memory_hash</code> 变了（<code>d99b4954…</code> → <code>6dbf91dc…</code>）→ 它确实是跟着 <code>offset</code> 走的证明。</li>
+</ul>
+<p>flag：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sUd0CrYpT&#123;l0c4l_n3tw0rk_n1nj4&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="踩坑"><a href="#踩坑" class="headerlink" title="踩坑"></a>踩坑</h4><p>| 坑 | 现象 | 解决 |
+| — | — | — |
+| RAR 头加密 | <code>7z l</code> 就要密码，文件名都看不到 | <code>rar2john</code> + hashcat <code>-m 13000</code>，rockyou 前 6% 命中 |
+| WSL 里的 hashcat 全挂 | CUDA <code>PTX .version 9.0 ... current 8.5</code>，pocl <code>shared.cl build failed</code> | 换 Windows 版 hashcat，加 <code>--backend-ignore-cuda</code> 走 OpenCL |
+| GoReSym 失效 | <code>no valid pclntab found</code> | Go 1.27.3 太新，工具只到 1.2x；直接 <code>strings</code> + 抓包 |
+| 签名猜不中 | <code>body</code>、<code>path+body</code>、<code>method+path+body</code> 全 401 | 离线拿公钥枚举验签，命中 <code>&quot;METHOD path sha256hex(body)&quot;</code> |
+| 官方客户端永远 403 | 本机是 Hyper-V 网卡 + 随机 link-local | 服务器要全球管理 MAC + EUI-64，自己构造观测 |
+| 诱饵 flag | <code>m3m0ry_dump_f41l</code> | 真答案在客户端 <code>/gate/2/verify</code> 的 <code>final_flag</code> 里 |</p>
+<h4 id="一句话总结"><a href="#一句话总结" class="headerlink" title="一句话总结"></a>一句话总结</h4><p>这题的防守做得很讲究：PoW 挡脚本、ed25519 签名挡改包、观测校验挡虚拟机 —— 但三层都能从”客户端自己”身上绕过去，最后一层干脆让客户端替你把答案写出来。真要加固的话：签名串加时间戳和随机数（现在可无限重放），<code>final_flag</code> 改服务端下发而不是本地常量。</p>
+
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
+                <ul id="audio-list" style="display:none">
+                    
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
+                    
+                </ul>
+                
+            </div>
+
+            
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/2026/10/30/2026-10-30-Neighbour-lite/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
+
+
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
+    
+    <a class="f-pn-card f-pn-prev" href="/2026/10/30/2026-10-30-ZeroG%E6%96%B0%E7%A5%9E%E8%B5%9BWP/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">ZeroG新神赛WP</span>
+        <span class="f-pn-date">2026-10-30</span>
+    </a>
+    
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Neighbour-lite"><span class="toc-text">Neighbour-lite</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5-%C2%B7-%E8%BF%9E%E6%96%87%E4%BB%B6%E5%90%8D%E9%83%BD%E4%B8%8D%E7%BB%99%E7%9A%84-RAR"><span class="toc-text">第一步 · 连文件名都不给的 RAR</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%C2%B7-%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%87%8C%E4%B8%8D%E7%94%A8%E9%80%86%E4%B9%9F%E8%83%BD%E7%9C%8B%E5%88%B0%E7%9A%84%E4%B8%9C%E8%A5%BF"><span class="toc-text">第二步 · 二进制里不用逆也能看到的东西</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5-%C2%B7-%E8%AE%A9%E5%AE%83%E8%BF%9E%E6%88%91%E7%9A%84%E5%81%87%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">第三步 · 让它连我的假服务器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5-%C2%B7-%E7%AD%BE%E5%90%8D%E5%92%8C-PoW-%E8%87%AA%E5%B7%B1%E5%A4%8D%E7%8E%B0"><span class="toc-text">第四步 · 签名和 PoW 自己复现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5-%C2%B7-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%AA%E8%AE%A4%E7%9C%9F%E7%9A%84%E9%82%BB%E5%B1%85"><span class="toc-text">第五步 · 服务器只认真的邻居</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E6%AD%A5-%C2%B7-%E5%85%88%E5%90%83%E4%B8%80%E4%B8%AA%E8%AF%B1%E9%A5%B5"><span class="toc-text">第六步 · 先吃一个诱饵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%83%E6%AD%A5-%C2%B7-%E8%AE%A9%E5%AE%98%E6%96%B9%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%87%AA%E5%B7%B1%E4%BA%A4%E7%AD%94%E6%A1%88"><span class="toc-text">第七步 · 让官方客户端自己交答案</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91"><span class="toc-text">踩坑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93"><span class="toc-text">一句话总结</span></a></li></ol></li></ol></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <img class="f-footer-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="34" height="34">
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">
+            <span class="f-footer-quote-zh">我不相信命运，且我将在醉生梦死中追寻真正的自我。</span>
+            <span class="f-footer-quote-en">I do not believe in fate. In wine and dreams, I will seek out my true self.</span>
+        </p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
