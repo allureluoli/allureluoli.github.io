@@ -197,7 +197,7 @@
             </span>
             <span class="f-meta-item">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-                18 min read
+                17 min read
             </span>
             <span class="f-meta-item">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
@@ -277,9 +277,7 @@
 <li><strong>原来的 <code>/WinAnsiEncoding</code> 那行必须删掉</strong>，留着会把字典结构顶坏。</li>
 </ul>
 <blockquote>
-<p>注意：PDF 的 Name 里 <code>/</code> 是分隔符，必须写成十六进制转义 <code>#2f</code>。
-所以 <code>../../..</code> 要写成 <code>..#2f..#2f..</code>，路径里的 <code>/</code> 也全部换成 <code>#2f</code>。
-少写一个 <code>2f</code>（比如写成 <code>#2fvault#878c1490</code>）就会被解析成 <code>#87</code> + <code>8c1490</code>，路径里多出一个 <code>0x87</code> 字节，彻底跑偏。</p>
+<p>注意：PDF 的 Name 里 <code>/</code> 是分隔符，必须写成十六进制转义 <code>#2f</code>。<br>所以 <code>../../..</code> 要写成 <code>..#2f..#2f..</code>，路径里的 <code>/</code> 也全部换成 <code>#2f</code>。<br>少写一个 <code>2f</code>（比如写成 <code>#2fvault#878c1490</code>）就会被解析成 <code>#87</code> + <code>8c1490</code>，路径里多出一个 <code>0x87</code> 字节，彻底跑偏。</p>
 </blockquote>
 <h4 id="5-必须补一个-11-0-obj"><a href="#5-必须补一个-11-0-obj" class="headerlink" title="5. 必须补一个 11 0 obj"></a>5. 必须补一个 11 0 obj</h4><p><code>/DescendantFonts [ 11 0 R ]</code> 是<strong>间接引用</strong>，指向的对象必须真实存在。在 <code>xref</code> 之前追加：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">11 0 obj</span><br><span class="line">&lt;&lt;</span><br><span class="line">  /Type /Font</span><br><span class="line">  /Subtype /CIDFontType2</span><br><span class="line">  /BaseFont /FakeCID</span><br><span class="line">  /CIDSystemInfo &lt;&lt;</span><br><span class="line">    /Registry (Adobe)</span><br><span class="line">    /Ordering (Identity)</span><br><span class="line">    /Supplement 0</span><br><span class="line">  &gt;&gt;</span><br><span class="line">&gt;&gt;</span><br><span class="line">endobj</span><br></pre></td></tr></table></figure>
@@ -290,10 +288,25 @@
 
 <p>会看到 <code>can&#39;t find startxref</code> &#x2F; <code>Attempting to reconstruct</code> 之类的警告，正常 —— 正是因为偏移全失效了，qpdf 在自我重建。</p>
 <h4 id="6-为什么是-7-层"><a href="#6-为什么是-7-层" class="headerlink" title="6. 为什么是 7 层 ../"></a>6. 为什么是 7 层 <code>../</code></h4><p><code>os.path.join(directory, name)</code> 会对两个候选目录各试一次，层数等于候选目录的深度：</p>
-<p>| 候选目录 | 组件数 | 结果 |
-| — | — | — |
-| <code>/usr/share/pdfminer/</code> | 3 | 镜像里这个目录<strong>根本不存在</strong>，路径第一段就 <code>ENOENT</code>，<code>..</code> 一个都没生效 |
-| <code>/usr/local/lib/python3.12/site-packages/pdfminer/cmap</code> | <strong>7</strong> | <code>usr/local/lib/python3.12/site-packages/pdfminer/cmap</code>，退 7 级正好到 <code>/</code> |</p>
+<table>
+<thead>
+<tr>
+<th>候选目录</th>
+<th>组件数</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/usr/share/pdfminer/</code></td>
+<td>3</td>
+<td>镜像里这个目录<strong>根本不存在</strong>，路径第一段就 <code>ENOENT</code>，<code>..</code> 一个都没生效</td>
+</tr>
+<tr>
+<td><code>/usr/local/lib/python3.12/site-packages/pdfminer/cmap</code></td>
+<td><strong>7</strong></td>
+<td><code>usr/local/lib/python3.12/site-packages/pdfminer/cmap</code>，退 7 级正好到 <code>/</code></td>
+</tr>
+</tbody></table>
 <p>所以必须写 <strong>7 个</strong> <code>..#2f</code>，才能从组件目录爬到根，再下到 <code>/data/vault/&lt;VID&gt;/</code>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">6 层 -&gt; /usr/data/vault/&lt;VID&gt;/r.pickle.gz      不存在</span><br><span class="line">7 层 -&gt; /data/vault/&lt;VID&gt;/r.pickle.gz          命中</span><br><span class="line">8 层 -&gt; /data/vault/&lt;VID&gt;/r.pickle.gz          也命中（/ 的父目录还是 /）</span><br></pre></td></tr></table></figure>
 
@@ -320,13 +333,40 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">job.start file=/data/vault/xxxxxxxx/chart.pdf</span><br><span class="line">engine=pdfminer.six 20250506</span><br><span class="line">cmap.search CMAP_PATH=/usr/share/pdfminer/</span><br><span class="line">cmap.search package=/usr/local/lib/python3.12/site-packages/pdfminer/cmap</span><br><span class="line">pdfminer.cmapdb DEBUG loading: &#x27;../../../../../../../data/vault/&lt;VID&gt;/r&#x27;</span><br><span class="line">pdfminer.cmapdb ERROR PWN&gt;uid=10001(app) gid=10001(app) ...</span><br></pre></td></tr></table></figure>
 
 <p><code>loading:</code> 那行打印的是 <code>_load_data()</code> 收到的字符串，<strong>调试时看它最快</strong>：路径对不对、层数够不够，一眼就能看出来。</p>
-<h3 id="排错对照表"><a href="#排错对照表" class="headerlink" title="排错对照表"></a>排错对照表</h3><p>| 诊断内容 | 说明 | 改哪里 |
-| — | — | — |
-| 只有 <code>job.start</code> + <code>cmap.search</code> | 字体没被实例化 | 内容流里要有 <code>BT /F1 12 Tf</code>，且改的是 <code>/F1</code> 对应的对象 |
-| <code>KeyError: &#39;DescendantFonts&#39;</code> | Type0 字典结构坏了 | 删掉裸 <code>/WinAnsiEncoding</code>，检查 <code>#2f</code> 是否完整 |
-| 有 <code>FontBBox</code> WARNING、<strong>没有</strong> <code>loading:</code> | <code>DescendantFonts</code> 指向 <code>null</code> | 补 <code>11 0 obj</code>，让引用有落点 |
-| <code>loading:</code> + <code>decode: &lt;CMap: None&gt;</code> | 路径没命中文件 | 层数（7）、<code>#2f</code> 数量、文件名是否 <code>r.pickle.gz</code>、VID 是否本次上传 |
-| <code>loading:</code> + <code>PWN&gt;</code> | 通了 | 收工 |</p>
+<h3 id="排错对照表"><a href="#排错对照表" class="headerlink" title="排错对照表"></a>排错对照表</h3><table>
+<thead>
+<tr>
+<th>诊断内容</th>
+<th>说明</th>
+<th>改哪里</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>只有 <code>job.start</code> + <code>cmap.search</code></td>
+<td>字体没被实例化</td>
+<td>内容流里要有 <code>BT /F1 12 Tf</code>，且改的是 <code>/F1</code> 对应的对象</td>
+</tr>
+<tr>
+<td><code>KeyError: &#39;DescendantFonts&#39;</code></td>
+<td>Type0 字典结构坏了</td>
+<td>删掉裸 <code>/WinAnsiEncoding</code>，检查 <code>#2f</code> 是否完整</td>
+</tr>
+<tr>
+<td>有 <code>FontBBox</code> WARNING、<strong>没有</strong> <code>loading:</code></td>
+<td><code>DescendantFonts</code> 指向 <code>null</code></td>
+<td>补 <code>11 0 obj</code>，让引用有落点</td>
+</tr>
+<tr>
+<td><code>loading:</code> + <code>decode: &lt;CMap: None&gt;</code></td>
+<td>路径没命中文件</td>
+<td>层数（7）、<code>#2f</code> 数量、文件名是否 <code>r.pickle.gz</code>、VID 是否本次上传</td>
+</tr>
+<tr>
+<td><code>loading:</code> + <code>PWN&gt;</code></td>
+<td>通了</td>
+<td>收工</td>
+</tr>
+</tbody></table>
 <h3 id="一句话总结"><a href="#一句话总结" class="headerlink" title="一句话总结"></a>一句话总结</h3><p>PDF 只是入口，真正的问题是三段拼接：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">path = os.path.join(fixed_dir, name_from_pdf + <span class="string">&quot;.pickle.gz&quot;</span>)   <span class="comment"># ① 用户可控字符串进路径</span></span><br><span class="line">pickle.loads(gzip.<span class="built_in">open</span>(path).read())                            <span class="comment"># ② 文件内容当代码执行</span></span><br></pre></td></tr></table></figure>
 

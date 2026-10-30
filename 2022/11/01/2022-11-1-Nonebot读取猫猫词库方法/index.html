@@ -24,10 +24,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
-    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,#话不多说，直接上代码#
-##读取文件的方法##
-为了保证Bot的可移植性，将词库文件存在机器人插件目录中，同时使用此函数读取根目录路径，与之相对路径合并，生成绝对路径，保证文件的可读性。
-1234,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,#话不多说，直接上代码###读取文件的方法##为了保证Bot的可移植性，将词库文件存在机器人插件目录中，同时使用此函数读取根目录路径，与之相对路径合并，生成绝对路径，保证文件的可读性。
+123456,"> 
     <meta name="author" content="Allureluoli"> 
     <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -38,10 +36,8 @@
     
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:title" content="NoneBot读取猫猫词库方法 - 二月の档案室"/>
-    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,#话不多说，直接上代码#
-##读取文件的方法##
-为了保证Bot的可移植性，将词库文件存在机器人插件目录中，同时使用此函数读取根目录路径，与之相对路径合并，生成绝对路径，保证文件的可读性。
-1234,"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,#话不多说，直接上代码###读取文件的方法##为了保证Bot的可移植性，将词库文件存在机器人插件目录中，同时使用此函数读取根目录路径，与之相对路径合并，生成绝对路径，保证文件的可读性。
+123456,"/>
     
     
     
@@ -49,10 +45,8 @@
     <meta property="og:site_name" content="二月の档案室"/>
     <meta property="og:type" content="object"/>
     <meta property="og:title" content="NoneBot读取猫猫词库方法 - 二月の档案室"/>
-    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,#话不多说，直接上代码#
-##读取文件的方法##
-为了保证Bot的可移植性，将词库文件存在机器人插件目录中，同时使用此函数读取根目录路径，与之相对路径合并，生成绝对路径，保证文件的可读性。
-1234,"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,#话不多说，直接上代码###读取文件的方法##为了保证Bot的可移植性，将词库文件存在机器人插件目录中，同时使用此函数读取根目录路径，与之相对路径合并，生成绝对路径，保证文件的可读性。
+123456,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 <link rel="stylesheet" href="/css/february.css">
@@ -233,28 +227,15 @@
     <div class="f-post-wrap">
         <article class="f-post-main">
             <div class="content markdown f-content">
-                <p>#话不多说，直接上代码#
-##读取文件的方法##
-为了保证Bot的可移植性，将词库文件存在机器人插件目录中，同时使用此函数读取根目录路径，与之相对路径合并，生成绝对路径，保证文件的可读性。</p>
+                <p>#话不多说，直接上代码#<br>##读取文件的方法##<br>为了保证Bot的可移植性，将词库文件存在机器人插件目录中，同时使用此函数读取根目录路径，与之相对路径合并，生成绝对路径，保证文件的可读性。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getRootPath</span>():</span><br><span class="line">   	<span class="comment"># 获取文件目录</span></span><br><span class="line">   	curPath = os.path.abspath(os.path.dirname(__file__))</span><br><span class="line">   	<span class="comment"># 获取项目根路径，内容为当前项目的名字</span></span><br><span class="line">   	rootPath = curPath[:curPath.find(<span class="string">&#x27;love2&#x27;</span>) + <span class="built_in">len</span>(<span class="string">&#x27;love2&#x27;</span>)]</span><br><span class="line">   	<span class="keyword">return</span> rootPath</span><br><span class="line">FilePath_1=<span class="built_in">str</span>(getRootPath())</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(FilePath_1)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">FilePath</span>(<span class="params">FilePath_2</span>):<span class="comment">#拼接捏</span></span><br><span class="line">   	FilePath_2=FilePath_1+FilePath_2</span><br><span class="line">   	<span class="keyword">return</span> FilePath_2</span><br></pre></td></tr></table></figure>
 
-<h2 id="将文件生成字典"><a href="#将文件生成字典" class="headerlink" title="将文件生成字典"></a>将文件生成字典</h2><p>主要分为三个步骤：
-1.读取文件生成列表
-2.读取每个列表利用分割符将每个列表再分成两个列表
-3.遍历列表，将每两个列表生成一个字典</p>
+<h2 id="将文件生成字典"><a href="#将文件生成字典" class="headerlink" title="将文件生成字典"></a>将文件生成字典</h2><p>主要分为三个步骤：<br>1.读取文件生成列表<br>2.读取每个列表利用分割符将每个列表再分成两个列表<br>3.遍历列表，将每两个列表生成一个字典</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">i = <span class="number">0</span></span><br><span class="line">FG_2 = []</span><br><span class="line">Fi_1 = <span class="built_in">open</span>(FilePath(<span class="string">r&#x27;\introduce\cat.ini&#x27;</span>))</span><br><span class="line"><span class="comment">#第一步</span></span><br><span class="line">Fi_2 = Fi_1.readlines()</span><br><span class="line"><span class="comment">#第二步</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(Fi_2)):</span><br><span class="line">   	FG_1 = Fi_2[i].split(<span class="string">&quot;=&quot;</span>)</span><br><span class="line">   	FG_2.append(FG_1[<span class="number">0</span>])</span><br><span class="line">   	FG_2.append(FG_1[<span class="number">1</span>])</span><br><span class="line">   	i = i + <span class="number">1</span></span><br><span class="line"><span class="comment">#第三步</span></span><br><span class="line">zd_1 = &#123;&#125;</span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> i&lt;=<span class="number">175</span>:</span><br><span class="line">   	i = i + <span class="number">2</span></span><br><span class="line">   	zd_1[FG_2[i]]=FG_2[i+<span class="number">1</span>]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>##无限响应器-处理所有的消息##
-读取词库最大的问题在于，如何将每个消息文本都拿去和字典尝试。
-经过尝试我找到了如此办法。</p>
+<p>##无限响应器-处理所有的消息##<br>读取词库最大的问题在于，如何将每个消息文本都拿去和字典尝试。<br>经过尝试我找到了如此办法。</p>
 <ul>
 <li>将on_message的消息反应设置为空，并降低事件响应器优先级。</li>
-<li>（降低优先级是为了防止将其他正常的事件响应器盖过）
-为什么使用字典：
-因为字典读取失败会返回 None,是不会发出任何消息的。
-一旦Key找到了对应的键，消息就会返回出来。
-基于此机制，代码获得实现，
-原理并不复杂，但很好的避免了大量的使用代码设置回复语的代码厄余问题。
-上代码：（这里的异常处理是多余的,,小声bb）</li>
+<li>（降低优先级是为了防止将其他正常的事件响应器盖过）<br>为什么使用字典：<br>因为字典读取失败会返回 None,是不会发出任何消息的。<br>一旦Key找到了对应的键，消息就会返回出来。<br>基于此机制，代码获得实现，<br>原理并不复杂，但很好的避免了大量的使用代码设置回复语的代码厄余问题。<br>上代码：（这里的异常处理是多余的,,小声bb）</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">dialogue_1 = on_message(priority=<span class="number">100</span>)<span class="comment">#这里优先级的大小是数值越大便越小</span></span><br><span class="line"><span class="meta">@dialogue_1.handle() </span><span class="comment">#出错</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_func</span>(<span class="params">bot: Bot,event:GroupMessageEvent</span>):</span><br><span class="line">   jsq = zd_1.get(<span class="built_in">str</span>(event.get_message()))</span><br><span class="line">   <span class="keyword">try</span>:</span><br><span class="line">       <span class="keyword">await</span> dialogue_1.send(jsq)</span><br><span class="line">   <span class="keyword">except</span>:</span><br><span class="line">       <span class="built_in">print</span>(<span class="string">&quot;不行喵&quot;</span>)</span><br></pre></td></tr></table></figure>
                 <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->

@@ -253,15 +253,42 @@
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(base) ┌──(cure㉿LAPTOP<span class="literal">-CMAM5D0J</span>)-[/<span class="type">mnt</span>/<span class="type">e</span>/<span class="type">ctf</span>/<span class="type">smallcode</span>/<span class="type">TOTP</span>]</span><br><span class="line">└─<span class="variable">$</span> python self.py</span><br><span class="line">TOTP 测试结果:</span><br><span class="line">密钥 Base32: <span class="number">4</span>SPZZBDHH77F3XEYBXM7BB2CQWSI56DM</span><br><span class="line">密钥字节: e49f9c84673ffe5ddc980dd9f0874285a48ef86c</span><br><span class="line">当前时间计数器: <span class="number">58712664</span></span><br><span class="line">当前 OTP: <span class="number">782045</span></span><br></pre></td></tr></table></figure>
 
 <p>四、核心算法详解</p>
-<p>| 步骤          | 说明                          |
-| ————- | —————————– |
-| 1. 时间计数器 | T &#x3D; floor((now - 1970) &#x2F; 30)  |
-| 2. 编码       | T → 8字节大端整数             |
-| 3. HMAC-SHA1  | HMAC(K, T)                    |
-| 4. 动态截断   | 取最后一个字节低4位作为偏移量 |
-| 5. 取4字节    | 构造31位整数（最高位清零）    |
-| 6. 取模       | code % 10^6                   |
-| 7. 补零       | 补足6位                       |</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1. 时间计数器</td>
+<td>T &#x3D; floor((now - 1970) &#x2F; 30)</td>
+</tr>
+<tr>
+<td>2. 编码</td>
+<td>T → 8字节大端整数</td>
+</tr>
+<tr>
+<td>3. HMAC-SHA1</td>
+<td>HMAC(K, T)</td>
+</tr>
+<tr>
+<td>4. 动态截断</td>
+<td>取最后一个字节低4位作为偏移量</td>
+</tr>
+<tr>
+<td>5. 取4字节</td>
+<td>构造31位整数（最高位清零）</td>
+</tr>
+<tr>
+<td>6. 取模</td>
+<td>code % 10^6</td>
+</tr>
+<tr>
+<td>7. 补零</td>
+<td>补足6位</td>
+</tr>
+</tbody></table>
 
                 <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
                 <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">

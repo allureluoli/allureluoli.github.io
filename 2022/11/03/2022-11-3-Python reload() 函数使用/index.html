@@ -26,8 +26,7 @@
     <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
     <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,
 Python 模块重载 更好的调用函数的方法
-前言
-  反复的去定义一个重复的代码会极大的降低我们的代码质量和工作效率，而Python本身模块目录结构的调用方式是有限的，在此之前先解释一下什么是P,"> 
+前言  反复的去定义一个重复的代码会极大的降低我们的代码质量和工作效率，而Python本身模块目录结构的调用方式是有限的，在此之前先解释一下什么是Py,"> 
     <meta name="author" content="Allureluoli"> 
     <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -40,8 +39,7 @@ Python 模块重载 更好的调用函数的方法
     <meta name="twitter:title" content="Python 模块重载 - 二月の档案室"/>
     <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,
 Python 模块重载 更好的调用函数的方法
-前言
-  反复的去定义一个重复的代码会极大的降低我们的代码质量和工作效率，而Python本身模块目录结构的调用方式是有限的，在此之前先解释一下什么是P,"/>
+前言  反复的去定义一个重复的代码会极大的降低我们的代码质量和工作效率，而Python本身模块目录结构的调用方式是有限的，在此之前先解释一下什么是Py,"/>
     
     
     
@@ -51,8 +49,7 @@ Python 模块重载 更好的调用函数的方法
     <meta property="og:title" content="Python 模块重载 - 二月の档案室"/>
     <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,
 Python 模块重载 更好的调用函数的方法
-前言
-  反复的去定义一个重复的代码会极大的降低我们的代码质量和工作效率，而Python本身模块目录结构的调用方式是有限的，在此之前先解释一下什么是P,"/>
+前言  反复的去定义一个重复的代码会极大的降低我们的代码质量和工作效率，而Python本身模块目录结构的调用方式是有限的，在此之前先解释一下什么是Py,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 <link rel="stylesheet" href="/css/february.css">
@@ -235,36 +232,18 @@ Python 模块重载 更好的调用函数的方法
             <div class="content markdown f-content">
                 <ul>
 <li>Python 模块重载 更好的调用函数的方法</li>
-<li>前言
-  反复的去定义一个重复的代码会极大的降低我们的代码质量和工作效率，而Python本身模块目录结构的调用方式是有限的，在此之前先解释一下什么是Python包。</li>
+<li>前言<br>  反复的去定义一个重复的代码会极大的降低我们的代码质量和工作效率，而Python本身模块目录结构的调用方式是有限的，在此之前先解释一下什么是Python包。</li>
 </ul>
-<blockquote><p>Python中的包
-包是一个分层次的文件目录结构，它定义了一个由模块及子包，和子包下的子包等组成的 Python 的应用环境。</p>
+<blockquote><p>Python中的包<br>包是一个分层次的文件目录结构，它定义了一个由模块及子包，和子包下的子包等组成的 Python 的应用环境。</p>
 <footer><strong>@菜鸟教程</strong><cite><a target="_blank" rel="noopener" href="https://www.runoob.com/python3/python3-basic-syntax.html">www.runoob.com/python3/python3-basic-syntax.html</a></cite></footer></blockquote>
 
-<p>而包自身的调用方式是由主到次的，也就是主模块可以调用(from import)所有子模块，而子模块只能调用自己下层的子模块，而当我们需要子模块去调用上层封装的函数或者类的时候，这就体现的极为不方便。
-好在，Python为我们提供的一个函数 – reload() 函数</p>
+<p>而包自身的调用方式是由主到次的，也就是主模块可以调用(from import)所有子模块，而子模块只能调用自己下层的子模块，而当我们需要子模块去调用上层封装的函数或者类的时候，这就体现的极为不方便。<br>好在，Python为我们提供的一个函数 – reload() 函数</p>
 <ul>
-<li><p>使用第一步
-  <code>from importlib import reload</code>
-  将这个模块导入
-  切记不要导成<code>from imp import reload</code>这样的形式
-  <code>imp</code>中的<code>reload</code>是一个古老的且已经弃用的函数</p>
+<li><p>使用第一步<br>  <code>from importlib import reload</code><br>  将这个模块导入<br>  切记不要导成<code>from imp import reload</code>这样的形式<br>  <code>imp</code>中的<code>reload</code>是一个古老的且已经弃用的函数</p>
 </li>
-<li><p>函数说明
-  reload的中文翻译为：重读  而它的用法也正如其名
-  reload()的主要用途便是在子模块中加载先前已经加载过的模块。
-  也因此，必须模块已经加载过才可以使用reload()进行重载。
-  如果你使用reload()去重载一个子模块中的模块，或者说未载入过的模块，那很显然是不行的。加载子模块的函数请使用常规的导入方法。
-  重载的形式就像是复制了代码段，将代码重新的在函数内执行一遍。</p>
+<li><p>函数说明<br>  reload的中文翻译为：重读  而它的用法也正如其名<br>  reload()的主要用途便是在子模块中加载先前已经加载过的模块。<br>  也因此，必须模块已经加载过才可以使用reload()进行重载。<br>  如果你使用reload()去重载一个子模块中的模块，或者说未载入过的模块，那很显然是不行的。加载子模块的函数请使用常规的导入方法。<br>  重载的形式就像是复制了代码段，将代码重新的在函数内执行一遍。</p>
 </li>
-<li><p>函数用法
-  非常的简单，直接填写模块名
-  例:
-  reload(funciton)
-<br>
-  reload(xxx)
-  ps:中间的模块名并非是字符串的形式，请勿加引号或者双引号</p>
+<li><p>函数用法<br>  非常的简单，直接填写模块名<br>  例:<br>  reload(funciton)<br><br><br>  reload(xxx)<br>  ps:中间的模块名并非是字符串的形式，请勿加引号或者双引号</p>
 </li>
 </ul>
 <p>​	</p>

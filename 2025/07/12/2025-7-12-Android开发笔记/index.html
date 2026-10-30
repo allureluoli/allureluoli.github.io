@@ -24,8 +24,23 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
-    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,开发笔记🛠️ 开发环境配置基础工具链| 组件           | 版本要求       | 备注                          |
-| ————– | ————– | ——,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,开发笔记🛠️ 开发环境配置基础工具链
+
+
+组件
+版本要求
+备注
+
+
+
+Android Studio
+Flamingo 2022+
+需支持 AGP 8.0
+
+
+JDK
+17+
+推荐使用 Temuri,"> 
     <meta name="author" content="Allureluoli"> 
     <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -36,8 +51,23 @@
     
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:title" content="2025-7-12-Android开发笔记 - 二月の档案室"/>
-    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,开发笔记🛠️ 开发环境配置基础工具链| 组件           | 版本要求       | 备注                          |
-| ————– | ————– | ——,"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,开发笔记🛠️ 开发环境配置基础工具链
+
+
+组件
+版本要求
+备注
+
+
+
+Android Studio
+Flamingo 2022+
+需支持 AGP 8.0
+
+
+JDK
+17+
+推荐使用 Temuri,"/>
     
     
     
@@ -45,8 +75,23 @@
     <meta property="og:site_name" content="二月の档案室"/>
     <meta property="og:type" content="object"/>
     <meta property="og:title" content="2025-7-12-Android开发笔记 - 二月の档案室"/>
-    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,开发笔记🛠️ 开发环境配置基础工具链| 组件           | 版本要求       | 备注                          |
-| ————– | ————– | ——,"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,开发笔记🛠️ 开发环境配置基础工具链
+
+
+组件
+版本要求
+备注
+
+
+
+Android Studio
+Flamingo 2022+
+需支持 AGP 8.0
+
+
+JDK
+17+
+推荐使用 Temuri,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 <link rel="stylesheet" href="/css/february.css">
@@ -224,12 +269,35 @@
     <div class="f-post-wrap">
         <article class="f-post-main">
             <div class="content markdown f-content">
-                <h3 id="开发笔记"><a href="#开发笔记" class="headerlink" title="开发笔记"></a>开发笔记</h3><h2 id="🛠️-开发环境配置"><a href="#🛠️-开发环境配置" class="headerlink" title="🛠️ 开发环境配置"></a>🛠️ 开发环境配置</h2><h3 id="基础工具链"><a href="#基础工具链" class="headerlink" title="基础工具链"></a>基础工具链</h3><p>| 组件           | 版本要求       | 备注                          |
-| ————– | ————– | —————————– |
-| Android Studio | Flamingo 2022+ | 需支持 AGP 8.0                |
-| JDK            | 17+            | 推荐使用 Temurin 发行版       |
-| Gradle         | 8.0+           | 使用 Wrapper 确保版本一致     |
-| Android SDK    | API 19+        | 最低兼容 Android 4.4 (KitKat) |</p>
+                <h3 id="开发笔记"><a href="#开发笔记" class="headerlink" title="开发笔记"></a>开发笔记</h3><h2 id="🛠️-开发环境配置"><a href="#🛠️-开发环境配置" class="headerlink" title="🛠️ 开发环境配置"></a>🛠️ 开发环境配置</h2><h3 id="基础工具链"><a href="#基础工具链" class="headerlink" title="基础工具链"></a>基础工具链</h3><table>
+<thead>
+<tr>
+<th>组件</th>
+<th>版本要求</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Android Studio</td>
+<td>Flamingo 2022+</td>
+<td>需支持 AGP 8.0</td>
+</tr>
+<tr>
+<td>JDK</td>
+<td>17+</td>
+<td>推荐使用 Temurin 发行版</td>
+</tr>
+<tr>
+<td>Gradle</td>
+<td>8.0+</td>
+<td>使用 Wrapper 确保版本一致</td>
+</tr>
+<tr>
+<td>Android SDK</td>
+<td>API 19+</td>
+<td>最低兼容 Android 4.4 (KitKat)</td>
+</tr>
+</tbody></table>
 <h3 id="关键依赖说明"><a href="#关键依赖说明" class="headerlink" title="关键依赖说明"></a>关键依赖说明</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;    </span><br><span class="line">    <span class="comment">// 基础框架    </span></span><br><span class="line">    implementation(libs.androidx.core.ktx)       </span><br><span class="line">    <span class="comment">// 提供 Kotlin 扩展 API    </span></span><br><span class="line">    implementation(libs.androidx.appcompat)     </span><br><span class="line">    <span class="comment">// 兼容性支持库    </span></span><br><span class="line">    implementation(libs.material)                </span><br><span class="line">    <span class="comment">// Material Design 组件    </span></span><br><span class="line">    <span class="comment">// 测试框架    </span></span><br><span class="line">    testImplementation(libs.junit)               <span class="comment">// 单元测试</span></span><br><span class="line">    androidTestImplementation(libs.androidx.junit)     <span class="comment">// 仪器化测试</span></span><br><span class="line">    androidTestImplementation(libs.androidx.espresso.core)  <span class="comment">// UI 自动化测试</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="基本的项目文件结构概况"><a href="#基本的项目文件结构概况" class="headerlink" title="基本的项目文件结构概况"></a><strong>基本的项目文件结构概况</strong></h3><p>一个标准的 Android 项目通常遵循以下目录结构（基于 <strong>Android Studio</strong> 默认模板）：</p>

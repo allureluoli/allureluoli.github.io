@@ -350,8 +350,7 @@
 <h3 id="引用传递"><a href="#引用传递" class="headerlink" title="引用传递"></a>引用传递</h3><ul>
 <li><p>引用传递：是指在调用函数时，将实际参数的地址传递到函数中，那么在函数中对参数进行修改，将会影响到实际参数</p>
 </li>
-<li><p>引用数据类型分为两个部分，引用变量和对象，这两个部分放在不同的地方，引用变量在栈中，而对象是放在<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%A0%86%E5%86%85%E5%AD%98&spm=1001.2101.3001.7020">堆内存</a>中的，引用变量指向对象。
-如下图所示，当传递参数之前会将参数进行复制，但是复制的是引用变量，复制后的引用变量还是指向内存中的同一对象，所以引用传递中，函数修改了参数会影响实际参数</p>
+<li><p>引用数据类型分为两个部分，引用变量和对象，这两个部分放在不同的地方，引用变量在栈中，而对象是放在<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%A0%86%E5%86%85%E5%AD%98&spm=1001.2101.3001.7020">堆内存</a>中的，引用变量指向对象。<br>如下图所示，当传递参数之前会将参数进行复制，但是复制的是引用变量，复制后的引用变量还是指向内存中的同一对象，所以引用传递中，函数修改了参数会影响实际参数</p>
 </li>
 </ul>
 <p><img src="https://img-blog.csdnimg.cn/20201029230018688.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1N0YXJ0MTIzNDU2Nw==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>

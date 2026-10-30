@@ -198,7 +198,7 @@
             </span>
             <span class="f-meta-item">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-                2.0k 字
+                1.9k 字
             </span>
             
         </div>
@@ -282,11 +282,30 @@
 <li>交换机无法正确解析 MAC 地址，进入 <strong>Hub 模式</strong>，导致所有流量广播，增加网络拥塞。</li>
 <li>攻击者可以监听大量流量，从而获取敏感信息。</li>
 </ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2><p>| <strong>攻击类型</strong>           | <strong>描述</strong>                                           | <strong>防御方法</strong>                                    |
-| ———————- | ————————————————– | ———————————————– |
-| <strong>ARP 欺骗</strong>           | 伪造网关&#x2F;目标 IP 的 MAC 地址，进行流量劫持         | <strong>静态 ARP 绑定</strong>，启用 <strong>DAI</strong>，使用防火墙检测 |
-| <strong>ARP 洪水</strong>           | 发送大量 ARP 数据包，导致交换机崩溃或进入 Hub 模式 | 限制 ARP 请求速率，使用防火墙规则               |
-| <strong>MITM（中间人攻击）</strong> | 拦截受害者与网关的流量，进行监听或数据篡改         | <strong>SSL&#x2F;TLS 加密</strong>，使用 VPN，使用静态 ARP        |</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2><table>
+<thead>
+<tr>
+<th><strong>攻击类型</strong></th>
+<th><strong>描述</strong></th>
+<th><strong>防御方法</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>ARP 欺骗</strong></td>
+<td>伪造网关&#x2F;目标 IP 的 MAC 地址，进行流量劫持</td>
+<td><strong>静态 ARP 绑定</strong>，启用 <strong>DAI</strong>，使用防火墙检测</td>
+</tr>
+<tr>
+<td><strong>ARP 洪水</strong></td>
+<td>发送大量 ARP 数据包，导致交换机崩溃或进入 Hub 模式</td>
+<td>限制 ARP 请求速率，使用防火墙规则</td>
+</tr>
+<tr>
+<td><strong>MITM（中间人攻击）</strong></td>
+<td>拦截受害者与网关的流量，进行监听或数据篡改</td>
+<td><strong>SSL&#x2F;TLS 加密</strong>，使用 VPN，使用静态 ARP</td>
+</tr>
+</tbody></table>
 <h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a><strong>结论</strong></h2><ul>
 <li>ARP 协议是 <strong>无状态的，没有安全机制</strong>，容易受到欺骗攻击。</li>
 <li><strong>ARP 欺骗</strong> 可以用于 <strong>流量劫持、监听、数据篡改</strong>，但需要在同一广播域内。</li>

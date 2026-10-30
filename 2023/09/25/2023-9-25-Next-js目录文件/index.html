@@ -200,11 +200,11 @@
             </span>
             <span class="f-meta-item">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-                10 min read
+                9 min read
             </span>
             <span class="f-meta-item">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-                4.3k 字
+                4.2k 字
             </span>
             
             <a class="f-meta-item f-meta-cat" href="/categories/JavaScript/">JavaScript</a>
@@ -244,11 +244,7 @@
 <h2 id="Automatic-Installation"><a href="#Automatic-Installation" class="headerlink" title="Automatic Installation"></a>Automatic Installation</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx create-next-app@latest</span><br></pre></td></tr></table></figure>
 
 <p>为什么只有自动安装？哦，手动安装暂时懒得学。</p>
-<h2 id="Project-Structure"><a href="#Project-Structure" class="headerlink" title="Project Structure"></a>Project Structure</h2><h3 id="In-Top-level-Folders"><a href="#In-Top-level-Folders" class="headerlink" title="In Top-level Folders"></a>In Top-level Folders</h3><p>Look:
-     - app <code>App Router</code> 
-     - pages <code>Pages Router</code> 
-     - public <code>Static assets to be served</code>
-     - src <code>Optional application source folder </code></p>
+<h2 id="Project-Structure"><a href="#Project-Structure" class="headerlink" title="Project Structure"></a>Project Structure</h2><h3 id="In-Top-level-Folders"><a href="#In-Top-level-Folders" class="headerlink" title="In Top-level Folders"></a>In Top-level Folders</h3><p>Look:<br>     - app <code>App Router</code><br>     - pages <code>Pages Router</code><br>     - public <code>Static assets to be served</code><br>     - src <code>Optional application source folder </code></p>
 <h3 id="Top-level-files"><a href="#Top-level-files" class="headerlink" title="Top-level files"></a>Top-level files</h3><hr>
 <p>Next.js</p>
 <hr>
@@ -325,10 +321,25 @@
 <h2 id="Dynamic-Routes-1"><a href="#Dynamic-Routes-1" class="headerlink" title="Dynamic Routes"></a>Dynamic Routes</h2><h3 id="Folder-convention-1"><a href="#Folder-convention-1" class="headerlink" title="Folder convention"></a>Folder convention</h3><p><code>[folder]/index</code>	<code>.js</code> <code>.jsx</code> <code>.tsx</code> 	动态路由段</p>
 <p><code>[...folder]/index</code>	<code>.js</code> <code>.jsx</code> <code>.tsx</code> 	捕获所有路由段</p>
 <p><code>[[...folder]]/index</code>	<code>.js</code> <code>.jsx</code> <code>.tsx</code>	可选的捕获全部路由段</p>
-<h3 id="File-convention-1"><a href="#File-convention-1" class="headerlink" title="File convention"></a>File convention</h3><p>| <a target="_blank" rel="noopener" href="https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes"><code>[file]</code></a> | <code>.js</code> <code>.jsx</code> <code>.tsx</code> | Dynamic route segment            |
-| ———————————————————— | ——————- | ——————————– |
-| <a target="_blank" rel="noopener" href="https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes#catch-all-segments"><code>[...file]</code></a> | <code>.js</code> <code>.jsx</code> <code>.tsx</code> | Catch-all route segment          |
-| <a target="_blank" rel="noopener" href="https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes#optional-catch-all-segments"><code>[[...file]]</code></a> | <code>.js</code> <code>.jsx</code> <code>.tsx</code> | Optional catch-all route segment |</p>
+<h3 id="File-convention-1"><a href="#File-convention-1" class="headerlink" title="File convention"></a>File convention</h3><table>
+<thead>
+<tr>
+<th><a target="_blank" rel="noopener" href="https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes"><code>[file]</code></a></th>
+<th><code>.js</code> <code>.jsx</code> <code>.tsx</code></th>
+<th>Dynamic route segment</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes#catch-all-segments"><code>[...file]</code></a></td>
+<td><code>.js</code> <code>.jsx</code> <code>.tsx</code></td>
+<td>Catch-all route segment</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes#optional-catch-all-segments"><code>[[...file]]</code></a></td>
+<td><code>.js</code> <code>.jsx</code> <code>.tsx</code></td>
+<td>Optional catch-all route segment</td>
+</tr>
+</tbody></table>
 <h2 id="App-Router"><a href="#App-Router" class="headerlink" title="App Router"></a>App Router</h2><p><code>Next.js</code> 应用程序路由器为React的最新范例功能，应用路由是由基于文件系统的路由器在页面路由器中的自然演变。</p>
 <p>一个应用程序中可以采取两种路由方式，但官方仍然建议使用应用路由器。</p>
 <h2 id="Frequently-Asked-Questions"><a href="#Frequently-Asked-Questions" class="headerlink" title="Frequently Asked Questions"></a>Frequently Asked Questions</h2><h3 id="How-can-I-access-the-request-object-in-a-layout"><a href="#How-can-I-access-the-request-object-in-a-layout" class="headerlink" title="How can I access the request object in a layout?"></a>How can I access the request object in a layout?</h3><p>如何访问布局中的请求对象？</p>
@@ -352,7 +363,7 @@
 <h2 id="How-can-I-set-cookies"><a href="#How-can-I-set-cookies" class="headerlink" title="How can I set cookies?"></a>How can I set cookies?</h2><p>可以使用 <code>cookies </code> 函数在<code>Server Actions</code> 或 <code>rOUTE hANDLERS</code> 中设置cookies。</p>
 <p>由于 HTTP 不允许在流开始后设置 cookies ,因此不能从页面或者布局中之间设置 cookies。其他方法是从<code>Middleware</code>也就是中间件中设置。</p>
 <h2 id="How-can-I-build-multi-tenant-apps"><a href="#How-can-I-build-multi-tenant-apps" class="headerlink" title="How can I build multi-tenant apps?"></a>How can I build multi-tenant apps?</h2><p>我该如何构建多用户应用程序？</p>
-<p>例子 https:&#x2F;&#x2F;vercel.com&#x2F;templates&#x2F;next.js&#x2F;platforms-starter-kit</p>
+<p>例子 <a target="_blank" rel="noopener" href="https://vercel.com/templates/next.js/platforms-starter-kit">https://vercel.com/templates/next.js/platforms-starter-kit</a></p>
 
                 <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
                 <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">

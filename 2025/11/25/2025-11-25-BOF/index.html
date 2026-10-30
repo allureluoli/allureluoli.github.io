@@ -24,9 +24,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
-    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,EZ_BOF参考题目来源：https:&amp;#x2F;&amp;#x2F;pwnable.kr&amp;#x2F;play.php
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,EZ_BOF参考题目来源：https://pwnable.kr/play.php
 查看源代码
-1234567891011121314151617181920212223,"> 
+1234567891011121314151617181920212223242526272829303,"> 
     <meta name="author" content="Allureluoli"> 
     <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -37,9 +37,9 @@
     
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:title" content="2025-11-25-BOF - 二月の档案室"/>
-    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,EZ_BOF参考题目来源：https:&amp;#x2F;&amp;#x2F;pwnable.kr&amp;#x2F;play.php
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,EZ_BOF参考题目来源：https://pwnable.kr/play.php
 查看源代码
-1234567891011121314151617181920212223,"/>
+1234567891011121314151617181920212223242526272829303,"/>
     
     
     
@@ -47,9 +47,9 @@
     <meta property="og:site_name" content="二月の档案室"/>
     <meta property="og:type" content="object"/>
     <meta property="og:title" content="2025-11-25-BOF - 二月の档案室"/>
-    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,EZ_BOF参考题目来源：https:&amp;#x2F;&amp;#x2F;pwnable.kr&amp;#x2F;play.php
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,EZ_BOF参考题目来源：https://pwnable.kr/play.php
 查看源代码
-1234567891011121314151617181920212223,"/>
+1234567891011121314151617181920212223242526272829303,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 <link rel="stylesheet" href="/css/february.css">
@@ -227,7 +227,7 @@
     <div class="f-post-wrap">
         <article class="f-post-main">
             <div class="content markdown f-content">
-                <h3 id="EZ-BOF"><a href="#EZ-BOF" class="headerlink" title="EZ_BOF"></a>EZ_BOF</h3><p>参考题目来源：https:&#x2F;&#x2F;pwnable.kr&#x2F;play.php</p>
+                <h3 id="EZ-BOF"><a href="#EZ-BOF" class="headerlink" title="EZ_BOF"></a>EZ_BOF</h3><p>参考题目来源：<a target="_blank" rel="noopener" href="https://pwnable.kr/play.php">https://pwnable.kr/play.php</a></p>
 <p>查看源代码</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">func</span><span class="params">(<span class="type">int</span> key)</span>&#123;</span><br><span class="line">        <span class="type">char</span> overflowme[<span class="number">32</span>]; <span class="comment">// 32位元缓冲区</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;overflow me : &quot;</span>);</span><br><span class="line">        <span class="comment">// 这里没有限制长度，随便溢</span></span><br><span class="line">        gets(overflowme);       <span class="comment">// smash me!</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// buffer只有32字节，但后面还有：</span></span><br><span class="line">        <span class="comment">// 12字节 saved EBP（4字节）+ saved EIP（4字节）+ main传的key参数（4字节）</span></span><br><span class="line">        <span class="comment">// 所以从overflowme[0]到key总共：32 + 4 + 4 + 4 = 44字节</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 为什么是52字节A而不是44？</span></span><br><span class="line">        <span class="comment">// 因为有Stack Canary！</span></span><br><span class="line">        <span class="comment">// key这个局部变量就在栈上，我们得精确覆盖成0xcafebabe。</span></span><br><span class="line">        <span class="comment">/// 检查key是否为0xcafebabe</span></span><br><span class="line">        <span class="keyword">if</span>(key == <span class="number">0xcafebabe</span>)&#123;</span><br><span class="line">                setregid(getegid(), getegid());</span><br><span class="line">                system(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;Nah..\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span>&#123;</span><br><span class="line">        func(<span class="number">0xdeadbeef</span>); <span class="comment">// 初始key值不是0xcafebabe</span></span><br><span class="line">        <span class="comment">// 正常结束程序</span></span><br><span class="line">        <span class="comment">// 溢出后覆盖修改key值为0xcafebabe</span></span><br><span class="line">        <span class="comment">// func(0xcafebabe);</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 

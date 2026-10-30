@@ -25,11 +25,7 @@
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
     <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,前后端数据交流的实现方法
-【关于笨蛋想出来的跨域请求的前后端方法】
-这种方法比较笨，理解起来也不太容易。
-第一步：
-先通过web服务器部署一个前端页面。
-可以使用apache,nginx，此类通用服,"> 
+【关于笨蛋想出来的跨域请求的前后端方法】这种方法比较笨，理解起来也不太容易。第一步：先通过web服务器部署一个前端页面。可以使用apache,nginx，此类通用服务器，或,"> 
     <meta name="author" content="Allureluoli"> 
     <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -41,11 +37,7 @@
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:title" content="前后端数据交流的实现方法 - 二月の档案室"/>
     <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,前后端数据交流的实现方法
-【关于笨蛋想出来的跨域请求的前后端方法】
-这种方法比较笨，理解起来也不太容易。
-第一步：
-先通过web服务器部署一个前端页面。
-可以使用apache,nginx，此类通用服,"/>
+【关于笨蛋想出来的跨域请求的前后端方法】这种方法比较笨，理解起来也不太容易。第一步：先通过web服务器部署一个前端页面。可以使用apache,nginx，此类通用服务器，或,"/>
     
     
     
@@ -54,11 +46,7 @@
     <meta property="og:type" content="object"/>
     <meta property="og:title" content="前后端数据交流的实现方法 - 二月の档案室"/>
     <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,前后端数据交流的实现方法
-【关于笨蛋想出来的跨域请求的前后端方法】
-这种方法比较笨，理解起来也不太容易。
-第一步：
-先通过web服务器部署一个前端页面。
-可以使用apache,nginx，此类通用服,"/>
+【关于笨蛋想出来的跨域请求的前后端方法】这种方法比较笨，理解起来也不太容易。第一步：先通过web服务器部署一个前端页面。可以使用apache,nginx，此类通用服务器，或,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 <link rel="stylesheet" href="/css/february.css">
@@ -242,31 +230,9 @@
         <article class="f-post-main">
             <div class="content markdown f-content">
                 <p>前后端数据交流的实现方法</p>
-<p>【关于笨蛋想出来的跨域请求的前后端方法】
-这种方法比较笨，理解起来也不太容易。
-第一步：
-先通过web服务器部署一个前端页面。
-可以使用apache,nginx，此类通用服务器，或者tomcat ,tornado，这类服务器，也可以手动用socket部署。
-使用socket部署也很简单，只要监听请求，就将页面数据发送过去就可以了。
-ps:第一步是为了将页面呈现出来，实现外部的访问，也就是我们的前端。
-第二步：
-使用编程语言写一个程序，监听一个端口，将此端口受到的数据进行处理。
-而第一步部署的页面的表单，向此端口进行发送。
-ps:思考一下，后端将数据发送回来，前端的程序又该如何写呢。这时候我产生了一些想法，前端只需要根据后端传来的数据判断，返回不同的页面就可以了。
-ps:预防中间人攻击，TLS证书对双方传输的数据进行加密，这样被抓到数据包也无法将其破解。
-ps:这种方法叫做跨域请求，因为端口不同的问题，会影响数据的传输。</p>
-<p>【关于Djongo和正常的前后端方法】
-这个方法的实现原理比方法一简单一些，但是更抽象一些。
-这个方法就是通过web服务器框架直接进行前后端分离。
-例如，Djongo，flask。
-web服务器本身会监听一个端口，而传输数据则只需要传输到自己监听的端口就可以？
-ps:众所周知Djongo是一个MVC架构的框架，但是因为使用了http协议，比起应用程序，要多一层浏览器的交互，这一层还是比较难理解的。
-ps:实际上Djongo是通过内部的API和MongoDB进行交互的，表单将通过令牌验证后将数据发送到我们在Django中定义的视图。
-ps:实际上Djongo等服务器的职能于方法一相同的，而仿写这个职能也很简单，只需要将数据发送给自身端口进行处理即可。
-ps:实现方法：当端口接到http访问请求，呈现页面。接到数据请求，进行数据处理。</p>
-<p>【关于CGI】
-CGI：网关接口，可以直接编译并运行程序，将程序输出的内容呈现为页面。
-猜测：网关接口的主要用途在于一个服务器支持多种编程语言写的web程序，并且减少端口资源的使用。</p>
+<p>【关于笨蛋想出来的跨域请求的前后端方法】<br>这种方法比较笨，理解起来也不太容易。<br>第一步：<br>先通过web服务器部署一个前端页面。<br>可以使用apache,nginx，此类通用服务器，或者tomcat ,tornado，这类服务器，也可以手动用socket部署。<br>使用socket部署也很简单，只要监听请求，就将页面数据发送过去就可以了。<br>ps:第一步是为了将页面呈现出来，实现外部的访问，也就是我们的前端。<br>第二步：<br>使用编程语言写一个程序，监听一个端口，将此端口受到的数据进行处理。<br>而第一步部署的页面的表单，向此端口进行发送。<br>ps:思考一下，后端将数据发送回来，前端的程序又该如何写呢。这时候我产生了一些想法，前端只需要根据后端传来的数据判断，返回不同的页面就可以了。<br>ps:预防中间人攻击，TLS证书对双方传输的数据进行加密，这样被抓到数据包也无法将其破解。<br>ps:这种方法叫做跨域请求，因为端口不同的问题，会影响数据的传输。</p>
+<p>【关于Djongo和正常的前后端方法】<br>这个方法的实现原理比方法一简单一些，但是更抽象一些。<br>这个方法就是通过web服务器框架直接进行前后端分离。<br>例如，Djongo，flask。<br>web服务器本身会监听一个端口，而传输数据则只需要传输到自己监听的端口就可以？<br>ps:众所周知Djongo是一个MVC架构的框架，但是因为使用了http协议，比起应用程序，要多一层浏览器的交互，这一层还是比较难理解的。<br>ps:实际上Djongo是通过内部的API和MongoDB进行交互的，表单将通过令牌验证后将数据发送到我们在Django中定义的视图。<br>ps:实际上Djongo等服务器的职能于方法一相同的，而仿写这个职能也很简单，只需要将数据发送给自身端口进行处理即可。<br>ps:实现方法：当端口接到http访问请求，呈现页面。接到数据请求，进行数据处理。</p>
+<p>【关于CGI】<br>CGI：网关接口，可以直接编译并运行程序，将程序输出的内容呈现为页面。<br>猜测：网关接口的主要用途在于一个服务器支持多种编程语言写的web程序，并且减少端口资源的使用。</p>
 
                 <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
                 <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">

@@ -236,8 +236,7 @@
 <p><code>0</code> 表示不允许文件与其他进程共享。</p>
 <p><code>0</code> 表示不设置安全属性，使用默认的安全设置。</p>
 <p><code>2u</code> 等同 <code>OPEN_ALWAYS</code> 类似<code>python open 的 a+</code> 文件存在则打开，文件不存在则创建新的</p>
-<p><code>0x80u</code> 是 <code>FILE_FLAG_NO_BUFFERING</code>，表示文件操作将不使用系统缓存进行缓冲，要求应用程序直接与物理存储进行交互。通常用于高效的文件操作。
-<code>0</code> 表示没有模板文件，通常设置为 <code>NULL</code>，即不使用任何模板文件</p>
+<p><code>0x80u</code> 是 <code>FILE_FLAG_NO_BUFFERING</code>，表示文件操作将不使用系统缓存进行缓冲，要求应用程序直接与物理存储进行交互。通常用于高效的文件操作。<br><code>0</code> 表示没有模板文件，通常设置为 <code>NULL</code>，即不使用任何模板文件</p>
 <h3 id="上方的可疑代码"><a href="#上方的可疑代码" class="headerlink" title="上方的可疑代码"></a>上方的可疑代码</h3><p><code>  hResInfo = FindResourceA(0, (LPCSTR)0x65, &quot;AAA&quot;);</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HRSRC <span class="title function_">FindResourceA</span><span class="params">(</span></span><br><span class="line"><span class="params">  HMODULE hModule,          <span class="comment">// 模块句柄</span></span></span><br><span class="line"><span class="params">  LPCSTR lpName,            <span class="comment">// 资源名称</span></span></span><br><span class="line"><span class="params">  LPCSTR lpType             <span class="comment">// 资源类型</span></span></span><br><span class="line"><span class="params">)</span>;</span><br></pre></td></tr></table></figure>
 

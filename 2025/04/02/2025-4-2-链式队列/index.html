@@ -207,7 +207,7 @@
             </span>
             <span class="f-meta-item">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-                1.1k 字
+                1.0k 字
             </span>
             
         </div>
@@ -233,11 +233,30 @@
 <li><strong>入队（Enqueue）</strong>：新人排到队尾。</li>
 <li><strong>出队（Dequeue）</strong>：队头的人先离开。</li>
 </ul>
-<h3 id="链式队列-vs-数组队列"><a href="#链式队列-vs-数组队列" class="headerlink" title="链式队列 vs 数组队列"></a><strong>链式队列 vs 数组队列</strong></h3><p>| 对比项       | 链式队列               | 数组队列        |
-| ———— | ———————- | ————— |
-| <strong>存储方式</strong> | 动态分配（不连续内存） | 连续内存        |
-| <strong>扩容</strong>     | 灵活（无容量限制）     | 需手动扩容&#x2F;缩容 |
-| <strong>适用场景</strong> | 频繁增删               | 随机访问        |</p>
+<h3 id="链式队列-vs-数组队列"><a href="#链式队列-vs-数组队列" class="headerlink" title="链式队列 vs 数组队列"></a><strong>链式队列 vs 数组队列</strong></h3><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>链式队列</th>
+<th>数组队列</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>存储方式</strong></td>
+<td>动态分配（不连续内存）</td>
+<td>连续内存</td>
+</tr>
+<tr>
+<td><strong>扩容</strong></td>
+<td>灵活（无容量限制）</td>
+<td>需手动扩容&#x2F;缩容</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>频繁增删</td>
+<td>随机访问</td>
+</tr>
+</tbody></table>
 <h2 id="2-链式队列的实现步骤"><a href="#2-链式队列的实现步骤" class="headerlink" title="2. 链式队列的实现步骤"></a><strong>2. 链式队列的实现步骤</strong></h2><p>我们用py代码实现</p>
 <p>先定义节点</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Node</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.front = <span class="literal">None</span></span><br><span class="line">        self.rear = <span class="literal">None</span></span><br><span class="line">        </span><br></pre></td></tr></table></figure>
@@ -251,11 +270,30 @@
 <p>检查队头是不是空的</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">is_empty</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="keyword">return</span> self.front <span class="keyword">is</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="4-时间复杂度分析"><a href="#4-时间复杂度分析" class="headerlink" title="4. 时间复杂度分析"></a><strong>4. 时间复杂度分析</strong></h2><p>| 操作        | 时间复杂度 | 说明                  |
-| ———– | ———- | ——————— |
-| <strong>Enqueue</strong> | O(1)       | 直接修改队尾指针      |
-| <strong>Dequeue</strong> | O(1)       | 直接修改队头指针      |
-| <strong>IsEmpty</strong> | O(1)       | 检查 <code>front</code> 是否为空 |</p>
+<h2 id="4-时间复杂度分析"><a href="#4-时间复杂度分析" class="headerlink" title="4. 时间复杂度分析"></a><strong>4. 时间复杂度分析</strong></h2><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>时间复杂度</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Enqueue</strong></td>
+<td>O(1)</td>
+<td>直接修改队尾指针</td>
+</tr>
+<tr>
+<td><strong>Dequeue</strong></td>
+<td>O(1)</td>
+<td>直接修改队头指针</td>
+</tr>
+<tr>
+<td><strong>IsEmpty</strong></td>
+<td>O(1)</td>
+<td>检查 <code>front</code> 是否为空</td>
+</tr>
+</tbody></table>
 <h2 id="5-常见问题"><a href="#5-常见问题" class="headerlink" title="5. 常见问题"></a><strong>5. 常见问题</strong></h2><h3 id="Q1-链式队列会溢出吗？"><a href="#Q1-链式队列会溢出吗？" class="headerlink" title="Q1: 链式队列会溢出吗？"></a><strong>Q1: 链式队列会溢出吗？</strong></h3><p>不会！因为链表动态分配内存，除非系统内存耗尽。</p>
 <h3 id="Q2-如何遍历链式队列？"><a href="#Q2-如何遍历链式队列？" class="headerlink" title="Q2: 如何遍历链式队列？"></a><strong>Q2: 如何遍历链式队列？</strong></h3><p>从 <code>front</code> 开始，沿着 <code>next</code> 指针逐个访问：</p>
 <PYTHON>

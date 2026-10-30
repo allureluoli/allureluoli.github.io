@@ -198,7 +198,7 @@
             </span>
             <span class="f-meta-item">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-                3.3k 字
+                3.2k 字
             </span>
             
         </div>
@@ -235,7 +235,7 @@
 <p>要破解canary必须知道canary的基本原理</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">  High</span><br><span class="line">  Address |                 |</span><br><span class="line">          +-----------------+</span><br><span class="line">          | args            |</span><br><span class="line">          +-----------------+</span><br><span class="line">          | return address  |</span><br><span class="line">          +-----------------+</span><br><span class="line">  rbp =&gt;  | old ebp         |</span><br><span class="line">          +-----------------+</span><br><span class="line">rbp-8 =&gt;  | canary value    |</span><br><span class="line">          +-----------------+</span><br><span class="line">          | local variables |</span><br><span class="line">  Low     |                 |</span><br><span class="line">  Address</span><br></pre></td></tr></table></figure>
 
-<p>转自 https:&#x2F;&#x2F;ctf-wiki.org&#x2F;pwn&#x2F;linux&#x2F;user-mode&#x2F;mitigation&#x2F;canary&#x2F;</p>
+<p>转自 <a target="_blank" rel="noopener" href="https://ctf-wiki.org/pwn/linux/user-mode/mitigation/canary/">https://ctf-wiki.org/pwn/linux/user-mode/mitigation/canary/</a></p>
 <p>首先代码</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">v2 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line"><span class="built_in">puts</span>(<span class="string">&quot;Please tell me your name:&quot;</span>);</span><br><span class="line">read(<span class="number">0</span>, buf, <span class="number">0x3F</span>uLL);</span><br><span class="line"><span class="built_in">printf</span>(buf);</span><br></pre></td></tr></table></figure>
 

@@ -726,10 +726,19 @@
 <h4 id="解构对象时查找原型链"><a href="#解构对象时查找原型链" class="headerlink" title="解构对象时查找原型链"></a>解构对象时查找原型链</h4><p>当解构一个对象时，如果属性本身没有被访问，它将沿着原型链继续查找。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  <span class="attr">self</span>: <span class="string">&quot;123&quot;</span>,</span><br><span class="line">  <span class="attr">__proto__</span>: &#123;</span><br><span class="line">    <span class="attr">prot</span>: <span class="string">&quot;456&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> &#123; self, prot &#125; = obj;</span><br><span class="line"><span class="comment">// self &quot;123&quot;</span></span><br><span class="line"><span class="comment">// prot &quot;456&quot; (Access to the prototype chain)</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="规范"><a href="#规范" class="headerlink" title="规范"></a><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#%E8%A7%84%E8%8C%83">规范</a></h2><p>| Specification                                                |
-| ———————————————————— |
-| <a target="_blank" rel="noopener" href="https://tc39.es/ecma262/multipage/ecmascript-language-expressions.html#sec-destructuring-assignment">ECMAScript Language Specification  # sec-destructuring-assignment</a> |
-| <a target="_blank" rel="noopener" href="https://tc39.es/ecma262/multipage/ecmascript-language-statements-and-declarations.html#sec-destructuring-binding-patterns">ECMAScript Language Specification  # sec-destructuring-binding-patterns</a> |</p>
+<h2 id="规范"><a href="#规范" class="headerlink" title="规范"></a><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#%E8%A7%84%E8%8C%83">规范</a></h2><table>
+<thead>
+<tr>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://tc39.es/ecma262/multipage/ecmascript-language-expressions.html#sec-destructuring-assignment">ECMAScript Language Specification  # sec-destructuring-assignment</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://tc39.es/ecma262/multipage/ecmascript-language-statements-and-declarations.html#sec-destructuring-binding-patterns">ECMAScript Language Specification  # sec-destructuring-binding-patterns</a></td>
+</tr>
+</tbody></table>
 <h1 id="模板字符串"><a href="#模板字符串" class="headerlink" title="模板字符串"></a>模板字符串</h1><p><strong>模板字面量</strong>是用反引号（&#96;&#96;&#96;）分隔的字面量，允许<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Template_literals#%E5%A4%9A%E8%A1%8C%E5%AD%97%E7%AC%A6%E4%B8%B2">多行字符串</a>、带嵌入表达式的<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Template_literals#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8F%92%E5%80%BC">字符串插值</a>和一种叫<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Template_literals#%E5%B8%A6%E6%A0%87%E7%AD%BE%E7%9A%84%E6%A8%A1%E6%9D%BF">带标签的模板</a>的特殊结构。</p>
 <p>模板字面量有时被非正式地叫作<em>模板字符串</em>，因为它们最常被用作<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Template_literals#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8F%92%E5%80%BC">字符串插值</a>（通过替换占位符来创建字符串）。然而，带标签的模板字面量可能不会产生字符串——它可以与自定义<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Template_literals#%E5%B8%A6%E6%A0%87%E7%AD%BE%E7%9A%84%E6%A8%A1%E6%9D%BF">标签函数</a>一起使用，来对模板字面量的不同部分执行任何操作。</p>
 <h2 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Template_literals#%E8%AF%AD%E6%B3%95">语法</a></h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">`string text`</span></span><br><span class="line"></span><br><span class="line"><span class="string">`string text line 1</span></span><br><span class="line"><span class="string"> string text line 2`</span></span><br><span class="line"></span><br><span class="line"><span class="string">`string text <span class="subst">$&#123;expression&#125;</span> string text`</span></span><br><span class="line"></span><br><span class="line">tagFunction<span class="string">`string text <span class="subst">$&#123;expression&#125;</span> string text`</span></span><br></pre></td></tr></table></figure>
@@ -827,9 +836,16 @@
 <p>值得注意的是，这一转义序列限制只对带标签的模板字面量移除，而不包括不带标签的模板字面量：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bad = <span class="string">`bad escape sequence: \unicode`</span>;</span><br></pre></td></tr></table></figure>
 
-<h2 id="规范-1"><a href="#规范-1" class="headerlink" title="规范"></a><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Template_literals#%E8%A7%84%E8%8C%83">规范</a></h2><p>| Specification                                                |
-| ———————————————————— |
-| <a target="_blank" rel="noopener" href="https://tc39.es/ecma262/multipage/ecmascript-language-expressions.html#sec-template-literals">ECMAScript Language Specification  # sec-template-literals</a> |</p>
+<h2 id="规范-1"><a href="#规范-1" class="headerlink" title="规范"></a><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Template_literals#%E8%A7%84%E8%8C%83">规范</a></h2><table>
+<thead>
+<tr>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://tc39.es/ecma262/multipage/ecmascript-language-expressions.html#sec-template-literals">ECMAScript Language Specification  # sec-template-literals</a></td>
+</tr>
+</tbody></table>
 <h1 id="条件（三元）运算符"><a href="#条件（三元）运算符" class="headerlink" title="条件（三元）运算符"></a>条件（三元）运算符</h1><p><strong>条件（三元）运算符</strong>是 JavaScript 唯一使用三个操作数的运算符：一个条件后跟一个问号（<code>?</code>），如果条件为<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Glossary/Truthy">真值</a>，则执行冒号（<code>:</code>）前的表达式；若条件为<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Glossary/Falsy">假值</a>，则执行最后的表达式。该运算符经常当作 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/if...else"><code>if...else</code></a> 语句的简捷形式来使用。</p>
 <h2 id="语法-2"><a href="#语法-2" class="headerlink" title="语法"></a><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Conditional_Operator#%E8%AF%AD%E6%B3%95">语法</a></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">condition ? exprIfTrue : exprIfFalse</span><br></pre></td></tr></table></figure>
 
@@ -856,9 +872,16 @@
 <p>这等价于以下 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/if...else"><code>if...else</code></a> 链。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">example</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (condition1) &#123;</span><br><span class="line">    <span class="keyword">return</span> value1;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (condition2) &#123;</span><br><span class="line">    <span class="keyword">return</span> value2;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (condition3) &#123;</span><br><span class="line">    <span class="keyword">return</span> value3;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> value4;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="规范-2"><a href="#规范-2" class="headerlink" title="规范"></a><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Conditional_Operator#%E8%A7%84%E8%8C%83">规范</a></h2><p>| Specification                                                |
-| ———————————————————— |
-| <a target="_blank" rel="noopener" href="https://tc39.es/ecma262/multipage/ecmascript-language-expressions.html#sec-conditional-operator">ECMAScript Language Specification  # sec-conditional-operator</a> |</p>
+<h2 id="规范-2"><a href="#规范-2" class="headerlink" title="规范"></a><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Conditional_Operator#%E8%A7%84%E8%8C%83">规范</a></h2><table>
+<thead>
+<tr>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://tc39.es/ecma262/multipage/ecmascript-language-expressions.html#sec-conditional-operator">ECMAScript Language Specification  # sec-conditional-operator</a></td>
+</tr>
+</tbody></table>
 <h1 id="JavaScript-模块"><a href="#JavaScript-模块" class="headerlink" title="JavaScript 模块"></a>JavaScript 模块</h1><p>这篇指南会给你入门 JavaScript 模块的全部信息。</p>
 <h2 id="模块化的背景"><a href="#模块化的背景" class="headerlink" title="模块化的背景"></a><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Modules#%E6%A8%A1%E5%9D%97%E5%8C%96%E7%9A%84%E8%83%8C%E6%99%AF">模块化的背景</a></h2><p>JavaScript 程序本来很小——在早期，它们大多被用来执行独立的脚本任务，在你的 web 页面需要的地方提供一定交互，所以一般不需要多大的脚本。过了几年，我们现在有了运行大量 JavaScript 脚本的复杂程序，还有一些被用在其他环境（例如 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Glossary/Node.js">Node.js</a>）。</p>
 <p>因此，近年来，有必要开始考虑提供一种<strong>将 JavaScript 程序拆分为可按需导入的单独模块</strong>的机制。Node.js 已经提供这个能力很长时间了，还有很多的 JavaScript 库和框架已经开始了模块的使用（例如，<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/CommonJS">CommonJS</a> 和基于 <a target="_blank" rel="noopener" href="https://github.com/amdjs/amdjs-api/blob/master/AMD.md">AMD</a> 的其他模块系统 如 <a target="_blank" rel="noopener" href="https://requirejs.org/">RequireJS</a>，以及最新的 <a target="_blank" rel="noopener" href="https://webpack.github.io/">Webpack</a> 和 <a target="_blank" rel="noopener" href="https://babeljs.io/">Babel</a>）。</p>

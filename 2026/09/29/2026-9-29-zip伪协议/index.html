@@ -24,7 +24,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
-    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,zip伪协议原题 https:&amp;#x2F;&amp;#x2F;www.ctfplus.cn&amp;#x2F;problem-detail&amp;#x2F;1836247027114053632&amp;#x2F;descrip,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,zip伪协议原题 https://www.ctfplus.cn/problem-detail/1836247027114053632/description
+极客大挑战2023-web-famale,"> 
     <meta name="author" content="Allureluoli"> 
     <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -35,7 +36,8 @@
     
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:title" content="2026-9-29-zip伪协议 - 二月の档案室"/>
-    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,zip伪协议原题 https:&amp;#x2F;&amp;#x2F;www.ctfplus.cn&amp;#x2F;problem-detail&amp;#x2F;1836247027114053632&amp;#x2F;descrip,"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,zip伪协议原题 https://www.ctfplus.cn/problem-detail/1836247027114053632/description
+极客大挑战2023-web-famale,"/>
     
     
     
@@ -43,7 +45,8 @@
     <meta property="og:site_name" content="二月の档案室"/>
     <meta property="og:type" content="object"/>
     <meta property="og:title" content="2026-9-29-zip伪协议 - 二月の档案室"/>
-    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,zip伪协议原题 https:&amp;#x2F;&amp;#x2F;www.ctfplus.cn&amp;#x2F;problem-detail&amp;#x2F;1836247027114053632&amp;#x2F;descrip,"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,zip伪协议原题 https://www.ctfplus.cn/problem-detail/1836247027114053632/description
+极客大挑战2023-web-famale,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 <link rel="stylesheet" href="/css/february.css">
@@ -219,7 +222,7 @@
     <div class="f-post-wrap">
         <article class="f-post-main">
             <div class="content markdown f-content">
-                <h3 id="zip伪协议"><a href="#zip伪协议" class="headerlink" title="zip伪协议"></a>zip伪协议</h3><p>原题 https:&#x2F;&#x2F;www.ctfplus.cn&#x2F;problem-detail&#x2F;1836247027114053632&#x2F;description</p>
+                <h3 id="zip伪协议"><a href="#zip伪协议" class="headerlink" title="zip伪协议"></a>zip伪协议</h3><p>原题 <a target="_blank" rel="noopener" href="https://www.ctfplus.cn/problem-detail/1836247027114053632/description">https://www.ctfplus.cn/problem-detail/1836247027114053632/description</a></p>
 <p>极客大挑战2023-web-famale_imp_l0ve</p>
 <p>做题步骤</p>
 <p>上传提交到  upload_file.php 但是发现一行注释： include.php 已废弃,只接受上传文件 暗示了文件包含点</p>
@@ -255,10 +258,7 @@
 </ul>
 <p>这几行是开发者改了一半留下的残骸:前端注释掉 filename 输入框(“懒得换前端了😋”),后端却还留着处理 filename 的代码,$file&#x2F;$name&#x2F;$filename_ext 全是死变量。这本身不是可利用点,但强烈暗示”后端和前端不同步、改得仓促”——这也是 CTF 里常见的出题信号。</p>
 <p>三、include.php 的漏洞(上一题已确认,这里补全)</p>
-<p>$file &#x3D; $_GET[‘file’];
-if(isset($file) &amp;&amp; strtolower(substr($file, -4)) &#x3D;&#x3D; “.jpg”){
-    include($file);      &#x2F;&#x2F; ← 第 7 行,任意文件包含
-}</p>
+<p>$file &#x3D; $_GET[‘file’];<br>if(isset($file) &amp;&amp; strtolower(substr($file, -4)) &#x3D;&#x3D; “.jpg”){<br>    include($file);      &#x2F;&#x2F; ← 第 7 行,任意文件包含<br>}</p>
 <p>include($file) 是任意文件包含;.jpg 后缀检查被 zip:&#x2F;&#x2F; 伪协议绕过。</p>
 <p>四、两洞串联</p>
 <p>上传 zip(过 upload_file.php 的后缀白名单)→ include.php 用 zip:&#x2F;&#x2F;&#x2F;var&#x2F;www&#x2F;upload&#x2F;readsrc.zip#r.jpg 包含(末尾 .jpg 过检查)→ 执行 zip 里的 PHP → RCE。</p>

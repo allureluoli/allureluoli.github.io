@@ -25,10 +25,7 @@
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
     <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,FAQ[常见问题]Middleware使用Rust开发 Actix 需要使用中间件
-中间件处理有两个步骤。 
-1.中间件初始化，中间件工厂被调用 
-链中的下一个服务作为参数。 
-中间件的调用方法通过,"> 
+中间件处理有两个步骤。1.中间件初始化，中间件工厂被调用链中的下一个服务作为参数。中间件的调用方法通过正常请求被调,"> 
     <meta name="author" content="Allureluoli"> 
     <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -40,10 +37,7 @@
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:title" content="2025-2-6-后端FAQ - 二月の档案室"/>
     <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,FAQ[常见问题]Middleware使用Rust开发 Actix 需要使用中间件
-中间件处理有两个步骤。 
-1.中间件初始化，中间件工厂被调用 
-链中的下一个服务作为参数。 
-中间件的调用方法通过,"/>
+中间件处理有两个步骤。1.中间件初始化，中间件工厂被调用链中的下一个服务作为参数。中间件的调用方法通过正常请求被调,"/>
     
     
     
@@ -52,10 +46,7 @@
     <meta property="og:type" content="object"/>
     <meta property="og:title" content="2025-2-6-后端FAQ - 二月の档案室"/>
     <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,FAQ[常见问题]Middleware使用Rust开发 Actix 需要使用中间件
-中间件处理有两个步骤。 
-1.中间件初始化，中间件工厂被调用 
-链中的下一个服务作为参数。 
-中间件的调用方法通过,"/>
+中间件处理有两个步骤。1.中间件初始化，中间件工厂被调用链中的下一个服务作为参数。中间件的调用方法通过正常请求被调,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 <link rel="stylesheet" href="/css/february.css">
@@ -238,10 +229,7 @@
         <article class="f-post-main">
             <div class="content markdown f-content">
                 <h1 id="FAQ-常见问题"><a href="#FAQ-常见问题" class="headerlink" title="FAQ[常见问题]"></a>FAQ[常见问题]</h1><h3 id="Middleware"><a href="#Middleware" class="headerlink" title="Middleware"></a>Middleware</h3><p>使用Rust开发 Actix 需要使用中间件</p>
-<p>中间件处理有两个步骤。 
-1.中间件初始化，中间件工厂被调用 
-链中的下一个服务作为参数。 
-中间件的调用方法通过正常请求被调用。</p>
+<p>中间件处理有两个步骤。<br>1.中间件初始化，中间件工厂被调用<br>链中的下一个服务作为参数。<br>中间件的调用方法通过正常请求被调用。</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::future::&#123;ready, Ready&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> actix_web::&#123;</span><br><span class="line">    dev::&#123;forward_ready, Service, ServiceRequest, ServiceResponse, Transform&#125;,</span><br><span class="line">    Error,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">use</span> futures_util::future::LocalBoxFuture;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导入库</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">SayHi</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// SayHi 将作为一个中间件处理 ServiceRequest 类型的请求</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span>&lt;S, B&gt; Transform&lt;S, ServiceRequest&gt; <span class="keyword">for</span> <span class="title class_">SayHi</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// S - 下一个服务的类型</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// B - 响应体的类型</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 对 SayHi 结构体实现了 Transform trait</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Transform 是 actix-web 中的一个 trait，用来定义如何转换和处理请求</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">where</span></span><br><span class="line">    S: Service&lt;ServiceRequest, Response = ServiceResponse&lt;B&gt;, Error = Error&gt;,</span><br><span class="line">    S::Future: <span class="symbol">&#x27;static</span>,</span><br><span class="line">    B: <span class="symbol">&#x27;static</span>,</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">type</span> <span class="title class_">Response</span> = ServiceResponse&lt;B&gt;;</span><br><span class="line">    <span class="keyword">type</span> <span class="title class_">Error</span> = Error;</span><br><span class="line">    <span class="keyword">type</span> <span class="title class_">InitError</span> = ();</span><br><span class="line">    <span class="keyword">type</span> <span class="title class_">Transform</span> = SayHiMiddleware&lt;S&gt;;</span><br><span class="line">    <span class="keyword">type</span> <span class="title class_">Future</span> = Ready&lt;<span class="type">Result</span>&lt;<span class="keyword">Self</span>::Transform, <span class="keyword">Self</span>::InitError&gt;&gt;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">new_transform</span>(&amp;<span class="keyword">self</span>, service: S) <span class="punctuation">-&gt;</span> <span class="keyword">Self</span>::Future &#123;</span><br><span class="line">        <span class="title function_ invoke__">ready</span>(<span class="title function_ invoke__">Ok</span>(SayHiMiddleware &#123; service &#125;))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这里出现了一些比较高级的技巧</p>

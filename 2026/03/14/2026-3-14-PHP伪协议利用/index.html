@@ -246,12 +246,30 @@ php://filte,"/>
 </ul>
 <p>摘录官方文档：</p>
 <p>php:&#x2F;&#x2F;filter 是一种元封装器，设计用于数据流打开时的<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/filters.php">筛选过滤</a>应用。    这对于一体式（all-in-one）的文件函数非常有用，类似 <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.readfile.php">readfile()</a><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.file.php">file()</a> 和 <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.file-get-contents.php">file_get_contents()</a>，    在数据流内容读取之前没有机会应用其他过滤器。   </p>
-<p>| 名称                        | 描述                                                         |
-| ————————— | ———————————————————— |
-| <code>resource=&lt;要过滤的数据流&gt;</code> | 这个参数是必须的。它指定了你要筛选过滤的数据流。             |
-| <code>read=&lt;读链的筛选列表&gt;</code>     | 该参数可选。可以设定一个或多个过滤器名称，以管道符（<code>|</code>）分隔。 |
-| <code>write=&lt;写链的筛选列表&gt;</code>    | 该参数可选。可以设定一个或多个过滤器名称，以管道符（<code>|</code>）分隔。 |
-| <code>&lt;；两个链的筛选列表&gt;</code>      | 任何没有以 <code>read=</code> 或 <code>write=</code> 作前缀         的筛选器列表会视情况应用于读或写链。 |</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>resource=&lt;要过滤的数据流&gt;</code></td>
+<td>这个参数是必须的。它指定了你要筛选过滤的数据流。</td>
+</tr>
+<tr>
+<td><code>read=&lt;读链的筛选列表&gt;</code></td>
+<td>该参数可选。可以设定一个或多个过滤器名称，以管道符（&#96;</td>
+</tr>
+<tr>
+<td><code>write=&lt;写链的筛选列表&gt;</code></td>
+<td>该参数可选。可以设定一个或多个过滤器名称，以管道符（&#96;</td>
+</tr>
+<tr>
+<td><code>&lt;；两个链的筛选列表&gt;</code></td>
+<td>任何没有以 <code>read=</code> 或 <code>write=</code> 作前缀         的筛选器列表会视情况应用于读或写链。</td>
+</tr>
+</tbody></table>
 <h3 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h3><p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/filters.string.php">字符串过滤器</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/filters.convert.php">转换过滤器</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/filters.compression.php">压缩过滤器</a></p>
