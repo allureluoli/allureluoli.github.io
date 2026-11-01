@@ -1,0 +1,475 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NESTCTF 2026 BenchLink：从配置泄露到堆任意写，停在 FSOP 触发点 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,这篇记的是 BenchLink &amp;#x2F; pendingreview2 没做完的部分：配置泄露和 CBC 授权绕过已经走通，工单 UAF、libc 泄漏与 tcache 任意写在本地复现成功，但,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="NESTCTF 2026 BenchLink：从配置泄露到堆任意写，停在 FSOP 触发点 - 二月の档案室"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,这篇记的是 BenchLink &amp;#x2F; pendingreview2 没做完的部分：配置泄露和 CBC 授权绕过已经走通，工单 UAF、libc 泄漏与 tcache 任意写在本地复现成功，但,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="NESTCTF 2026 BenchLink：从配置泄露到堆任意写，停在 FSOP 触发点 - 二月の档案室"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,这篇记的是 BenchLink &amp;#x2F; pendingreview2 没做完的部分：配置泄露和 CBC 授权绕过已经走通，工单 UAF、libc 泄漏与 tcache 任意写在本地复现成功，但,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
+
+    <meta name="theme-color" content="#faf9f5" />
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <img class="f-brand-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="28" height="28">
+        <span class="f-brand-text">二月<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="/">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="/" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「我不相信命运，且我将在醉生梦死中追寻真正的自我。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
+</div>
+
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
+            
+            <span class="f-crumb-cur">正文</span>
+        </nav>
+
+        <h1 class="f-post-title">NESTCTF 2026 BenchLink：从配置泄露到堆任意写，停在 FSOP 触发点</h1>
+
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2026-10-31T15:50:00.000Z">2026-10-31</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                4 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                1.9k 字
+            </span>
+            
+        </div>
+
+        
+        <div class="f-post-tags">
+            
+            <a class="f-tag" href="/tags/CTF/">#CTF</a>
+            
+            <a class="f-tag" href="/tags/PWN/">#PWN</a>
+            
+            <a class="f-tag" href="/tags/Web/">#Web</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <p>这篇记的是 BenchLink &#x2F; pendingreview2 没做完的部分：配置泄露和 CBC 授权绕过已经走通，工单 UAF、libc 泄漏与 tcache 任意写在本地复现成功，但没有形成远程读取 flag 的闭环。</p>
+<span id="more"></span>
+
+<h2 id="先把结果放在前面"><a href="#先把结果放在前面" class="headerlink" title="先把结果放在前面"></a>先把结果放在前面</h2><table>
+<thead>
+<tr>
+<th>环节</th>
+<th>记录中的结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>未授权读取配置</td>
+<td>成功，拿到管理员口令并登录</td>
+</tr>
+<tr>
+<td>BLT&#x2F;1 信封位翻转</td>
+<td>成功取得 field_service_authorized</td>
+</tr>
+<tr>
+<td>工单释放后修改</td>
+<td>确认 UAF，可写已释放缓冲区的前三字节</td>
+</tr>
+<tr>
+<td>libc 泄漏、tcache 任意写</td>
+<td>本地配套 libc 环境验证成功</td>
+</tr>
+<tr>
+<td>FSOP 执行、远程 flag</td>
+<td>未完成</td>
+</tr>
+</tbody></table>
+<p>不同实例出现过下线、Caddy 空 200、连接拒绝。这些只说明当时环境状态，不代表今天仍然如此，也不能算漏洞利用成功。</p>
+<h2 id="第一道门：配置备份没有认证"><a href="#第一道门：配置备份没有认证" class="headerlink" title="第一道门：配置备份没有认证"></a>第一道门：配置备份没有认证</h2><p>匿名请求 <code>/cgi-bin/config-backup.bin</code> 会原样返回 <code>/app/device.cfg</code>，其中包含 <code>admin_user</code> 和 <code>admin_password</code>。用配置中的账号执行 <code>POST /api/login</code> 后可进入管理员会话。</p>
+<p>登录要求 <code>application/x-www-form-urlencoded</code>；用 JSON 发送相同字段并不会得到预期结果。这里拿到的管理员口令是后续入口，不能当成 flag。</p>
+<h2 id="第二道门：CBC-信封不校验完整性"><a href="#第二道门：CBC-信封不校验完整性" class="headerlink" title="第二道门：CBC 信封不校验完整性"></a>第二道门：CBC 信封不校验完整性</h2><p><code>GET /api/service/dispatch</code> 返回 192 个十六进制字符，也就是 96 字节的 BLT&#x2F;1 信封。布局为 16 字节 IV 和 AES-CBC 密文，明文包含 nonce、角色、站点标识及会话绑定字段。</p>
+<p>关键问题是：信封没有 MAC，且被连带破坏的 nonce 块不参与有效检查。记录中的修改是对<strong>完整信封原始字节</strong>执行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">envelope = <span class="built_in">bytearray</span>.fromhex(review_envelope)</span><br><span class="line">envelope[<span class="number">27</span>] ^= <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>再将修改后的十六进制字符串以原始正文提交给 <code>POST /api/service/dispatch</code>。角色字符从 <code>0</code> 变成 <code>1</code>，服务返回 <code>field_service_authorized</code> 与 <code>control_authorized=true</code>。偏移仅适用于这份题目布局。</p>
+<p>早期笔记把随机 AES 密钥当成主要障碍，后来位翻转已经绕过这一步，因此不再把“恢复 AES 密钥”列为待办。</p>
+<h2 id="第三道门：工单-UAF-与三字节写"><a href="#第三道门：工单-UAF-与三字节写" class="headerlink" title="第三道门：工单 UAF 与三字节写"></a>第三道门：工单 UAF 与三字节写</h2><p>授权后可创建、取消和修改工单。取消时缓冲区被 free，但表项仍可用于 revision；revision 只能改前三字节，receipt 则能读取前八字节。</p>
+<p>receipt 的 <code>record_tag</code> 有字节序陷阱：真实内存字节是 <code>bytes.fromhex(tag)[::-1]</code>。如果不先还原字节序，后面计算地址会全部错位。</p>
+<p>配套 glibc 2.36 环境里，构造足够多的工单再释放，使合适大小的块进入 unsorted bin，可得到 libc 地址。记录中的本地校验偏移为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">libc_base = leak - 0x1d3cc0</span><br></pre></td></tr></table></figure>
+
+<p>这个值来自题目配套 libc，不是其他 glibc 2.36 构建都能套用的通用常量。</p>
+<h2 id="任意写如何在本地成立"><a href="#任意写如何在本地成立" class="headerlink" title="任意写如何在本地成立"></a>任意写如何在本地成立</h2><p>safe-linking 使三字节写不能直接替换任意 64 位指针。后续利用先在堆内布置可控缓冲区和伪造链结点，再用低三字节覆盖把 tcache 链导入可控位置；从可控结点中读取完整的编码 next 指针，继续把分配导向目标。</p>
+<p>本地的验证标准是：让目标地址指向一个仍存活工单的缓冲区，执行重新分配和写入，再从该工单 receipt 中读到写入内容。这证明了写原语；它尚不能证明远程已可执行任意命令。</p>
+<h2 id="最后为什么没有接上-FSOP"><a href="#最后为什么没有接上-FSOP" class="headerlink" title="最后为什么没有接上 FSOP"></a>最后为什么没有接上 FSOP</h2><p>候选方案是构造 FILE &#x2F; wide_data &#x2F; vtable，借 <code>_IO_wfile_jumps</code> 一类路径触发执行。但当时的逆向记录显示，主循环没有正常返回路径，也没有可直接使用的 exit&#x2F;abort 导入；发现的 fflush 作用于配置临时文件，而非 stderr 或全局流。</p>
+<p>glibc 2.36 下也不能继续把 <code>__free_hook = system</code> 当成常规收尾办法。已经有写能力，仍然缺少“服务实际会走到哪里”的触发证据。</p>
+<h2 id="留给下一轮的工作"><a href="#留给下一轮的工作" class="headerlink" title="留给下一轮的工作"></a>留给下一轮的工作</h2><ol>
+<li>在同一二进制和配套 libc 上复现地址泄漏与写入，保存完整请求序列。</li>
+<li>补齐 PIE 泄漏及全局状态定位，查清 accept 失败或主循环结束后是否真的进入 exit。</li>
+<li>用本地断点确认 FILE 链确实被访问，再考虑远程验证。</li>
+<li>最终以远程读取结果或平台判题为准，不用本地任意写替代通关结论。</li>
+</ol>
+<h2 id="资料来源"><a href="#资料来源" class="headerlink" title="资料来源"></a>资料来源</h2><p>依据工作区 <code>STATUS.md</code>、<code>nest_226/BENCHLINK.md</code>、BenchLink 会话与原 WP 的后期记录整理。<code>bench/NOTES.md</code> 中“尚未绕过 dispatch”的内容属于早期状态。原记录引用的 exp2.py、h_*.py 等实验脚本未作为本文附件提供。</p>
+
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
+                <ul id="audio-list" style="display:none">
+                    
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
+                    
+                </ul>
+                
+            </div>
+
+            
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/2026/10/31/2026-10-31-NESTCTF-BenchLink-progress/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
+
+
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
+    
+    <a class="f-pn-card f-pn-prev" href="/2026/10/31/2026-10-31-NESTCTF-Ghost-progress/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">NESTCTF 2026 Ghost in the Queue：四把钥匙之后，权限和遥测还差两步</span>
+        <span class="f-pn-date">2026-10-31</span>
+    </a>
+    
+    
+    <a class="f-pn-card f-pn-next" href="/2026/10/31/2026-10-31-CTF-samples-LWE-progress/">
+        <span class="f-pn-label">更早的文章 →</span>
+        <span class="f-pn-title">samples.json 未完成记录：LWE 秘密向量已恢复，masked_update 仍未解开</span>
+        <span class="f-pn-date">2026-10-31</span>
+    </a>
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E6%8A%8A%E7%BB%93%E6%9E%9C%E6%94%BE%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-text">先把结果放在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%81%93%E9%97%A8%EF%BC%9A%E9%85%8D%E7%BD%AE%E5%A4%87%E4%BB%BD%E6%B2%A1%E6%9C%89%E8%AE%A4%E8%AF%81"><span class="toc-text">第一道门：配置备份没有认证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%81%93%E9%97%A8%EF%BC%9ACBC-%E4%BF%A1%E5%B0%81%E4%B8%8D%E6%A0%A1%E9%AA%8C%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="toc-text">第二道门：CBC 信封不校验完整性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E9%81%93%E9%97%A8%EF%BC%9A%E5%B7%A5%E5%8D%95-UAF-%E4%B8%8E%E4%B8%89%E5%AD%97%E8%8A%82%E5%86%99"><span class="toc-text">第三道门：工单 UAF 与三字节写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%BB%E6%84%8F%E5%86%99%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9C%AC%E5%9C%B0%E6%88%90%E7%AB%8B"><span class="toc-text">任意写如何在本地成立</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B2%A1%E6%9C%89%E6%8E%A5%E4%B8%8A-FSOP"><span class="toc-text">最后为什么没有接上 FSOP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%95%99%E7%BB%99%E4%B8%8B%E4%B8%80%E8%BD%AE%E7%9A%84%E5%B7%A5%E4%BD%9C"><span class="toc-text">留给下一轮的工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%96%99%E6%9D%A5%E6%BA%90"><span class="toc-text">资料来源</span></a></li></ol></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <img class="f-footer-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="34" height="34">
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">
+            <span class="f-footer-quote-zh">我不相信命运，且我将在醉生梦死中追寻真正的自我。</span>
+            <span class="f-footer-quote-en">I do not believe in fate. In wine and dreams, I will seek out my true self.</span>
+        </p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

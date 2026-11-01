@@ -1,0 +1,546 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026-10-31-NESTCTF-WP - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,NESTCTF 2026 · 三道题这场三道题方向完全不同：一个”不许加载”的 pickle、一个五层跳板的 Web、一个汽车 UDS 的真靶 pwn。按做题顺序记一遍，脚本都留在本机各题目录里。
+,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2026-10-31-NESTCTF-WP - 二月の档案室"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,NESTCTF 2026 · 三道题这场三道题方向完全不同：一个”不许加载”的 pickle、一个五层跳板的 Web、一个汽车 UDS 的真靶 pwn。按做题顺序记一遍，脚本都留在本机各题目录里。
+,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2026-10-31-NESTCTF-WP - 二月の档案室"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,NESTCTF 2026 · 三道题这场三道题方向完全不同：一个”不许加载”的 pickle、一个五层跳板的 Web、一个汽车 UDS 的真靶 pwn。按做题顺序记一遍，脚本都留在本机各题目录里。
+,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
+
+    <meta name="theme-color" content="#faf9f5" />
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <img class="f-brand-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="28" height="28">
+        <span class="f-brand-text">二月<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="/">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="/" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「我不相信命运，且我将在醉生梦死中追寻真正的自我。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
+</div>
+
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
+            
+            <span class="f-crumb-cur">正文</span>
+        </nav>
+
+        <h1 class="f-post-title">2026-10-31-NESTCTF-WP</h1>
+
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2026-10-31T05:40:00.000Z">2026-10-31</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                11 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                5.0k 字
+            </span>
+            
+        </div>
+
+        
+        <div class="f-post-tags">
+            
+            <a class="f-tag" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">#网络安全</a>
+            
+            <a class="f-tag" href="/tags/CTF/">#CTF</a>
+            
+            <a class="f-tag" href="/tags/PWN/">#PWN</a>
+            
+            <a class="f-tag" href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">#逆向工程</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <h3 id="NESTCTF-2026-·-三道题"><a href="#NESTCTF-2026-·-三道题" class="headerlink" title="NESTCTF 2026 · 三道题"></a>NESTCTF 2026 · 三道题</h3><p>这场三道题方向完全不同：一个”不许加载”的 pickle、一个五层跳板的 Web、一个汽车 UDS 的真靶 pwn。按做题顺序记一遍，脚本都留在本机各题目录里。</p>
+<p><img src="/img/images/nestctf2026-0-overview.png" alt="三题总览"></p>
+<h4 id="一、pickle-me-not-·-全程没-load-过-checkpoint"><a href="#一、pickle-me-not-·-全程没-load-过-checkpoint" class="headerlink" title="一、pickle-me-not · 全程没 load 过 checkpoint"></a>一、pickle-me-not · 全程没 load 过 checkpoint</h4><p>题面明写了一句 **”Do not load unknown checkpoints locally just to inspect them.”**，所以整题只用 <code>zipfile</code> + <code>pickletools</code> 解字节，没让 torch 碰过任何 <code>.pt</code>。</p>
+<p>先静态看附件里的 <code>normal_reference.pt</code>（1806 B）：<code>data.pkl</code> 319 B，3 个 GLOBAL 全在白名单，<code>format=modelhub-safe-v4</code>，权重 6×8，bias 步长 0.4 —— 这就是题面说的”受信任参考”，没有秘密。</p>
+<p>题目主体在 ModelHub 的隔离区，得先进工作区。</p>
+<p><strong>1. 双编码路径穿越</strong></p>
+<p><code>GET /api/v1/artifacts?path=</code> 的 gateway 做一次 urldecode 就做策略检查，storage 层又 unquote 一次：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">path=%252e%252e%252fquarantine%252fimport_ticket.json</span><br></pre></td></tr></table></figure>
+
+<p>读到了 <code>repository:/quarantine/import_ticket.json</code>，拿到票据。</p>
+<p><strong>2. replay 拿 legacy worker RCE</strong></p>
+<p><code>POST /api/v1/import-jobs/IMP-2026-0917-017/replay</code> 只检查 payload 前缀是 <code>LEGACY\n</code>，后面直接交给兼容 worker 反序列化。于是顺手把隔离目录 7 个文件全拉回本地：两个 safetensors、index、manifest、ticket、<code>quarantine_snapshot.pt</code>、<code>import_diagnostics.ndjson</code>。</p>
+<p><strong>3. 静态摊平快照</strong></p>
+<p><code>data.pkl</code> 617 B，5 个 GLOBAL，白名单外只有一个：<code>modelhub_compat.rebuild_legacy_token</code>。它的参数把 guard 视图的几何全暴露了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">storage=2  offset=19  size=(4,32)  stride=(67,2)</span><br></pre></td></tr></table></figure>
+
+<p><strong>4. mhkdf：卡点就是题眼</strong></p>
+<p><code>import_diagnostics.ndjson</code> 里写着 KDF 规格 <code>mhkdf-sha256-v1</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">block_i = sha256( utf8(global|route_id|nonce|storage_key|peer_salt) || counter_be32 )</span><br><span class="line">peer_salt = guard.kdf_salt = 69c429c475ee3c2c89aa14ae514d2c75</span><br></pre></td></tr></table></figure>
+
+<p>我一开始按<strong>绝对偏移</strong>对齐 keystream，把字段组合、分隔符、counter 顺序全试了一遍，125 万+ 组合，最高可打印率 74&#x2F;128 —— 全是噪声。换成<strong>视图内序号</strong>对齐（第 j 个视图字节异或第 j 个 keystream 字节）之后，第一个候选就出明文：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">seed = modelhub_compat.rebuild_legacy_token|legacy-tar-bridge/quarantine-17|6c6f61645f736166655f323032365f31|2|69c429c475ee3c2c89aa14ae514d2c75</span><br><span class="line">MODEL_IMPORT_REVIEW|tensor=guard.trace|flag&#123;UuRlZZK0Q83g2Jw5xYCovugmjBOSbLllhBk35dVH&#125;|END</span><br></pre></td></tr></table></figure>
+
+<p><code>6c6f...</code> 那段是 ASCII <code>load_safe_2026_1</code>，<code>storage_key</code> 就是视图号 <code>2</code>。flag：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;UuRlZZK0Q83g2Jw5xYCovugmjBOSbLllhBk35dVH&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/images/nestctf2026-2-pickle.png" alt="pickle 链路"></p>
+<h4 id="二、wasmnesia-·-从-SSRF-到-SUID-劫持"><a href="#二、wasmnesia-·-从-SSRF-到-SUID-劫持" class="headerlink" title="二、wasmnesia · 从 SSRF 到 SUID 劫持"></a>二、wasmnesia · 从 SSRF 到 SUID 劫持</h4><p>EdgeLedger 是个运营报表平台，登录页预填了账号，SPA 只暴露 11 个 API。五层跳板，每层都有回显。</p>
+<p><strong>1. SSRF（userinfo 骗白名单）</strong></p>
+<p><code>POST /api/v1/connectors/fetch</code> 有主机白名单，但解析 host 时没处理 userinfo：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://***@127.0.0.1:9090/internal/v1/artifacts/runs/job-f1234001/formal.wexp</span><br></pre></td></tr></table></figure>
+
+<p>拿回 1168 字节的正式导出（WEXP 容器），sha256 和页面上记录的工件一致。</p>
+<p><strong>2. 复刻 wasm 插件</strong></p>
+<p>同目录的 <code>ledger_shift.wasm</code> 只有 389 字节，手写解析出 <code>mix32 / derive_seed / transform_batch</code>，常数 <code>0x9e3779b9 / 0x85ebca6b / 0xc2b2ae35 / 0x27d4eb2d</code>，魔数 <code>&quot;WASM&quot;</code>。Python 重写后算出指纹 <code>dd2e9e17488602cfddc41319</code>，和页面上的 Output fingerprint 一字不差。</p>
+<p>另一份 <code>edge_context_diag_aarch64</code> 是幌子：反汇编后 <code>main</code> 只在两个值同时为 0 时才失败，任何参数都打印 <code>self-test: OK</code>，里面根本没有 transform。</p>
+<p><strong>3. 已知明文爆 seed（关键一步）</strong></p>
+<p>导出是”置换 + XOR”，输入一定是 EIPC 容器（头 28 字节已知）。写了个 C 程序对 2^32 穷举，**25 秒命中 <code>seed = 0xcb5c3daf</code>**（s&#x3D;13, o&#x3D;7, r&#x3D;11）。反演出被隔离前的真实输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">redrive_endpoint=/api/v1/operations/redrives</span><br><span class="line">execution_id=job-f1234001</span><br><span class="line">generation=1</span><br><span class="line">input_sha256=d6579f95f3691633e44c633bc60fb56c6c8ae50cd1cfcc74cbfcea341d39d379</span><br></pre></td></tr></table></figure>
+
+<p>交叉验证：WEXP 头里那 16 个未知字节，正好等于 <code>sha256(恢复输入)[0:16]</code>，字节级对齐。</p>
+<p><strong>4. redrive 命令注入</strong></p>
+<p><code>POST /api/v1/operations/redrives</code> 的 <code>profile</code> 字段直接进 shell：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">profile = &quot;archive-jsonl;id&quot;   -&gt;  uid=1001(ctf)</span><br></pre></td></tr></table></figure>
+
+<p><code>rz.py</code> 就成了一条命令通道。坑：输出里带 <code>&gt;</code> 重定向会让接口 502，换 <code>tee</code> 或分段写入。</p>
+<p><strong>5. SUID root + PYTHONPATH 劫持</strong></p>
+<p><code>/usr/local/bin/edge-health</code> 是 SUID root，逻辑是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chdir(&quot;/app/workspace&quot;)</span><br><span class="line">setenv(&quot;PYTHONPATH&quot;, &quot;/app/workspace:/opt/edge&quot;)</span><br><span class="line">execl(&quot;/usr/bin/python3&quot;, &quot;python3&quot;, &quot;-c&quot;, &quot;import edge_health; edge_health.run()&quot;)</span><br></pre></td></tr></table></figure>
+
+<p><code>/app/workspace</code> 是 ctf 可写。丢一个自己的 <code>edge_health.py</code> 进去，再跑 SUID 程序，就是 root。读 <code>/root/flag</code>，并复制到 <code>/app/workspace/rootflag.copy</code> 复核过（47 字节含换行）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;86f8fdbuxGTvYtoY48XM2K0blC959GRvqidG7253&#125;</span><br></pre></td></tr></table></figure>
+
+<p>顺手拿到了 <code>/var/lib/edgeledger/attestation.key</code> 的 32 字节 HMAC 密钥。</p>
+<p><img src="/img/images/nestctf2026-3-wasm.png" alt="wasmnesia 链路"></p>
+<h4 id="三、silgate-·-一次-DoIP-版本字节的旁路"><a href="#三、silgate-·-一次-DoIP-版本字节的旁路" class="headerlink" title="三、silgate · 一次 DoIP 版本字节的旁路"></a>三、silgate · 一次 DoIP 版本字节的旁路</h4><p>真靶：<code>km902rre.nestctf.cyberpeace.cn:58999</code>（TLS）。vECU 实现 DoIP + ISO-TP + UDS 子集，附件给了协议规格和例程格式。</p>
+<p><strong>1. 广播与激活</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">03 fc 00 04 00 00 00 49 4c 53 49 4c 47 41 54 45 32 36 4b 37 41 33 39 30 31 0e 80 25 ...</span><br><span class="line">-&gt; VIN LSILGATE26K7A3901   addr 0x0E80   SEC-GATE v2.3.1 (legacy-compat build)</span><br></pre></td></tr></table></figure>
+
+<p>路由激活 <code>type=0x01</code> 走 <code>memcmp(cred, &quot;SILG1&quot;, n)</code>，但长度校验 <code>len - 5 &gt;= oem_len</code> 恒不成立 —— 发短包就能无凭据通过，回 <code>0x10</code>。</p>
+<p><strong>2. 0x23 越权读</strong></p>
+<p>4 字节相对地址是 <code>镜像基址 + offset</code>，<strong>没有边界校验</strong>，一路读到 <code>0xC00000</code>，拖回 4 MB 固件镜像。8 字节绝对地址能读运行中的 vECU 本体 <code>0x55DDE2288000 + 0x9000</code>（36 KB 动态 ELF，链接 OpenSSL）和会话堆。</p>
+<p>主密钥指针在 <code>image+0x9108</code>，指向封存页 <code>0x7FDE0799B000</code> —— 不在可读窗口里，所以标准通道的 <code>0x27</code>（HMAC-SHA256）没法伪造。</p>
+<p><strong>3. DoIP 版本 &#x3D; 0x02，进隐藏分发器</strong></p>
+<p>反汇编里 <code>0x5D18: cmp bpl, 2 -&gt; 0x6045</code>，<code>bpl</code> 是 DoIP 头里的版本字节。把版本改成 <code>0x02</code>（校验字节 <code>0xFD</code>），诊断帧进第二套分发器，而且<strong>不走 ISO-TP</strong>：<code>[src][dst][UDS...]</code> 裸传。</p>
+<p><strong>4. legacy SecurityAccess（弱 16 位 KDF）</strong></p>
+<p>legacy 通道的 <code>0x27</code> 子功能是 <code>0x01/0x02</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ecx = ((seed &lt;&lt; 7) ^ seed); ecx ^= (ecx &amp; 0xFFFF) &gt;&gt; 9; ecx ^= ecx &lt;&lt; 8</span><br><span class="line">key = ((A * ecx) ^ B ^ 0x4B37) &amp; 0xFFFF      # A/B 来自 image+0x901C</span><br></pre></td></tr></table></figure>
+
+<p><code>0x27 0x01</code> 拿 seed，算完发 <code>0x27 0x02 + key</code>，回 <code>67 02</code>，解锁位置位。接着 <code>0x10 0x02</code> 进编程会话（<code>50 02 00 32 01 F4</code>），<code>0x31 04/05 0203</code> 过 RID 握手（<code>71 05 02 03 00</code>）。</p>
+<p><strong>5. 刷一段例程去读文件</strong></p>
+<p><code>0x34</code> 申请下载，回 <code>74 20 08 00</code>；<code>0x36</code> 传数据，<strong>必须每个都是单帧（≤5 字节数据）</strong>，多帧会回 NRC <code>0x24</code>；<code>0x37</code> 回 <code>77</code>，例程在独立线程里从 <code>buffer+0x10</code> 执行。</p>
+<p>静态扫描只拦 <code>CC / F4 / 0F 05 / 0F 34 / CD 80</code>，所以别写 syscall。GOT 就在可读的镜像窗口里（<code>0x8E88 / 0x8F28</code>），直接 call libc：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fopen(IMG + <span class="number">0x9080</span>, <span class="string">&quot;r&quot;</span>)      <span class="comment"># &quot;/home/ctf/flag&quot; 就在 .bss</span></span><br><span class="line">fread(dst, <span class="number">1</span>, <span class="number">0x40</span>, fp)</span><br></pre></td></tr></table></figure>
+
+<p>例程执行完，用 <code>0x23</code> 把结果页读回来：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;hLcV4EaVTTaAtlvX6XPWKJKkgqI1hNcqORtAu4Z0&#125;</span><br></pre></td></tr></table></figure>
+
+<p>整个链路的坑集中在 <code>0x36</code>：不是协议设计问题，是服务器侧 ISO-TP 的 STmin&#x2F;BS 判定让多帧全部失败，单帧才稳。</p>
+<p><img src="/img/images/nestctf2026-4-silgate.png" alt="silgate 链路"></p>
+<h4 id="没做完的"><a href="#没做完的" class="headerlink" title="没做完的"></a>没做完的</h4><ul>
+<li>另一道 Web 题环境一直 502（Caddy 空 200），没起就放了。</li>
+</ul>
+<h4 id="踩坑表"><a href="#踩坑表" class="headerlink" title="踩坑表"></a>踩坑表</h4><table>
+<thead>
+<tr>
+<th>坑</th>
+<th>现象</th>
+<th>解决</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>pickle 的 keystream 对齐</td>
+<td>125 万组合最高 74&#x2F;128，全是噪声</td>
+<td>按 guard <strong>视图内序号</strong>，不是绝对偏移</td>
+</tr>
+<tr>
+<td>双编码穿越</td>
+<td>单次 <code>%2e%2e%2f</code> 被策略拦住</td>
+<td><code>%252e%252e%252f</code>，网关和 storage 各 unquote 一次</td>
+</tr>
+<tr>
+<td>wasm 侧的 aarch64 自检</td>
+<td>任何参数都 <code>OK</code>，看着像有逻辑</td>
+<td>反汇编，失败条件是两个值同时为 0，纯幌子</td>
+</tr>
+<tr>
+<td>redrive 注入带 <code>&gt;</code></td>
+<td>接口 502</td>
+<td>换 <code>tee</code> &#x2F; 分段写</td>
+</tr>
+<tr>
+<td>silgate <code>0x36</code> 多帧</td>
+<td>NRC <code>0x24</code></td>
+<td>每条单帧，≤5 字节数据</td>
+</tr>
+<tr>
+<td>silgate 标准 <code>0x27</code></td>
+<td>只能回 NRC，密钥读不到</td>
+<td>DoIP 版本改 <code>0x02</code> 走 legacy 弱 KDF</td>
+</tr>
+</tbody></table>
+<h4 id="一句话总结"><a href="#一句话总结" class="headerlink" title="一句话总结"></a>一句话总结</h4><p>三道题考的东西不重样：pickle 是”只读字节流也能还原密钥流”，wasmnesia 是”每一层都留了可观测回显，链就断不了”，silgate 则是”一个头字段的版本分支，比任何加密都致命”。真要说共同点：<strong>先找到那个能让程序走另一条分支的字节</strong>，剩下的都是体力活。</p>
+
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
+                <ul id="audio-list" style="display:none">
+                    
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
+                    
+                </ul>
+                
+            </div>
+
+            
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/2026/10/31/2026-10-31-NESTCTF-WP/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
+
+
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
+    
+    <a class="f-pn-card f-pn-prev" href="/2026/10/30/2026-10-30-Neighbour-lite/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">2026-10-30-Neighbour-lite</span>
+        <span class="f-pn-date">2026-10-30</span>
+    </a>
+    
+    
+    <a class="f-pn-card f-pn-next" href="/2026/10/31/2026-10-31-NESTCTF-northline/">
+        <span class="f-pn-label">更早的文章 →</span>
+        <span class="f-pn-title">2026-10-31-NESTCTF-northline</span>
+        <span class="f-pn-date">2026-10-31</span>
+    </a>
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#NESTCTF-2026-%C2%B7-%E4%B8%89%E9%81%93%E9%A2%98"><span class="toc-text">NESTCTF 2026 · 三道题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E3%80%81pickle-me-not-%C2%B7-%E5%85%A8%E7%A8%8B%E6%B2%A1-load-%E8%BF%87-checkpoint"><span class="toc-text">一、pickle-me-not · 全程没 load 过 checkpoint</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E3%80%81wasmnesia-%C2%B7-%E4%BB%8E-SSRF-%E5%88%B0-SUID-%E5%8A%AB%E6%8C%81"><span class="toc-text">二、wasmnesia · 从 SSRF 到 SUID 劫持</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E3%80%81silgate-%C2%B7-%E4%B8%80%E6%AC%A1-DoIP-%E7%89%88%E6%9C%AC%E5%AD%97%E8%8A%82%E7%9A%84%E6%97%81%E8%B7%AF"><span class="toc-text">三、silgate · 一次 DoIP 版本字节的旁路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B2%A1%E5%81%9A%E5%AE%8C%E7%9A%84"><span class="toc-text">没做完的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91%E8%A1%A8"><span class="toc-text">踩坑表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93"><span class="toc-text">一句话总结</span></a></li></ol></li></ol></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <img class="f-footer-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="34" height="34">
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">
+            <span class="f-footer-quote-zh">我不相信命运，且我将在醉生梦死中追寻真正的自我。</span>
+            <span class="f-footer-quote-en">I do not believe in fate. In wine and dreams, I will seek out my true self.</span>
+        </p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

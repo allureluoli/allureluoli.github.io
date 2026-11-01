@@ -1,0 +1,484 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NESTCTF 2026 Ghost in the Queue：四把钥匙之后，权限和遥测还差两步 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,GhostCloud 的最终 flag 锁在 vault 中，需要六把 key。10 月 31 日的会话已经从早期的 2&amp;#x2F;6、3&amp;#x2F;6 推进到 4&amp;#x2F;6；延续到 11 月 ,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="NESTCTF 2026 Ghost in the Queue：四把钥匙之后，权限和遥测还差两步 - 二月の档案室"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,GhostCloud 的最终 flag 锁在 vault 中，需要六把 key。10 月 31 日的会话已经从早期的 2&amp;#x2F;6、3&amp;#x2F;6 推进到 4&amp;#x2F;6；延续到 11 月 ,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="NESTCTF 2026 Ghost in the Queue：四把钥匙之后，权限和遥测还差两步 - 二月の档案室"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,GhostCloud 的最终 flag 锁在 vault 中，需要六把 key。10 月 31 日的会话已经从早期的 2&amp;#x2F;6、3&amp;#x2F;6 推进到 4&amp;#x2F;6；延续到 11 月 ,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
+
+    <meta name="theme-color" content="#faf9f5" />
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <img class="f-brand-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="28" height="28">
+        <span class="f-brand-text">二月<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="/">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="/" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「我不相信命运，且我将在醉生梦死中追寻真正的自我。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
+</div>
+
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
+            
+            <span class="f-crumb-cur">正文</span>
+        </nav>
+
+        <h1 class="f-post-title">NESTCTF 2026 Ghost in the Queue：四把钥匙之后，权限和遥测还差两步</h1>
+
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2026-10-31T15:50:00.000Z">2026-10-31</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                5 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                2.2k 字
+            </span>
+            
+        </div>
+
+        
+        <div class="f-post-tags">
+            
+            <a class="f-tag" href="/tags/CTF/">#CTF</a>
+            
+            <a class="f-tag" href="/tags/Web/">#Web</a>
+            
+            <a class="f-tag" href="/tags/MQTT/">#MQTT</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <p>GhostCloud 的最终 flag 锁在 vault 中，需要六把 key。10 月 31 日的会话已经从早期的 2&#x2F;6、3&#x2F;6 推进到 4&#x2F;6；延续到 11 月 1 日凌晨的日志仍显示 <code>complete=false</code>。这篇把已验证的四条链和剩余两处卡点分开记下来。</p>
+<span id="more"></span>
+
+<h2 id="当前最可靠的进度"><a href="#当前最可靠的进度" class="headerlink" title="当前最可靠的进度"></a>当前最可靠的进度</h2><p>凌晨 <code>fullchain.log</code> 中的最终响应为：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;complete&quot;</span><span class="punctuation">:</span><span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span><span class="attr">&quot;total&quot;</span><span class="punctuation">:</span><span class="number">6</span><span class="punctuation">,</span><span class="attr">&quot;unlocked&quot;</span><span class="punctuation">:</span><span class="punctuation">[</span><span class="string">&quot;k1&quot;</span><span class="punctuation">,</span><span class="string">&quot;k3&quot;</span><span class="punctuation">,</span><span class="string">&quot;k4&quot;</span><span class="punctuation">,</span><span class="string">&quot;k6&quot;</span><span class="punctuation">]</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>来源</th>
+<th>关键问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>k1</td>
+<td>运维任务输出</td>
+<td>approval_id 没有绑定任务语义</td>
+</tr>
+<tr>
+<td>k3</td>
+<td>GOLD 会员告警</td>
+<td>满足两笔高价订单后获得奖励</td>
+</tr>
+<tr>
+<td>k4</td>
+<td>crown 商品发货</td>
+<td>新实例中解决资金后正常购买</td>
+</tr>
+<tr>
+<td>k6</td>
+<td>对账异常告警</td>
+<td>并发取消产生重复退款事件</td>
+</tr>
+<tr>
+<td>k2</td>
+<td>badge 商品</td>
+<td>仍要求 admin 角色</td>
+</tr>
+<tr>
+<td>k5</td>
+<td>遥测诊断</td>
+<td>缺少 boot session token</td>
+</tr>
+</tbody></table>
+<h2 id="先把传输层修对"><a href="#先把传输层修对" class="headerlink" title="先把传输层修对"></a>先把传输层修对</h2><p>HTTP API 和 MQTT 是两条不同通道，平台给的 nc 中继实际需要 TLS。早期客户端还出现过 username&#x2F;password 标志位、CONNACK 返回码、QoS0 PUBLISH 变量头及 topic 偏移错误。</p>
+<p>这些错误会把“客户端编码不正确”误判成“服务拒绝认证”。后续用正确的 MQTT 帧确认连接后，才开始把 API、租户主题和 public 状态广播对应起来。</p>
+<h2 id="k1：审批编号有效，不代表当前任务被审批"><a href="#k1：审批编号有效，不代表当前任务被审批" class="headerlink" title="k1：审批编号有效，不代表当前任务被审批"></a>k1：审批编号有效，不代表当前任务被审批</h2><p>先通过 API 提交合法的 echo 任务，拿到有效 approval_id，再向 <code>tenant/alice/jobs/submit</code> 投递改变了 type、role 的事件。</p>
+<p>调度器接受了编号，却没有把它与原先审批的任务类型和角色绑定，因而能执行 get_key1 并在任务结果主题返回 key。根因是审批对象和执行对象之间缺少完整绑定。</p>
+<h2 id="k6：取消订单缺乏幂等保护"><a href="#k6：取消订单缺乏幂等保护" class="headerlink" title="k6：取消订单缺乏幂等保护"></a>k6：取消订单缺乏幂等保护</h2><p>对同一订单并发取消，出现了多次退款相关事件。对账服务发现异常后向 <code>tenant/alice/alerts</code> 发送 integrity.alert，其中包含 k6。</p>
+<p>这里要区分两件事：异常告警可以拿到 key，但退款进入的是 pending_refunds。旧实例里 pending 长时间不结算，并不能当成可立即消费的余额。</p>
+<h2 id="k3-与-k4：资金问题后来已经解决"><a href="#k3-与-k4：资金问题后来已经解决" class="headerlink" title="k3 与 k4：资金问题后来已经解决"></a>k3 与 k4：资金问题后来已经解决</h2><p>旧笔记中“余额只有 30，买不起 crown”是过时状态。新实例中利用 topup claim 首次使用后的约 90 秒窗口，改变 topup_id 重复入账，会话记录余额达到 23,000。</p>
+<p>有了可用余额，购买 crown 取得 k4；完成两笔单价至少 150 的已支付订单后晋升 GOLD，在 alerts 中收到 k3。早期还验证过 GHOST60 一次性券的并发问题，但最新进度不再依赖旧实例被冻结的退款。</p>
+<p>这部分的顺序很关键：先处理短时有效的 claim，再做购物与告警收集。不能把很早之前领取过、已经 burn 的 claim 当成可重放的新凭证。</p>
+<h2 id="中继桥已经打通，但不等于拿到全部内部权限"><a href="#中继桥已经打通，但不等于拿到全部内部权限" class="headerlink" title="中继桥已经打通，但不等于拿到全部内部权限"></a>中继桥已经打通，但不等于拿到全部内部权限</h2><p>自动化网关限制 target 为 <code>internal/audit/*</code>，但 audit ingest 又根据 payload.forward 转发 body，形成第二跳。记录中借此触达内部 shipping 和 telemetry 通道，并拿到过 ops-toolkit。</p>
+<p>这说明入口校验的地址与真正的最终目的地不是同一层。然而某些消费者仍有商品白名单、身份和令牌检查；能发到 topic 不等于消费者一定接受操作。</p>
+<h2 id="还没做完的-k2"><a href="#还没做完的-k2" class="headerlink" title="还没做完的 k2"></a>还没做完的 k2</h2><p>badge 下单后被取消，原因是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">restricted item: admin role required</span><br></pre></td></tr></table></figure>
+
+<p>即使余额已经足够、k1 已提交，限制也没有自动消失。直接添加 role 字段、猜运维任务类型和向订单命令主题投递事件，没有形成可确认的 badge 发货记录。</p>
+<p>下一步需要追踪履约服务的角色来源：它信任哪个事件、哪个字段，是否存在与审批链不同的身份绑定缺口。当前不能把“消息里写了 admin”当成权限已经提升。</p>
+<h2 id="还没做完的-k5"><a href="#还没做完的-k5" class="headerlink" title="还没做完的 k5"></a>还没做完的 k5</h2><p>遥测采用 <code>54 4d 01 ...</code> 开头的 TLV 帧。0x30 诊断分支已经能到达，但返回 <code>diag auth failed</code>，说明仍缺 boot session token。</p>
+<p>public 状态流中主要看到周期健康信息；restart 任务返回的成功文本也不足以证明代理真的重启或播出了 token。旧记录还试过注解长度回显、配置注入和多种 token 候选，没有得到有效诊断认证。</p>
+<p>应继续确认 token 的生成、保存和启动期发送位置，保留重启前后的原始帧，而不是只看 job 的一句成功输出。</p>
+<h2 id="后续检查点"><a href="#后续检查点" class="headerlink" title="后续检查点"></a>后续检查点</h2><p>每次推进都以 <code>/api/vault</code> 为准，避免把上一实例的进度混到新实例里。当前保留的断点是 k1&#x2F;k3&#x2F;k4&#x2F;k6 已接受，k2&#x2F;k5 未完成，没有完整 flag。</p>
+<h2 id="资料来源"><a href="#资料来源" class="headerlink" title="资料来源"></a>资料来源</h2><p>依据 default-workspace 的 ghost 笔记、ntf 工作区 10 月 31 日会话及 <code>fresh_watch.log</code>、<code>fullchain.log</code> 整理；凌晨日志作为跨日补记单独说明。gitq &#x2F; gitq_handout 的题面内容也是 Ghost in the Queue，归入同题，没有另算一题。文中未公开个人 API 密钥或完整会话转储。</p>
+
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
+                <ul id="audio-list" style="display:none">
+                    
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
+                    
+                </ul>
+                
+            </div>
+
+            
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/2026/10/31/2026-10-31-NESTCTF-Ghost-progress/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
+
+
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
+    
+    <a class="f-pn-card f-pn-prev" href="/2026/10/31/2026-10-31-NESTCTF-SSCP-progress/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">NESTCTF 2026 SSCP：空口令、诊断导出与尚未完成的摄像头转向</span>
+        <span class="f-pn-date">2026-10-31</span>
+    </a>
+    
+    
+    <a class="f-pn-card f-pn-next" href="/2026/10/31/2026-10-31-NESTCTF-BenchLink-progress/">
+        <span class="f-pn-label">更早的文章 →</span>
+        <span class="f-pn-title">NESTCTF 2026 BenchLink：从配置泄露到堆任意写，停在 FSOP 触发点</span>
+        <span class="f-pn-date">2026-10-31</span>
+    </a>
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%93%E5%89%8D%E6%9C%80%E5%8F%AF%E9%9D%A0%E7%9A%84%E8%BF%9B%E5%BA%A6"><span class="toc-text">当前最可靠的进度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E6%8A%8A%E4%BC%A0%E8%BE%93%E5%B1%82%E4%BF%AE%E5%AF%B9"><span class="toc-text">先把传输层修对</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#k1%EF%BC%9A%E5%AE%A1%E6%89%B9%E7%BC%96%E5%8F%B7%E6%9C%89%E6%95%88%EF%BC%8C%E4%B8%8D%E4%BB%A3%E8%A1%A8%E5%BD%93%E5%89%8D%E4%BB%BB%E5%8A%A1%E8%A2%AB%E5%AE%A1%E6%89%B9"><span class="toc-text">k1：审批编号有效，不代表当前任务被审批</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#k6%EF%BC%9A%E5%8F%96%E6%B6%88%E8%AE%A2%E5%8D%95%E7%BC%BA%E4%B9%8F%E5%B9%82%E7%AD%89%E4%BF%9D%E6%8A%A4"><span class="toc-text">k6：取消订单缺乏幂等保护</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#k3-%E4%B8%8E-k4%EF%BC%9A%E8%B5%84%E9%87%91%E9%97%AE%E9%A2%98%E5%90%8E%E6%9D%A5%E5%B7%B2%E7%BB%8F%E8%A7%A3%E5%86%B3"><span class="toc-text">k3 与 k4：资金问题后来已经解决</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E7%BB%A7%E6%A1%A5%E5%B7%B2%E7%BB%8F%E6%89%93%E9%80%9A%EF%BC%8C%E4%BD%86%E4%B8%8D%E7%AD%89%E4%BA%8E%E6%8B%BF%E5%88%B0%E5%85%A8%E9%83%A8%E5%86%85%E9%83%A8%E6%9D%83%E9%99%90"><span class="toc-text">中继桥已经打通，但不等于拿到全部内部权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%98%E6%B2%A1%E5%81%9A%E5%AE%8C%E7%9A%84-k2"><span class="toc-text">还没做完的 k2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%98%E6%B2%A1%E5%81%9A%E5%AE%8C%E7%9A%84-k5"><span class="toc-text">还没做完的 k5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E7%BB%AD%E6%A3%80%E6%9F%A5%E7%82%B9"><span class="toc-text">后续检查点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%96%99%E6%9D%A5%E6%BA%90"><span class="toc-text">资料来源</span></a></li></ol></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <img class="f-footer-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="34" height="34">
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">
+            <span class="f-footer-quote-zh">我不相信命运，且我将在醉生梦死中追寻真正的自我。</span>
+            <span class="f-footer-quote-en">I do not believe in fate. In wine and dreams, I will seek out my true self.</span>
+        </p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

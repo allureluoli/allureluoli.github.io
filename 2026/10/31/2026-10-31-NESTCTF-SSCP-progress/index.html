@@ -1,0 +1,466 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NESTCTF 2026 SSCP：空口令、诊断导出与尚未完成的摄像头转向 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,SSCP 这道题没有停在“所有入口都需要认证”。后续已经从媒体服务的空口令行拿到诊断包，登录只读控制台，并看到实时画面；但没有取得最终白板内容或完整 flag。跨到 11 月 1 日凌晨，状态文件还,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="NESTCTF 2026 SSCP：空口令、诊断导出与尚未完成的摄像头转向 - 二月の档案室"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,SSCP 这道题没有停在“所有入口都需要认证”。后续已经从媒体服务的空口令行拿到诊断包，登录只读控制台，并看到实时画面；但没有取得最终白板内容或完整 flag。跨到 11 月 1 日凌晨，状态文件还,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="NESTCTF 2026 SSCP：空口令、诊断导出与尚未完成的摄像头转向 - 二月の档案室"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,SSCP 这道题没有停在“所有入口都需要认证”。后续已经从媒体服务的空口令行拿到诊断包，登录只读控制台，并看到实时画面；但没有取得最终白板内容或完整 flag。跨到 11 月 1 日凌晨，状态文件还,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
+
+    <meta name="theme-color" content="#faf9f5" />
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <img class="f-brand-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="28" height="28">
+        <span class="f-brand-text">二月<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="/">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="/" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「我不相信命运，且我将在醉生梦死中追寻真正的自我。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
+</div>
+
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
+            
+            <span class="f-crumb-cur">正文</span>
+        </nav>
+
+        <h1 class="f-post-title">NESTCTF 2026 SSCP：空口令、诊断导出与尚未完成的摄像头转向</h1>
+
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2026-10-31T15:50:00.000Z">2026-10-31</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                4 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                1.7k 字
+            </span>
+            
+        </div>
+
+        
+        <div class="f-post-tags">
+            
+            <a class="f-tag" href="/tags/CTF/">#CTF</a>
+            
+            <a class="f-tag" href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">#逆向工程</a>
+            
+            <a class="f-tag" href="/tags/IoT/">#IoT</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <p>SSCP 这道题没有停在“所有入口都需要认证”。后续已经从媒体服务的空口令行拿到诊断包，登录只读控制台，并看到实时画面；但没有取得最终白板内容或完整 flag。跨到 11 月 1 日凌晨，状态文件还记录了一次 PTZ 认证突破，下面单独补记。</p>
+<span id="more"></span>
+
+<h2 id="四个入口要分开看"><a href="#四个入口要分开看" class="headerlink" title="四个入口要分开看"></a>四个入口要分开看</h2><table>
+<thead>
+<tr>
+<th>服务</th>
+<th>认证或用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sscp-console&#x2F;1.1</td>
+<td>控制台登录、只读画面</td>
+</tr>
+<tr>
+<td>dsapi&#x2F;1.0</td>
+<td>JSON 设备配置，X-Session</td>
+</tr>
+<tr>
+<td>sscpd&#x2F;1.0</td>
+<td>SSCP 控制，<code>/sscp/device_service</code></td>
+</tr>
+<tr>
+<td>vhttpd&#x2F;1.0</td>
+<td>私有媒体，SHA-256 Digest，realm&#x3D;TPC260</td>
+</tr>
+</tbody></table>
+<p>比赛把不同内网端口映射成多个域名。不能因为一个入口用同一端口号，就认定其认证逻辑也相同。</p>
+<h2 id="从空口令行进入媒体服务"><a href="#从空口令行进入媒体服务" class="headerlink" title="从空口令行进入媒体服务"></a>从空口令行进入媒体服务</h2><p><code>hub_primary_2</code> 配合空密码通过 vhttpd 的 Digest 认证。根路径给出 preview、stream.mjpg、playback、diagnostic 和 firmware&#x2F;download 等端点。</p>
+<p>这里的“空密码”仍然需要按照 Digest 协议计算 response，不是省略 Authorization 头。</p>
+<h2 id="诊断包给出了只读账号"><a href="#诊断包给出了只读账号" class="headerlink" title="诊断包给出了只读账号"></a>诊断包给出了只读账号</h2><p><code>/diagnostic</code> 导出的 ZIP 里有 config.json，包含 viewer 账号的明文密码、camera_acc 用户名、第二管理身份及初始 pan&#x2F;tilt。</p>
+<p>用 viewer 登录 console 成功，还能登录 dsapi，但权限有限：console 的 PTZ move 返回 403，dsapi 只允许部分方法。账号能登录，并不代表能操纵摄像头。</p>
+<p>抓到的画面是 OFFICE 门，初始位置 P&#x3D;-150、T&#x3D;10。<code>/preview?pan=...</code> 并没有改变机位，只改变查询参数不能绕过控制接口。</p>
+<h2 id="固件能解释算法，不能直接代表线上密钥"><a href="#固件能解释算法，不能直接代表线上密钥" class="headerlink" title="固件能解释算法，不能直接代表线上密钥"></a>固件能解释算法，不能直接代表线上密钥</h2><p>固件包是 VSCPFW 容器，解出 ARM32 静态二进制 vscpd。反编译与 qemu 实测确认，UsernameToken 的核心涉及：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Base64_NOPAD(SHA1(decoded_nonce || Created前缀 || 固件中的常量))</span><br></pre></td></tr></table></figure>
+
+<p>固件中的 <code>cfg_account_password</code> 字符串参与计算。本地用相应 digest 可以得到 AUTH_OK，改环境变量不影响结果；但线上不接受同一常量。</p>
+<p>这份附件标识为 dev&#x2F;local 构建。准确结论是“本地算法与线上认证尚未对齐”，而不是“线上密码一定藏在进程环境”或“出题人一定漏发口令”。后两种说法没有足够证据。</p>
+<h2 id="Base64-填充是一次实际踩坑"><a href="#Base64-填充是一次实际踩坑" class="headerlink" title="Base64 填充是一次实际踩坑"></a>Base64 填充是一次实际踩坑</h2><p>早期字典测试使用了带 <code>=</code> 的 28 字符 digest，后来根据固件编码器改为无填充的 27 字符。格式不同，旧批次的失败就不能用来排除相同密码在正确格式下有效。</p>
+<p>修正后的 top10k 仍未命中，接着才运行设备定向字典。此前“已经尝试两万次”的数量本身没有意义，先确认协议字节才有意义。</p>
+<h2 id="跨日补记：00-09-的认证突破"><a href="#跨日补记：00-09-的认证突破" class="headerlink" title="跨日补记：00:09 的认证突破"></a>跨日补记：00:09 的认证突破</h2><p><code>SSCP_LOOT.md</code> 末尾有 2026-11-01 00:09 的更新，部分中文存在编码损坏，但仍明确保留：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">camera_acc : password@#123</span><br><span class="line">GetStatus 200</span><br></pre></td></tr></table></figure>
+
+<p>该记录称无填充格式下，设备定向字典约 4700 条时命中。它比 10 月 31 日会话末尾“仍缺 camera_acc 密码”的状态更新。</p>
+<p>因此后续不能继续把“没有 PTZ 凭据”当成唯一卡点。但这条是状态文件记录，本次没有重新对靶机认证，也没有找到最终白板或 flag 的成功回执。</p>
+<h2 id="真正剩下的工作"><a href="#真正剩下的工作" class="headerlink" title="真正剩下的工作"></a>真正剩下的工作</h2><p>使用正确的 camera_acc 凭据和 UsernameToken 编码完成 PTZ，再把机位变化与媒体画面对应。工作区已经有 <code>sscp_ptz.py</code> 和相关抓帧脚本；下一轮应先验证 GetStatus、移动响应和实际图像是否一致，再判断白板能否读出。</p>
+<p>实例关闭后多个入口曾退化为 Caddy 空响应，需要重新核对同一实例的映射和状态，不能把不同实例的会话凭据混用。</p>
+<h2 id="资料来源"><a href="#资料来源" class="headerlink" title="资料来源"></a>资料来源</h2><p>根据 <code>nest_226/SSCP_LOOT.md</code>、SSCP 当日会话及早期测绘笔记整理。仅保留题目实验账号中与认证突破有关的信息，未附个人服务密钥、完整抓包或浏览器会话。</p>
+
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
+                <ul id="audio-list" style="display:none">
+                    
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
+                    
+                </ul>
+                
+            </div>
+
+            
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/2026/10/31/2026-10-31-NESTCTF-SSCP-progress/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
+
+
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
+    
+    <a class="f-pn-card f-pn-prev" href="/2026/10/31/2026-10-31-NESTCTF-Handoff-progress/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">NESTCTF 2026 Handoff：45 分之后，展示身份与绑定身份之间还差一条链</span>
+        <span class="f-pn-date">2026-10-31</span>
+    </a>
+    
+    
+    <a class="f-pn-card f-pn-next" href="/2026/10/31/2026-10-31-NESTCTF-Ghost-progress/">
+        <span class="f-pn-label">更早的文章 →</span>
+        <span class="f-pn-title">NESTCTF 2026 Ghost in the Queue：四把钥匙之后，权限和遥测还差两步</span>
+        <span class="f-pn-date">2026-10-31</span>
+    </a>
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E5%85%A5%E5%8F%A3%E8%A6%81%E5%88%86%E5%BC%80%E7%9C%8B"><span class="toc-text">四个入口要分开看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E7%A9%BA%E5%8F%A3%E4%BB%A4%E8%A1%8C%E8%BF%9B%E5%85%A5%E5%AA%92%E4%BD%93%E6%9C%8D%E5%8A%A1"><span class="toc-text">从空口令行进入媒体服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%8A%E6%96%AD%E5%8C%85%E7%BB%99%E5%87%BA%E4%BA%86%E5%8F%AA%E8%AF%BB%E8%B4%A6%E5%8F%B7"><span class="toc-text">诊断包给出了只读账号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BA%E4%BB%B6%E8%83%BD%E8%A7%A3%E9%87%8A%E7%AE%97%E6%B3%95%EF%BC%8C%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E4%BB%A3%E8%A1%A8%E7%BA%BF%E4%B8%8A%E5%AF%86%E9%92%A5"><span class="toc-text">固件能解释算法，不能直接代表线上密钥</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Base64-%E5%A1%AB%E5%85%85%E6%98%AF%E4%B8%80%E6%AC%A1%E5%AE%9E%E9%99%85%E8%B8%A9%E5%9D%91"><span class="toc-text">Base64 填充是一次实际踩坑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%A8%E6%97%A5%E8%A1%A5%E8%AE%B0%EF%BC%9A00-09-%E7%9A%84%E8%AE%A4%E8%AF%81%E7%AA%81%E7%A0%B4"><span class="toc-text">跨日补记：00:09 的认证突破</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9C%9F%E6%AD%A3%E5%89%A9%E4%B8%8B%E7%9A%84%E5%B7%A5%E4%BD%9C"><span class="toc-text">真正剩下的工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%96%99%E6%9D%A5%E6%BA%90"><span class="toc-text">资料来源</span></a></li></ol></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <img class="f-footer-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="34" height="34">
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">
+            <span class="f-footer-quote-zh">我不相信命运，且我将在醉生梦死中追寻真正的自我。</span>
+            <span class="f-footer-quote-en">I do not believe in fate. In wine and dreams, I will seek out my true self.</span>
+        </p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

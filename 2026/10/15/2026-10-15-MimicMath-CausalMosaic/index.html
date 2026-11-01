@@ -1,0 +1,511 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026-10-15-拟态机制-CausalMosaic - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,
+资料说明：原记录中提及的本机脚本及题目附件未随本文附上，相关文件名仅用于说明当时的复现流程。
+
+因果拼图 Causal Mosaic · 三份残缺日志拼一个全序1flag&amp;#123;W3nxZB8,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2026-10-15-拟态机制-CausalMosaic - 二月の档案室"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,
+资料说明：原记录中提及的本机脚本及题目附件未随本文附上，相关文件名仅用于说明当时的复现流程。
+
+因果拼图 Causal Mosaic · 三份残缺日志拼一个全序1flag&amp;#123;W3nxZB8,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2026-10-15-拟态机制-CausalMosaic - 二月の档案室"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,
+资料说明：原记录中提及的本机脚本及题目附件未随本文附上，相关文件名仅用于说明当时的复现流程。
+
+因果拼图 Causal Mosaic · 三份残缺日志拼一个全序1flag&amp;#123;W3nxZB8,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
+
+    <meta name="theme-color" content="#faf9f5" />
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <img class="f-brand-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="28" height="28">
+        <span class="f-brand-text">二月<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="/">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="/" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「我不相信命运，且我将在醉生梦死中追寻真正的自我。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
+</div>
+
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
+            
+            <span class="f-crumb-cur">正文</span>
+        </nav>
+
+        <h1 class="f-post-title">2026-10-15-拟态机制-CausalMosaic</h1>
+
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2026-10-15T12:00:00.000Z">2026-10-15</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                7 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                3.2k 字
+            </span>
+            
+        </div>
+
+        
+        <div class="f-post-tags">
+            
+            <a class="f-tag" href="/tags/CTF/">#CTF</a>
+            
+            <a class="f-tag" href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
+            
+            <a class="f-tag" href="/tags/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/">#拓扑排序</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <blockquote>
+<p>资料说明：原记录中提及的本机脚本及题目附件未随本文附上，相关文件名仅用于说明当时的复现流程。</p>
+</blockquote>
+<h3 id="因果拼图-Causal-Mosaic-·-三份残缺日志拼一个全序"><a href="#因果拼图-Causal-Mosaic-·-三份残缺日志拼一个全序" class="headerlink" title="因果拼图 Causal Mosaic · 三份残缺日志拼一个全序"></a>因果拼图 Causal Mosaic · 三份残缺日志拼一个全序</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;W3nxZB8RVy4tcddDVAvpHIo8&#125;</span><br></pre></td></tr></table></figure>
+
+<p>环境：附件 <code>20261015-v5</code>，本机网关 <code>http://127.0.0.1:28911</code><br>复现：<code>py -3.13 solve.py</code>（或 <code>python client_example.py --base http://127.0.0.1:28911</code>）</p>
+<h4 id="一句话"><a href="#一句话" class="headerlink" title="一句话"></a>一句话</h4><p>平台给你三份<strong>部分有序</strong>的观测（A 直接给前后对、B 给带箭头的字符串、C 给下标对），要你合成一个<strong>全序</strong>（事件数组）；三份答案 A&#x2F;B&#x2F;C 必须完全一致地提交同一份结果。本质是“从三个不同编码的偏序关系恢复拓扑序”，难点不在算法，而在<strong>看懂三种格式各自的箭头方向</strong>。</p>
+<h4 id="0-协议"><a href="#0-协议" class="headerlink" title="0. 协议"></a>0. 协议</h4><p>网页或客户端都只有两步：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">POST /api/new      -&gt; &#123;&quot;session_id&quot;:..., &quot;question_id&quot;:..., &quot;challenge&quot;:&#123;...&#125;&#125;</span><br><span class="line">POST /api/submit   -&gt; &#123;&quot;session_id&quot;:..., &quot;question_id&quot;:..., &quot;inputs&quot;:&#123;&quot;A&quot;:...,&quot;B&quot;:...,&quot;C&quot;:...&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>会话 15 分钟、最多 64 次提交；正文上限 256 KiB（三份答案都要塞进去）。答对一次即完成。</p>
+<h4 id="1-三种-traces-的解码（这题的坑全在这）"><a href="#1-三种-traces-的解码（这题的坑全在这）" class="headerlink" title="1. 三种 traces 的解码（这题的坑全在这）"></a>1. 三种 traces 的解码（这题的坑全在这）</h4><p><code>challenge</code> 里有 <code>events</code>（每个带 <code>id</code> 和 <code>weight</code>）和 <code>traces</code> 三段：</p>
+<table>
+<thead>
+<tr>
+<th>来源</th>
+<th>结构</th>
+<th>怎么读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>traces.A</code></td>
+<td><code>&#123;&quot;before&quot;: X, &quot;after&quot;: Y&#125;</code></td>
+<td>直接就是 <code>X → Y</code></td>
+</tr>
+<tr>
+<td><code>traces.B</code></td>
+<td><code>&#123;&quot;relation&quot;: &quot;L &lt;- R&quot;&#125;</code></td>
+<td><strong>箭头右边先发生</strong>，所以是 <code>R → L</code>（反着读！）</td>
+</tr>
+<tr>
+<td><code>traces.C</code></td>
+<td><code>&#123;&quot;pair&quot;: [i, j]&#125;</code></td>
+<td>下标 → 事件 id，即 <code>ids[i] → ids[j]</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> traces.get(<span class="string">&quot;A&quot;</span>, []):</span><br><span class="line">    edges.append((row[<span class="string">&quot;before&quot;</span>], row[<span class="string">&quot;after&quot;</span>]))</span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> traces.get(<span class="string">&quot;B&quot;</span>, []):</span><br><span class="line">    left, right = [p.strip() <span class="keyword">for</span> p <span class="keyword">in</span> row[<span class="string">&quot;relation&quot;</span>].split(<span class="string">&quot;&lt;-&quot;</span>)]</span><br><span class="line">    edges.append((right, left))          <span class="comment"># 箭头指向“后发生”</span></span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> traces.get(<span class="string">&quot;C&quot;</span>, []):</span><br><span class="line">    i, j = row[<span class="string">&quot;pair&quot;</span>]</span><br><span class="line">    edges.append((ids[i], ids[j]))</span><br></pre></td></tr></table></figure>
+
+<p>B 那段是唯一的语义陷阱：字符串看着像 <code>后 &lt;- 前</code>，很多人第一反应按 <code>left → right</code> 连边，结果拼出来的序会让后面的边全部成环。</p>
+<h4 id="2-拓扑排序（Kahn）"><a href="#2-拓扑排序（Kahn）" class="headerlink" title="2. 拓扑排序（Kahn）"></a>2. 拓扑排序（Kahn）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">indeg = &#123;i: <span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> ids&#125;</span><br><span class="line">adj   = &#123;i: [] <span class="keyword">for</span> i <span class="keyword">in</span> ids&#125;</span><br><span class="line"><span class="keyword">for</span> a, b <span class="keyword">in</span> edges:</span><br><span class="line">    adj[a].append(b); indeg[b] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">order, ready = [], [i <span class="keyword">for</span> i <span class="keyword">in</span> ids <span class="keyword">if</span> indeg[i] == <span class="number">0</span>]</span><br><span class="line"><span class="keyword">while</span> ready:</span><br><span class="line">    cur = ready.pop(<span class="number">0</span>); order.append(cur)</span><br><span class="line">    <span class="keyword">for</span> nxt <span class="keyword">in</span> adj[cur]:</span><br><span class="line">        indeg[nxt] -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> indeg[nxt] == <span class="number">0</span>:</span><br><span class="line">            ready.append(nxt)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">len</span>(order) != <span class="built_in">len</span>(ids):</span><br><span class="line">    <span class="keyword">raise</span> SystemExit(<span class="string">&quot;cycle detected / incomplete topological order&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><code>len(order) != len(ids)</code> 就是“边读反了&#x2F;漏了一段”的报警器 —— 这题里它比任何调试输出都好用。</p>
+<h4 id="3-提交与评分"><a href="#3-提交与评分" class="headerlink" title="3. 提交与评分"></a>3. 提交与评分</h4><p>三份答案放同一个数组（平台要求 A&#x2F;B&#x2F;C 是<strong>同一份完整答案</strong>）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">post(base, <span class="string">&quot;/api/submit&quot;</span>, &#123;<span class="string">&quot;session_id&quot;</span>: sid, <span class="string">&quot;question_id&quot;</span>: qid,</span><br><span class="line">                           <span class="string">&quot;inputs&quot;</span>: &#123;<span class="string">&quot;A&quot;</span>: order, <span class="string">&quot;B&quot;</span>: order, <span class="string">&quot;C&quot;</span>: order&#125;&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>每个执行器独立校验，返回 <code>valid/value/digest</code>。本题结果：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;outputs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line"> <span class="punctuation">&#123;</span><span class="attr">&quot;executor&quot;</span><span class="punctuation">:</span><span class="string">&quot;A&quot;</span><span class="punctuation">,</span><span class="attr">&quot;valid&quot;</span><span class="punctuation">:</span><span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span><span class="attr">&quot;value&quot;</span><span class="punctuation">:</span><span class="number">234</span><span class="punctuation">,</span><span class="attr">&quot;digest&quot;</span><span class="punctuation">:</span><span class="string">&quot;bf96d698...7cbb&quot;</span><span class="punctuation">,</span><span class="attr">&quot;reason&quot;</span><span class="punctuation">:</span><span class="string">&quot;accepted&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line"> <span class="punctuation">&#123;</span><span class="attr">&quot;executor&quot;</span><span class="punctuation">:</span><span class="string">&quot;B&quot;</span><span class="punctuation">,</span><span class="attr">&quot;valid&quot;</span><span class="punctuation">:</span><span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span><span class="attr">&quot;value&quot;</span><span class="punctuation">:</span><span class="number">234</span><span class="punctuation">,</span><span class="attr">&quot;digest&quot;</span><span class="punctuation">:</span><span class="string">&quot;bf96d698...7cbb&quot;</span><span class="punctuation">,</span><span class="attr">&quot;reason&quot;</span><span class="punctuation">:</span><span class="string">&quot;accepted&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line"> <span class="punctuation">&#123;</span><span class="attr">&quot;executor&quot;</span><span class="punctuation">:</span><span class="string">&quot;C&quot;</span><span class="punctuation">,</span><span class="attr">&quot;valid&quot;</span><span class="punctuation">:</span><span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span><span class="attr">&quot;value&quot;</span><span class="punctuation">:</span><span class="number">234</span><span class="punctuation">,</span><span class="attr">&quot;digest&quot;</span><span class="punctuation">:</span><span class="string">&quot;bf96d698...7cbb&quot;</span><span class="punctuation">,</span><span class="attr">&quot;reason&quot;</span><span class="punctuation">:</span><span class="string">&quot;accepted&quot;</span><span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;flag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;flag&#123;W3nxZB8RVy4tcddDVAvpHIo8&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>value</code> 是事件权重之和（本题 234），<code>digest</code> 是把事件 id 排序后做 SHA-256 —— 也就是说<strong>校验的是“序”和“集合”两件事</strong>，顺序错了 value 不会变但 valid 会 false。</p>
+<h4 id="4-踩坑"><a href="#4-踩坑" class="headerlink" title="4. 踩坑"></a>4. 踩坑</h4><table>
+<thead>
+<tr>
+<th>坑</th>
+<th>现象</th>
+<th>解决</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>B 的箭头方向</td>
+<td>拼出来成环 &#x2F; 拓扑长度不足</td>
+<td><code>&quot;L &lt;- R&quot;</code> 读作 <code>R → L</code></td>
+</tr>
+<tr>
+<td>C 用事件 id 当边</td>
+<td><code>unknown event in edge</code></td>
+<td><code>pair</code> 是<strong>下标</strong>，要过一层 <code>ids[i]</code></td>
+</tr>
+<tr>
+<td>事件集合不完整</td>
+<td><code>len(order) != len(ids)</code></td>
+<td>三份 traces 必须全吃进去</td>
+</tr>
+<tr>
+<td>提交非数组</td>
+<td><code>invalid inputs</code></td>
+<td>因果拼图提交的是<strong>事件 id 数组</strong>，不是对象</td>
+</tr>
+<tr>
+<td>会话超时</td>
+<td><code>session expired</code></td>
+<td>15 分钟窗口，重新 <code>/api/new</code> 即可（每题答案结构不变）</td>
+</tr>
+</tbody></table>
+<h4 id="5-一句话总结"><a href="#5-一句话总结" class="headerlink" title="5. 一句话总结"></a>5. 一句话总结</h4><p>这题不难，难在“三种观测格式三种箭头约定”。<strong>先统一成有向边，再让算法替你想</strong> —— 只要 <code>len(order) == len(ids)</code>，答案就一定是自洽的。</p>
+
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
+                <ul id="audio-list" style="display:none">
+                    
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
+                    
+                </ul>
+                
+            </div>
+
+            
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/2026/10/15/2026-10-15-MimicMath-CausalMosaic/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
+
+
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
+    
+    <a class="f-pn-card f-pn-prev" href="/2026/10/13/2026-10-13-JWT/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">2026-10-13-JWT</span>
+        <span class="f-pn-date">2026-10-13</span>
+    </a>
+    
+    
+    <a class="f-pn-card f-pn-next" href="/2026/10/16/2026-10-16-DockingCheck/">
+        <span class="f-pn-label">更早的文章 →</span>
+        <span class="f-pn-title">2026-10-16-DockingCheck</span>
+        <span class="f-pn-date">2026-10-16</span>
+    </a>
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%A0%E6%9E%9C%E6%8B%BC%E5%9B%BE-Causal-Mosaic-%C2%B7-%E4%B8%89%E4%BB%BD%E6%AE%8B%E7%BC%BA%E6%97%A5%E5%BF%97%E6%8B%BC%E4%B8%80%E4%B8%AA%E5%85%A8%E5%BA%8F"><span class="toc-text">因果拼图 Causal Mosaic · 三份残缺日志拼一个全序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D"><span class="toc-text">一句话</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#0-%E5%8D%8F%E8%AE%AE"><span class="toc-text">0. 协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%B8%89%E7%A7%8D-traces-%E7%9A%84%E8%A7%A3%E7%A0%81%EF%BC%88%E8%BF%99%E9%A2%98%E7%9A%84%E5%9D%91%E5%85%A8%E5%9C%A8%E8%BF%99%EF%BC%89"><span class="toc-text">1. 三种 traces 的解码（这题的坑全在这）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F%EF%BC%88Kahn%EF%BC%89"><span class="toc-text">2. 拓扑排序（Kahn）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%8F%90%E4%BA%A4%E4%B8%8E%E8%AF%84%E5%88%86"><span class="toc-text">3. 提交与评分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E8%B8%A9%E5%9D%91"><span class="toc-text">4. 踩坑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93"><span class="toc-text">5. 一句话总结</span></a></li></ol></li></ol></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <img class="f-footer-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="34" height="34">
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">
+            <span class="f-footer-quote-zh">我不相信命运，且我将在醉生梦死中追寻真正的自我。</span>
+            <span class="f-footer-quote-en">I do not believe in fate. In wine and dreams, I will seek out my true self.</span>
+        </p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

