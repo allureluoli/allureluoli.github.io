@@ -9834,6 +9834,11 @@ RESULT: reproduced (vulnerable crashes, fixed does not)
 <h2 id="诊断包给出了只读账号"><a href="#诊断包给出了只读账号" class="headerlink" title="诊断包给出了只读账号"></a>诊断包给出了只读账号</h2><p><code>/diagnostic</code> 导出的 ZIP 里有 config.json，包含 viewer 账号的明文密码、camera_acc 用户名、第二管理身份及初始 pan&#x2F;tilt。</p>
 <p>用 viewer 登录 console 成功，还能登录 dsapi，但权限有限：console 的 PTZ move 返回 403，dsapi 只允许部分方法。账号能登录，并不代表能操纵摄像头。</p>
 <p>抓到的画面是 OFFICE 门，初始位置 P&#x3D;-150、T&#x3D;10。<code>/preview?pan=...</code> 并没有改变机位，只改变查询参数不能绕过控制接口。</p>
+<h3 id="实际抓取的画面"><a href="#实际抓取的画面" class="headerlink" title="实际抓取的画面"></a>实际抓取的画面</h3><p>下面是从工作区保存的原始 PNG，不是示意图。图内时间戳均为 UTC+08:00。</p>
+<p><img src="/img/sscp-20261031/vhttpd-preview.png" alt="2026-10-31 22:15:59，媒体预览显示 OFFICE 门，机位为 P=-150.0、T+10"></p>
+<p><em>媒体服务 <code>/preview</code> 的实际返回，来源：<code>nest_226/captures/vhttpd_preview.png</code>。此时白板不在画面中。</em></p>
+<p><img src="/img/sscp-20261031/query-pan-zero.png" alt="2026-10-31 22:29:08，pan 参数为零的测试图片，画面仍显示 P=-150.0、T+10"></p>
+<p><em>查询参数扫角阶段保存为 <code>captures/pan_+000.png</code> 的图片。文件名表示测试参数，右上角叠字和 OFFICE 门画面仍保持初始机位，不能据文件名判断已转向。</em></p>
 <h2 id="固件能解释算法，不能直接代表线上密钥"><a href="#固件能解释算法，不能直接代表线上密钥" class="headerlink" title="固件能解释算法，不能直接代表线上密钥"></a>固件能解释算法，不能直接代表线上密钥</h2><p>固件包是 VSCPFW 容器，解出 ARM32 静态二进制 vscpd。反编译与 qemu 实测确认，UsernameToken 的核心涉及：</p>
 <figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Base64_NOPAD(SHA1(decoded_nonce || Created前缀 || 固件中的常量))</span><br></pre></td></tr></table></figure>
 
@@ -9846,6 +9851,8 @@ RESULT: reproduced (vulnerable crashes, fixed does not)
 
 <p>该记录称无填充格式下，设备定向字典约 4700 条时命中。它比 10 月 31 日会话末尾“仍缺 camera_acc 密码”的状态更新。</p>
 <p>因此后续不能继续把“没有 PTZ 凭据”当成唯一卡点。但这条是状态文件记录，本次没有重新对靶机认证，也没有找到最终白板或 flag 的成功回执。</p>
+<p><img src="/img/sscp-20261031/ptz-sweep-plus90.png" alt="2026-11-01 00:13:06，PTZ 扫角阶段保存的画面仍显示 OFFICE 门和 P=-150.0、T+10"></p>
+<p><em>跨日 PTZ 扫角阶段的实际抓帧，来源：<code>frames/ptz_sweep/pan_+090.png</code>。尽管文件名标记 +90，图中机位仍为 -150；这张图没有证明摄像头已经转向，也没有显示白板内容。</em></p>
 <h2 id="真正剩下的工作"><a href="#真正剩下的工作" class="headerlink" title="真正剩下的工作"></a>真正剩下的工作</h2><p>使用正确的 camera_acc 凭据和 UsernameToken 编码完成 PTZ，再把机位变化与媒体画面对应。工作区已经有 <code>sscp_ptz.py</code> 和相关抓帧脚本；下一轮应先验证 GetStatus、移动响应和实际图像是否一致，再判断白板能否读出。</p>
 <p>实例关闭后多个入口曾退化为 Caddy 空响应，需要重新核对同一实例的映射和状态，不能把不同实例的会话凭据混用。</p>
 <h2 id="资料来源"><a href="#资料来源" class="headerlink" title="资料来源"></a>资料来源</h2><p>根据 <code>nest_226/SSCP_LOOT.md</code>、SSCP 当日会话及早期测绘笔记整理。仅保留题目实验账号中与认证突破有关的信息，未附个人服务密钥、完整抓包或浏览器会话。</p>
