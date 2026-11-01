@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+import hashlib
 
 root = Path(__file__).resolve().parent
 data = json.loads((root / "samples.json").read_text(encoding="utf-8"))
@@ -15,4 +16,8 @@ residuals = [(sum(a * x for a, x in zip(row, s)) + err - target) % q
 assert all(r == 0 for r in residuals), residuals
 print(f"Verified {m}/{m} equations; s weight={sum(s)}")
 print("s=" + "".join(map(str, s)))
-print("masked_update remains unsolved; no final flag is asserted.")
+cipher = bytes.fromhex(data["masked_update"])
+mask = hashlib.sha256(bytes(s)).digest()
+plaintext = bytes(c ^ k for c, k in zip(cipher, mask))
+assert plaintext == b"flag{mask_seed_from_dropout}"
+print(plaintext.decode())

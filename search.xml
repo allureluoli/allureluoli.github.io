@@ -9542,9 +9542,9 @@ RESULT: reproduced (vulnerable crashes, fixed does not)
       </tags>
   </entry>
   <entry>
-    <title>samples.json 未完成记录：LWE 秘密向量已恢复，masked_update 仍未解开</title>
+    <title>samples.json LWE 题解：恢复秘密向量，用 SHA-256 还原掩码</title>
     <url>/2026/10/31/2026-10-31-CTF-samples-LWE-progress/</url>
-    <content><![CDATA[<p>这道附件题目前只保留 samples.json，缺少完整题面。已经得到能满足所有方程的秘密向量与误差向量，但 masked_update 的生成规则不明，尚未得到最终 flag。不能把恢复私钥等同于完成整题。</p>
+    <content><![CDATA[<p>这道 LWE 附件题已经解出：恢复二进制秘密向量 s 后，计算 <code>SHA256(bytes(s))</code>，与 masked_update 异或得到 <code>flag&#123;mask_seed_from_dropout&#125;</code>。本文已用保存的原始数据重新核验方程和最终解密结果。</p>
 <span id="more"></span>
 
 <h2 id="附件结构"><a href="#附件结构" class="headerlink" title="附件结构"></a>附件结构</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">q = 7681</span><br><span class="line">n = 32</span><br><span class="line">m = 64</span><br><span class="line">A: 64 × 32</span><br><span class="line">b: 64 维</span><br><span class="line">masked_update: 28 字节</span><br></pre></td></tr></table></figure>
@@ -9561,21 +9561,25 @@ RESULT: reproduced (vulnerable crashes, fixed does not)
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">residuals = [</span><br><span class="line">    (<span class="built_in">sum</span>(a * x <span class="keyword">for</span> a, x <span class="keyword">in</span> <span class="built_in">zip</span>(row, s)) + err - target) % q</span><br><span class="line">    <span class="keyword">for</span> row, err, target <span class="keyword">in</span> <span class="built_in">zip</span>(A, e, b)</span><br><span class="line">]</span><br><span class="line"><span class="keyword">assert</span> <span class="built_in">len</span>(residuals) == <span class="number">64</span></span><br><span class="line"><span class="keyword">assert</span> <span class="built_in">all</span>(r == <span class="number">0</span> <span class="keyword">for</span> r <span class="keyword">in</span> residuals)</span><br></pre></td></tr></table></figure>
 
 <p>结果全部为零，且 s 的元素集合为 <code>&#123;0,1&#125;</code>、e 为 <code>&#123;-1,0,1&#125;</code>。这证明保存的解满足该实例；本文不据此声称解的唯一性已经被证明。</p>
-<h2 id="没完成的是-masked-update"><a href="#没完成的是-masked-update" class="headerlink" title="没完成的是 masked_update"></a>没完成的是 masked_update</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">7c53ddbd82faf811c0397982909a9498644d63fb50a6e697d7cf97f6</span><br></pre></td></tr></table></figure>
+<h2 id="最后一步：SHA-256-掩码"><a href="#最后一步：SHA-256-掩码" class="headerlink" title="最后一步：SHA-256 掩码"></a>最后一步：SHA-256 掩码</h2><p>masked_update 是 28 字节密文：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">7c53ddbd82faf811c0397982909a9498644d63fb50a6e697d7cf97f6</span><br></pre></td></tr></table></figure>
 
-<p>它有 28 字节，与 SHA-224 输出长度相同，但长度相同不能证明它就是 SHA-224 或某种哈希结果。</p>
-<p>原会话和工作区尝试过多种候选：s&#x2F;e 的直接字节或位串异或、常见哈希派生、不同大小端与序列化、若干 PRNG、AES 模式及流密码等。记录中没有得到符合预期格式且经平台确认的 flag。</p>
-<p>这些失败只能排除具体脚本覆盖的候选，不能证明“所有常规方案都不可能”。也没有证据支持直接提交 <code>flag&#123;81063a74&#125;</code>。</p>
+<p>对秘密向量执行 <code>bytes(s)</code>，得到 <strong>32 个值为 0x00 或 0x01 的字节</strong>，再计算 SHA-256。取摘要前 28 字节与密文异或即可还原明文。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"></span><br><span class="line">s = [</span><br><span class="line">    <span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,</span><br><span class="line">    <span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,</span><br><span class="line">    <span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,</span><br><span class="line">    <span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,</span><br><span class="line">]</span><br><span class="line">cipher = <span class="built_in">bytes</span>.fromhex(</span><br><span class="line">    <span class="string">&quot;7c53ddbd82faf811c0397982909a9498644d63fb50a6e697d7cf97f6&quot;</span></span><br><span class="line">)</span><br><span class="line">mask = hashlib.sha256(<span class="built_in">bytes</span>(s)).digest()</span><br><span class="line">plaintext = <span class="built_in">bytes</span>(c ^ k <span class="keyword">for</span> c, k <span class="keyword">in</span> <span class="built_in">zip</span>(cipher, mask))</span><br><span class="line"><span class="built_in">print</span>(plaintext.decode())</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">flag&#123;mask_seed_from_dropout&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>bytes(s)</code> 不是 ASCII 字符串 <code>&quot;10000001...&quot;</code>，也不是把位串打包成四字节 <code>81 06 3a 74</code>。这三种编码的哈希结果不同。此前卡住的是最终派生时的编码选择，不能因为密文长 28 字节就把它当成 SHA-224。</p>
+<p>用户补充的最终解法采用 LLL 恢复 s；工作区保存的较早脚本还包含 BKZ&#x2F;CVP。本文保留前述已有格构造说明，本次重新验证的是保存的向量与最终解密，没有重新运行格规约。</p>
 <h2 id="自动扫-flag-的误报"><a href="#自动扫-flag-的误报" class="headerlink" title="自动扫 flag 的误报"></a>自动扫 flag 的误报</h2><p>自动接题器对 samples.zip 与 samples (1).zip 写入过一个含乱码、控制字符的 <code>FrW&#123;...&#125;</code> 候选。它来自附件静态扫描，没有数学推导或判题回执，不能算完成记录。两份样本应合并处理，避免把重复误报计作两道已解题。</p>
-<h2 id="后续应先补什么"><a href="#后续应先补什么" class="headerlink" title="后续应先补什么"></a>后续应先补什么</h2><p>先找原题名称、描述及生成脚本，确认 masked_update 的含义、字节编码和预期输出格式。保存的 s&#x2F;e 已足够继续验证具体构造，不必先重跑格约化。</p>
-<p>下面提供本题原始数据、已恢复的解以及独立校验脚本；它们只用于复核已完成的数学部分，不包含最终解密程序。</p>
-<ul>
+<h2 id="数据与验证脚本"><a href="#数据与验证脚本" class="headerlink" title="数据与验证脚本"></a>数据与验证脚本</h2><ul>
 <li><a href="/downloads/ctf-20261031-lwe/samples.json">samples.json</a></li>
 <li><a href="/downloads/ctf-20261031-lwe/lwe_solution.json">lwe_solution.json</a></li>
 <li><a href="/downloads/ctf-20261031-lwe/verify_solution.py">verify_solution.py</a></li>
 </ul>
-<p>下载到同一目录后运行 <code>python verify_solution.py</code>。完整误差向量保存在解文件中。</p>
-<h2 id="资料来源"><a href="#资料来源" class="headerlink" title="资料来源"></a>资料来源</h2><p>依据 10 月 31 日 samples 会话、<code>samples_work/unz/solve_wsl.py</code>、<code>lwe_solution.json</code> 及自动接题索引整理。本文重新执行了方程校验，没有重新运行格求解，也没有猜测最终 flag。</p>
+<p>下载到同一目录运行 <code>python verify_solution.py</code>，会先校验全部 64 个方程，再解密并检查最终 flag。</p>
+<h2 id="资料来源"><a href="#资料来源" class="headerlink" title="资料来源"></a>资料来源</h2><p>格分析来自 10 月 31 日 samples 会话及工作区文件；最终 SHA-256 掩码方法由后续解题结果补充。本文使用保存的原始 samples.json、s&#x2F;e 独立校验成功，完整明文为 <code>flag&#123;mask_seed_from_dropout&#125;</code>。</p>
 ]]></content>
       <tags>
         <tag>CTF</tag>
@@ -9651,14 +9655,14 @@ RESULT: reproduced (vulnerable crashes, fixed does not)
       </tags>
   </entry>
   <entry>
-    <title>DeepSeek Harness CTF 工作区复盘：2026-10-31 未完成题目与进度索引</title>
+    <title>DeepSeek Harness CTF 工作区复盘：2026-10-31 题目进度索引与后续解题更新</title>
     <url>/2026/10/31/2026-10-31-DSH-CTF-workspace-review/</url>
-    <content><![CDATA[<p>昨天在 DeepSeek Harness 里同时推进了几道题，后来工作区、会话和 WP 各留下一份状态，读起来很容易把早期卡点当成最终进度。这次对照本机会话和文件，把仍未完成的内容合并为五篇记录。</p>
+    <content><![CDATA[<p>昨天在 DeepSeek Harness 里同时推进了几道题，后来工作区、会话和 WP 各留下一份状态，读起来很容易把早期卡点当成最终进度。这次对照本机会话和文件，将当时未完成的内容合并为五篇记录；后续 LWE 已解出，并补记 UAE 的解码结果。</p>
 <span id="more"></span>
 
 <h2 id="本次整理范围"><a href="#本次整理范围" class="headerlink" title="本次整理范围"></a>本次整理范围</h2><p>核对本机 DSH 注册的 default-workspace、ntf、net_ghost 三个工作区，以及自动接题器保存的派生会话。时间以北京时间 2026-10-31 为主，对同一题延续到 11 月 1 日凌晨的日志明确标记为跨日补记。</p>
 <p>net_ghost 的现存会话没有检出 10 月 31 日事件，因此没有把它更早的开发任务写成昨天的 CTF 进度。这里只覆盖能够读取到的本地会话与资料，不把它描述成服务器上所有 DSH 安装的全量记录。</p>
-<h2 id="五道未完成题目"><a href="#五道未完成题目" class="headerlink" title="五道未完成题目"></a>五道未完成题目</h2><table>
+<h2 id="题目进度（含后续更新）"><a href="#题目进度（含后续更新）" class="headerlink" title="题目进度（含后续更新）"></a>题目进度（含后续更新）</h2><table>
 <thead>
 <tr>
 <th>题目</th>
@@ -9688,8 +9692,13 @@ RESULT: reproduced (vulnerable crashes, fixed does not)
 </tr>
 <tr>
 <td>samples.json</td>
-<td>找到并复核满足全部 64 行方程的 LWE 解</td>
-<td>masked_update 规则及最终明文</td>
+<td>已完成：LWE 解与 SHA256(bytes(s)) 掩码解密均已复核</td>
+<td>无；flag{mask_seed_from_dropout}</td>
+</tr>
+<tr>
+<td>UAE &#x2F; uae.zip</td>
+<td>用户补充已恢复二维码，原文 dr34m_0f_n01s3</td>
+<td>本次未独立复跑扩散逆推</td>
 </tr>
 </tbody></table>
 <h2 id="分题记录"><a href="#分题记录" class="headerlink" title="分题记录"></a>分题记录</h2><ul>
@@ -9697,14 +9706,15 @@ RESULT: reproduced (vulnerable crashes, fixed does not)
 <li><a href="/2026/10/31/2026-10-31-NESTCTF-Ghost-progress/">Ghost：四把钥匙之后</a></li>
 <li><a href="/2026/10/31/2026-10-31-NESTCTF-Handoff-progress/">Handoff：45 分后的身份鸿沟</a></li>
 <li><a href="/2026/10/31/2026-10-31-NESTCTF-SSCP-progress/">SSCP：空口令与摄像头转向</a></li>
-<li><a href="/2026/10/31/2026-10-31-CTF-samples-LWE-progress/">samples.json：LWE 解与未解掩码</a></li>
+<li><a href="/2026/10/31/2026-10-31-CTF-samples-LWE-progress/">samples.json：LWE 解与 SHA-256 掩码</a></li>
 </ul>
 <h2 id="清理掉的几处旧结论"><a href="#清理掉的几处旧结论" class="headerlink" title="清理掉的几处旧结论"></a>清理掉的几处旧结论</h2><p>Ghost 不能继续停留在“3&#x2F;6，没钱买 crown”：新实例资金链已跑通，最新日志是 4&#x2F;6。Handoff 不能把旧 mock 中的多次 RETRY 当成新版线上事实。SSCP 也不能停留在“四入口全硬认证”：媒体空口令和诊断泄露已经成立，凌晨还记录了 camera_acc 的有效认证。</p>
-<p>BenchLink 的任意写主要是本地验证，不能等同于远程拿 flag。samples 的向量通过方程验证，但不能直接当成最终提交答案。自动扫到的乱码 flag、流水线测试 flag 和 mock flag 都不计入正式通关。</p>
+<p>BenchLink 的任意写主要是本地验证，不能等同于远程拿 flag。samples 的向量及最终 SHA-256 异或解密现已验证，得到 <code>flag&#123;mask_seed_from_dropout&#125;</code>。自动扫到的乱码 flag、流水线测试 flag 和 mock flag 都不计入正式通关。</p>
 <h2 id="哪些内容没有重复写"><a href="#哪些内容没有重复写" class="headerlink" title="哪些内容没有重复写"></a>哪些内容没有重复写</h2><p>原博客已有的 NESTCTF 三题合集和已经整理过的完整 WP 不在本次未完成题索引中。当天会话中的 Bootleg、Undercurrent、Silent Weights 等有完成记录，也没有为了凑进度再次写成未完成题。</p>
 <p>gitq_handout 的 README 实际是 Ghost in the Queue 题面，归入 Ghost。PWN 开赛清单属于工具准备资料，没有具体未完成题目的验证结果，因此未另立一题。</p>
 <h2 id="接下来如何续做"><a href="#接下来如何续做" class="headerlink" title="接下来如何续做"></a>接下来如何续做</h2><p>每题都把有效的协议事实、具体失败变体和真正缺少的最后一环留在分题文章里。后续更新应带上实例、时间、原始返回与判题结果；环境离线只记为当时观测，不替代漏洞结论。</p>
-<p>这些文章是公开的未完成复盘，不是完整通关 WP。未放入 DSH 原始会话、个人密钥或浏览器登录 token；实验脚本仅引用工作区文件名，只有 LWE 的数据与独立校验脚本随文提供。</p>
+<p>其中四篇仍是未完成复盘，LWE 已更新为完整解密记录；UAE 按用户提供的成功结果补记。未放入 DSH 原始会话、个人密钥或浏览器登录 token；实验脚本仅引用工作区文件名，只有 LWE 的数据与独立校验脚本随文提供。</p>
+<h2 id="UAE-后续补记"><a href="#UAE-后续补记" class="headerlink" title="UAE 后续补记"></a>UAE 后续补记</h2><p>用户补充 uae.zip 已解出：从扩散过程逆推，去除已知种子的噪声和掩码后恢复二维码，解码原文为 <code>dr34m_0f_n01s3</code>。若平台要求包装格式，则为 <code>flag&#123;dr34m_0f_n01s3&#125;</code>；二维码原文不含 <code>flag&#123;&#125;</code>。这部分来自用户提供的解题结果，本次未独立复跑，也不补造未提供的参数与代码。</p>
 ]]></content>
       <tags>
         <tag>CTF</tag>

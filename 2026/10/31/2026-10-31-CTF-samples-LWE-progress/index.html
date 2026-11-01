@@ -19,12 +19,12 @@
     </script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>samples.json 未完成记录：LWE 秘密向量已恢复，masked_update 仍未解开 - 二月の档案室</title>
+    <title>samples.json LWE 题解：恢复秘密向量，用 SHA-256 还原掩码 - 二月の档案室</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
-    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,这道附件题目前只保留 samples.json，缺少完整题面。已经得到能满足所有方程的秘密向量与误差向量，但 masked_update 的生成规则不明，尚未得到最终 flag。不能把恢复私钥等同于,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,这道 LWE 附件题已经解出：恢复二进制秘密向量 s 后，计算 SHA256(bytes(s))，与 masked_update 异或得到 flag&amp;#123;mask_seed_from_drop,"> 
     <meta name="author" content="Allureluoli"> 
     <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -34,16 +34,16 @@
     
     
     <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="samples.json 未完成记录：LWE 秘密向量已恢复，masked_update 仍未解开 - 二月の档案室"/>
-    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,这道附件题目前只保留 samples.json，缺少完整题面。已经得到能满足所有方程的秘密向量与误差向量，但 masked_update 的生成规则不明，尚未得到最终 flag。不能把恢复私钥等同于,"/>
+    <meta name="twitter:title" content="samples.json LWE 题解：恢复秘密向量，用 SHA-256 还原掩码 - 二月の档案室"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,这道 LWE 附件题已经解出：恢复二进制秘密向量 s 后，计算 SHA256(bytes(s))，与 masked_update 异或得到 flag&amp;#123;mask_seed_from_drop,"/>
     
     
     
     
     <meta property="og:site_name" content="二月の档案室"/>
     <meta property="og:type" content="object"/>
-    <meta property="og:title" content="samples.json 未完成记录：LWE 秘密向量已恢复，masked_update 仍未解开 - 二月の档案室"/>
-    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,这道附件题目前只保留 samples.json，缺少完整题面。已经得到能满足所有方程的秘密向量与误差向量，但 masked_update 的生成规则不明，尚未得到最终 flag。不能把恢复私钥等同于,"/>
+    <meta property="og:title" content="samples.json LWE 题解：恢复秘密向量，用 SHA-256 还原掩码 - 二月の档案室"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,这道 LWE 附件题已经解出：恢复二进制秘密向量 s 后，计算 SHA256(bytes(s))，与 masked_update 异或得到 flag&amp;#123;mask_seed_from_drop,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 <link rel="stylesheet" href="/css/february.css">
@@ -185,7 +185,7 @@
             <span class="f-crumb-cur">正文</span>
         </nav>
 
-        <h1 class="f-post-title">samples.json 未完成记录：LWE 秘密向量已恢复，masked_update 仍未解开</h1>
+        <h1 class="f-post-title">samples.json LWE 题解：恢复秘密向量，用 SHA-256 还原掩码</h1>
 
         <div class="f-post-meta">
             <span class="f-meta-item">
@@ -198,7 +198,7 @@
             </span>
             <span class="f-meta-item">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-                1.6k 字
+                1.9k 字
             </span>
             
         </div>
@@ -221,7 +221,7 @@
     <div class="f-post-wrap">
         <article class="f-post-main">
             <div class="content markdown f-content">
-                <p>这道附件题目前只保留 samples.json，缺少完整题面。已经得到能满足所有方程的秘密向量与误差向量，但 masked_update 的生成规则不明，尚未得到最终 flag。不能把恢复私钥等同于完成整题。</p>
+                <p>这道 LWE 附件题已经解出：恢复二进制秘密向量 s 后，计算 <code>SHA256(bytes(s))</code>，与 masked_update 异或得到 <code>flag&#123;mask_seed_from_dropout&#125;</code>。本文已用保存的原始数据重新核验方程和最终解密结果。</p>
 <span id="more"></span>
 
 <h2 id="附件结构"><a href="#附件结构" class="headerlink" title="附件结构"></a>附件结构</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">q = 7681</span><br><span class="line">n = 32</span><br><span class="line">m = 64</span><br><span class="line">A: 64 × 32</span><br><span class="line">b: 64 维</span><br><span class="line">masked_update: 28 字节</span><br></pre></td></tr></table></figure>
@@ -238,21 +238,25 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">residuals = [</span><br><span class="line">    (<span class="built_in">sum</span>(a * x <span class="keyword">for</span> a, x <span class="keyword">in</span> <span class="built_in">zip</span>(row, s)) + err - target) % q</span><br><span class="line">    <span class="keyword">for</span> row, err, target <span class="keyword">in</span> <span class="built_in">zip</span>(A, e, b)</span><br><span class="line">]</span><br><span class="line"><span class="keyword">assert</span> <span class="built_in">len</span>(residuals) == <span class="number">64</span></span><br><span class="line"><span class="keyword">assert</span> <span class="built_in">all</span>(r == <span class="number">0</span> <span class="keyword">for</span> r <span class="keyword">in</span> residuals)</span><br></pre></td></tr></table></figure>
 
 <p>结果全部为零，且 s 的元素集合为 <code>&#123;0,1&#125;</code>、e 为 <code>&#123;-1,0,1&#125;</code>。这证明保存的解满足该实例；本文不据此声称解的唯一性已经被证明。</p>
-<h2 id="没完成的是-masked-update"><a href="#没完成的是-masked-update" class="headerlink" title="没完成的是 masked_update"></a>没完成的是 masked_update</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">7c53ddbd82faf811c0397982909a9498644d63fb50a6e697d7cf97f6</span><br></pre></td></tr></table></figure>
+<h2 id="最后一步：SHA-256-掩码"><a href="#最后一步：SHA-256-掩码" class="headerlink" title="最后一步：SHA-256 掩码"></a>最后一步：SHA-256 掩码</h2><p>masked_update 是 28 字节密文：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">7c53ddbd82faf811c0397982909a9498644d63fb50a6e697d7cf97f6</span><br></pre></td></tr></table></figure>
 
-<p>它有 28 字节，与 SHA-224 输出长度相同，但长度相同不能证明它就是 SHA-224 或某种哈希结果。</p>
-<p>原会话和工作区尝试过多种候选：s&#x2F;e 的直接字节或位串异或、常见哈希派生、不同大小端与序列化、若干 PRNG、AES 模式及流密码等。记录中没有得到符合预期格式且经平台确认的 flag。</p>
-<p>这些失败只能排除具体脚本覆盖的候选，不能证明“所有常规方案都不可能”。也没有证据支持直接提交 <code>flag&#123;81063a74&#125;</code>。</p>
+<p>对秘密向量执行 <code>bytes(s)</code>，得到 <strong>32 个值为 0x00 或 0x01 的字节</strong>，再计算 SHA-256。取摘要前 28 字节与密文异或即可还原明文。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"></span><br><span class="line">s = [</span><br><span class="line">    <span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,</span><br><span class="line">    <span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,</span><br><span class="line">    <span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,</span><br><span class="line">    <span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,</span><br><span class="line">]</span><br><span class="line">cipher = <span class="built_in">bytes</span>.fromhex(</span><br><span class="line">    <span class="string">&quot;7c53ddbd82faf811c0397982909a9498644d63fb50a6e697d7cf97f6&quot;</span></span><br><span class="line">)</span><br><span class="line">mask = hashlib.sha256(<span class="built_in">bytes</span>(s)).digest()</span><br><span class="line">plaintext = <span class="built_in">bytes</span>(c ^ k <span class="keyword">for</span> c, k <span class="keyword">in</span> <span class="built_in">zip</span>(cipher, mask))</span><br><span class="line"><span class="built_in">print</span>(plaintext.decode())</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;mask_seed_from_dropout&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>bytes(s)</code> 不是 ASCII 字符串 <code>&quot;10000001...&quot;</code>，也不是把位串打包成四字节 <code>81 06 3a 74</code>。这三种编码的哈希结果不同。此前卡住的是最终派生时的编码选择，不能因为密文长 28 字节就把它当成 SHA-224。</p>
+<p>用户补充的最终解法采用 LLL 恢复 s；工作区保存的较早脚本还包含 BKZ&#x2F;CVP。本文保留前述已有格构造说明，本次重新验证的是保存的向量与最终解密，没有重新运行格规约。</p>
 <h2 id="自动扫-flag-的误报"><a href="#自动扫-flag-的误报" class="headerlink" title="自动扫 flag 的误报"></a>自动扫 flag 的误报</h2><p>自动接题器对 samples.zip 与 samples (1).zip 写入过一个含乱码、控制字符的 <code>FrW&#123;...&#125;</code> 候选。它来自附件静态扫描，没有数学推导或判题回执，不能算完成记录。两份样本应合并处理，避免把重复误报计作两道已解题。</p>
-<h2 id="后续应先补什么"><a href="#后续应先补什么" class="headerlink" title="后续应先补什么"></a>后续应先补什么</h2><p>先找原题名称、描述及生成脚本，确认 masked_update 的含义、字节编码和预期输出格式。保存的 s&#x2F;e 已足够继续验证具体构造，不必先重跑格约化。</p>
-<p>下面提供本题原始数据、已恢复的解以及独立校验脚本；它们只用于复核已完成的数学部分，不包含最终解密程序。</p>
-<ul>
+<h2 id="数据与验证脚本"><a href="#数据与验证脚本" class="headerlink" title="数据与验证脚本"></a>数据与验证脚本</h2><ul>
 <li><a href="/downloads/ctf-20261031-lwe/samples.json">samples.json</a></li>
 <li><a href="/downloads/ctf-20261031-lwe/lwe_solution.json">lwe_solution.json</a></li>
 <li><a href="/downloads/ctf-20261031-lwe/verify_solution.py">verify_solution.py</a></li>
 </ul>
-<p>下载到同一目录后运行 <code>python verify_solution.py</code>。完整误差向量保存在解文件中。</p>
-<h2 id="资料来源"><a href="#资料来源" class="headerlink" title="资料来源"></a>资料来源</h2><p>依据 10 月 31 日 samples 会话、<code>samples_work/unz/solve_wsl.py</code>、<code>lwe_solution.json</code> 及自动接题索引整理。本文重新执行了方程校验，没有重新运行格求解，也没有猜测最终 flag。</p>
+<p>下载到同一目录运行 <code>python verify_solution.py</code>，会先校验全部 64 个方程，再解密并检查最终 flag。</p>
+<h2 id="资料来源"><a href="#资料来源" class="headerlink" title="资料来源"></a>资料来源</h2><p>格分析来自 10 月 31 日 samples 会话及工作区文件；最终 SHA-256 掩码方法由后续解题结果补充。本文使用保存的原始 samples.json、s&#x2F;e 独立校验成功，完整明文为 <code>flag&#123;mask_seed_from_dropout&#125;</code>。</p>
 
                 <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
                 <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -293,7 +297,7 @@
     
     <a class="f-pn-card f-pn-next" href="/2026/10/31/2026-10-31-DSH-CTF-workspace-review/">
         <span class="f-pn-label">更早的文章 →</span>
-        <span class="f-pn-title">DeepSeek Harness CTF 工作区复盘：2026-10-31 未完成题目与进度索引</span>
+        <span class="f-pn-title">DeepSeek Harness CTF 工作区复盘：2026-10-31 题目进度索引与后续解题更新</span>
         <span class="f-pn-date">2026-10-31</span>
     </a>
     
@@ -323,7 +327,7 @@
             
             <div class="f-toc-card" id="f-toc-card">
                 <p class="f-toc-title">目录<em>CONTENTS</em></p>
-                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-text">附件结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%82%E8%A7%A3%E6%80%9D%E8%B7%AF"><span class="toc-text">求解思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%B2%E6%81%A2%E5%A4%8D%E5%B9%B6%E9%87%8D%E6%96%B0%E6%A0%B8%E9%AA%8C%E7%9A%84%E7%BB%93%E6%9E%9C"><span class="toc-text">已恢复并重新核验的结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B2%A1%E5%AE%8C%E6%88%90%E7%9A%84%E6%98%AF-masked-update"><span class="toc-text">没完成的是 masked_update</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E6%89%AB-flag-%E7%9A%84%E8%AF%AF%E6%8A%A5"><span class="toc-text">自动扫 flag 的误报</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E7%BB%AD%E5%BA%94%E5%85%88%E8%A1%A5%E4%BB%80%E4%B9%88"><span class="toc-text">后续应先补什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%96%99%E6%9D%A5%E6%BA%90"><span class="toc-text">资料来源</span></a></li></ol></div>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-text">附件结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%82%E8%A7%A3%E6%80%9D%E8%B7%AF"><span class="toc-text">求解思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%B2%E6%81%A2%E5%A4%8D%E5%B9%B6%E9%87%8D%E6%96%B0%E6%A0%B8%E9%AA%8C%E7%9A%84%E7%BB%93%E6%9E%9C"><span class="toc-text">已恢复并重新核验的结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E4%B8%80%E6%AD%A5%EF%BC%9ASHA-256-%E6%8E%A9%E7%A0%81"><span class="toc-text">最后一步：SHA-256 掩码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E6%89%AB-flag-%E7%9A%84%E8%AF%AF%E6%8A%A5"><span class="toc-text">自动扫 flag 的误报</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E4%B8%8E%E9%AA%8C%E8%AF%81%E8%84%9A%E6%9C%AC"><span class="toc-text">数据与验证脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%96%99%E6%9D%A5%E6%BA%90"><span class="toc-text">资料来源</span></a></li></ol></div>
             </div>
             
         </aside>
