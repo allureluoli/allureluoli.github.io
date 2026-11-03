@@ -1,0 +1,651 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>区块链国赛笔记 02｜FISCO BCOS 控制台命令与节点状态检查 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,控制台既是合约交互入口，也是确认群组、节点和共识状态的工具。这篇把常用命令和原始状态检查记录放在一起。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="区块链国赛笔记 02｜FISCO BCOS 控制台命令与节点状态检查 - 二月の档案室"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,控制台既是合约交互入口，也是确认群组、节点和共识状态的工具。这篇把常用命令和原始状态检查记录放在一起。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="区块链国赛笔记 02｜FISCO BCOS 控制台命令与节点状态检查 - 二月の档案室"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,控制台既是合约交互入口，也是确认群组、节点和共识状态的工具。这篇把常用命令和原始状态检查记录放在一起。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
+
+    <meta name="theme-color" content="#faf9f5" />
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <img class="f-brand-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="28" height="28">
+        <span class="f-brand-text">二月<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="/">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="/" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「我不相信命运，且我将在醉生梦死中追寻真正的自我。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
+</div>
+
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
+            
+            <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9B%BD%E8%B5%9B%E7%AC%94%E8%AE%B0/">区块链国赛笔记</a>
+            <span aria-hidden="true">/</span>
+            
+            <span class="f-crumb-cur">正文</span>
+        </nav>
+
+        <h1 class="f-post-title">区块链国赛笔记 02｜FISCO BCOS 控制台命令与节点状态检查</h1>
+
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2026-11-03T15:30:00.000Z">2026-11-03</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                15 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                7.0k 字
+            </span>
+            
+            <a class="f-meta-item f-meta-cat" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9B%BD%E8%B5%9B%E7%AC%94%E8%AE%B0/">区块链国赛笔记</a>
+            
+        </div>
+
+        
+        <div class="f-post-tags">
+            
+            <a class="f-tag" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/">#区块链</a>
+            
+            <a class="f-tag" href="/tags/%E5%9B%BD%E8%B5%9B%E5%A4%87%E8%B5%9B/">#国赛备赛</a>
+            
+            <a class="f-tag" href="/tags/FISCO-BCOS/">#FISCO BCOS</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <p>控制台既是合约交互入口，也是确认群组、节点和共识状态的工具。这篇把常用命令和原始状态检查记录放在一起。</p>
+<span id="more"></span>
+
+<blockquote>
+<p>本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时的实验环境；本文未重新搭建整套环境验证。</p>
+</blockquote>
+<h2 id="阅读前先确认"><a href="#阅读前先确认" class="headerlink" title="阅读前先确认"></a>阅读前先确认</h2><p>进程存在只证明程序启动；还要检查连接、群组成员、块高及交易执行结果。无交易时块高不增长，不能单凭这一点判定故障。</p>
+<h2 id="FISCO-CONSOLE"><a href="#FISCO-CONSOLE" class="headerlink" title="FISCO CONSOLE"></a>FISCO CONSOLE</h2><p>CONSOLE 是官方开发的控制台</p>
+<p>1.x版本基于 WEB3SDK实现 2.6往后版本都是使用JAVA SDK实现</p>
+<p>但是JAVA版本很抽象 上一个文档有讲 官方推荐使用java 14</p>
+<p><strong>基本命令 (Basic Command)</strong></p>
+<ul>
+<li><code>help([-h, -help, --h, --H, --help, -H, h])</code> 提供帮助信息</li>
+<li><code>clearNodeName</code> 清空默认节点名称为空</li>
+<li><code>quit([quit, q, exit])</code> 退出控制台</li>
+<li><code>getNodeName</code> 获取此客户端中的默认节点名称</li>
+<li><code>switch([s])</code> 按名称切换到特定群组</li>
+<li><code>setNodeName</code> 设置发送请求的默认节点名称</li>
+</ul>
+<p><strong>合约操作 (Contract Operation)</strong></p>
+<ul>
+<li><code>call</code> 通过函数和参数调用合约</li>
+<li><code>deploy</code> 在区块链上部署合约</li>
+<li><code>getCode</code> 查询给定地址的代码</li>
+<li><code>getDeployLog</code> 查询已部署合约的日志</li>
+<li><code>listAbi</code> 列出合约的函数和事件信息</li>
+<li><code>listDeployContractAddress</code> 列出指定合约的合约地址</li>
+<li><code>transfer</code> 将代币转移到指定地址</li>
+</ul>
+<p><strong>区块链状态查询 (Blockchain Status Query)</strong></p>
+<ul>
+<li><code>getBlockByHash</code> 通过哈希查询区块信息</li>
+<li><code>getBlockByNumber</code> 通过区块号查询区块信息</li>
+<li><code>getBlockHashByNumber</code> 通过区块号查询区块哈希</li>
+<li><code>getBlockHeaderByHash</code> 通过哈希查询区块头信息</li>
+<li><code>getBlockHeaderByNumber</code> 通过区块号查询区块头信息</li>
+<li><code>getBlockNumber</code> 查询最新区块的编号（也就是块高 区块链编号代表区块链高度）</li>
+<li><code>getPeers</code> 查询当前连接到客户端的对等节点</li>
+<li><code>getPendingTxSize</code> 查询待处理交易的大小</li>
+<li><code>getSyncStatus</code> 查询同步状态</li>
+<li><code>getSystemConfigByKey</code> 通过键查询系统配置值</li>
+<li><code>getTotalTransactionCount</code> 查询总交易数量</li>
+<li><code>getTransactionByHash</code> 通过交易哈希查询交易信息</li>
+<li><code>getTransactionByHashWithProof</code> 通过交易哈希查询交易和交易证明</li>
+<li><code>getTransactionReceipt</code> 通过交易哈希查询交易收据</li>
+<li><code>getTransactionReceiptByHashWithProof</code> 通过交易哈希查询收据和交易收据证明</li>
+<li><code>setSystemConfigByKey</code> 通过键设置系统配置值</li>
+</ul>
+<p><strong>共识操作 (Consensus Operation)</strong></p>
+<ul>
+<li><code>addObserver</code> 添加观察者节点</li>
+<li><code>addSealer</code> 添加共识节点</li>
+<li><code>getCandidateList</code> 查询候选共识节点的节点ID列表</li>
+<li><code>getConsensusStatus</code> 查询共识状态</li>
+<li><code>getObserverList</code> 查询观察者节点的节点ID列表</li>
+<li><code>getPbftView</code> 查询节点的PBFT视图</li>
+<li><code>getSealerList</code> 查询共识节点的节点ID列表</li>
+<li><code>removeNode</code> 移除节点</li>
+<li><code>setConsensusWeight</code> 为指定节点设置共识权重</li>
+</ul>
+<p><strong>BFS 操作 (BFS Operation)</strong></p>
+<ul>
+<li><code>cd</code> 更改目录到给定路径</li>
+<li><code>fixBFS</code> 修复指定版本的BFS错误</li>
+<li><code>ln</code> 创建链接以访问合约</li>
+<li><code>ls</code> 列出给定路径中的资源</li>
+<li><code>mkdir</code> 在给定路径中创建目录</li>
+<li><code>pwd</code> 显示工作目录名称的绝对路径</li>
+<li><code>tree</code> 以树状格式列出目录内容</li>
+</ul>
+<p><strong>CRUD 合约操作 (CRUD Contract Operation)</strong></p>
+<ul>
+<li><code>alter</code> 通过SQL更改表列</li>
+<li><code>create</code> 通过SQL创建表</li>
+<li><code>delete</code> 通过SQL删除记录</li>
+<li><code>desc</code> 描述表信息</li>
+<li><code>insert</code> 通过SQL插入记录</li>
+<li><code>select</code> 通过SQL选择记录</li>
+<li><code>update</code> 通过SQL更新记录</li>
+</ul>
+<p><strong>群组信息查询 (Group Info Query)</strong></p>
+<ul>
+<li><code>getGroupInfo</code> 查询当前群组信息</li>
+<li><code>getGroupInfoList</code> 获取所有群组信息</li>
+<li><code>getGroupList</code> 列出所有群组列表</li>
+<li><code>getGroupNodeInfo</code> 获取群组节点信息</li>
+<li><code>getGroupPeers</code> 列出所有群组对等节点</li>
+</ul>
+<p><strong>权限操作 (Authority Operation)</strong></p>
+<ul>
+<li><code>abolishAccount</code> 废除特定账户</li>
+<li><code>abolishContract</code> 废除特定合约</li>
+<li><code>addObserverProposal</code> 向委员会创建提案，尝试添加新的共识观察者节点</li>
+<li><code>addSealerProposal</code> 向委员会创建提案，尝试添加新的共识节点</li>
+<li><code>checkDeployAuth</code> 检查账户是否具有部署权限</li>
+<li><code>checkMethodAuth</code> 检查特定合约中账户的方法访问控制列表(ACL)</li>
+<li><code>closeDeployAuthProposal</code> 向委员会创建提案，尝试关闭特定账户的部署ACL</li>
+<li><code>closeMethodAuth</code> 关闭特定合约中账户的方法ACL</li>
+<li><code>freezeAccount</code> 冻结特定账户</li>
+<li><code>freezeContract</code> 冻结特定合约</li>
+<li><code>getAccountStatus</code> 获取账户状态</li>
+<li><code>getCommitteeInfo</code> 获取委员会信息</li>
+<li><code>getContractAdmin</code> 从特定合约获取管理员地址</li>
+<li><code>getContractStatus</code> 获取合约状态</li>
+<li><code>getDeployAuth</code> 全局获取部署ACL策略</li>
+<li><code>getLatestProposal</code> 获取最新提案信息</li>
+<li><code>getMethodAuth</code> 获取特定合约中账户的方法ACL</li>
+<li><code>getProposalInfo</code> 从委员会获取特定提案信息或提案信息列表</li>
+<li><code>initAuth</code> 初始化委员会合约系统</li>
+<li><code>openDeployAuthProposal</code> 向委员会创建提案，尝试为特定账户开启部署ACL</li>
+<li><code>openMethodAuth</code> 为特定合约中的账户开启方法ACL</li>
+<li><code>removeNodeProposal</code> 向委员会创建提案，尝试移除共识节点</li>
+<li><code>resetAdminProposal</code> 向委员会创建提案，尝试重置特定合约的管理员</li>
+<li><code>revokeProposal</code> 从委员会撤销特定提案</li>
+<li><code>setConsensusNodeWeightProposal</code> 向委员会创建提案，尝试设置共识节点的权重</li>
+<li><code>setDeployAuthTypeProposal</code> 向委员会创建提案，尝试全局设置部署ACL类型</li>
+<li><code>setMethodAuth</code> 在特定合约中设置方法ACL类型</li>
+<li><code>setRateProposal</code> 向委员会创建提案，尝试更新委员会投票率</li>
+<li><code>setSysConfigProposal</code> 向委员会创建提案，尝试设置系统配置</li>
+<li><code>unfreezeAccount</code> 解冻特定账户</li>
+<li><code>unfreezeContract</code> 解冻特定合约</li>
+<li><code>updateGovernorProposal</code> 向委员会创建提案，尝试更新治理者</li>
+<li><code>upgradeVoteProposal</code> 向委员会创建提案，尝试升级委员会投票计算逻辑</li>
+<li><code>voteProposal</code> 向委员会投票特定提案</li>
+</ul>
+<p><strong>账户操作 (Account Operation)</strong></p>
+<ul>
+<li><code>getCurrentAccount</code> 获取当前账户信息</li>
+<li><code>listAccount</code> 列出当前保存的账户列表</li>
+<li><code>loadAccount</code> 加载账户以进行交易签名</li>
+<li><code>newAccount</code> 创建账户</li>
+</ul>
+<p><strong>分片操作 (Sharding Operation)</strong></p>
+<ul>
+<li><code>getContractShard</code> 获取合约所属的分片</li>
+<li><code>linkShard</code> 将合约添加到分片</li>
+<li><code>makeShard</code> 创建分片</li>
+</ul>
+<p><strong>余额预编译操作 (Balance Precompiled Operation)</strong></p>
+<ul>
+<li><code>addBalance</code> 向账户添加余额。仅余额治理者(balanceGovernor)可以使用</li>
+<li><code>getBalance</code> 获取账户的余额</li>
+<li><code>listBalanceGovernor</code> 列出所有注册的余额治理者</li>
+<li><code>registerBalanceGovernor</code> 将账户注册为余额治理者。仅治理者(Governor)账户可以使用</li>
+<li><code>subBalance</code> 从账户扣除余额。仅余额治理者可以使用</li>
+<li><code>transferBalance</code> 将余额从一个账户转移到另一个账户。仅余额治理者可以使用</li>
+<li><code>unregisterBalanceGovernor</code> 从余额治理者中注销账户。仅治理者账户可以使用</li>
+</ul>
+<h2 id="FISCO-监控状态"><a href="#FISCO-监控状态" class="headerlink" title="FISCO 监控状态"></a>FISCO 监控状态</h2><h3 id="监控区块链状态"><a href="#监控区块链状态" class="headerlink" title="监控区块链状态"></a>监控区块链状态</h3><p>文档中提到：监控区块链网络的节点数量、节点ID、块高、pbftview和节点运行状态，我们可以通过一些命令来查看节点数量</p>
+<ul>
+<li><p>监控区块链网络的节点数量</p>
+<ul>
+<li><p>通过进程查看</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">└─$ ps aux |grep -v grep |grep fisco-bcos</span><br><span class="line">cure     25655  4.4  0.6 1905492 78308 pts/1   Sl   15:15   5:38 /home/cure/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini -g config.genesis</span><br><span class="line">cure     25657  4.4  0.6 1947004 77896 pts/1   Sl   15:15   5:37 /home/cure/fisco/nodes/127.0.0.1/node3/../fisco-bcos -c config.ini -g config.genesis</span><br><span class="line">cure     25659  4.4  0.6 1956748 82488 pts/1   Sl   15:15   5:39 /home/cure/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini -g config.genesis</span><br><span class="line">cure     25661  4.4  0.6 1982360 79432 pts/1   Sl   15:15   5:38 /home/cure/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini -g config.genesis</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看一个群组的节点数量</p>
+<p>进入console 后通过命令查看(首先你已经在正确的群组内了)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[group0]: /apps&gt; getObserverList</span><br><span class="line">[]</span><br><span class="line"></span><br><span class="line">[group0]: /apps&gt; getSealerList</span><br><span class="line">[</span><br><span class="line">    Sealer&#123;</span><br><span class="line">        nodeID=<span class="string">&#x27;2ae72c97e19a93ac3cee2951326bc5daba0ac7db0991bb5b8069d18130e638cb4981aa6f6dec246d0374c1d068d74559b7edef3ce259793e369300e638ba3c07&#x27;</span>,</span><br><span class="line">        weight=1</span><br><span class="line">    &#125;,</span><br><span class="line">    Sealer&#123;</span><br><span class="line">        nodeID=<span class="string">&#x27;3e80932ce833e5e186c293c5ff4982650b1236709fa1fd9ff79db79765900e9bf0ba2ab7dc17aee9c7aed74d9a208e2eb2ad1c2e9fe14cc5d07e8eba9a17aae8&#x27;</span>,</span><br><span class="line">        weight=1</span><br><span class="line">    &#125;,</span><br><span class="line">    Sealer&#123;</span><br><span class="line">        nodeID=<span class="string">&#x27;6a249c4013ab54c5d40ee541d00f831ea27cb3d4e7cb56730882f7780613faadacb698c30b2e0869958e12087554f972da05a103fee3ad0acbc6095927bec879&#x27;</span>,</span><br><span class="line">        weight=1</span><br><span class="line">    &#125;,</span><br><span class="line">    Sealer&#123;</span><br><span class="line">        nodeID=<span class="string">&#x27;ce907b6e4a120a22d0247267f00348cf101f9ca4e8a907dd73d342a851e5d1471a7d4ab0849f17633302242e89c6446df876cf3d051011fd3453dac2adcaafd1&#x27;</span>,</span><br><span class="line">        weight=1</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">[group0]: /apps&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>查看节点ID</p>
+<ul>
+<li><p>通过 console 有三个列表命令</p>
+</li>
+<li><p><code>getCandidateList</code> 查询候选共识节点的节点ID列表</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[group0]: /apps&gt; getCandidateList</span><br><span class="line">[]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>getObserverList</code> 查询观察者节点的节点ID列表</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[group0]: /apps&gt; getObserverList</span><br><span class="line">[]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>getSealerList</code> 查询共识节点的节点ID列表</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[group0]: /apps&gt; getSealerList</span><br><span class="line">[</span><br><span class="line">    Sealer&#123;</span><br><span class="line">        nodeID=<span class="string">&#x27;2ae72c97e19a93ac3cee2951326bc5daba0ac7db0991bb5b8069d18130e638cb4981aa6f6dec246d0374c1d068d74559b7edef3ce259793e369300e638ba3c07&#x27;</span>,</span><br><span class="line">        weight=1</span><br><span class="line">    &#125;,</span><br><span class="line">    Sealer&#123;</span><br><span class="line">        nodeID=<span class="string">&#x27;3e80932ce833e5e186c293c5ff4982650b1236709fa1fd9ff79db79765900e9bf0ba2ab7dc17aee9c7aed74d9a208e2eb2ad1c2e9fe14cc5d07e8eba9a17aae8&#x27;</span>,</span><br><span class="line">        weight=1</span><br><span class="line">    &#125;,</span><br><span class="line">    Sealer&#123;</span><br><span class="line">        nodeID=<span class="string">&#x27;6a249c4013ab54c5d40ee541d00f831ea27cb3d4e7cb56730882f7780613faadacb698c30b2e0869958e12087554f972da05a103fee3ad0acbc6095927bec879&#x27;</span>,</span><br><span class="line">        weight=1</span><br><span class="line">    &#125;,</span><br><span class="line">    Sealer&#123;</span><br><span class="line">        nodeID=<span class="string">&#x27;ce907b6e4a120a22d0247267f00348cf101f9ca4e8a907dd73d342a851e5d1471a7d4ab0849f17633302242e89c6446df876cf3d051011fd3453dac2adcaafd1&#x27;</span>,</span><br><span class="line">        weight=1</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过<code>cat</code> 命令读取文件直接查看</p>
+<p>这里以查看node3为例</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">└─$ <span class="built_in">cat</span> node3/conf/node.nodeid</span><br><span class="line">ce907b6e4a120a22d0247267f00348cf101f9ca4e8a907dd73d342a851e5d1471a7d4ab0849f17633302242e89c6446df876cf3d051011fd3453dac2adcaafd1</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>查询区块链高度</p>
+<ul>
+<li><p>在console 通过 <code>getBlockNumber</code> 查看区块链编号</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">=============================================================================================</span><br><span class="line">[group0]: /apps&gt; getBlockNumber</span><br><span class="line">2</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>监控 pbftview</p>
+<ul>
+<li><p>在console 通过 <code>getPbftView</code>查看<code>view</code>的编号</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[group0]: /apps&gt; getPbftView</span><br><span class="line">3</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="科普"><a href="#科普" class="headerlink" title="科普"></a>科普</h3><p>最新区块编号（或称区块高度）表示当前区块链网络中最新的、已被共识确认的区块的序号。其核心含义是：</p>
+<ul>
+<li>链增长标识：编号从 0（创世块）开始单调递增，数值越大代表链越长，包含的交易和历史越多。</li>
+<li>网络状态指标：反映了网络的活跃度和数据处理进度。编号增长越快，通常说明网络交易吞吐量越高或出块间隔越短。</li>
+<li>同步参考点：新节点或落后节点通过对比此编号来判断自己与网络最新状态的差距，以完成数据同步。</li>
+</ul>
+<p>PBFT（Practical Byzantine Fault Tolerance，实用拜占庭容错）是一种共识算法，旨在解决分布式系统中节点可能发生恶意行为（拜占庭错误）的问题。其核心目标是在最多不超过1&#x2F;3的节点出现故障或恶意行为时，系统仍能达成一致并正常运行</p>
+<p>共识算法可以在少数节点作恶(如伪造消息)场景中达成共识，它采用签名、签名验证、哈希等密码学算法确保消息传递过程中的防篡改性、防伪造性、不可抵赖性，并优化了前人工作，将拜占庭容错算法复杂度从指数级降低到多项式级别，在一个由(3<em>f+1)个节点构成的系统中，只要有不少于(2</em>f+1)个非恶意节点正常工作，该系统就能达成一致性，如：7个节点的系统中允许2个节点出现拜占庭错误。</p>
+<p>主要特点：</p>
+<ul>
+<li><strong>容错性</strong>：最多容忍f个恶意节点（系统总节点数需≥3f+1）。</li>
+<li><strong>确定性</strong>：一旦达成共识，结果不可逆转。</li>
+<li><strong>性能</strong>：相比PoW等算法，能耗低、延迟较低，适合联盟链或私有链场景。</li>
+</ul>
+<p><code>getPbftView</code> 返回的视图 <code>View</code>  是PBFT中的一种状态机制，用于在主节点（Primary）出现故障时切换领导权。</p>
+<ul>
+<li>视图编号从0开始递增（通常为整数），每次主节点切换时视图编号+1。</li>
+</ul>
+<h2 id="复现时的自查"><a href="#复现时的自查" class="headerlink" title="复现时的自查"></a>复现时的自查</h2><ul>
+<li>记录自己实际使用的版本、配置和缺失依赖。</li>
+<li>对照本篇关键步骤，保存命令或调用结果，并解释结果代表什么。</li>
+<li>对失败或与原记录不一致的情况保留错误信息，不把历史输出当成自己的验证结果。</li>
+</ul>
+<p><a href="/guosai-notes/">返回系列导读</a> · <a href="/guosai-notes/fisco-start/">上一篇</a> · <a href="/guosai-notes/fisco-expand/">下一篇</a></p>
+
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
+                <ul id="audio-list" style="display:none">
+                    
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
+                    
+                </ul>
+                
+            </div>
+
+            
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/guosai-notes/fisco-console/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
+
+
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
+    
+    <a class="f-pn-card f-pn-prev" href="/guosai-notes/fisco-start/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">区块链国赛笔记 01｜FISCO BCOS 建链、端口与控制台配置</span>
+        <span class="f-pn-date">2026-11-03</span>
+    </a>
+    
+    
+    <a class="f-pn-card f-pn-next" href="/guosai-notes/">
+        <span class="f-pn-label">更早的文章 →</span>
+        <span class="f-pn-title">差几名银牌之后：把我的区块链国赛备赛笔记公开</span>
+        <span class="f-pn-date">2026-11-03</span>
+    </a>
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E5%89%8D%E5%85%88%E7%A1%AE%E8%AE%A4"><span class="toc-text">阅读前先确认</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FISCO-CONSOLE"><span class="toc-text">FISCO CONSOLE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FISCO-%E7%9B%91%E6%8E%A7%E7%8A%B6%E6%80%81"><span class="toc-text">FISCO 监控状态</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%91%E6%8E%A7%E5%8C%BA%E5%9D%97%E9%93%BE%E7%8A%B6%E6%80%81"><span class="toc-text">监控区块链状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%91%E6%99%AE"><span class="toc-text">科普</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E7%8E%B0%E6%97%B6%E7%9A%84%E8%87%AA%E6%9F%A5"><span class="toc-text">复现时的自查</span></a></li></ol></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <img class="f-footer-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="34" height="34">
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">
+            <span class="f-footer-quote-zh">我不相信命运，且我将在醉生梦死中追寻真正的自我。</span>
+            <span class="f-footer-quote-en">I do not believe in fate. In wine and dreams, I will seek out my true self.</span>
+        </p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

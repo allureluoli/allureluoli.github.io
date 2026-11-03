@@ -1,0 +1,592 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>差几名银牌之后：把我的区块链国赛备赛笔记公开 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,之前打国赛，最后惜败，离银牌差了几名。现在决定把当时留下的学习笔记整理出来，放到博客里公开，希望这些实操记录和踩过的坑，也能帮到后来准备比赛的人。
+这些内容是我当时的学习过程，有完整的命令和代码，也,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="差几名银牌之后：把我的区块链国赛备赛笔记公开 - 二月の档案室"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,之前打国赛，最后惜败，离银牌差了几名。现在决定把当时留下的学习笔记整理出来，放到博客里公开，希望这些实操记录和踩过的坑，也能帮到后来准备比赛的人。
+这些内容是我当时的学习过程，有完整的命令和代码，也,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="差几名银牌之后：把我的区块链国赛备赛笔记公开 - 二月の档案室"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,之前打国赛，最后惜败，离银牌差了几名。现在决定把当时留下的学习笔记整理出来，放到博客里公开，希望这些实操记录和踩过的坑，也能帮到后来准备比赛的人。
+这些内容是我当时的学习过程，有完整的命令和代码，也,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
+
+    <meta name="theme-color" content="#faf9f5" />
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <img class="f-brand-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="28" height="28">
+        <span class="f-brand-text">二月<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="/">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="/" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「我不相信命运，且我将在醉生梦死中追寻真正的自我。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
+</div>
+
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
+            
+            <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9B%BD%E8%B5%9B%E7%AC%94%E8%AE%B0/">区块链国赛笔记</a>
+            <span aria-hidden="true">/</span>
+            
+            <span class="f-crumb-cur">正文</span>
+        </nav>
+
+        <h1 class="f-post-title">差几名银牌之后：把我的区块链国赛备赛笔记公开</h1>
+
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2026-11-03T15:30:00.000Z">2026-11-03</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                5 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                2.2k 字
+            </span>
+            
+            <a class="f-meta-item f-meta-cat" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9B%BD%E8%B5%9B%E7%AC%94%E8%AE%B0/">区块链国赛笔记</a>
+            
+        </div>
+
+        
+        <div class="f-post-tags">
+            
+            <a class="f-tag" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/">#区块链</a>
+            
+            <a class="f-tag" href="/tags/%E5%9B%BD%E8%B5%9B%E5%A4%87%E8%B5%9B/">#国赛备赛</a>
+            
+            <a class="f-tag" href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">#学习记录</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <p>之前打国赛，最后惜败，离银牌差了几名。现在决定把当时留下的学习笔记整理出来，放到博客里公开，希望这些实操记录和踩过的坑，也能帮到后来准备比赛的人。</p>
+<p>这些内容是我当时的学习过程，有完整的命令和代码，也有没做完的部分、对题目的推测，以及为了练习自己补出来的示例。整理时保留了这些区别，不把练习记录当成标准答案。</p>
+<span id="more"></span>
+
+<h2 id="这套笔记怎么读"><a href="#这套笔记怎么读" class="headerlink" title="这套笔记怎么读"></a>这套笔记怎么读</h2><p>如果从零开始，可以先走 FISCO BCOS 建链、控制台、扩容和 WeBASE 这条线，再读 Solidity 与 ABI，之后练合约测试和前后端联调。安全实验与 Uniswap 源码放在后半部分。</p>
+<p>文章使用整理日期，不推断原始比赛日期或赛事届次。原笔记混有 Solidity 0.4.x、0.5.x、0.8.x，FISCO BCOS 不同部署模式，以及本地以太坊开发链；它们是不同练习环境，不能合并成一个依赖清单。</p>
+<h2 id="系列目录"><a href="#系列目录" class="headerlink" title="系列目录"></a>系列目录</h2><ol>
+<li><a href="/guosai-notes/fisco-start/">FISCO BCOS 建链、端口与控制台配置</a></li>
+<li><a href="/guosai-notes/fisco-console/">FISCO BCOS 控制台命令与节点状态检查</a></li>
+<li><a href="/guosai-notes/fisco-expand/">FISCO BCOS 节点扩容：角色、证书与 Air 实操</a></li>
+<li><a href="/guosai-notes/webase/">WeBASE 部署、用户管理与 CNS</a></li>
+<li><a href="/guosai-notes/webase-cert/">WeBASE-Front 启动失败：一次证书不匹配排查</a></li>
+<li><a href="/guosai-notes/solidity-design/">Solidity 存证合约：存储、接口与工具库</a></li>
+<li><a href="/guosai-notes/solidity-abi/">读懂 Solidity ABI、调用输入与 FISCO 交易回执</a></li>
+<li><a href="/guosai-notes/supply-chain/">供应链金融合约：企业、票据与转账业务</a></li>
+<li><a href="/guosai-notes/foundry/">Foundry 入门：工具分工与 Counter 测试</a></li>
+<li><a href="/guosai-notes/rust-ink/">Rust 智能合约初识：ink! 存储、消息与单元测试</a></li>
+<li><a href="/guosai-notes/spring-web/">Spring Boot 接口开发与 OpenAPI 调试笔记</a></li>
+<li><a href="/guosai-notes/spring-vue/">Vue 与 Thymeleaf：比赛前端源码阅读</a></li>
+<li><a href="/guosai-notes/web3j/">Spring Boot 通过 Web3j 调用本地合约</a></li>
+<li><a href="/guosai-notes/mock-deploy/">流程模拟：四节点建链与 WeBASE 部署</a></li>
+<li><a href="/guosai-notes/mock-docker/">流程模拟：用 Docker 部署四节点联盟链</a></li>
+<li><a href="/guosai-notes/bank-tests/">Bank 合约练习：功能测试与取款边界</a></li>
+<li><a href="/guosai-notes/uniswap-factory/">Uniswap V2 工厂合约：交易对与 CREATE2</a></li>
+<li><a href="/guosai-notes/uniswap-pair/">Uniswap V2 Pair：流动性与交换测试阅读笔记</a></li>
+<li><a href="/guosai-notes/security-reentrancy/">合约安全实验：重入攻击与测试记录</a></li>
+<li><a href="/guosai-notes/security-arithmetic/">合约安全实验：算术溢出与下溢</a></li>
+<li><a href="/guosai-notes/security-delegatecall/">合约安全实验：delegatecall 与存储槽覆盖</a></li>
+<li><a href="/guosai-notes/security-replay/">合约安全实验：签名重放与防护思路</a></li>
+<li><a href="/guosai-notes/security-selfdestruct/">合约安全实验：selfdestruct 的版本边界</a></li>
+<li><a href="/guosai-notes/ops/">备赛运维补充：Bash 监控、MySQL 与 Docker 推演</a></li>
+</ol>
+<h2 id="当时如何拆解备赛任务"><a href="#当时如何拆解备赛任务" class="headerlink" title="当时如何拆解备赛任务"></a>当时如何拆解备赛任务</h2><p>下面是原笔记中的备赛范围与权重摘录，尚未完成来源核对，只能代表当时的学习规划，不作为当前赛制说明。</p>
+<table>
+<thead>
+<tr>
+<th>任务模块</th>
+<th>权重</th>
+<th>考察点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A 区块链网络搭建、监控与维护</td>
+<td>20%</td>
+<td>基于Ubuntu虚拟化开发环境，使用预编译二进制文件搭建企业级区块链开发平台，含FISCO BCOS区块链底层技术平台和区块链控制台等，按要求进行扩容和区块链网络配置，并监控区块链网络的运行状态。</td>
+</tr>
+<tr>
+<td>B 智能合约开发与测试</td>
+<td>20%</td>
+<td>基于业务背景，使用Solidity合约语言进行智能合约开发与测试，并完成合约编译、部署，实现不同业务智能合约的测试。</td>
+</tr>
+<tr>
+<td>C 智能合约的编译、部署、调用</td>
+<td>15%</td>
+<td>智能合约的编译、部署、调用、发送交易等，并通过区块链中间件平台完整展示业务逻辑。</td>
+</tr>
+<tr>
+<td>D 前端开发</td>
+<td>10%</td>
+<td>基于前端开发框架VUE完成页面逻辑和展示。</td>
+</tr>
+<tr>
+<td>E 区块链应用系统开发与测试</td>
+<td>20%</td>
+<td>利用后端Java编程语言，实现应用程序接口、完善区块链应用系统接口，调用智能合约开发结果，实现上链以及链上信息查询展示。</td>
+</tr>
+<tr>
+<td>F 项目文档编写</td>
+<td>5%</td>
+<td>根据项目需求和实施成果，编写区块链应用系统测试用例等项目文档。</td>
+</tr>
+<tr>
+<td>G 集成测试与部署</td>
+<td>5%</td>
+<td>根据开发完成的前后端项目，编译项目并部署环境启动容器，完成集成测试。</td>
+</tr>
+<tr>
+<td>H 职业素养</td>
+<td>5%</td>
+<td>团队分工明确合理、操作规范、文明竞赛。</td>
+</tr>
+</tbody></table>
+<h3 id="FISCO-BCOS系统-模块A"><a href="#FISCO-BCOS系统-模块A" class="headerlink" title="FISCO-BCOS系统 模块A"></a>FISCO-BCOS系统 模块A</h3><ul>
+<li>使用预编译二进制文件搭建企业级区块链开发平台<ul>
+<li>FISCO BCOS区块链底层技术平台</li>
+<li>区块链控制台</li>
+<li>附加：<ul>
+<li>扩容<ul>
+<li>增加更多节点，新建更多群组</li>
+</ul>
+</li>
+<li>区块链网络配置</li>
+<li>监控区块链网络的运行状态<ul>
+<li>监控区块链网络的节点数量、节点ID、块高、pbftview和节点运行状态</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Solidity-智能合约-模块B"><a href="#Solidity-智能合约-模块B" class="headerlink" title="Solidity 智能合约 模块B"></a>Solidity 智能合约 模块B</h3><ul>
+<li><p>Solidity智能合约开发</p>
+<ul>
+<li>转账合约：</li>
+<li>接口合约：</li>
+<li>存储合约：</li>
+</ul>
+</li>
+<li><p>Solidity智能合约测试</p>
+</li>
+<li><p>Solidity智能合约编译、部署</p>
+</li>
+<li><p>实现不同业务智能合约的测试</p>
+</li>
+</ul>
+<h3 id="智能合约的使用-模块C"><a href="#智能合约的使用-模块C" class="headerlink" title="智能合约的使用 模块C"></a>智能合约的使用 模块C</h3><ul>
+<li><p>智能合约编译部署后，发送交易</p>
+</li>
+<li><p>通过区块链中间件平台完整展示业务逻辑</p>
+</li>
+</ul>
+<h3 id="前端开发-模块D"><a href="#前端开发-模块D" class="headerlink" title="前端开发 模块D"></a>前端开发 模块D</h3><ul>
+<li>使用VUE完成<code>dapp</code>前端开发</li>
+<li>完成页面逻辑和展示</li>
+</ul>
+<h3 id="区块链应用系统开发与测试-模块E"><a href="#区块链应用系统开发与测试-模块E" class="headerlink" title="区块链应用系统开发与测试 模块E"></a>区块链应用系统开发与测试 模块E</h3><ul>
+<li><strong>又名 智能合约使用 JAVA 后端调用</strong><ul>
+<li>应用程序接口</li>
+<li>完善区块链应用系统接口</li>
+<li>调用智能合约开发结果</li>
+<li>实现上链以及链上信息查询展示</li>
+</ul>
+</li>
+</ul>
+<h3 id="编写项目文档-模块F"><a href="#编写项目文档-模块F" class="headerlink" title="编写项目文档 模块F"></a>编写项目文档 模块F</h3><ul>
+<li>根据项目要求内容和实现编写出相应的项目文档</li>
+<li>编写区块链应用系统测试用例</li>
+</ul>
+<h3 id="集成测试与部署-模块G"><a href="#集成测试与部署-模块G" class="headerlink" title="集成测试与部署 模块G"></a>集成测试与部署 模块G</h3><ul>
+<li>编译项目并部署环境启动容器，完成集成测试</li>
+</ul>
+<hr>
+<p>可能出现的内容：</p>
+<ul>
+<li><strong>智能合约漏洞攻击和防护</strong></li>
+</ul>
+<h2 id="最后几天的练习安排"><a href="#最后几天的练习安排" class="headerlink" title="最后几天的练习安排"></a>最后几天的练习安排</h2><p>下面保留原笔记的日期标记，不据此推断年份。</p>
+<p>10.8</p>
+<ul>
+<li><p>Foundry Rust</p>
+</li>
+<li><p>Brownie Python</p>
+</li>
+<li><p>再写一个 Solidity 金融管理合约</p>
+</li>
+<li><p>SQL 创建用户 设置权限练习</p>
+</li>
+</ul>
+<p>10.9</p>
+<ul>
+<li>Solidity 合约</li>
+<li>Solidity 漏洞复现练习和深层了解</li>
+<li>Solidity</li>
+</ul>
+<p>10.10 </p>
+<ul>
+<li>前端调用合约练习</li>
+<li>前后端交互复现</li>
+</ul>
+<h2 id="整理范围与未完成部分"><a href="#整理范围与未完成部分" class="headerlink" title="整理范围与未完成部分"></a>整理范围与未完成部分</h2><p>空白的 Foundry_Rust、只有标题的抓包笔记和占位 README 没有单独发布。安全实验、Uniswap 与 Rust 内容保留为学习记录，未补造测试通过结果。源码引用继续保留原有注释，涉及第三方代码时应同时遵循上游许可。</p>
+<p>本次修订纠正了回执状态、接口可见性、ERC20 transfer 参数以及监控循环，并删除证书排错中的密钥输出。原始笔记保留在本地，没有覆盖。</p>
+
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
+                <ul id="audio-list" style="display:none">
+                    
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
+                    
+                </ul>
+                
+            </div>
+
+            
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/guosai-notes/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
+
+
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
+    
+    <a class="f-pn-card f-pn-prev" href="/guosai-notes/fisco-console/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">区块链国赛笔记 02｜FISCO BCOS 控制台命令与节点状态检查</span>
+        <span class="f-pn-date">2026-11-03</span>
+    </a>
+    
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E5%A5%97%E7%AC%94%E8%AE%B0%E6%80%8E%E4%B9%88%E8%AF%BB"><span class="toc-text">这套笔记怎么读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E5%88%97%E7%9B%AE%E5%BD%95"><span class="toc-text">系列目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%93%E6%97%B6%E5%A6%82%E4%BD%95%E6%8B%86%E8%A7%A3%E5%A4%87%E8%B5%9B%E4%BB%BB%E5%8A%A1"><span class="toc-text">当时如何拆解备赛任务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#FISCO-BCOS%E7%B3%BB%E7%BB%9F-%E6%A8%A1%E5%9D%97A"><span class="toc-text">FISCO-BCOS系统 模块A</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solidity-%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6-%E6%A8%A1%E5%9D%97B"><span class="toc-text">Solidity 智能合约 模块B</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E7%9A%84%E4%BD%BF%E7%94%A8-%E6%A8%A1%E5%9D%97C"><span class="toc-text">智能合约的使用 模块C</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-%E6%A8%A1%E5%9D%97D"><span class="toc-text">前端开发 模块D</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BA%94%E7%94%A8%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E4%B8%8E%E6%B5%8B%E8%AF%95-%E6%A8%A1%E5%9D%97E"><span class="toc-text">区块链应用系统开发与测试 模块E</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E5%86%99%E9%A1%B9%E7%9B%AE%E6%96%87%E6%A1%A3-%E6%A8%A1%E5%9D%97F"><span class="toc-text">编写项目文档 模块F</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95%E4%B8%8E%E9%83%A8%E7%BD%B2-%E6%A8%A1%E5%9D%97G"><span class="toc-text">集成测试与部署 模块G</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E5%87%A0%E5%A4%A9%E7%9A%84%E7%BB%83%E4%B9%A0%E5%AE%89%E6%8E%92"><span class="toc-text">最后几天的练习安排</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E7%90%86%E8%8C%83%E5%9B%B4%E4%B8%8E%E6%9C%AA%E5%AE%8C%E6%88%90%E9%83%A8%E5%88%86"><span class="toc-text">整理范围与未完成部分</span></a></li></ol></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <img class="f-footer-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="34" height="34">
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">
+            <span class="f-footer-quote-zh">我不相信命运，且我将在醉生梦死中追寻真正的自我。</span>
+            <span class="f-footer-quote-en">I do not believe in fate. In wine and dreams, I will seek out my true self.</span>
+        </p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

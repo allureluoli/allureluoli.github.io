@@ -1,0 +1,558 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>区块链国赛笔记 14｜流程模拟：四节点建链与 WeBASE 部署 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,按模拟任务把建链、端口调整和 WeBASE 部署串成一次完整练习，保留命令输出和截图作为操作记录。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时的实,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="区块链国赛笔记 14｜流程模拟：四节点建链与 WeBASE 部署 - 二月の档案室"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,按模拟任务把建链、端口调整和 WeBASE 部署串成一次完整练习，保留命令输出和截图作为操作记录。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时的实,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="区块链国赛笔记 14｜流程模拟：四节点建链与 WeBASE 部署 - 二月の档案室"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,按模拟任务把建链、端口调整和 WeBASE 部署串成一次完整练习，保留命令输出和截图作为操作记录。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时的实,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
+
+    <meta name="theme-color" content="#faf9f5" />
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <img class="f-brand-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="28" height="28">
+        <span class="f-brand-text">二月<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="/">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="/" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「我不相信命运，且我将在醉生梦死中追寻真正的自我。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
+</div>
+
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
+            
+            <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9B%BD%E8%B5%9B%E7%AC%94%E8%AE%B0/">区块链国赛笔记</a>
+            <span aria-hidden="true">/</span>
+            
+            <span class="f-crumb-cur">正文</span>
+        </nav>
+
+        <h1 class="f-post-title">区块链国赛笔记 14｜流程模拟：四节点建链与 WeBASE 部署</h1>
+
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2026-11-03T15:30:00.000Z">2026-11-03</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                18 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                8.1k 字
+            </span>
+            
+            <a class="f-meta-item f-meta-cat" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9B%BD%E8%B5%9B%E7%AC%94%E8%AE%B0/">区块链国赛笔记</a>
+            
+        </div>
+
+        
+        <div class="f-post-tags">
+            
+            <a class="f-tag" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/">#区块链</a>
+            
+            <a class="f-tag" href="/tags/%E5%9B%BD%E8%B5%9B%E5%A4%87%E8%B5%9B/">#国赛备赛</a>
+            
+            <a class="f-tag" href="/tags/FISCO-BCOS/">#FISCO BCOS</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <p>按模拟任务把建链、端口调整和 WeBASE 部署串成一次完整练习，保留命令输出和截图作为操作记录。</p>
+<span id="more"></span>
+
+<blockquote>
+<p>本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时的实验环境；本文未重新搭建整套环境验证。</p>
+</blockquote>
+<h2 id="阅读前先确认"><a href="#阅读前先确认" class="headerlink" title="阅读前先确认"></a>阅读前先确认</h2><p>题面中的三个起始端口与记录中实际使用的两个端口参数存在版本差异。这份记录不能证明所有题面要求已完成，复现时应逐项核对节点配置与监听端口。</p>
+<h2 id="第一部分-1-2题"><a href="#第一部分-1-2题" class="headerlink" title="第一部分 1-2题"></a>第一部分 1-2题</h2><h3 id="第一题"><a href="#第一题" class="headerlink" title="第一题"></a>第一题</h3><p>【要求】</p>
+<p><code>登录Linux服务器，完成节点部署、启动、将过程结果截图，保存至作答 区并点击提交。</code></p>
+<p>1.任务</p>
+<p>登陆Linux服务器，进入指定操作目录（&#x2F;root&#x2F;tools&#x2F;）基于开发部署工 具build_chain.sh 脚本在本地搭建一条4 节点的FISCO BCOS链。起始端口 号为：30300,20200,8545。将节点2的端口号改为30500,20400,8675。确保 搭建的区块链系统能正常运行，并将执行的命令和完整的命令执行结果截图保存 至作答区并点击提交。具体任务如下</p>
+<h4 id="作答："><a href="#作答：" class="headerlink" title="作答："></a>作答：</h4><ul>
+<li>创建节点</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">└─$ bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200 -e ./fisco-bcos</span><br><span class="line">[INFO] Use binary ./fisco-bcos-linux-x86_64.tar.gz</span><br><span class="line">[INFO] Generate ca cert successfully!</span><br><span class="line">Processing IP 127.0.0.1 Total:4</span><br><span class="line">[INFO] Generate ./nodes/127.0.0.1/sdk cert successful!</span><br><span class="line">[INFO] Generate ./nodes/127.0.0.1/node0/conf cert successful!</span><br><span class="line">[INFO] Generate ./nodes/127.0.0.1/node1/conf cert successful!</span><br><span class="line">[INFO] Generate ./nodes/127.0.0.1/node2/conf cert successful!</span><br><span class="line">[INFO] Generate ./nodes/127.0.0.1/node3/conf cert successful!</span><br><span class="line">[INFO] Admin account: 0x3e92f42f138364a66c04e636a1eee5aca03f352f</span><br><span class="line">==============================================================</span><br><span class="line">[INFO] GroupID              : group0</span><br><span class="line">[INFO] ChainID              : chain0</span><br><span class="line">[INFO] fisco-bcos path      : ./fisco-bcos-linux-x86_64.tar.gz</span><br><span class="line">[INFO] Auth mode            : <span class="literal">false</span></span><br><span class="line">[INFO] Start port           : 30300 20200</span><br><span class="line">[INFO] Server IP            : 127.0.0.1:4</span><br><span class="line">[INFO] SM model             : <span class="literal">false</span></span><br><span class="line">[INFO] <span class="built_in">enable</span> HSM           : <span class="literal">false</span></span><br><span class="line">[INFO] nodes.json           : 127.0.0.1:30300,127.0.0.1:30301,127.0.0.1:30302,127.0.0.1:30303,</span><br><span class="line">[INFO] Output <span class="built_in">dir</span>           : ./nodes</span><br><span class="line">[INFO] All completed. Files <span class="keyword">in</span> ./nodes</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/fisco]</span><br><span class="line">└─$ <span class="built_in">cd</span> nodes</span><br><span class="line"></span><br><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/fisco/nodes]</span><br><span class="line">└─$ <span class="built_in">ls</span></span><br><span class="line">127.0.0.1  ca</span><br><span class="line"></span><br><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/fisco/nodes]</span><br><span class="line">└─$ <span class="built_in">cd</span> 127.0.0.1/node2</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改节点2的端口号</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/fisco/nodes/127.0.0.1/node2]</span><br><span class="line">└─$ vim config.ini</span><br><span class="line">// 修改 [p2p], [rpc],[web3_rpc] 三项的listen_port 即可</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>启动节点</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/fisco/nodes/127.0.0.1]</span><br><span class="line">└─$ bash start_all.sh</span><br><span class="line">try to start node0</span><br><span class="line">try to start node1</span><br><span class="line">try to start node2</span><br><span class="line">try to start node3</span><br><span class="line"> node1 start successfully pid=2722</span><br><span class="line"> node0 start successfully pid=2735</span><br><span class="line"> node3 start successfully pid=2733</span><br><span class="line"> node2 start successful</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>检查节点进程</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/webase-deploy]</span><br><span class="line">└─$ ps -ef | grep fisco</span><br><span class="line">cure       744 26480  0 18:56 pts/8    00:00:00 grep --color=auto fisco</span><br><span class="line">cure      2722 26479  4 17:23 pts/8    00:04:31 /home/cure/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini -g config.genesis</span><br><span class="line">cure      2733 26479  4 17:23 pts/8    00:04:30 /home/cure/fisco/nodes/127.0.0.1/node3/../fisco-bcos -c config.ini -g config.genesis</span><br><span class="line">cure      2735 26479  5 17:23 pts/8    00:04:40 /home/cure/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini -g config.genesis</span><br><span class="line">cure      2737 26479  4 17:23 pts/8    00:04:28 /home/cure/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini -g config.genesis</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第二题"><a href="#第二题" class="headerlink" title="第二题"></a>第二题</h3><p>【要求】 登录Linux服务器，部署节点管理平台，并将部署、启动、应用过程结果截图，保存至作答区并点击提交。</p>
+<p>【任务】</p>
+<p> 登录linux服务器，进入指定操作目录（&#x2F;root&#x2F;tools&#x2F;webase）中完成区块 链一体化管理平台的配置部署，并检查是否安装成功，具体操作任务如下：</p>
+<ol>
+<li><p>进入WeBASE-Node-Manager目录，完成数据库初始化操作；</p>
+</li>
+<li><p>修改application.yml 配置文件，进行WeBASE-Node-Manager的服务配置，包括数据库名称，数据库用户，数据库密码等；</p>
+</li>
+<li><p>使用命令启动WeBASE-Node-Manager管理平台服务，并检查节点管理是否正常启动；</p>
+</li>
+<li><p>使用swagger对节点管理服务的 API 接口测试</p>
+</li>
+</ol>
+<h4 id="作答"><a href="#作答" class="headerlink" title="作答"></a>作答</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Enter password: *****************</span><br><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection <span class="built_in">id</span> is 8</span><br><span class="line">Server version: 8.0.40 MySQL Community Server - GPL</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2024, Oracle and/or its affiliates.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type <span class="string">&#x27;help;&#x27;</span> or <span class="string">&#x27;\h&#x27;</span> <span class="keyword">for</span> <span class="built_in">help</span>. Type <span class="string">&#x27;\c&#x27;</span> to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>总之先进去</p>
+<p>look一下官方文档的 “初始化数据库”</p>
+<p>摘自官方文档：</p>
+<hr>
+<h4 id="5-1-新建数据库"><a href="#5-1-新建数据库" class="headerlink" title="5.1 新建数据库"></a>5.1 新建数据库</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#登录MySQL:</span><br><span class="line">mysql <span class="operator">-</span>u $&#123;your_db_account&#125; <span class="operator">-</span>p$&#123;your_db_password&#125;  例如：mysql <span class="operator">-</span>u root <span class="operator">-</span>p123456</span><br><span class="line">#新建数据库：</span><br><span class="line"><span class="keyword">CREATE</span> DATABASE IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> &#123;your_db_name&#125; <span class="keyword">DEFAULT</span> CHARSET utf8 <span class="keyword">COLLATE</span> utf8_general_ci;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-2-修改脚本配置"><a href="#5-2-修改脚本配置" class="headerlink" title="5.2 修改脚本配置"></a>5.2 修改脚本配置</h4><p>进入数据库脚本目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd  dist/script</span><br></pre></td></tr></table></figure>
+
+<p>修改数据库连接信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">修改数据库名称：sed -i &quot;s/webasenodemanager/$&#123;your_db_name&#125;/g&quot; webase.sh</span><br><span class="line">修改数据库用户名：sed -i &quot;s/defaultAccount/$&#123;your_db_account&#125;/g&quot; webase.sh</span><br><span class="line">修改数据库密码：sed -i &quot;s/defaultPassword/$&#123;your_db_password&#125;/g&quot; webase.sh</span><br></pre></td></tr></table></figure>
+
+<p>例如：将数据库用户名修改为root，则执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -i &quot;s/defaultAccount/root/g&quot; webase.sh</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-3-运行数据库脚本"><a href="#5-3-运行数据库脚本" class="headerlink" title="5.3 运行数据库脚本"></a>5.3 运行数据库脚本</h4><p>执行命令：bash  webase.sh  ${dbIP}  ${dbPort} 如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash webase.sh 127.0.0.1 3306</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>继续，就创建<code>webasenodemanager</code>吧</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">CREATE</span> DATABASE IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> webasenodemanager <span class="keyword">DEFAULT</span> CHARSET utf8 <span class="keyword">COLLATE</span> utf8_general_ci;</span><br><span class="line">Query OK, <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>进入脚本目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/webase-deploy/webase-node-mgr]</span><br><span class="line">└─$ <span class="built_in">cd</span> script</span><br><span class="line"></span><br><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/webase-deploy/webase-node-mgr/script]</span><br><span class="line">└─$ <span class="built_in">ls</span></span><br><span class="line">temp.sh  webase-ddl.sql  webase-dml.sql  webase.sh  webase-sql.list</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>那很有生活了</p>
+<p>他的<code>sed -i </code>命令太过时了 直接 vim进去改呗</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#dbUser</span></span><br><span class="line">DBUSER=<span class="string">&quot;root&quot;</span></span><br><span class="line">5.2 修改脚本</span><br><span class="line"><span class="comment">#abPass</span></span><br><span class="line">PASSWD=<span class="string">&quot;?????&quot;</span></span><br><span class="line">进入数据库脚本</span><br><span class="line"><span class="comment">#dbName</span></span><br><span class="line">DBNAME=<span class="string">&quot;webasenodemanager&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>我们直接运行脚本即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/webase-deploy/webase-node-mgr/script]</span><br><span class="line">└─$ bash webase.sh 192.168.15.182 3306</span><br><span class="line"></span><br><span class="line"> init start....</span><br><span class="line">init success...</span><br></pre></td></tr></table></figure>
+
+<p>然后去改 <code>application.yml</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/webase-deploy/webase-node-mgr/conf]</span><br><span class="line">└─$ vim application.yml</span><br></pre></td></tr></table></figure>
+
+<p>改<code>spring</code> 的<code>datasource</code> 中的<code>url</code>以及<code>username</code>和<code>password</code>即可</p>
+<p>然后去启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/webase-deploy/webase-node-mgr]</span><br><span class="line">└─$ bash start.sh</span><br><span class="line">===============================================================================================</span><br><span class="line">Server com.webank.webase.node.mgr.Application Port 5001 ...PID(22942) [Starting]. Please message check through the <span class="built_in">log</span> file (default path:./log/).</span><br><span class="line">===============================================================================================</span><br><span class="line"></span><br><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/webase-deploy/webase-node-mgr]</span><br><span class="line">└─$ <span class="built_in">ls</span></span><br><span class="line">apps  conf  gradle  lib  <span class="built_in">log</span>  release_note.txt  script  start.sh  status.sh  stop.sh</span><br><span class="line"></span><br><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/webase-deploy/webase-node-mgr]</span><br><span class="line">└─$ <span class="built_in">cd</span> <span class="built_in">log</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>看下日志有没有启动成功</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/webase-deploy/webase-node-mgr/log]</span><br><span class="line">└─$ <span class="built_in">ls</span></span><br><span class="line">node-manager.out                                   WeBASE-Node-Manager.<span class="built_in">log</span></span><br><span class="line">WeBASE-Node-Manager-error.log                      WeBASE-Node-Manager.log.2025-09-11.1.log.gz</span><br><span class="line">WeBASE-Node-Manager-error.log.2025-09-11.1.log.gz  WeBASE-Node-Manager.log.2025-09-12.1.log.gz</span><br><span class="line">WeBASE-Node-Manager-error.log.2025-09-12.1.log.gz  WeBASE-Node-Manager.log.2025-09-13.1.log.gz</span><br><span class="line">WeBASE-Node-Manager-error.log.2025-09-13.1.log.gz  WeBASE-Node-Manager.log.2025-09-14.1.log.gz</span><br><span class="line">WeBASE-Node-Manager-error.log.2025-09-14.1.log.gz  WeBASE-Node-Manager.log.2025-09-15.1.log.gz</span><br><span class="line">WeBASE-Node-Manager-error.log.2025-09-15.1.log.gz  WeBASE-Node-Manager.log.2025-09-16.1.log.gz</span><br><span class="line">WeBASE-Node-Manager-error.log.2025-09-16.1.log.gz  WeBASE-Node-Manager.log.2025-09-17.1.log.gz</span><br><span class="line">WeBASE-Node-Manager-error.log.2025-09-17.1.log.gz  WeBASE-Node-Manager.log.2025-09-18.1.log.gz</span><br><span class="line"></span><br><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/webase-deploy/webase-node-mgr/log]</span><br><span class="line">└─$ <span class="built_in">tail</span> -f WeBASE-Node-Manager.<span class="built_in">log</span></span><br><span class="line">2025-09-26 19:28:50.570 [node-mgr-task-6] INFO  CertMonitorTask() - end checkCertValidityForAlert useTime:276</span><br><span class="line">2025-09-26 19:28:50.570 [node-mgr-task-3] WARN  NodeStatusMonitorTask() - checkNodeStatusForAlert jump over: not found any group</span><br><span class="line">2025-09-26 19:28:50.575 [node-mgr-task-4] INFO  ChainService() - Run task:[DeployType:0, isChainRunning:<span class="literal">false</span>]</span><br><span class="line">2025-09-26 19:28:50.575 [node-mgr-task-4] INFO  GroupService() - start resetGroupList. startTime:1758886130575</span><br><span class="line">2025-09-26 19:28:50.578 [node-mgr-task-4] INFO  GroupService() - resetGroupList frontList empty, jump over</span><br><span class="line">2025-09-26 19:29:00.000 [node-mgr-task-9] INFO  DeleteInfoTask() - start deleteInfoStart. startTime:1758886140000</span><br><span class="line">2025-09-26 19:29:00.006 [node-mgr-task-9] WARN  DeleteInfoTask() - DeleteInfoTask jump over, not found any group</span><br><span class="line">2025-09-26 19:29:00.009 [node-mgr-task-7] WARN  StatisticsTransdailyTask() - updateTransdailyData jump over: no group information exists</span><br><span class="line">2025-09-26 19:29:00.293 [node-mgr-task-1] WARN  TransMonitorTask() - blockStat jump over, not found any group</span><br><span class="line">2025-09-26 19:29:10.294 [node-mgr-task-8] WARN  TransMonitorTask() - blockStat jump over, not found any group</span><br><span class="line">2025-09-26 19:29:15.001 [node-mgr-task-10] INFO  DeleteInfoTask() - start deleteInfoStart. startTime:1758886155001</span><br><span class="line">2025-09-26 19:29:15.005 [nod</span><br></pre></td></tr></table></figure>
+
+<p>看样子是成功了</p>
+<p>然后去启动一下<code>WebaseWeb</code>和<code>WebaseFront</code>啥的</p>
+<p>题目要求我们检查它正常启动</p>
+<p>正常启动的三个证据</p>
+<ul>
+<li>状态</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/webase-deploy/webase-node-mgr]</span><br><span class="line">└─$ bash status.sh</span><br><span class="line">===============================================================================================</span><br><span class="line">Server com.webank.webase.node.mgr.Application Port 5001 is running PID(24663)</span><br><span class="line">===============================================================================================</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>证据2 因为webaseWEB需要 使用WeBASE-Node-Manager</p>
+<p><img src="/images/guosai-notes/c0e755d9d4406df41d4d7b12064fd63a.png" alt="c0e755d9d4406df41d4d7b12064fd63a"></p>
+</li>
+<li><p>证据3 访问接口get 版本</p>
+<p><img src="/images/guosai-notes/474dc3cd7a0c558b055231f4317c94be.png" alt="474dc3cd7a0c558b055231f4317c94be"></p>
+</li>
+</ul>
+<p>然后 <code>swagger-ui</code>这玩意官方文档里根本没说，问题不大，我去翻源码了</p>
+<p><img src="/images/guosai-notes/4462425c0087659fae05ce0d75396c57.png" alt="4462425c0087659fae05ce0d75396c57"></p>
+<p>找到了正确的界面</p>
+<p><img src="/images/guosai-notes/f5b025181855f793be8c063ecbcd7bc6.png" alt="f5b025181855f793be8c063ecbcd7bc6"></p>
+<p>随便执行个简单的</p>
+<p><img src="/images/guosai-notes/0200afd40794b96e8f9d36eeb2797695.png" alt="0200afd40794b96e8f9d36eeb2797695"></p>
+<h2 id="复现时的自查"><a href="#复现时的自查" class="headerlink" title="复现时的自查"></a>复现时的自查</h2><ul>
+<li>记录自己实际使用的版本、配置和缺失依赖。</li>
+<li>对照本篇关键步骤，保存命令或调用结果，并解释结果代表什么。</li>
+<li>对失败或与原记录不一致的情况保留错误信息，不把历史输出当成自己的验证结果。</li>
+</ul>
+<p><a href="/guosai-notes/">返回系列导读</a> · <a href="/guosai-notes/web3j/">上一篇</a> · <a href="/guosai-notes/mock-docker/">下一篇</a></p>
+
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
+                <ul id="audio-list" style="display:none">
+                    
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
+                    
+                </ul>
+                
+            </div>
+
+            
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/guosai-notes/mock-deploy/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
+
+
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
+    
+    <a class="f-pn-card f-pn-prev" href="/guosai-notes/web3j/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">区块链国赛笔记 13｜Spring Boot 通过 Web3j 调用本地合约</span>
+        <span class="f-pn-date">2026-11-03</span>
+    </a>
+    
+    
+    <a class="f-pn-card f-pn-next" href="/guosai-notes/spring-vue/">
+        <span class="f-pn-label">更早的文章 →</span>
+        <span class="f-pn-title">区块链国赛笔记 12｜Vue 与 Thymeleaf：比赛前端源码阅读</span>
+        <span class="f-pn-date">2026-11-03</span>
+    </a>
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E5%89%8D%E5%85%88%E7%A1%AE%E8%AE%A4"><span class="toc-text">阅读前先确认</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86-1-2%E9%A2%98"><span class="toc-text">第一部分 1-2题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%A2%98"><span class="toc-text">第一题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%9C%E7%AD%94%EF%BC%9A"><span class="toc-text">作答：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%A2%98"><span class="toc-text">第二题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%9C%E7%AD%94"><span class="toc-text">作答</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-%E6%96%B0%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">5.1 新建数据库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-%E4%BF%AE%E6%94%B9%E8%84%9A%E6%9C%AC%E9%85%8D%E7%BD%AE"><span class="toc-text">5.2 修改脚本配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-%E8%BF%90%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E8%84%9A%E6%9C%AC"><span class="toc-text">5.3 运行数据库脚本</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E7%8E%B0%E6%97%B6%E7%9A%84%E8%87%AA%E6%9F%A5"><span class="toc-text">复现时的自查</span></a></li></ol></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <img class="f-footer-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="34" height="34">
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">
+            <span class="f-footer-quote-zh">我不相信命运，且我将在醉生梦死中追寻真正的自我。</span>
+            <span class="f-footer-quote-en">I do not believe in fate. In wine and dreams, I will seek out my true self.</span>
+        </p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

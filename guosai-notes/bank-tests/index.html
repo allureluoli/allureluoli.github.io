@@ -1,0 +1,485 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>区块链国赛笔记 16｜Bank 合约练习：功能测试与取款边界 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,原练习没有附带待补全的 Bank 源码，因此下面的 Bank 是我为训练自行构造的合约，不是原题标准答案。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="区块链国赛笔记 16｜Bank 合约练习：功能测试与取款边界 - 二月の档案室"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,原练习没有附带待补全的 Bank 源码，因此下面的 Bank 是我为训练自行构造的合约，不是原题标准答案。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="区块链国赛笔记 16｜Bank 合约练习：功能测试与取款边界 - 二月の档案室"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,原练习没有附带待补全的 Bank 源码，因此下面的 Bank 是我为训练自行构造的合约，不是原题标准答案。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
+
+    <meta name="theme-color" content="#faf9f5" />
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <img class="f-brand-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="28" height="28">
+        <span class="f-brand-text">二月<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="/">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="/" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「我不相信命运，且我将在醉生梦死中追寻真正的自我。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
+</div>
+
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
+            
+            <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9B%BD%E8%B5%9B%E7%AC%94%E8%AE%B0/">区块链国赛笔记</a>
+            <span aria-hidden="true">/</span>
+            
+            <span class="f-crumb-cur">正文</span>
+        </nav>
+
+        <h1 class="f-post-title">区块链国赛笔记 16｜Bank 合约练习：功能测试与取款边界</h1>
+
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2026-11-03T15:30:00.000Z">2026-11-03</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                25 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                11.4k 字
+            </span>
+            
+            <a class="f-meta-item f-meta-cat" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9B%BD%E8%B5%9B%E7%AC%94%E8%AE%B0/">区块链国赛笔记</a>
+            
+        </div>
+
+        
+        <div class="f-post-tags">
+            
+            <a class="f-tag" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/">#区块链</a>
+            
+            <a class="f-tag" href="/tags/%E5%9B%BD%E8%B5%9B%E5%A4%87%E8%B5%9B/">#国赛备赛</a>
+            
+            <a class="f-tag" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">#学习笔记</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <p>原练习没有附带待补全的 Bank 源码，因此下面的 Bank 是我为训练自行构造的合约，不是原题标准答案。</p>
+<span id="more"></span>
+
+<blockquote>
+<p>本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时的实验环境；本文未重新搭建整套环境验证。</p>
+</blockquote>
+<h2 id="阅读前先确认"><a href="#阅读前先确认" class="headerlink" title="阅读前先确认"></a>阅读前先确认</h2><p>优先覆盖金额为零、余额不足、余额恰好等于取款金额、账户不存在以及正常取款。测试框架依赖和合约版本需要匹配。</p>
+<h2 id="第二部分-1题"><a href="#第二部分-1题" class="headerlink" title="第二部分 1题"></a>第二部分 1题</h2><h2 id="第二部分：智能合约开发与测试"><a href="#第二部分：智能合约开发与测试" class="headerlink" title="第二部分：智能合约开发与测试"></a>第二部分：智能合约开发与测试</h2><h3 id="第1题：按要求完成智能合约开发开发与测"><a href="#第1题：按要求完成智能合约开发开发与测" class="headerlink" title="第1题：按要求完成智能合约开发开发与测"></a>第1题：按要求完成智能合约开发开发与测</h3><p>【要求】 使用Solidity 语言进行智能合约开发，根据需求用例文档在待补充源码中完 成程序接口功能的编码，解决代码错误和警告，正确编译合约，功能调试正确， 运行合约进行业务功能的验证，成功获取合约的abi，将合约部署至区块链，获 取部署的合约信息，将任务中编写代码、运行截图、部署至区块链截图保存至指 定位置。</p>
+<p>【任务】</p>
+<p>1．完善bank合约开发，根据合约里面的代码注释，完善缺失的合约中缺失的代码。</p>
+<p>2．基于hardhat完成合约的功能测试，针对bank合约中的函数，完成功能测试</p>
+<p>3.针对bank合约中的withdraw函数，完成边界值测试</p>
+<p>要求：</p>
+<p> 1.测试区块金额大于0的情况<br> 2.测试账户余额大于取款金额的情况</p>
+<p> 3.测试账户存在的情况</p>
+<hr>
+<h3 id="作答"><a href="#作答" class="headerlink" title="作答"></a>作答</h3><p>只能自己想一个合约了</p>
+<p>第一个合约叫 <code>Bank</code> 那就是和银行有关的</p>
+<p>账户：开户，销户</p>
+<p>存款：存钱，取钱，查询余额，转账</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity 0.4.2;</span><br><span class="line"></span><br><span class="line">contract Bank2&#123;</span><br><span class="line"></span><br><span class="line">    struct Account&#123;</span><br><span class="line">        address owner;</span><br><span class="line">        uint balance;</span><br><span class="line">        uint time;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    mapping (address =&gt; Account) public accounts; // 映射结构存储</span><br><span class="line"></span><br><span class="line">    // 创建账户的事件 提供监听</span><br><span class="line">    event AccountCreate(address account,uint time);</span><br><span class="line"></span><br><span class="line">    // 创建账户的函数</span><br><span class="line"></span><br><span class="line">    function createAccount() public&#123;</span><br><span class="line"></span><br><span class="line">        address account = msg.sender;</span><br><span class="line"></span><br><span class="line">        accounts[account] = Account(&#123;</span><br><span class="line">            owner: account,</span><br><span class="line">            balance: 0,</span><br><span class="line">            time: now</span><br><span class="line">        &#125;);</span><br><span class="line">        AccountCreate(account,now);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function checkAccount(address account) public returns(bool)&#123;</span><br><span class="line">        return  accounts[account].owner != address(0); // 检查是不是空地址罢了</span><br><span class="line">    &#125;</span><br><span class="line">    // 存款</span><br><span class="line">    function deposit() public payable &#123;</span><br><span class="line"></span><br><span class="line">        if (!checkAccount(msg.sender)) &#123;</span><br><span class="line">            createAccount();</span><br><span class="line">        &#125;</span><br><span class="line">        accounts[msg.sender].balance += msg.value;</span><br><span class="line">        accounts[msg.sender].time = now;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要写一个 <code>withdraw</code> 大概是提现函数的意思吧</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">accounts[msg.sender].balance -= amount;</span><br><span class="line"></span><br><span class="line"> // 转账给用户</span><br><span class="line"> (bool success, ) = payable(msg.sender).call&#123;value: amount&#125;(&quot;&quot;);</span><br><span class="line"> require(success, &quot;Withdrawal failed&quot;);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>完善后的完整合约</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br></pre></td><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity 0.4.20;</span><br><span class="line"></span><br><span class="line">contract Bank &#123;</span><br><span class="line"></span><br><span class="line">    struct Account &#123;</span><br><span class="line">        address owner;</span><br><span class="line">        uint balance;</span><br><span class="line">        uint time;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    mapping (address =&gt; Account) public accounts;</span><br><span class="line"></span><br><span class="line">    // 事件声明</span><br><span class="line">    event AccountCreate(address account, uint time);</span><br><span class="line">    event WithdrawSuccess(address account, uint amount, uint time);</span><br><span class="line">    event WithdrawFailed(address account, uint amount, string reason, uint time);</span><br><span class="line"></span><br><span class="line">    // 创建账户</span><br><span class="line">    function createAccount() public &#123;</span><br><span class="line">        address account = msg.sender;</span><br><span class="line"></span><br><span class="line">        // 不允许重复创建账户</span><br><span class="line">        if (checkAccount(account)) &#123;</span><br><span class="line">            revert();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        accounts[account] = Account(&#123;</span><br><span class="line">            owner: account,</span><br><span class="line">            balance: 0,</span><br><span class="line">            time: now</span><br><span class="line">        &#125;);</span><br><span class="line">        AccountCreate(account, now);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 检查账户是否存在</span><br><span class="line">    function checkAccount(address account) public constant returns(bool) &#123;</span><br><span class="line">        return accounts[account].owner != address(0);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 存款</span><br><span class="line">    function deposit() public payable &#123;</span><br><span class="line">        if (!checkAccount(msg.sender)) &#123;</span><br><span class="line">            createAccount();</span><br><span class="line">        &#125;</span><br><span class="line">        accounts[msg.sender].balance += msg.value;</span><br><span class="line">        accounts[msg.sender].time = now;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 检查余额</span><br><span class="line">    function checkBalance() public constant returns (uint) &#123;</span><br><span class="line">        address account = msg.sender;</span><br><span class="line">        if (!checkAccount(account)) &#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line">        return accounts[account].balance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 完善的取款函数</span><br><span class="line">    function withdraw(uint amount) public &#123;</span><br><span class="line">        address account = msg.sender;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        // 1. 检查账户是否存在</span><br><span class="line">        if (!checkAccount(account)) &#123;</span><br><span class="line">            WithdrawFailed(account, amount, &quot;用户不存在&quot;, now);</span><br><span class="line">            revert();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 2. 检查余额是否充足</span><br><span class="line">        if (accounts[account].balance &lt; amount) &#123;</span><br><span class="line">            WithdrawFailed(account, amount, &quot;余额不足&quot;, now);</span><br><span class="line">            revert();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 3. 检查取款金额是否有效</span><br><span class="line">        if (amount == 0) &#123;</span><br><span class="line">            WithdrawFailed(account, amount, &quot;取款金额必须大于0&quot;, now);</span><br><span class="line">            revert();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 4. 更新账户余额</span><br><span class="line">        accounts[account].balance -= amount;</span><br><span class="line">        accounts[account].time = now;</span><br><span class="line"></span><br><span class="line">        // 5. 转账给用户</span><br><span class="line">        if (!account.send(amount)) &#123;</span><br><span class="line">            // 如果转账失败，恢复余额</span><br><span class="line">            accounts[account].balance += amount;</span><br><span class="line">            WithdrawFailed(account, amount, &quot;转账失败&quot;, now);</span><br><span class="line">            revert();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 6. 记录成功事件</span><br><span class="line">        WithdrawSuccess(account, amount, now);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function transfer(address to, uint amount) public &#123;</span><br><span class="line">        address from = msg.sender;</span><br><span class="line"></span><br><span class="line">        // 1. 检查发送方账户</span><br><span class="line">        if (!checkAccount(from)) &#123;</span><br><span class="line">            WithdrawFailed(from, amount, &quot;发送方账户不存在&quot;, now);</span><br><span class="line">            revert();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 2. 检查接收方账户</span><br><span class="line">        if (!checkAccount(to)) &#123;</span><br><span class="line">            WithdrawFailed(from, amount, &quot;接收方账户不存在&quot;, now);</span><br><span class="line">            revert();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 3. 检查转账金额是否有效</span><br><span class="line">        if (amount == 0) &#123;</span><br><span class="line">            WithdrawFailed(from, amount, &quot;转账金额必须大于0&quot;, now);</span><br><span class="line">            revert();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 4. 检查发送方余额是否充足</span><br><span class="line">        if (accounts[from].balance &lt; amount) &#123;</span><br><span class="line">            WithdrawFailed(from, amount, &quot;发送方余额不足&quot;, now);</span><br><span class="line">            revert();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 5. 更新余额</span><br><span class="line">        accounts[from].balance -= amount;</span><br><span class="line">        accounts[to].balance += amount;  // 关键：增加接收方余额</span><br><span class="line"></span><br><span class="line">        // 3. 更新时间戳</span><br><span class="line">        accounts[from].time = now;</span><br><span class="line">        accounts[to].time = now;</span><br><span class="line"></span><br><span class="line">        // 4. 记录事件</span><br><span class="line">        TransferSuccess(from, to, amount, now);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 转账成功事件</span><br><span class="line">    event TransferSuccess(address from, address to, uint amount, uint time);</span><br><span class="line"></span><br><span class="line">    // 获取账户信息</span><br><span class="line">    function getAccountInfo() public constant returns (address, uint, uint) &#123;</span><br><span class="line">        address account = msg.sender;</span><br><span class="line">        if (!checkAccount(account)) &#123;</span><br><span class="line">            return (address(0), 0, 0);</span><br><span class="line">        &#125;</span><br><span class="line">        return (accounts[account].owner, accounts[account].balance, accounts[account].time);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>大概要这么写，难说</p>
+<p>边界值测试话 下界 上界 … 极端大值和极端小值</p>
+<h3 id="基本功能测试"><a href="#基本功能测试" class="headerlink" title="基本功能测试"></a>基本功能测试</h3><p>测试代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; expect &#125; = <span class="built_in">require</span>(<span class="string">&quot;chai&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; ethers &#125; = <span class="built_in">require</span>(<span class="string">&quot;hardhat&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_">describe</span>(<span class="string">&quot;Bank 合约&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> bank;</span><br><span class="line">    <span class="keyword">let</span> owner, user1, user2, user3;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">beforeEach</span>(<span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        [owner, user1, user2, user3] = <span class="keyword">await</span> ethers.<span class="title function_">getSigners</span>();</span><br><span class="line">        <span class="keyword">const</span> <span class="title class_">Bank</span> = <span class="keyword">await</span> ethers.<span class="title function_">getContractFactory</span>(<span class="string">&quot;Bank&quot;</span>);</span><br><span class="line">        bank = <span class="keyword">await</span> <span class="title class_">Bank</span>.<span class="title function_">deploy</span>();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="title function_">describe</span>(<span class="string">&quot;部署测试&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="title function_">it</span>(<span class="string">&quot;成功部署合约&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="title function_">expect</span>(bank.<span class="property">address</span>).<span class="property">to</span>.<span class="property">not</span>.<span class="title function_">equal</span>(<span class="string">&quot;0x0000000000000000000000000000000000000000&quot;</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="title function_">describe</span>(<span class="string">&quot;账户管理&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="title function_">it</span>(<span class="string">&quot;应该允许创建账户&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">createAccount</span>();</span><br><span class="line">            <span class="title function_">expect</span>(<span class="keyword">await</span> bank.<span class="title function_">checkAccount</span>(user1.<span class="property">address</span>)).<span class="property">to</span>.<span class="property">be</span>.<span class="property">true</span>;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="title function_">it</span>(<span class="string">&quot;不允许重复创建账户&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">createAccount</span>();</span><br><span class="line">            <span class="keyword">await</span> <span class="title function_">expect</span>(bank.<span class="title function_">connect</span>(user1).<span class="title function_">createAccount</span>()).<span class="property">to</span>.<span class="property">be</span>.<span class="property">reverted</span>;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="title function_">describe</span>(<span class="string">&quot;存款测试&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="title function_">it</span>(<span class="string">&quot;应该允许用户存款&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">createAccount</span>();</span><br><span class="line">            <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">deposit</span>(&#123; <span class="attr">value</span>: <span class="number">100</span> &#125;);</span><br><span class="line">            <span class="title function_">expect</span>(<span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">checkBalance</span>()).<span class="property">to</span>.<span class="title function_">equal</span>(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="title function_">describe</span>(<span class="string">&quot;取款测试&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="title function_">it</span>(<span class="string">&quot;应该允许用户取款&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">createAccount</span>();</span><br><span class="line">            <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">deposit</span>(&#123; <span class="attr">value</span>: <span class="number">100</span> &#125;);</span><br><span class="line">            <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">withdraw</span>(<span class="number">50</span>);</span><br><span class="line">            <span class="title function_">expect</span>(<span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">checkBalance</span>()).<span class="property">to</span>.<span class="title function_">equal</span>(<span class="number">50</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="title function_">describe</span>(<span class="string">&quot;转账测试&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="title function_">it</span>(<span class="string">&quot;应该允许用户转账&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user2).<span class="title function_">createAccount</span>();</span><br><span class="line">            <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">createAccount</span>();</span><br><span class="line">            <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">deposit</span>(&#123; <span class="attr">value</span>: <span class="number">100</span> &#125;);</span><br><span class="line">            <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">transfer</span>(user2.<span class="property">address</span>, <span class="number">50</span>);</span><br><span class="line">            <span class="title function_">expect</span>(<span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">checkBalance</span>()).<span class="property">to</span>.<span class="title function_">equal</span>(<span class="number">50</span>);</span><br><span class="line">            <span class="title function_">expect</span>(<span class="keyword">await</span> bank.<span class="title function_">connect</span>(user2).<span class="title function_">checkBalance</span>()).<span class="property">to</span>.<span class="title function_">equal</span>(<span class="number">50</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>测试结果</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> E:\code\solidity_project\bank3&gt; pnpm hardhat test test/Bank.test.js</span><br><span class="line">Compiled <span class="number">1</span> Solidity file successfully (evm target: unknown evm version <span class="keyword">for</span> solc version <span class="number">0.4</span>.<span class="number">20</span>).</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  Bank 合约</span><br><span class="line">    部署测试</span><br><span class="line">      ✔ 成功部署合约 (<span class="number">46</span>ms)</span><br><span class="line">    账户管理</span><br><span class="line">      ✔ 应该允许创建账户</span><br><span class="line">      ✔ 不允许重复创建账户</span><br><span class="line">    存款测试</span><br><span class="line">      ✔ 应该允许用户存款</span><br><span class="line">    取款测试</span><br><span class="line">      ✔ 应该允许用户取款</span><br><span class="line">    转账测试</span><br><span class="line">      ✔ 应该允许用户转账</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="number">6</span> passing (<span class="number">941</span>ms)</span><br></pre></td></tr></table></figure>
+
+<p>边界值测试js脚本编写</p>
+<p>我只能说 Easy</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">describe</span>(<span class="string">&quot;取款边界值测试&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">       <span class="keyword">let</span> user1, user2;</span><br><span class="line"></span><br><span class="line">       <span class="title function_">beforeEach</span>(<span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">           [user1, user2] = <span class="keyword">await</span> ethers.<span class="title function_">getSigners</span>();</span><br><span class="line">           <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">createAccount</span>();</span><br><span class="line">           <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">deposit</span>(&#123; <span class="attr">value</span>: <span class="number">100</span> &#125;);</span><br><span class="line">       &#125;);</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 1. 测试取款金额大于0的情况</span></span><br><span class="line">       <span class="title function_">describe</span>(<span class="string">&quot;测试取款金额大于0的情况&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">           <span class="title function_">it</span>(<span class="string">&quot;应该允许取款金额为1（最小值）&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">               <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">withdraw</span>(<span class="number">1</span>);</span><br><span class="line">               <span class="title function_">expect</span>(<span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">checkBalance</span>()).<span class="property">to</span>.<span class="title function_">equal</span>(<span class="number">99</span>);</span><br><span class="line">           &#125;);</span><br><span class="line"></span><br><span class="line">           <span class="title function_">it</span>(<span class="string">&quot;应该允许取款金额为余额的一半&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">               <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">withdraw</span>(<span class="number">50</span>);</span><br><span class="line">               <span class="title function_">expect</span>(<span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">checkBalance</span>()).<span class="property">to</span>.<span class="title function_">equal</span>(<span class="number">50</span>);</span><br><span class="line">           &#125;);</span><br><span class="line"></span><br><span class="line">           <span class="title function_">it</span>(<span class="string">&quot;应该允许取款金额为余额-1&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">               <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">withdraw</span>(<span class="number">99</span>);</span><br><span class="line">               <span class="title function_">expect</span>(<span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">checkBalance</span>()).<span class="property">to</span>.<span class="title function_">equal</span>(<span class="number">1</span>);</span><br><span class="line">           &#125;);</span><br><span class="line"></span><br><span class="line">           <span class="title function_">it</span>(<span class="string">&quot;应该允许取款金额等于余额&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">               <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">withdraw</span>(<span class="number">100</span>);</span><br><span class="line">               <span class="title function_">expect</span>(<span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">checkBalance</span>()).<span class="property">to</span>.<span class="title function_">equal</span>(<span class="number">0</span>);</span><br><span class="line">           &#125;);</span><br><span class="line"></span><br><span class="line">           <span class="title function_">it</span>(<span class="string">&quot;应该拒绝取款金额为0&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">               <span class="keyword">await</span> <span class="title function_">expect</span>(bank.<span class="title function_">connect</span>(user1).<span class="title function_">withdraw</span>(<span class="number">0</span>))</span><br><span class="line">                   .<span class="property">to</span>.<span class="property">be</span>.<span class="property">reverted</span>;</span><br><span class="line">           &#125;);</span><br><span class="line"></span><br><span class="line">           <span class="title function_">it</span>(<span class="string">&quot;应该拒绝取款金额为负数（Solidity会自动处理）&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">               <span class="comment">// uint 类型不能为负数，Solidity 会自动拒绝</span></span><br><span class="line">               <span class="comment">// 这个测试主要是验证类型安全</span></span><br><span class="line">           &#125;);</span><br><span class="line">       &#125;);</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 2. 测试账户余额大于取款金额的情况</span></span><br><span class="line">       <span class="title function_">describe</span>(<span class="string">&quot;测试账户余额大于取款金额的情况&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">           <span class="title function_">it</span>(<span class="string">&quot;余额100，取款50，应该成功&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">               <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">withdraw</span>(<span class="number">50</span>);</span><br><span class="line">               <span class="title function_">expect</span>(<span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">checkBalance</span>()).<span class="property">to</span>.<span class="title function_">equal</span>(<span class="number">50</span>);</span><br><span class="line">           &#125;);</span><br><span class="line"></span><br><span class="line">           <span class="title function_">it</span>(<span class="string">&quot;余额100，取款99，应该成功&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">               <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">withdraw</span>(<span class="number">99</span>);</span><br><span class="line">               <span class="title function_">expect</span>(<span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">checkBalance</span>()).<span class="property">to</span>.<span class="title function_">equal</span>(<span class="number">1</span>);</span><br><span class="line">           &#125;);</span><br><span class="line"></span><br><span class="line">           <span class="title function_">it</span>(<span class="string">&quot;余额100，取款100，应该成功&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">               <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">withdraw</span>(<span class="number">100</span>);</span><br><span class="line">               <span class="title function_">expect</span>(<span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">checkBalance</span>()).<span class="property">to</span>.<span class="title function_">equal</span>(<span class="number">0</span>);</span><br><span class="line">           &#125;);</span><br><span class="line"></span><br><span class="line">           <span class="title function_">it</span>(<span class="string">&quot;余额100，取款101，应该失败&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">               <span class="keyword">await</span> <span class="title function_">expect</span>(bank.<span class="title function_">connect</span>(user1).<span class="title function_">withdraw</span>(<span class="number">101</span>))</span><br><span class="line">                   .<span class="property">to</span>.<span class="property">be</span>.<span class="property">reverted</span>;</span><br><span class="line">           &#125;);</span><br><span class="line"></span><br><span class="line">           <span class="title function_">it</span>(<span class="string">&quot;余额100，取款最大值，应该失败&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">               <span class="keyword">await</span> <span class="title function_">expect</span>(bank.<span class="title function_">connect</span>(user1).<span class="title function_">withdraw</span>(<span class="number">115792089237316195423570985008687907853269984665640564039457584007913129639935n</span>))</span><br><span class="line">                   .<span class="property">to</span>.<span class="property">be</span>.<span class="property">reverted</span>;</span><br><span class="line">           &#125;);</span><br><span class="line"></span><br><span class="line">       &#125;);</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 3. 测试账户存在的情况</span></span><br><span class="line">       <span class="title function_">describe</span>(<span class="string">&quot;测试账户存在的情况&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">           <span class="title function_">it</span>(<span class="string">&quot;已创建账户的用户应该能取款&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">               <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">withdraw</span>(<span class="number">50</span>);</span><br><span class="line">               <span class="title function_">expect</span>(<span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">checkBalance</span>()).<span class="property">to</span>.<span class="title function_">equal</span>(<span class="number">50</span>);</span><br><span class="line">           &#125;);</span><br><span class="line"></span><br><span class="line">           <span class="title function_">it</span>(<span class="string">&quot;未创建账户的用户应该不能取款&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">               <span class="keyword">await</span> <span class="title function_">expect</span>(bank.<span class="title function_">connect</span>(user2).<span class="title function_">withdraw</span>(<span class="number">50</span>))</span><br><span class="line">                   .<span class="property">to</span>.<span class="property">be</span>.<span class="property">reverted</span>;</span><br><span class="line">           &#125;);</span><br><span class="line"></span><br><span class="line">           <span class="title function_">it</span>(<span class="string">&quot;创建账户但余额为0的用户应该不能取款&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">               <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user2).<span class="title function_">createAccount</span>();</span><br><span class="line">               <span class="keyword">await</span> <span class="title function_">expect</span>(bank.<span class="title function_">connect</span>(user2).<span class="title function_">withdraw</span>(<span class="number">1</span>))</span><br><span class="line">                   .<span class="property">to</span>.<span class="property">be</span>.<span class="property">reverted</span>;</span><br><span class="line">           &#125;);</span><br><span class="line">       &#125;);</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 4. 额外边界测试</span></span><br><span class="line">       <span class="title function_">describe</span>(<span class="string">&quot;额外边界测试&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">           <span class="title function_">it</span>(<span class="string">&quot;连续多次取款&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">               <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">withdraw</span>(<span class="number">30</span>);</span><br><span class="line">               <span class="title function_">expect</span>(<span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">checkBalance</span>()).<span class="property">to</span>.<span class="title function_">equal</span>(<span class="number">70</span>);</span><br><span class="line"></span><br><span class="line">               <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">withdraw</span>(<span class="number">30</span>);</span><br><span class="line">               <span class="title function_">expect</span>(<span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">checkBalance</span>()).<span class="property">to</span>.<span class="title function_">equal</span>(<span class="number">40</span>);</span><br><span class="line"></span><br><span class="line">               <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">withdraw</span>(<span class="number">40</span>);</span><br><span class="line">               <span class="title function_">expect</span>(<span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">checkBalance</span>()).<span class="property">to</span>.<span class="title function_">equal</span>(<span class="number">0</span>);</span><br><span class="line">           &#125;);</span><br><span class="line"></span><br><span class="line">           <span class="title function_">it</span>(<span class="string">&quot;取款后再次存款再取款&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">               <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">withdraw</span>(<span class="number">50</span>);</span><br><span class="line">               <span class="title function_">expect</span>(<span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">checkBalance</span>()).<span class="property">to</span>.<span class="title function_">equal</span>(<span class="number">50</span>);</span><br><span class="line"></span><br><span class="line">               <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">deposit</span>(&#123; <span class="attr">value</span>: <span class="number">50</span> &#125;);</span><br><span class="line">               <span class="title function_">expect</span>(<span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">checkBalance</span>()).<span class="property">to</span>.<span class="title function_">equal</span>(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">               <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">withdraw</span>(<span class="number">100</span>);</span><br><span class="line">               <span class="title function_">expect</span>(<span class="keyword">await</span> bank.<span class="title function_">connect</span>(user1).<span class="title function_">checkBalance</span>()).<span class="property">to</span>.<span class="title function_">equal</span>(<span class="number">0</span>);</span><br><span class="line">           &#125;);</span><br><span class="line"></span><br><span class="line">           <span class="title function_">it</span>(<span class="string">&quot;测试大额取款&quot;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">               <span class="comment">// 存入大额资金</span></span><br><span class="line">               <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user3).<span class="title function_">createAccount</span>();</span><br><span class="line"></span><br><span class="line">               <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user3).<span class="title function_">deposit</span>(&#123; <span class="attr">value</span>: <span class="number">999997133560957503749n</span>&#125;);</span><br><span class="line"></span><br><span class="line">               <span class="comment">// 取款大额资金</span></span><br><span class="line">               <span class="keyword">await</span> bank.<span class="title function_">connect</span>(user3).<span class="title function_">withdraw</span>(<span class="number">999997133560957503749n</span>);</span><br><span class="line">               <span class="title function_">expect</span>(<span class="keyword">await</span> bank.<span class="title function_">connect</span>(user3).<span class="title function_">checkBalance</span>()).<span class="property">to</span>.<span class="title function_">equal</span>(<span class="number">0</span>);</span><br><span class="line">           &#125;);</span><br><span class="line">       &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>测试结果</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">  取款边界值测试</span><br><span class="line">    测试取款金额大于<span class="number">0</span>的情况</span><br><span class="line">      ✔ 应该允许取款金额为<span class="number">1</span>（最小值）</span><br><span class="line">      ✔ 应该允许取款金额为余额的一半</span><br><span class="line">      ✔ 应该允许取款金额为余额<span class="literal">-1</span></span><br><span class="line">      ✔ 应该允许取款金额等于余额</span><br><span class="line">      ✔ 应该拒绝取款金额为<span class="number">0</span></span><br><span class="line">      ✔ 应该拒绝取款金额为负数（Solidity会自动处理）</span><br><span class="line">    测试账户余额大于取款金额的情况</span><br><span class="line">      ✔ 余额<span class="number">100</span>，取款<span class="number">50</span>，应该成功</span><br><span class="line">      ✔ 余额<span class="number">100</span>，取款<span class="number">99</span>，应该成功</span><br><span class="line">      ✔ 余额<span class="number">100</span>，取款<span class="number">100</span>，应该成功</span><br><span class="line">      ✔ 余额<span class="number">100</span>，取款<span class="number">101</span>，应该失败</span><br><span class="line">      ✔ 余额<span class="number">100</span>，取款最大值，应该失败</span><br><span class="line">    测试账户存在的情况</span><br><span class="line">      ✔ 已创建账户的用户应该能取款</span><br><span class="line">      ✔ 未创建账户的用户应该不能取款</span><br><span class="line">      ✔ 创建账户但余额为<span class="number">0</span>的用户应该不能取款</span><br><span class="line">    额外边界测试</span><br><span class="line">      ✔ 连续多次取款</span><br><span class="line">      ✔ 取款后再次存款再取款</span><br><span class="line">      ✔ 测试大额取款</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">23</span> passing (<span class="number">1</span>s)</span><br></pre></td></tr></table></figure>
+
+<h2 id="复现时的自查"><a href="#复现时的自查" class="headerlink" title="复现时的自查"></a>复现时的自查</h2><ul>
+<li>记录自己实际使用的版本、配置和缺失依赖。</li>
+<li>对照本篇关键步骤，保存命令或调用结果，并解释结果代表什么。</li>
+<li>对失败或与原记录不一致的情况保留错误信息，不把历史输出当成自己的验证结果。</li>
+</ul>
+<p><a href="/guosai-notes/">返回系列导读</a> · <a href="/guosai-notes/mock-docker/">上一篇</a> · <a href="/guosai-notes/uniswap-factory/">下一篇</a></p>
+
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
+                <ul id="audio-list" style="display:none">
+                    
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
+                    
+                </ul>
+                
+            </div>
+
+            
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/guosai-notes/bank-tests/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
+
+
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
+    
+    <a class="f-pn-card f-pn-prev" href="/guosai-notes/mock-docker/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">区块链国赛笔记 15｜流程模拟：用 Docker 部署四节点联盟链</span>
+        <span class="f-pn-date">2026-11-03</span>
+    </a>
+    
+    
+    <a class="f-pn-card f-pn-next" href="/guosai-notes/web3j/">
+        <span class="f-pn-label">更早的文章 →</span>
+        <span class="f-pn-title">区块链国赛笔记 13｜Spring Boot 通过 Web3j 调用本地合约</span>
+        <span class="f-pn-date">2026-11-03</span>
+    </a>
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E5%89%8D%E5%85%88%E7%A1%AE%E8%AE%A4"><span class="toc-text">阅读前先确认</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86-1%E9%A2%98"><span class="toc-text">第二部分 1题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%9A%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E5%BC%80%E5%8F%91%E4%B8%8E%E6%B5%8B%E8%AF%95"><span class="toc-text">第二部分：智能合约开发与测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC1%E9%A2%98%EF%BC%9A%E6%8C%89%E8%A6%81%E6%B1%82%E5%AE%8C%E6%88%90%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E5%BC%80%E5%8F%91%E5%BC%80%E5%8F%91%E4%B8%8E%E6%B5%8B"><span class="toc-text">第1题：按要求完成智能合约开发开发与测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E7%AD%94"><span class="toc-text">作答</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="toc-text">基本功能测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E7%8E%B0%E6%97%B6%E7%9A%84%E8%87%AA%E6%9F%A5"><span class="toc-text">复现时的自查</span></a></li></ol></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <img class="f-footer-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="34" height="34">
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">
+            <span class="f-footer-quote-zh">我不相信命运，且我将在醉生梦死中追寻真正的自我。</span>
+            <span class="f-footer-quote-en">I do not believe in fate. In wine and dreams, I will seek out my true self.</span>
+        </p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

@@ -1,0 +1,503 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>区块链国赛笔记 06｜Solidity 存证合约：存储、接口与工具库 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,把状态保存、业务入口和公共工具分开，是阅读题目和补全合约的起点。本篇保留不同版本的学习示例，不把它们拼成一个工程。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="区块链国赛笔记 06｜Solidity 存证合约：存储、接口与工具库 - 二月の档案室"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,把状态保存、业务入口和公共工具分开，是阅读题目和补全合约的起点。本篇保留不同版本的学习示例，不把它们拼成一个工程。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="区块链国赛笔记 06｜Solidity 存证合约：存储、接口与工具库 - 二月の档案室"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,把状态保存、业务入口和公共工具分开，是阅读题目和补全合约的起点。本篇保留不同版本的学习示例，不把它们拼成一个工程。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
+
+    <meta name="theme-color" content="#faf9f5" />
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <img class="f-brand-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="28" height="28">
+        <span class="f-brand-text">二月<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="/">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="/" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「我不相信命运，且我将在醉生梦死中追寻真正的自我。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
+</div>
+
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
+            
+            <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9B%BD%E8%B5%9B%E7%AC%94%E8%AE%B0/">区块链国赛笔记</a>
+            <span aria-hidden="true">/</span>
+            
+            <span class="f-crumb-cur">正文</span>
+        </nav>
+
+        <h1 class="f-post-title">区块链国赛笔记 06｜Solidity 存证合约：存储、接口与工具库</h1>
+
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2026-11-03T15:30:00.000Z">2026-11-03</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                11 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                4.9k 字
+            </span>
+            
+            <a class="f-meta-item f-meta-cat" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9B%BD%E8%B5%9B%E7%AC%94%E8%AE%B0/">区块链国赛笔记</a>
+            
+        </div>
+
+        
+        <div class="f-post-tags">
+            
+            <a class="f-tag" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/">#区块链</a>
+            
+            <a class="f-tag" href="/tags/%E5%9B%BD%E8%B5%9B%E5%A4%87%E8%B5%9B/">#国赛备赛</a>
+            
+            <a class="f-tag" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">#学习笔记</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <p>把状态保存、业务入口和公共工具分开，是阅读题目和补全合约的起点。本篇保留不同版本的学习示例，不把它们拼成一个工程。</p>
+<span id="more"></span>
+
+<blockquote>
+<p>本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时的实验环境；本文未重新搭建整套环境验证。</p>
+</blockquote>
+<h2 id="阅读前先确认"><a href="#阅读前先确认" class="headerlink" title="阅读前先确认"></a>阅读前先确认</h2><p>链上历史可追溯不代表状态变量不能修改。<code>extcodesize</code> 也不能作为完整的可信身份判断。示例中缺少的外部接口和 Ownable 等依赖需要单独准备。</p>
+<h2 id="存储合约设计"><a href="#存储合约设计" class="headerlink" title="存储合约设计"></a>存储合约设计</h2><h3 id="存储合约设计-1"><a href="#存储合约设计-1" class="headerlink" title="存储合约设计"></a>存储合约设计</h3><p>基本要求</p>
+<ul>
+<li><p>数据持久化</p>
+<ul>
+<li>数据（永存概念） 存储在区块链</li>
+<li>仅可修改状态不可篡改</li>
+</ul>
+</li>
+<li><p>状态变量存储</p>
+<ul>
+<li><pre><code class="solidity">uint256 public data;          // 简单数值
+mapping(address =&gt; uint) balances; // 映射结构
+string[] public records;      // 动态数组
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- Gas成本考虑</span><br><span class="line"></span><br><span class="line">  - 邮费昂贵</span><br><span class="line"></span><br><span class="line">基本结构</span><br><span class="line"></span><br><span class="line">- 存储层</span><br><span class="line">- 业务逻辑层</span><br><span class="line">- 权限控制层</span><br><span class="line"></span><br><span class="line">```solidity</span><br><span class="line">pragma solidity ^0.4.25;</span><br><span class="line"></span><br><span class="line">contract SimpleStorage &#123;</span><br><span class="line">    // 合约所有者</span><br><span class="line">    address public owner;</span><br><span class="line"></span><br><span class="line">    // 存储的数据</span><br><span class="line">    uint256 private storedData;</span><br><span class="line"></span><br><span class="line">    // 修改数据的事件日志</span><br><span class="line">    event DataStored(uint256 newValue, address indexed setBy);</span><br><span class="line"></span><br><span class="line">    // 构造函数，设置合约部署者为所有者</span><br><span class="line">    constructor() public &#123;</span><br><span class="line">        owner = msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 权限修饰符：仅所有者可调用</span><br><span class="line">    modifier onlyOwner() &#123;</span><br><span class="line">        require(msg.sender == owner, &quot;Only owner can call this function&quot;);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 存储数据函数（仅所有者）</span><br><span class="line">    function set(uint256 data) public onlyOwner &#123;</span><br><span class="line">        storedData = data;</span><br><span class="line">        emit DataStored(data, msg.sender);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 读取数据函数（公开）</span><br><span class="line">    function get() public view returns (uint256) &#123;</span><br><span class="line">        return storedData;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 转移所有权（仅所有者）</span><br><span class="line">    function transferOwnership(address newOwner) public onlyOwner &#123;</span><br><span class="line">        require(newOwner != address(0), &quot;Invalid address&quot;);</span><br><span class="line">        owner = newOwner;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 接口合约设计</span><br><span class="line"></span><br><span class="line">### 接口合约设计</span><br><span class="line"></span><br><span class="line">接口合约是只包含函数声明而不包含实现的抽象合约，用于定义合约之间的交互标准。</span><br><span class="line"></span><br><span class="line">设计原则：</span><br><span class="line"></span><br><span class="line">- 强制标准化：过接口约束外部合约的调用规范，例如代币协议（ERC20/ERC721）必须实现标准函数。</span><br><span class="line">- 无状态性：接口内禁止定义状态变量或构造函数，仅声明函数签名。</span><br><span class="line">- 全外部可见性：**外部可见性**：所有函数必须为 `external`；实现合约中可以用 public 函数实现对应的 external 接口。</span><br><span class="line"></span><br><span class="line">- 明确职责分离</span><br><span class="line">- 保持接口最小化</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">接口类型：</span><br><span class="line"></span><br><span class="line">- 代币标准接口</span><br><span class="line">- Defi协议接口</span><br><span class="line">- Oracle 预言机接口</span><br><span class="line"></span><br><span class="line">- 错误处理接口</span><br><span class="line">- 跨链桥接口</span><br><span class="line">- 多继承接口</span><br><span class="line">- 治理接口</span><br><span class="line">- 实用工具接口</span><br><span class="line">- 跨链桥接口</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">接口代码示例</span><br><span class="line"></span><br><span class="line">```solidity</span><br><span class="line">// 支持多继承的Difi组合接口</span><br><span class="line">interface IAvancedDefi is IERC20, IUniswapV2Pair &#123;</span><br><span class="line">	// 闪电贷功能（代币和NFT混合抵押）</span><br><span class="line">	function flashLoan(</span><br><span class="line">		address asset,</span><br><span class="line">		uint256 amount,</span><br><span class="line">		bytes calldata data</span><br><span class="line">	) external payable returns (bool);</span><br><span class="line"></span><br><span class="line">	// 跨链调用扩展 （需要预言机）</span><br><span class="line">	function crossChainCall(</span><br><span class="line">		uint256 targetChainId,</span><br><span class="line">		address targetContract,</span><br><span class="line">		bytes calldata payload</span><br><span class="line">	) external payable;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ERC20标准合约</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">// ERC20标准合约示例</span><br><span class="line">interface IERC20 &#123;</span><br><span class="line">	function totalSupply() external view returns (uint256);</span><br><span class="line">	function balanceOf(address account) external view returns (uint256);</span><br><span class="line">	function transfer(address recipient, uint256 amount) external returns(bool);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>接口伪装攻击防御</strong>：<br> 在实现合约中验证调用者接口的完整性：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">require(</span><br><span class="line"></span><br><span class="line">    IInterface(target).supportsInterface(type(IStandard).interfaceId),</span><br><span class="line"></span><br><span class="line">    &quot;Invalid interface&quot;</span><br><span class="line"></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h2 id="工具合约解析"><a href="#工具合约解析" class="headerlink" title="工具合约解析"></a>工具合约解析</h2><h3 id="工具合约解析-1"><a href="#工具合约解析-1" class="headerlink" title="工具合约解析"></a>工具合约解析</h3><p>WeBASE-Front 工具箱中自带有工具合约</p>
+<p>以下是代码解析：</p>
+<p><code>Address</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.24;</span><br><span class="line"></span><br><span class="line">library Address &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	// 检查地址是否为合约</span><br><span class="line">    function isContract(address addr) internal view returns(bool) &#123;</span><br><span class="line">        uint256 size;</span><br><span class="line">        assembly &#123; size := extcodesize(addr) &#125;</span><br><span class="line">        // 这里使用了 assembly 对 EVM 进行字节码级操作</span><br><span class="line">        // extcodesize是 EVM 内置函数，返回指定地址的合约代码大小</span><br><span class="line">        // 如果 size &gt; 0 那说明这个地址的确是个合约</span><br><span class="line">        return size &gt; 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function isEmptyAddress(address addr) internal pure returns(bool)&#123;</span><br><span class="line">        return addr == address(0); // 一目了然 检查合约是不是空地址</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意一点，使用这个函数时，在构造函数中调用会返回false，因为合约还未部署到链上。</p>
+<p><code>LibString</code> 这个<code>library</code> 有 690行 太长了，只挑几个解析</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function bytesToString(bytes memory _bytes) internal pure returns (string memory)&#123;</span><br><span class="line">    bytes memory bytesArray = new bytes(_bytes.length);</span><br><span class="line">    for (uint256 i; i &lt; _bytes.length; i++) &#123;</span><br><span class="line">        bytesArray[i] = _bytes[i];</span><br><span class="line">    &#125;</span><br><span class="line">    return string(_bytes);  // ❌ 这里应该是return string(bytesArray);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有点难绷了，为啥第一个函数就出现了错误，我有点不信任这个工具合约了</p>
+<h2 id="fix"><a href="#fix" class="headerlink" title="fix"></a>fix</h2><h3 id="去除了-bytesToString-中不必要的部分"><a href="#去除了-bytesToString-中不必要的部分" class="headerlink" title="去除了 bytesToString() 中不必要的部分"></a>去除了 bytesToString() 中不必要的部分</h3><h2 id="修正了-bytes32ToString-并对逻辑进行重写"><a href="#修正了-bytes32ToString-并对逻辑进行重写" class="headerlink" title="修正了 bytes32ToString() 并对逻辑进行重写"></a>修正了 bytes32ToString() 并对逻辑进行重写</h2><p>原代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">function bytesToString(bytes memory _bytes) internal pure returns (string memory)&#123;</span><br><span class="line">    bytes memory bytesArray = new bytes(_bytes.length); // 无用的复制</span><br><span class="line">    for (uint256 i; i &lt; _bytes.length; i++) &#123;</span><br><span class="line">        bytesArray[i] = _bytes[i];</span><br><span class="line">    &#125;</span><br><span class="line">    return string(_bytes);</span><br><span class="line">&#125;</span><br><span class="line">function bytes32ToString(bytes32 _bytes32) internal pure returns(string memory)&#123;</span><br><span class="line">    bytes memory bytesString = new bytes(32);</span><br><span class="line">    uint charCount = 0 ;</span><br><span class="line">    for(uint i = 0 ; i&lt;32;i++)&#123;</span><br><span class="line">        byte char = byte(bytes32(uint(_bytes32) *2 **(8*i))); //错误的位操作** (8 * i)))</span><br><span class="line">        if(char !=0)&#123;</span><br><span class="line">            bytesString[charCount] = char;</span><br><span class="line">            charCount++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    bytes memory bytesStringTrimmed = new bytes(charCount);</span><br><span class="line">    for(uint j=0;j&lt;charCount;j++)&#123;</span><br><span class="line">        bytesStringTrimmed[j]=bytesString[j];</span><br><span class="line">    &#125;</span><br><span class="line">    return string(bytesStringTrimmed);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修正代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function bytesToString(bytes memory _bytes) internal pure returns (string memory)&#123;</span><br><span class="line">    return string(_bytes);</span><br><span class="line">&#125;</span><br><span class="line">function bytes32ToString(bytes32 _bytes32) public pure returns (string) &#123;</span><br><span class="line">    uint8 length;</span><br><span class="line">    while (length &lt; 32 &amp;&amp; _bytes32[length] != 0) &#123;</span><br><span class="line">        length++;</span><br><span class="line">    &#125;</span><br><span class="line">    bytes memory bytesString = new bytes(length);</span><br><span class="line">    for (uint i = 0; i &lt; length; i++) &#123;</span><br><span class="line">        bytesString[i] = _bytes32[i];</span><br><span class="line">    &#125;</span><br><span class="line">    return string(bytesString);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>已进行的测试：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function testLetterA() public pure returns (string result, string correct, bool isEqual) &#123;</span><br><span class="line">    bytes32 input = bytes32(uint(65)); // &#x27;A&#x27;</span><br><span class="line">    result = bytes32ToString(input);</span><br><span class="line">    correct = bytes32ToStringCorrect(input);</span><br><span class="line">    isEqual = keccak256(result) == keccak256(correct);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>output:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  <span class="string">&quot;A&quot;</span>,</span><br><span class="line">  <span class="string">&quot;&quot;</span>,</span><br><span class="line">  <span class="string">&quot;false&quot;</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h2 id="核对资料"><a href="#核对资料" class="headerlink" title="核对资料"></a>核对资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.solidity.org/en/latest/contracts.html#interfaces">Solidity 接口规则</a></li>
+<li><a target="_blank" rel="noopener" href="https://fisco-bcos-30-en-document.readthedocs.io/en/latest/docs/sdk/java_sdk/transaction_data_struct.html">FISCO BCOS 交易与回执结构</a></li>
+</ul>
+<p>接口检测只说明对方声称支持某个接口，不能替代授权检查；原笔记的“接口伪装攻击防御”片段仅可作为接口探测思路。</p>
+<h2 id="复现时的自查"><a href="#复现时的自查" class="headerlink" title="复现时的自查"></a>复现时的自查</h2><ul>
+<li>记录自己实际使用的版本、配置和缺失依赖。</li>
+<li>对照本篇关键步骤，保存命令或调用结果，并解释结果代表什么。</li>
+<li>对失败或与原记录不一致的情况保留错误信息，不把历史输出当成自己的验证结果。</li>
+</ul>
+<p><a href="/guosai-notes/">返回系列导读</a> · <a href="/guosai-notes/webase-cert/">上一篇</a> · <a href="/guosai-notes/solidity-abi/">下一篇</a></p>
+
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
+                <ul id="audio-list" style="display:none">
+                    
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
+                    
+                </ul>
+                
+            </div>
+
+            
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/guosai-notes/solidity-design/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
+
+
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
+    
+    <a class="f-pn-card f-pn-prev" href="/guosai-notes/solidity-abi/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">区块链国赛笔记 07｜读懂 Solidity ABI、调用输入与 FISCO 交易回执</span>
+        <span class="f-pn-date">2026-11-03</span>
+    </a>
+    
+    
+    <a class="f-pn-card f-pn-next" href="/guosai-notes/webase-cert/">
+        <span class="f-pn-label">更早的文章 →</span>
+        <span class="f-pn-title">区块链国赛笔记 05｜WeBASE-Front 启动失败：一次证书不匹配排查</span>
+        <span class="f-pn-date">2026-11-03</span>
+    </a>
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E5%89%8D%E5%85%88%E7%A1%AE%E8%AE%A4"><span class="toc-text">阅读前先确认</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%90%88%E7%BA%A6%E8%AE%BE%E8%AE%A1"><span class="toc-text">存储合约设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%90%88%E7%BA%A6%E8%AE%BE%E8%AE%A1-1"><span class="toc-text">存储合约设计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E5%90%88%E7%BA%A6%E8%A7%A3%E6%9E%90"><span class="toc-text">工具合约解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E5%90%88%E7%BA%A6%E8%A7%A3%E6%9E%90-1"><span class="toc-text">工具合约解析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fix"><span class="toc-text">fix</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%BB%E9%99%A4%E4%BA%86-bytesToString-%E4%B8%AD%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E9%83%A8%E5%88%86"><span class="toc-text">去除了 bytesToString() 中不必要的部分</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%AD%A3%E4%BA%86-bytes32ToString-%E5%B9%B6%E5%AF%B9%E9%80%BB%E8%BE%91%E8%BF%9B%E8%A1%8C%E9%87%8D%E5%86%99"><span class="toc-text">修正了 bytes32ToString() 并对逻辑进行重写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%AF%B9%E8%B5%84%E6%96%99"><span class="toc-text">核对资料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E7%8E%B0%E6%97%B6%E7%9A%84%E8%87%AA%E6%9F%A5"><span class="toc-text">复现时的自查</span></a></li></ol></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <img class="f-footer-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="34" height="34">
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">
+            <span class="f-footer-quote-zh">我不相信命运，且我将在醉生梦死中追寻真正的自我。</span>
+            <span class="f-footer-quote-en">I do not believe in fate. In wine and dreams, I will seek out my true self.</span>
+        </p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

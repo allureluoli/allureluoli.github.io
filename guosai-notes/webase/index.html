@@ -1,0 +1,541 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>区块链国赛笔记 04｜WeBASE 部署、用户管理与 CNS - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,WeBASE 把节点、签名服务和应用管理串起来。这里整理部署入口、配置文件、用户类型以及合约命名服务的学习记录。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="区块链国赛笔记 04｜WeBASE 部署、用户管理与 CNS - 二月の档案室"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,WeBASE 把节点、签名服务和应用管理串起来。这里整理部署入口、配置文件、用户类型以及合约命名服务的学习记录。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="区块链国赛笔记 04｜WeBASE 部署、用户管理与 CNS - 二月の档案室"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,WeBASE 把节点、签名服务和应用管理串起来。这里整理部署入口、配置文件、用户类型以及合约命名服务的学习记录。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
+
+    <meta name="theme-color" content="#faf9f5" />
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <img class="f-brand-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="28" height="28">
+        <span class="f-brand-text">二月<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="/">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="/" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「我不相信命运，且我将在醉生梦死中追寻真正的自我。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
+</div>
+
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
+            
+            <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9B%BD%E8%B5%9B%E7%AC%94%E8%AE%B0/">区块链国赛笔记</a>
+            <span aria-hidden="true">/</span>
+            
+            <span class="f-crumb-cur">正文</span>
+        </nav>
+
+        <h1 class="f-post-title">区块链国赛笔记 04｜WeBASE 部署、用户管理与 CNS</h1>
+
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2026-11-03T15:30:00.000Z">2026-11-03</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                21 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                9.4k 字
+            </span>
+            
+            <a class="f-meta-item f-meta-cat" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9B%BD%E8%B5%9B%E7%AC%94%E8%AE%B0/">区块链国赛笔记</a>
+            
+        </div>
+
+        
+        <div class="f-post-tags">
+            
+            <a class="f-tag" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/">#区块链</a>
+            
+            <a class="f-tag" href="/tags/%E5%9B%BD%E8%B5%9B%E5%A4%87%E8%B5%9B/">#国赛备赛</a>
+            
+            <a class="f-tag" href="/tags/FISCO-BCOS/">#FISCO BCOS</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <p>WeBASE 把节点、签名服务和应用管理串起来。这里整理部署入口、配置文件、用户类型以及合约命名服务的学习记录。</p>
+<span id="more"></span>
+
+<blockquote>
+<p>本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时的实验环境；本文未重新搭建整套环境验证。</p>
+</blockquote>
+<h2 id="阅读前先确认"><a href="#阅读前先确认" class="headerlink" title="阅读前先确认"></a>阅读前先确认</h2><p>先核对各组件版本和配置，再按依赖关系检查数据库、签名服务、Front 与管理服务。导入公钥不等于拥有对应私钥的签名能力。</p>
+<h2 id="WeBase部署"><a href="#WeBase部署" class="headerlink" title="WeBase部署"></a>WeBase部署</h2><p>微众银行开源的自研区块链中间件平台——WeBase 是区块链应用和FISCO BCOS节点之间搭建的中间件平台。</p>
+<p>WeBASE屏蔽了区块链底层的复杂度，降低区块链使用的门槛，大幅提高区块链应用的开发效率，包含节点前置、节点管理、交易链路，数据导出，Web管理平台等子系统。用户可以根据业务所需，选择子系统进行部署，可以进一步体验丰富交互的体验、可视化智能合约开发环境IDE。</p>
+<p>下载(or clone)解压后cd进去</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~]</span><br><span class="line">└─$ <span class="built_in">cd</span> webase-deploy</span><br><span class="line"></span><br><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/webase-deploy]</span><br><span class="line">└─$ <span class="built_in">ls</span></span><br><span class="line"><span class="built_in">comm</span>               deploy.py  install.md  nodeconf      telnet.py  visual-deploy.properties  webase-upgrade.sh</span><br><span class="line">common.properties  docker     <span class="built_in">log</span>         README-en.md  upgrade    WeBASE-Front</span><br></pre></td></tr></table></figure>
+
+<p>输入命令启动安装程序，会自动检测需要配置的环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/webase-deploy]</span><br><span class="line">└─$ python3 deploy.py installAll</span><br><span class="line">============================================================</span><br><span class="line"></span><br><span class="line">              _    _     ______  ___  _____ _____</span><br><span class="line">             | |  | |    | ___ \/ _ \/  ___|  ___|</span><br><span class="line">             | |  | | ___| |_/ / /_\ \ `--.| |__</span><br><span class="line">             | |/\| |/ _ | ___ |  _  |`--. |  __|</span><br><span class="line">             \  /\  |  __| |_/ | | | /\__/ | |___</span><br><span class="line">              \/  \/ \___\____/\_| |_\____/\____/</span><br><span class="line"></span><br><span class="line">============================================================</span><br><span class="line">==============      checking envrionment      ==============</span><br><span class="line">check git...</span><br><span class="line">check finished sucessfully.</span><br><span class="line">check openssl...</span><br><span class="line">check finished sucessfully.</span><br><span class="line">check curl...</span><br><span class="line">check finished sucessfully.</span><br><span class="line">check wget...</span><br><span class="line">check finished sucessfully.</span><br><span class="line">check dos2unix...</span><br><span class="line">check finished sucessfully.</span><br><span class="line">check config webase v1.5.5 and fisco version v2.11.0...</span><br><span class="line">check finished sucessfully.</span><br><span class="line">check host free memory and cpu core...</span><br><span class="line">check finished sucessfully.</span><br><span class="line">check nginx...</span><br><span class="line">check finished sucessfully.</span><br><span class="line">check java...</span><br></pre></td></tr></table></figure>
+
+<p>从输出可以看到：<code>git</code>、<code>openssl</code>、<code>curl</code>、<code>wget</code>、<code>dos2unix</code>、<code>nginx</code>、<code>java</code>(我使用的是<code>openjdk-11</code>)</p>
+<p>除此之外，官方文档明确要求了需要准备MYSQL 由于我使用的是<code>wsl-kali</code> 官方源并不支持MYSQL，我使用了外部的远程MYSQL 连接，运行正常。</p>
+<p>相关配置在<code>vim common.properties</code> 配置。</p>
+<hr>
+<h3 id="关于两个配置文件"><a href="#关于两个配置文件" class="headerlink" title="关于两个配置文件"></a>关于两个配置文件</h3><p><code>common.properties</code>：公共配置文件</p>
+<ul>
+<li><strong>主要作用</strong>：包含所有 WeBase 组件共用的基础配置</li>
+</ul>
+<p><code>visual-deploy.properties</code>：可视化配置文件</p>
+<ul>
+<li><strong>主要作用</strong>：专门用于 WeBase-Visual 可视化部署工具的配置</li>
+</ul>
+<hr>
+<p>到了这一步，我们已经部署并启动了所有服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2025-09-11 11:10:50 (325 KB/s) - 已保存 “webase-web-mobile.zip” [1402252/1402252])</span><br><span class="line"></span><br><span class="line">onelineOutput: nginx: the configuration file /etc/nginx/nginx.conf syntax is ok</span><br><span class="line">Defualt nginx config path: /etc/nginx</span><br><span class="line">==============      Starting WeBASE-Web       ==============</span><br><span class="line">==============      WeBASE-Web Started        ==============</span><br><span class="line">==============  Init Front <span class="keyword">for</span> Mgr start...   ==============</span><br><span class="line">======================================================================================================================================  Init Front <span class="keyword">for</span> Mgr fail.      ==============</span><br><span class="line">============================================================</span><br><span class="line">==============      deploy  has completed     ==============</span><br><span class="line">============================================================</span><br><span class="line">==============    webase-web version  v1.5.5        ========</span><br><span class="line">==============    webase-node-mgr version  v1.5.5   ========</span><br><span class="line">==============    webase-sign version  v1.5.5       ========</span><br><span class="line">==============    webase-front version  v1.5.5      ========</span><br><span class="line">============================================================</span><br></pre></td></tr></table></figure>
+
+<p>命令方面官方文档给了讲解</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一键部署</span></span><br><span class="line">部署并启动所有服务        python3 deploy.py installAll</span><br><span class="line">停止一键部署的所有服务    python3 deploy.py stopAll</span><br><span class="line">启动一键部署的所有服务    python3 deploy.py startAll</span><br><span class="line"><span class="comment"># 各子服务启停</span></span><br><span class="line">启动FISCO-BCOS节点:      python3 deploy.py startNode</span><br><span class="line">停止FISCO-BCOS节点:      python3 deploy.py stopNode</span><br><span class="line">启动WeBASE-Web:          python3 deploy.py startWeb</span><br><span class="line">停止WeBASE-Web:          python3 deploy.py stopWeb</span><br><span class="line">启动WeBASE-Node-Manager: python3 deploy.py startManager</span><br><span class="line">停止WeBASE-Node-Manager: python3 deploy.py stopManager</span><br><span class="line">启动WeBASE-Sign:        python3 deploy.py startSign</span><br><span class="line">停止WeBASE-Sign:        python3 deploy.py stopSign</span><br><span class="line">启动WeBASE-Front:        python3 deploy.py startFront</span><br><span class="line">停止WeBASE-Front:        python3 deploy.py stopFront</span><br><span class="line"><span class="comment"># 可视化部署</span></span><br><span class="line">部署并启动可视化部署的所有服务  python3 deploy.py installWeBASE</span><br><span class="line">停止可视化部署的所有服务  python3 deploy.py stopWeBASE</span><br><span class="line">启动可视化部署的所有服务  python3 deploy.py startWeBASE</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="踩坑"><a href="#踩坑" class="headerlink" title="踩坑"></a>踩坑</h3><p>根据文档提示，我们输入<code>http://localhost:5000/#/login</code> 进入WeBase登录页面</p>
+<p>此时却弹出错误提示</p>
+<p>立即抓包发现</p>
+<p><code>http://localhost:5000/mgr/WeBASE-Node-Manager/config/encrypt </code>和  <code>/mgr/WeBASE-Node-Manager/account/pictureCheckCode</code>以及  <code>/mgr/WeBASE-Node-Manager/config/auth </code>  三个路由均返回404错误。</p>
+<p>根据路由名称判断大概是 <code>webase-node-mgr</code> 这个服务没有启动好，固尝试重新启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/webase-deploy]</span><br><span class="line">└─$ python3 deploy.py startManager</span><br><span class="line">==============  Starting WeBASE-Node-Manager  ==============</span><br><span class="line">============== WeBASE-Node-Manager starting. Please check through the <span class="built_in">log</span> file (default path:./webase-node-mgr/log/). ==============</span><br><span class="line">==============  WeBASE-Node-Manager  Started  ==============</span><br></pre></td></tr></table></figure>
+
+<p>查看进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/webase-deploy]</span><br><span class="line">└─$ ps -ef | grep java</span><br><span class="line">cure     56504 23135  0 11:07 pts/5    00:00:35 /usr/lib/jvm/java-11-openjdk-amd64/bin/java -Dfile.encoding=UTF-8 -Xmx256m -Xms256m -Xmn128m -Xss512k -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/cure/webase-deploy/webase-sign/log/heap_error.hprof -<span class="built_in">cp</span> conf/:apps/*:lib/* com.webank.webase.sign.Application</span><br><span class="line">cure     82084 23136  0 13:31 pts/5    00:00:00 grep --color=auto java</span><br></pre></td></tr></table></figure>
+
+<p>发现 <code>webase-sign</code> 运行正常 但并未发现<code>WeBase-Node-Manager</code> 服务</p>
+<p>查询log文件<code>WeBASE-Node-Manager-error.log</code>发现字段</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Caused by: com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications <span class="built_in">link</span> failure</span><br><span class="line">Caused by: javax.net.ssl.SSLHandshakeException: Received fatal alert: missing_extension</span><br></pre></td></tr></table></figure>
+
+<p>可以得出结论是MYSQL服务的SSL验证问题</p>
+<p>而又因为 <strong>MySQL 8.0+ 默认启用 SSL</strong></p>
+<p>可得出 <strong>Node-Manager 的 MySQL 驱动与服务器 SSL 配置不兼容</strong></p>
+<p>我同时连接数据库去看了下，发现MYSQL中需要的数据库已经创建和写入数据</p>
+<p>说明和公共配置无关</p>
+<p>进入查看 <code>webase-node-mgr</code>的配置文件 发现<code>application-docker.yml </code> 和  <code>application.yml</code> 文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/webase-deploy/webase-node-mgr]</span><br><span class="line">└─$ <span class="built_in">ls</span> conf</span><br><span class="line">application-docker.yml  application.yml  Arial  <span class="built_in">log</span>  mapper  swagger  templates  temp.yml  warehouse</span><br></pre></td></tr></table></figure>
+
+<p>由于我们未采用Docker部署因此应该是修改 <code>application.yml</code>文件</p>
+<p>进入在<code>spring</code> 字段下果然发现有关MySQL的Url，我们在参数加入<code>useSSL=false</code>  禁用SSL验证</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">url:</span> <span class="string">jdbc:mysql://xxx.xxx.xx.xx:3306/webasenodemanager?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=true&amp;requireSSL=false&amp;verifyServerCertificate=false&amp;serverTimezone=Asia/Shanghai</span></span><br></pre></td></tr></table></figure>
+
+<p>现在再进入登录界面果然恢复正常</p>
+<hr>
+<p>后续</p>
+<p>发现账号登录显示 <code>系统未初始化</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">==============      FISCO-BCOS  Started       ==============</span><br><span class="line">==============      Starting WeBASE-Sign      ==============</span><br><span class="line">============== WeBASE-Sign starting. Please check through the <span class="built_in">log</span> file (default path:./webase-sign/log/). ==============</span><br><span class="line">==============      WeBASE-Sign  Started      ==============</span><br><span class="line">==============     Starting WeBASE-Front      ==============</span><br><span class="line">============== WeBASE-Front starting. Please check through the <span class="built_in">log</span> file (default path:./webase-front/log/). ==============</span><br><span class="line">==============     WeBASE-Front  Started.     ==============</span><br><span class="line">==============  Starting WeBASE-Node-Manager  ==============</span><br><span class="line">============== WeBASE-Node-Manager starting. Please check through the <span class="built_in">log</span> file (default path:./webase-node-mgr/log/). ==============</span><br><span class="line">==============  WeBASE-Node-Manager  Started  ==============</span><br><span class="line">==============      Starting WeBASE-Web       ==============</span><br><span class="line">==============      WeBASE-Web Started        ==============</span><br></pre></td></tr></table></figure>
+
+<p>大坑</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/webase-deploy]</span><br><span class="line">└─$ python3 deploy.py check</span><br><span class="line">============================================================</span><br><span class="line"></span><br><span class="line">              _    _     ______  ___  _____ _____</span><br><span class="line">             | |  | |    | ___ \/ _ \/  ___|  ___|</span><br><span class="line">             | |  | | ___| |_/ / /_\ \ `--.| |__</span><br><span class="line">             | |/\| |/ _ | ___ |  _  |`--. |  __|</span><br><span class="line">             \  /\  |  __| |_/ | | | /\__/ | |___</span><br><span class="line">              \/  \/ \___\____/\_| |_\____/\____/</span><br><span class="line"></span><br><span class="line">============================================================</span><br><span class="line">==============      checking envrionment      ==============</span><br><span class="line">check git...</span><br><span class="line">check finished sucessfully.</span><br><span class="line">check openssl...</span><br><span class="line">check finished sucessfully.</span><br><span class="line">check curl...</span><br><span class="line">check finished sucessfully.</span><br><span class="line">check wget...</span><br><span class="line">check finished sucessfully.</span><br><span class="line">check dos2unix...</span><br><span class="line">check finished sucessfully.</span><br><span class="line">check config webase v1.5.5 and fisco version v2.11.0...</span><br><span class="line">check finished sucessfully.</span><br><span class="line">check host free memory and cpu core...</span><br><span class="line">check finished sucessfully.</span><br><span class="line">check nginx...</span><br><span class="line">check finished sucessfully.</span><br><span class="line">check java...</span><br><span class="line">check finished sucessfully.</span><br><span class="line">check FISCO-BCOS node port...</span><br><span class="line">  error! port 8545 has been used. please check.</span><br></pre></td></tr></table></figure>
+
+<p>8545端口的不是你自己启动的吗，报什么错啊</p>
+<hr>
+<p>官方文档有说明：</p>
+<p>​    <strong>注：使用国密版需要修改设置配置项<code>encrypt.type=1</code>。前置SDK与节点默认使用非国密SSL，如果需要使用国密SSL，需要修改设置配置项<code>encrypt.sslType=1</code>。</strong></p>
+<p>新版本又改了</p>
+<p>遗漏这个选项会造成 <code>webase-front</code> 启动失败，非常难修，和证书有关系</p>
+<p>默认是双通道双认证的</p>
+<hr>
+<p>大坑！！！！</p>
+<h3 id="Mulander-J-commented-on-Aug-23-2023"><a href="#Mulander-J-commented-on-Aug-23-2023" class="headerlink" title="Mulander-J commented on Aug 23, 2023"></a>Mulander-J commented on Aug 23, 2023</h3><p><a target="_blank" rel="noopener" href="https://github.com/Mulander-J">Mulander-J</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/FISCO-BCOS/java-sdk/issues/536#issuecomment-1689549240">on Aug 23, 2023</a></p>
+<p>刚踩了个坑  <code>fisco-bcos-v3</code> 版本不兼容 <code>WeBase-v2</code>版本，需要使用 <code>WeBase-v3</code>（lab分支）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">----------------------------</span><br><span class="line">====&gt; STEP1: try to connect nodes with ecdsa context...</span><br><span class="line">&lt;==== STEP1-1: Load certificates for ecdsa context success...</span><br><span class="line">&lt;==== STEP1 Result: try to connect nodes with ecdsa context failed. reason:</span><br><span class="line">Failed to connect to all the nodes!</span><br><span class="line">* ssl handshake failed:/127.0.0.1:20200</span><br><span class="line"> reason: error:14094438:SSL routines:ssl3_read_bytes:tlsv1 alert internal error. Please make sure the certificate are correctly configured and copied.</span><br><span class="line"></span><br><span class="line">----------------------------</span><br><span class="line">====&gt; STEP2: connect nodes with ecdsa context failed, try to connect nodes with sm-context...</span><br><span class="line">&lt;==== STEP2 Result: connect with sm context failed for cert missing.</span><br><span class="line">* Missed certificates:</span><br><span class="line">[conf/gm/gmca.crt,conf/gm/gmsdk.crt,conf/gm/gmsdk.key,conf/gm/gmensdk.key,conf/gm/gmensdk.crt,]</span><br><span class="line">currentPath: /home/mulander/fisco/WeBASE-Front/dist</span><br><span class="line">----------------------------</span><br><span class="line">&lt;====&gt; Error: try to connect nodes with both ecdsa and sm context failed &lt;====&gt;</span><br><span class="line">&lt;====&gt; Please refer to github issue: https://github.com/FISCO-BCOS/java-sdk/issues/536</span><br><span class="line">&lt;====&gt; Please refer to fisco-docs: https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/faq/connect.html</span><br><span class="line">----------------------------</span><br><span class="line">* FISCO BCOS Java SDK Version: 2.9.1</span><br><span class="line">* Support secp256k1 : true</span><br><span class="line">* Java Version : 11.0.20</span><br><span class="line">* JDK Disabled NamedCurves : null</span><br><span class="line">* JDK DisableNative Option : false</span><br><span class="line">* OS Name : Linux</span><br><span class="line">* OS Arch : amd64</span><br><span class="line">* OS Version : 5.15.90.1-microsoft-standard-WSL2</span><br><span class="line">* JVM Version : 11.0.20+8-post-Ubuntu-1ubuntu122.04</span><br><span class="line">* JVM Vendor : Ubuntu</span><br><span class="line">* JVM Vendor URL : https://ubuntu.com/</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>如果已经部署过旧合约切记删除掉数据库，重新安装部署时会生成新的</p>
+<h2 id="WeBase用户"><a href="#WeBase用户" class="headerlink" title="WeBase用户"></a>WeBase用户</h2><h3 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h3><p>WeBase有新建私钥用户和导入公钥用户两种用户导入方式</p>
+<ul>
+<li>新建用户（私钥托管在签名服务中）：在管理平台的合约管理中部署和调用合约</li>
+<li>导入公钥用户：把交易和用户关联</li>
+</ul>
+<hr>
+<h3 id="科普"><a href="#科普" class="headerlink" title="科普"></a>科普</h3><p><strong>Contract Name Service</strong> 简称CNS 在我们新建用户私钥时可以看到</p>
+<p>CNS的中文名叫 <strong>合约命名服务</strong>  可以把它理解为<strong>区块链世界的DNS（域名系统）</strong></p>
+<p>实例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 没有CNS：硬编码地址，难以维护</span><br><span class="line">HelloWorld contract = HelloWorld(0x742d35Cc6634C893292...);</span><br><span class="line"></span><br><span class="line">// 使用CNS：通过名称访问，易于维护</span><br><span class="line">HelloWorld contract = HelloWorld(CNS.getAddress(&quot;HelloWorld&quot;));</span><br></pre></td></tr></table></figure>
+
+<p>CNS工作原理</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">+----------------+    +----------------+    +-----------------+</span><br><span class="line">|    DApp应用     | -&gt; |    CNS代理      | -&gt; |  实际合约实例     |</span><br><span class="line">| (使用合约别名)   |    | (名称-&gt;地址映射) |    | (0x742d35Cc...)  |</span><br><span class="line">+----------------+    +----------------+    +-----------------+</span><br></pre></td></tr></table></figure>
+
+<h2 id="复现时的自查"><a href="#复现时的自查" class="headerlink" title="复现时的自查"></a>复现时的自查</h2><ul>
+<li>记录自己实际使用的版本、配置和缺失依赖。</li>
+<li>对照本篇关键步骤，保存命令或调用结果，并解释结果代表什么。</li>
+<li>对失败或与原记录不一致的情况保留错误信息，不把历史输出当成自己的验证结果。</li>
+</ul>
+<p><a href="/guosai-notes/">返回系列导读</a> · <a href="/guosai-notes/fisco-expand/">上一篇</a> · <a href="/guosai-notes/webase-cert/">下一篇</a></p>
+
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
+                <ul id="audio-list" style="display:none">
+                    
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
+                    
+                </ul>
+                
+            </div>
+
+            
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/guosai-notes/webase/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
+
+
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
+    
+    <a class="f-pn-card f-pn-prev" href="/guosai-notes/supply-chain/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">区块链国赛笔记 08｜供应链金融合约：企业、票据与转账业务</span>
+        <span class="f-pn-date">2026-11-03</span>
+    </a>
+    
+    
+    <a class="f-pn-card f-pn-next" href="/guosai-notes/solidity-abi/">
+        <span class="f-pn-label">更早的文章 →</span>
+        <span class="f-pn-title">区块链国赛笔记 07｜读懂 Solidity ABI、调用输入与 FISCO 交易回执</span>
+        <span class="f-pn-date">2026-11-03</span>
+    </a>
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E5%89%8D%E5%85%88%E7%A1%AE%E8%AE%A4"><span class="toc-text">阅读前先确认</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WeBase%E9%83%A8%E7%BD%B2"><span class="toc-text">WeBase部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E4%B8%A4%E4%B8%AA%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">关于两个配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91"><span class="toc-text">踩坑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mulander-J-commented-on-Aug-23-2023"><span class="toc-text">Mulander-J commented on Aug 23, 2023</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WeBase%E7%94%A8%E6%88%B7"><span class="toc-text">WeBase用户</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86"><span class="toc-text">用户管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%91%E6%99%AE"><span class="toc-text">科普</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E7%8E%B0%E6%97%B6%E7%9A%84%E8%87%AA%E6%9F%A5"><span class="toc-text">复现时的自查</span></a></li></ol></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <img class="f-footer-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="34" height="34">
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">
+            <span class="f-footer-quote-zh">我不相信命运，且我将在醉生梦死中追寻真正的自我。</span>
+            <span class="f-footer-quote-en">I do not believe in fate. In wine and dreams, I will seek out my true self.</span>
+        </p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

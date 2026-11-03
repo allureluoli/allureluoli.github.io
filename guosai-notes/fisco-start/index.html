@@ -1,0 +1,716 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>区块链国赛笔记 01｜FISCO BCOS 建链、端口与控制台配置 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,先把建链脚本、节点目录和控制台的关系弄清楚，再检查端口与证书。这里保留了当时使用的不同部署模式参数，实际操作时要先确认脚本版本。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="区块链国赛笔记 01｜FISCO BCOS 建链、端口与控制台配置 - 二月の档案室"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,先把建链脚本、节点目录和控制台的关系弄清楚，再检查端口与证书。这里保留了当时使用的不同部署模式参数，实际操作时要先确认脚本版本。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="区块链国赛笔记 01｜FISCO BCOS 建链、端口与控制台配置 - 二月の档案室"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,先把建链脚本、节点目录和控制台的关系弄清楚，再检查端口与证书。这里保留了当时使用的不同部署模式参数，实际操作时要先确认脚本版本。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
+
+    <meta name="theme-color" content="#faf9f5" />
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <img class="f-brand-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="28" height="28">
+        <span class="f-brand-text">二月<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="/">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="/" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「我不相信命运，且我将在醉生梦死中追寻真正的自我。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
+</div>
+
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
+            
+            <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9B%BD%E8%B5%9B%E7%AC%94%E8%AE%B0/">区块链国赛笔记</a>
+            <span aria-hidden="true">/</span>
+            
+            <span class="f-crumb-cur">正文</span>
+        </nav>
+
+        <h1 class="f-post-title">区块链国赛笔记 01｜FISCO BCOS 建链、端口与控制台配置</h1>
+
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2026-11-03T15:30:00.000Z">2026-11-03</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                13 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                5.8k 字
+            </span>
+            
+            <a class="f-meta-item f-meta-cat" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9B%BD%E8%B5%9B%E7%AC%94%E8%AE%B0/">区块链国赛笔记</a>
+            
+        </div>
+
+        
+        <div class="f-post-tags">
+            
+            <a class="f-tag" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/">#区块链</a>
+            
+            <a class="f-tag" href="/tags/%E5%9B%BD%E8%B5%9B%E5%A4%87%E8%B5%9B/">#国赛备赛</a>
+            
+            <a class="f-tag" href="/tags/FISCO-BCOS/">#FISCO BCOS</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <p>先把建链脚本、节点目录和控制台的关系弄清楚，再检查端口与证书。这里保留了当时使用的不同部署模式参数，实际操作时要先确认脚本版本。</p>
+<span id="more"></span>
+
+<blockquote>
+<p>本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时的实验环境；本文未重新搭建整套环境验证。</p>
+</blockquote>
+<h2 id="阅读前先确认"><a href="#阅读前先确认" class="headerlink" title="阅读前先确认"></a>阅读前先确认</h2><p>FISCO BCOS 2.x、3.x 以及 Air、Pro 的参数不能混用。以手头脚本的 <code>bash build_chain.sh -h</code> 为准，控制台和 SDK 也要匹配。</p>
+<h2 id="FISCO-1"><a href="#FISCO-1" class="headerlink" title="FISCO 1"></a>FISCO 1</h2><h3 id="FISCO-BCOS-的组成"><a href="#FISCO-BCOS-的组成" class="headerlink" title="FISCO BCOS 的组成"></a>FISCO BCOS 的组成</h3><p><code>build_chain.sh</code> 是节点的部署工具 会自动下载节点部署文件和相应的<code>.sh</code> 脚本</p>
+<p><code>download_console.sh</code> 会为我们下载控制台的压缩包并解压</p>
+<ul>
+<li><code>控制台1.x</code> 系列基于 <a target="_blank" rel="noopener" href="https://fisco-bcos-documentation.readthedocs.io/zh-cn/latest/docs/sdk/java_sdk.html">Web3SDK</a> 实现，<code>控制台2.6之后</code> 基于 <a target="_blank" rel="noopener" href="https://fisco-bcos-documentation.readthedocs.io/zh-cn/latest/docs/sdk/java_sdk/index.html">Java SDK</a> 实现，最新版本控制台基于 <code>Java SDK</code> 实现</li>
+</ul>
+<h3 id="检查证书内容确认证书匹配"><a href="#检查证书内容确认证书匹配" class="headerlink" title="检查证书内容确认证书匹配"></a>检查证书内容确认证书匹配</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/test_2/console]</span><br><span class="line">└─$ <span class="built_in">cat</span> conf/ca.crt</span><br><span class="line">-----BEGIN CERTIFICATE-----</span><br><span class="line">MIIDHTCCAgWgAwIBAgIUDCLqjjN</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/test_2/fisco/nodes/127.0.0.1]</span><br><span class="line">└─$ <span class="built_in">cat</span> sdk/ca.crt</span><br><span class="line">-----BEGIN CERTIFICATE-----</span><br><span class="line">MIIDHTCCAgWgAwIBAgIUDCLqjjNQug</span><br></pre></td></tr></table></figure>
+
+<h3 id="控制台的配置文件-conf-config-toml"><a href="#控制台的配置文件-conf-config-toml" class="headerlink" title="控制台的配置文件 conf/config.toml"></a>控制台的配置文件 <code>conf/config.toml</code></h3><p>中文注释版</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[cryptoMaterial]</span></span><br><span class="line"><span class="attr">certPath</span> = <span class="string">&quot;conf&quot;</span>                           <span class="comment"># 证书路径</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以下配置如果注释掉，默认使用certPath路径</span></span><br><span class="line"><span class="comment"># caCert = &quot;conf/ca.crt&quot;                    # CA证书文件路径</span></span><br><span class="line">                                            <span class="comment"># 如果连接国密节点，默认CA证书路径为 $&#123;certPath&#125;/gm/gmca.crt</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sslCert = &quot;conf/sdk.crt&quot;                  # SSL证书文件路径</span></span><br><span class="line">                                            <span class="comment"># 如果连接国密节点，默认SDK证书路径为 $&#123;certPath&#125;/gm/gmsdk.crt</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sslKey = &quot;conf/sdk.key&quot;                   # SSL密钥文件路径</span></span><br><span class="line">                                            <span class="comment"># 如果连接国密节点，默认SDK私钥路径为 $&#123;certPath&#125;/gm/gmsdk.key</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># enSslCert = &quot;conf/gm/gmensdk.crt&quot;         # 国密加密证书文件路径</span></span><br><span class="line">                                            <span class="comment"># 默认从 $&#123;certPath&#125;/gm/gmensdk.crt 加载国密SSL加密证书</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># enSslKey = &quot;conf/gm/gmensdk.key&quot;          # 国密SSL证书文件路径</span></span><br><span class="line">                                            <span class="comment"># 默认从 $&#123;certPath&#125;/gm/gmensdk.key 加载国密SSL加密私钥</span></span><br><span class="line"></span><br><span class="line"><span class="section">[network]</span></span><br><span class="line"><span class="attr">peers</span> = [<span class="string">&quot;127.0.0.1:20200&quot;</span>, <span class="string">&quot;127.0.0.1:20201&quot;</span>]    <span class="comment"># 要连接的节点列表</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将私有主题配置为主题消息发送者</span></span><br><span class="line"><span class="comment"># [[amop]]</span></span><br><span class="line"><span class="comment"># topicName = &quot;PrivateTopic1&quot;</span></span><br><span class="line"><span class="comment"># publicKeys = [ &quot;conf/amop/consumer_public_key_1.pem&quot; ]    # 您想要向其发送此主题AMOP消息的节点的公钥</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将私有主题配置为主题订阅者</span></span><br><span class="line"><span class="comment"># [[amop]]</span></span><br><span class="line"><span class="comment"># topicName = &quot;PrivateTopic2&quot;</span></span><br><span class="line"><span class="comment"># privateKey = &quot;conf/amop/consumer_private_key.p12&quot;         # 用于订阅者验证的私钥</span></span><br><span class="line"><span class="comment"># password = &quot;123456&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="section">[account]</span></span><br><span class="line"><span class="attr">keyStoreDir</span> = <span class="string">&quot;account&quot;</span>         <span class="comment"># 加载/存储账户文件的目录，默认为&quot;account&quot;</span></span><br><span class="line"><span class="comment"># accountFilePath = &quot;&quot;          # 账户文件路径（默认从keyStoreDir指定的路径加载）</span></span><br><span class="line"><span class="attr">accountFileFormat</span> = <span class="string">&quot;pem&quot;</span>       <span class="comment"># 账户文件的存储格式（默认为&quot;pem&quot;，可选&quot;p12&quot;）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># accountAddress = &quot;&quot;           # 交易发送账户地址</span></span><br><span class="line">                                <span class="comment"># 默认为随机生成的账户</span></span><br><span class="line">                                <span class="comment"># 随机生成的账户存储在keyStoreDir指定的路径中</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># password = &quot;&quot;                 # 用于加载账户文件的密码</span></span><br><span class="line"></span><br><span class="line"><span class="section">[threadPool]</span></span><br><span class="line"><span class="comment"># channelProcessorThreadSize = &quot;16&quot;         # 处理通道回调的线程池大小</span></span><br><span class="line">                                            <span class="comment"># 默认为CPU核心数</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># receiptProcessorThreadSize = &quot;16&quot;         # 处理交易回执通知的线程池大小</span></span><br><span class="line">                                            <span class="comment"># 默认为CPU核心数</span></span><br><span class="line"></span><br><span class="line"><span class="attr">maxBlockingQueueSize</span> = <span class="string">&quot;102400&quot;</span>             <span class="comment"># 线程池的最大阻塞队列大小</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="国密配置"><a href="#国密配置" class="headerlink" title="国密配置"></a>国密配置</h3><h2 id="FISCO-2"><a href="#FISCO-2" class="headerlink" title="FISCO 2"></a>FISCO 2</h2><h3 id="命令解析"><a href="#命令解析" class="headerlink" title="命令解析"></a>命令解析</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545</span><br></pre></td></tr></table></figure>
+
+<p>这是启动构建区块链节点脚本的命令参数解析如下</p>
+<ul>
+<li>设置了IP为本地主机地址<ul>
+<li>4代表启动四个节点</li>
+<li>三个端口是三个起始端口</li>
+<li>分别是<ul>
+<li>P2P网络起始端口</li>
+<li>RPC&#x2F;Channel端口</li>
+<li>JSON&#x2F;RPC端口</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>命令后的端口分配</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">节点1: 127.0.0.1:30300, 127.0.0.1:20200, 127.0.0.1:8545</span><br><span class="line">节点2: 127.0.0.1:30301, 127.0.0.1:20201, 127.0.0.1:8546</span><br><span class="line">节点3: 127.0.0.1:30302, 127.0.0.1:20202, 127.0.0.1:8547</span><br><span class="line">节点4: 127.0.0.1:30303, 127.0.0.1:20203, 127.0.0.1:8548</span><br></pre></td></tr></table></figure>
+
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p><code>JavaSDK</code>连接节点存在失败的可能 排查思路</p>
+<ul>
+<li>解决方法摘自官方issue:</li>
+</ul>
+<h4 id="Important-前置说明"><a href="#Important-前置说明" class="headerlink" title="Important: 前置说明"></a><strong>Important: 前置说明</strong></h4><h4 id="1-jdk版本支持"><a href="#1-jdk版本支持" class="headerlink" title="1. jdk版本支持"></a><strong>1. jdk版本支持</strong></h4><p>JavaSDK原则上支持从jdk 1.8到jdk 15的<code>OracleJDK</code>和<code>OpenJDK</code>，但中间有部分版本禁用或者不支持<code>secp256k1</code>曲线，会导致sdk与节点之间握手失败，<strong>请首先检查当前使用的jdk是否支持<code>secp256k1</code>曲线</strong>，目前已经覆盖测试的jdk版本如下，推荐大家使用：</p>
+<ul>
+<li><strong><code>OracleJDK</code></strong>:<ul>
+<li>1.8.0_141</li>
+<li>1.8.0_202</li>
+<li>11.0.2</li>
+<li>14.0.2</li>
+<li>15.0.2</li>
+</ul>
+</li>
+<li><strong><code>OpenJDK</code></strong>:<ul>
+<li>11.0.2</li>
+<li>14.0.2</li>
+<li>15.0.2</li>
+</ul>
+</li>
+</ul>
+<h3 id="踩坑"><a href="#踩坑" class="headerlink" title="踩坑"></a>踩坑</h3><p> fisco 2.x版本启动console 有SSL问题</p>
+<p>3.x版本没有这个问题 溯源四小时无结果，默认2.x版本被淘汰</p>
+<ul>
+<li>尝试：<ul>
+<li>CA证书添加到<code>jre</code>信任</li>
+<li>更换多个<code>jdk</code>版本</li>
+<li>更换操作系统</li>
+</ul>
+</li>
+</ul>
+<h2 id="FISCO-3"><a href="#FISCO-3" class="headerlink" title="FISCO 3"></a>FISCO 3</h2><p>这些是合约存放目录存放有大量的合约</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/fisco/console/contracts/solidity]</span><br><span class="line">└─$ <span class="built_in">ls</span></span><br><span class="line">Asset.sol  CastTest.sol  DelegateCallTest.sol  EventSubDemo.sol  KVTableTest.sol  Table.sol      TableTestV320.sol</span><br><span class="line">Cast.sol   Crypto.sol    EntryWrapper.sol      HelloWorld.sol    ShaTest.sol      TableTest.sol  TableV320.sol</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="FISCI-build-chain"><a href="#FISCI-build-chain" class="headerlink" title="FISCI build chain"></a>FISCI build chain</h2><h3 id="FISCO-BCOS-一键脚本"><a href="#FISCO-BCOS-一键脚本" class="headerlink" title="FISCO BCOS 一键脚本"></a>FISCO BCOS 一键脚本</h3><p>FISCO BCOS提供了<code>build_chain.sh</code>脚本帮助用户快速搭建FISCO BCOS联盟链。</p>
+<p>通过脚本 + 参数我们就可以使用其中的功能</p>
+<p>例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash build_chain.sh -C expand_node -V pro -o expand_node -c ./config.toml</span><br></pre></td></tr></table></figure>
+
+<h3 id="通用参数（适用于-air-模式）"><a href="#通用参数（适用于-air-模式）" class="headerlink" title="通用参数（适用于 air 模式）"></a><strong>通用参数（适用于 <code>air</code> 模式）</strong></h3><table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>-C &lt;Command&gt;</code></td>
+<td align="left">【可选】命令类型，当前支持 <code>deploy</code>（部署）和 <code>expand</code>（扩展），默认为 <code>deploy</code></td>
+</tr>
+<tr>
+<td align="left"><code>-g &lt;group id&gt;</code></td>
+<td align="left">【可选】群组ID，默认为 <code>group0</code></td>
+</tr>
+<tr>
+<td align="left"><code>-I &lt;chain id&gt;</code></td>
+<td align="left">【可选】链ID，默认为 <code>chain0</code></td>
+</tr>
+<tr>
+<td align="left"><code>-v &lt;FISCO-BCOS binary version&gt;</code></td>
+<td align="left">【可选】FISCO-BCOS二进制版本，默认为最新版 v3.10.0</td>
+</tr>
+<tr>
+<td align="left"><code>-l &lt;IP list&gt;</code></td>
+<td align="left">【必需】IP列表，格式为 <code>&quot;ip1:节点数1,ip2:节点数2&quot;</code>，例如：<code>&quot;192.168.0.1:2,192.168.0.2:3&quot;</code></td>
+</tr>
+<tr>
+<td align="left"><code>-L &lt;fisco bcos lightnode exec&gt;</code></td>
+<td align="left">【可选】轻节点可执行文件路径，输入 <code>download_binary</code> 下载或指定正确的轻节点二进制路径</td>
+</tr>
+<tr>
+<td align="left"><code>-e &lt;fisco-bcos exec&gt;</code></td>
+<td align="left">【可选】fisco-bcos 二进制可执行文件路径</td>
+</tr>
+<tr>
+<td align="left"><code>-t &lt;mtail exec&gt;</code></td>
+<td align="left">【可选】mtail 二进制可执行文件路径</td>
+</tr>
+<tr>
+<td align="left"><code>-o &lt;output dir&gt;</code></td>
+<td align="left">【可选】输出目录，默认为 <code>./nodes</code></td>
+</tr>
+<tr>
+<td align="left"><code>-p &lt;Start port&gt;</code></td>
+<td align="left">【可选】起始端口，默认为 <code>30300,20200</code>（即 p2p_port 从 30300 开始，rpc_port 从 20200 开始）</td>
+</tr>
+<tr>
+<td align="left"><code>-s &lt;SM model&gt;</code></td>
+<td align="left">【可选】是否启用国密SSL连接，默认为 <code>false</code></td>
+</tr>
+<tr>
+<td align="left"><code>-H &lt;HSM model&gt;</code></td>
+<td align="left">【可选】是否使用硬件安全模块（HSM），默认为 <code>false</code></td>
+</tr>
+<tr>
+<td align="left"><code>-c &lt;Config Path&gt;</code></td>
+<td align="left">【扩展节点时必需】指定扩展节点的配置文件路径（需包含 <code>config.ini</code>、<code>config.genesis</code> 和 <code>nodes.json</code>）</td>
+</tr>
+<tr>
+<td align="left"><code>-d &lt;CA cert path&gt;</code></td>
+<td align="left">【扩展节点时必需】扩展节点时指定CA证书和私钥的路径</td>
+</tr>
+<tr>
+<td align="left"><code>-D &lt;docker mode&gt;</code></td>
+<td align="left">【可选】是否启用Docker模式，默认为关闭。设置 <code>-D</code> 时使用Docker构建</td>
+</tr>
+<tr>
+<td align="left"><code>-E &lt;Enable debug log&gt;</code></td>
+<td align="left">【可选】是否启用调试日志，默认为关闭。设置 <code>-E</code> 时启用</td>
+</tr>
+<tr>
+<td align="left"><code>-a &lt;Auth account&gt;</code></td>
+<td align="left">【可选】认证模式下指定管理员账户地址</td>
+</tr>
+<tr>
+<td align="left"><code>-w &lt;WASM mode&gt;</code></td>
+<td align="left">【可选】是否使用WASM虚拟机引擎，默认为 <code>false</code></td>
+</tr>
+<tr>
+<td align="left"><code>-R &lt;Serial_mode&gt;</code></td>
+<td align="left">【可选】是否使用串行执行，默认为 <code>true</code></td>
+</tr>
+<tr>
+<td align="left"><code>-k &lt;key page size&gt;</code></td>
+<td align="left">【可选】键值分页大小，默认为 <code>10240</code></td>
+</tr>
+<tr>
+<td align="left"><code>-m &lt;fisco-bcos monitor&gt;</code></td>
+<td align="left">【可选】是否启用节点监控，默认为 <code>false</code></td>
+</tr>
+<tr>
+<td align="left"><code>-i &lt;fisco-bcos monitor ip/port&gt;</code></td>
+<td align="left">【可选】扩展节点时需指定监控服务的IP和端口</td>
+</tr>
+<tr>
+<td align="left"><code>-M &lt;fisco-bcos monitor&gt;</code></td>
+<td align="left">【可选】扩展节点时指定Prometheus监控工具的路径</td>
+</tr>
+<tr>
+<td align="left"><code>-z &lt;Generate tar packet&gt;</code></td>
+<td align="left">【可选】打包链上数据生成tar包</td>
+</tr>
+<tr>
+<td align="left"><code>-n &lt;node key path&gt;</code></td>
+<td align="left">【可选】设置节点密钥文件路径以加载节点ID</td>
+</tr>
+<tr>
+<td align="left"><code>-N &lt;node path&gt;</code></td>
+<td align="left">【可选】设置需修改为多CA模式的节点路径</td>
+</tr>
+<tr>
+<td align="left"><code>-u &lt;multi ca path&gt;</code></td>
+<td align="left">【可选】设置多CA模式下其他CA的路径</td>
+</tr>
+<tr>
+<td align="left"><code>-6 &lt;ipv6 mode&gt;</code></td>
+<td align="left">【可选】是否启用IPv6模式（默认监听 <code>::</code>），默认为 <code>false</code></td>
+</tr>
+<tr>
+<td align="left"><code>-T &lt;Consensus Algorithm&gt;</code></td>
+<td align="left">【可选】共识算法，默认为 <code>PBFT</code>，可选 <code>pbft</code> &#x2F; <code>rpbft</code>（推荐 <code>pbft</code>）</td>
+</tr>
+<tr>
+<td align="left"><code>-h</code></td>
+<td align="left">显示帮助信息</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="Pro-Max-模式专用参数"><a href="#Pro-Max-模式专用参数" class="headerlink" title="Pro&#x2F;Max 模式专用参数"></a><strong>Pro&#x2F;Max 模式专用参数</strong></h3><table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>-C &lt;Command&gt;</code></td>
+<td align="left">【可选】命令类型，当前仅支持 <code>deploy</code>（部署），默认为 <code>deploy</code></td>
+</tr>
+<tr>
+<td align="left"><code>-g &lt;group id&gt;</code></td>
+<td align="left">【可选】群组ID，默认为 <code>group0</code></td>
+</tr>
+<tr>
+<td align="left"><code>-I &lt;chain id&gt;</code></td>
+<td align="left">【可选】链ID，默认为 <code>chain0</code></td>
+</tr>
+<tr>
+<td align="left"><code>-V &lt;chain version&gt;</code></td>
+<td align="left">【可选】链版本，支持 <code>air</code>、<code>pro</code>、<code>max</code>，默认为 <code>air</code></td>
+</tr>
+<tr>
+<td align="left"><code>-l &lt;IP list&gt;</code></td>
+<td align="left">【必需】IP列表，格式同通用模式</td>
+</tr>
+<tr>
+<td align="left"><code>-p &lt;Start port&gt;</code></td>
+<td align="left">【可选】起始端口，默认为 <code>30300,20200,40400,2379</code>（即 p2p_port 从 30300 开始，rpc_port 从 20200 开始，tars_port 从 40400 开始，tikv_port 默认为 2379）</td>
+</tr>
+<tr>
+<td align="left"><code>-e &lt;service binary path&gt;</code></td>
+<td align="left">【可选】RPC网关节点服务的二进制路径</td>
+</tr>
+<tr>
+<td align="left"><code>-y &lt;service binary download type&gt;</code></td>
+<td align="left">【可选】RPC网关节点服务二进制下载类型，默认为 <code>cdn</code></td>
+</tr>
+<tr>
+<td align="left"><code>-v &lt;service binary version&gt;</code></td>
+<td align="left">【可选】服务二进制版本，默认为最新版 v3.10.0</td>
+</tr>
+<tr>
+<td align="left"><code>-r &lt;service binary download path&gt;</code></td>
+<td align="left">【可选】服务二进制下载路径，默认为 <code>binary</code></td>
+</tr>
+<tr>
+<td align="left"><code>-c &lt;Config Path&gt;</code></td>
+<td align="left">【可选】指定部署节点的 <code>config.toml</code> 配置文件路径</td>
+</tr>
+<tr>
+<td align="left"><code>-t &lt;deploy type&gt;</code></td>
+<td align="left">【可选】部署类型，支持 <code>rpc</code>、<code>gateway</code>、<code>node</code>、<code>all</code>，默认为 <code>all</code></td>
+</tr>
+<tr>
+<td align="left"><code>-o &lt;output dir&gt;</code></td>
+<td align="left">【可选】输出目录，默认为 <code>generated</code></td>
+</tr>
+<tr>
+<td align="left"><code>-s &lt;SM model&gt;</code></td>
+<td align="left">【可选】是否启用国密SSL连接，默认为 <code>false</code></td>
+</tr>
+<tr>
+<td align="left"><code>-h</code></td>
+<td align="left">显示帮助信息</td>
+</tr>
+</tbody></table>
+<h2 id="复现时的自查"><a href="#复现时的自查" class="headerlink" title="复现时的自查"></a>复现时的自查</h2><ul>
+<li>记录自己实际使用的版本、配置和缺失依赖。</li>
+<li>对照本篇关键步骤，保存命令或调用结果，并解释结果代表什么。</li>
+<li>对失败或与原记录不一致的情况保留错误信息，不把历史输出当成自己的验证结果。</li>
+</ul>
+<p><a href="/guosai-notes/">返回系列导读</a> · <a href="/guosai-notes/fisco-console/">下一篇</a></p>
+
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
+                <ul id="audio-list" style="display:none">
+                    
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
+                    
+                </ul>
+                
+            </div>
+
+            
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/guosai-notes/fisco-start/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
+
+
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
+    
+    <a class="f-pn-card f-pn-prev" href="/guosai-notes/fisco-expand/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">区块链国赛笔记 03｜FISCO BCOS 节点扩容：角色、证书与 Air 实操</span>
+        <span class="f-pn-date">2026-11-03</span>
+    </a>
+    
+    
+    <a class="f-pn-card f-pn-next" href="/guosai-notes/fisco-console/">
+        <span class="f-pn-label">更早的文章 →</span>
+        <span class="f-pn-title">区块链国赛笔记 02｜FISCO BCOS 控制台命令与节点状态检查</span>
+        <span class="f-pn-date">2026-11-03</span>
+    </a>
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E5%89%8D%E5%85%88%E7%A1%AE%E8%AE%A4"><span class="toc-text">阅读前先确认</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FISCO-1"><span class="toc-text">FISCO 1</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#FISCO-BCOS-%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-text">FISCO BCOS 的组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E8%AF%81%E4%B9%A6%E5%86%85%E5%AE%B9%E7%A1%AE%E8%AE%A4%E8%AF%81%E4%B9%A6%E5%8C%B9%E9%85%8D"><span class="toc-text">检查证书内容确认证书匹配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%8F%B0%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6-conf-config-toml"><span class="toc-text">控制台的配置文件 conf&#x2F;config.toml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BD%E5%AF%86%E9%85%8D%E7%BD%AE"><span class="toc-text">国密配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FISCO-2"><span class="toc-text">FISCO 2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90"><span class="toc-text">命令解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Important-%E5%89%8D%E7%BD%AE%E8%AF%B4%E6%98%8E"><span class="toc-text">Important: 前置说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-jdk%E7%89%88%E6%9C%AC%E6%94%AF%E6%8C%81"><span class="toc-text">1. jdk版本支持</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91"><span class="toc-text">踩坑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FISCO-3"><span class="toc-text">FISCO 3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FISCI-build-chain"><span class="toc-text">FISCI build chain</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#FISCO-BCOS-%E4%B8%80%E9%94%AE%E8%84%9A%E6%9C%AC"><span class="toc-text">FISCO BCOS 一键脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E5%8F%82%E6%95%B0%EF%BC%88%E9%80%82%E7%94%A8%E4%BA%8E-air-%E6%A8%A1%E5%BC%8F%EF%BC%89"><span class="toc-text">通用参数（适用于 air 模式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pro-Max-%E6%A8%A1%E5%BC%8F%E4%B8%93%E7%94%A8%E5%8F%82%E6%95%B0"><span class="toc-text">Pro&#x2F;Max 模式专用参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E7%8E%B0%E6%97%B6%E7%9A%84%E8%87%AA%E6%9F%A5"><span class="toc-text">复现时的自查</span></a></li></ol></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <img class="f-footer-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="34" height="34">
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">
+            <span class="f-footer-quote-zh">我不相信命运，且我将在醉生梦死中追寻真正的自我。</span>
+            <span class="f-footer-quote-en">I do not believe in fate. In wine and dreams, I will seek out my true self.</span>
+        </p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

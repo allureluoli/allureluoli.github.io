@@ -1,0 +1,536 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>区块链国赛笔记 08｜供应链金融合约：企业、票据与转账业务 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,这组笔记围绕企业、银行和票据流转展开。两个较长的合约是分别学习的实现，不是可以直接拼接的同一份源码。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时的,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="区块链国赛笔记 08｜供应链金融合约：企业、票据与转账业务 - 二月の档案室"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,这组笔记围绕企业、银行和票据流转展开。两个较长的合约是分别学习的实现，不是可以直接拼接的同一份源码。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时的,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="区块链国赛笔记 08｜供应链金融合约：企业、票据与转账业务 - 二月の档案室"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,这组笔记围绕企业、银行和票据流转展开。两个较长的合约是分别学习的实现，不是可以直接拼接的同一份源码。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时的,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
+
+    <meta name="theme-color" content="#faf9f5" />
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <img class="f-brand-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="28" height="28">
+        <span class="f-brand-text">二月<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="/">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="/" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「我不相信命运，且我将在醉生梦死中追寻真正的自我。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
+</div>
+
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
+            
+            <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9B%BD%E8%B5%9B%E7%AC%94%E8%AE%B0/">区块链国赛笔记</a>
+            <span aria-hidden="true">/</span>
+            
+            <span class="f-crumb-cur">正文</span>
+        </nav>
+
+        <h1 class="f-post-title">区块链国赛笔记 08｜供应链金融合约：企业、票据与转账业务</h1>
+
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2026-11-03T15:30:00.000Z">2026-11-03</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                28 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                12.5k 字
+            </span>
+            
+            <a class="f-meta-item f-meta-cat" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9B%BD%E8%B5%9B%E7%AC%94%E8%AE%B0/">区块链国赛笔记</a>
+            
+        </div>
+
+        
+        <div class="f-post-tags">
+            
+            <a class="f-tag" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/">#区块链</a>
+            
+            <a class="f-tag" href="/tags/%E5%9B%BD%E8%B5%9B%E5%A4%87%E8%B5%9B/">#国赛备赛</a>
+            
+            <a class="f-tag" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">#学习笔记</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <p>这组笔记围绕企业、银行和票据流转展开。两个较长的合约是分别学习的实现，不是可以直接拼接的同一份源码。</p>
+<span id="more"></span>
+
+<blockquote>
+<p>本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时的实验环境；本文未重新搭建整套环境验证。</p>
+</blockquote>
+<h2 id="阅读前先确认"><a href="#阅读前先确认" class="headerlink" title="阅读前先确认"></a>阅读前先确认</h2><p>先画清谁能创建票据、谁持有余额、转让后如何追溯，再逐条核对权限和金额守恒。旧版 Solidity 示例需要配套编译器和依赖。</p>
+<h2 id="合约开发1"><a href="#合约开发1" class="headerlink" title="合约开发1"></a>合约开发1</h2><h3 id="合约开发"><a href="#合约开发" class="headerlink" title="合约开发"></a>合约开发</h3><hr>
+<p>比赛要求如下</p>
+<p>使用Solidity编程语言开 发智能合约，包括存储合约设计开发，接口合约设计开发，最终实现区块链存证功能</p>
+<ul>
+<li>存储合约设计开发</li>
+<li>接口合约设计开发</li>
+<li>区块链存证功能</li>
+</ul>
+<h4 id="省赛选拔题解剖"><a href="#省赛选拔题解剖" class="headerlink" title="省赛选拔题解剖"></a>省赛选拔题解剖</h4><p>此题是债卷凭证题</p>
+<p>原始资产上链，进行审核校验</p>
+<p>确认贸易关系和身份</p>
+<p>保证资产真实性</p>
+<p>债券基于供应链层层拆分和流转</p>
+<p>追溯到最底层资产</p>
+<p>实现信用穿透</p>
+<hr>
+<p>四个对象</p>
+<p>主要对象 ：</p>
+<ul>
+<li>供应商</li>
+<li>需求企业</li>
+</ul>
+<hr>
+<p>bankToCompanyReceipt：银行向公司交易；</p>
+<p>companyToCompanyReceipt：公司与公司交易；</p>
+<p>companyToBankReceipt：公司与银行交易。</p>
+<p>实现三个接口</p>
+<hr>
+<h2 id="合约开发2-金融合约"><a href="#合约开发2-金融合约" class="headerlink" title="合约开发2 金融合约"></a>合约开发2 金融合约</h2><h3 id="金融合约开发"><a href="#金融合约开发" class="headerlink" title="金融合约开发"></a>金融合约开发</h3><p>开发流程：</p>
+<p>合约部署的所有者 添加银行和公司</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.25;</span><br><span class="line"></span><br><span class="line">import &#x27;./Ownable.sol&#x27;;</span><br><span class="line"></span><br><span class="line">// SupplyChainFin is Ownable 开局先继承</span><br><span class="line">contract SupplyChainFin is Ownable &#123;</span><br><span class="line">    // 利用 struct 结构体制定表示企业的信息结构</span><br><span class="line">    struct Company &#123;</span><br><span class="line">        string companyName;</span><br><span class="line">        address companyAddress;</span><br><span class="line">        uint creditAsset;</span><br><span class="line">        uint[] acceptReceiptIndex;</span><br><span class="line">        uint[] sendReceiptIndex;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 利用 struct 结构体制定表示票据的信息结构</span><br><span class="line">    struct Receipt &#123;</span><br><span class="line">        address senderAddress;</span><br><span class="line">        address accepterAddress;</span><br><span class="line">        uint8 receiptType;</span><br><span class="line">        uint8 transferType;</span><br><span class="line">        uint amount;</span><br><span class="line">        bool isActive;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 利用 mapping 快速通过地址得到企业信息</span><br><span class="line">    mapping(address =&gt; Company) public companies;</span><br><span class="line"></span><br><span class="line">    // 利用 mapping 快速通过ID得到票据信息</span><br><span class="line">    mapping(uint =&gt; Receipt) public receipts;</span><br><span class="line"></span><br><span class="line">    // 使用 address[] 专门存储不同的企业地址</span><br><span class="line">    address[] public companyAddresses;</span><br><span class="line"></span><br><span class="line">    // 状态变量</span><br><span class="line">    uint public receiptCount;</span><br><span class="line"></span><br><span class="line">    // 事件定义</span><br><span class="line">    event CompanyAdded(address indexed companyAddress, string companyName, uint creditAsset);</span><br><span class="line">    event ReceiptCreated(uint indexed receiptId, address sender, address accepter, uint amount);</span><br><span class="line">    event ReceiptTransferred(uint indexed receiptId, address oldAccepter, address newAccepter);</span><br><span class="line"></span><br><span class="line">    // 权限设计 onlyOwner - 实际上隐藏在 Ownable.sol</span><br><span class="line">    /**</span><br><span class="line">     * @dev Throws if called by any account other than the owner.</span><br><span class="line">     */</span><br><span class="line">    // modifier onlyOwner() &#123;</span><br><span class="line">    //   require(msg.sender == owner);</span><br><span class="line">    //   _;</span><br><span class="line">    // &#125;</span><br><span class="line"></span><br><span class="line">    // 添加企业信息 - onlyOwner权限</span><br><span class="line">    function addCompany(address _companyAddress, string _companyName, uint _creditAsset) public onlyOwner returns (bool) &#123;</span><br><span class="line">        // 通过 keccak256 对比哈希值，确认企业不存在</span><br><span class="line">        require(companies[_companyAddress].companyAddress == address(0), &quot;Company already exists&quot;);</span><br><span class="line"></span><br><span class="line">        companies[_companyAddress] = Company(&#123;</span><br><span class="line">            companyName: _companyName,</span><br><span class="line">            companyAddress: _companyAddress,</span><br><span class="line">            creditAsset: _creditAsset,</span><br><span class="line">            acceptReceiptIndex: new uint,</span><br><span class="line">            sendReceiptIndex: new uint</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        // 添加到地址列表</span><br><span class="line">        companyAddresses.push(_companyAddress);</span><br><span class="line"></span><br><span class="line">        emit CompanyAdded(_companyAddress, _companyName, _creditAsset);</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 创建票据 - 保证交易的合法性</span><br><span class="line">    function createReceipt(address _accepterAddress, uint8 _receiptType, uint8 _transferType, uint _amount) public returns (uint) &#123;</span><br><span class="line">        // 验证发送方企业存在</span><br><span class="line">        require(companies[msg.sender].companyAddress != address(0), &quot;Sender company not registered&quot;);</span><br><span class="line"></span><br><span class="line">        // 验证接收方企业存在</span><br><span class="line">        require(companies[_accepterAddress].companyAddress != address(0), &quot;Accepter company not registered&quot;);</span><br><span class="line"></span><br><span class="line">        // 验证金额有效性</span><br><span class="line">        require(_amount &gt; 0, &quot;Amount must be greater than 0&quot;);</span><br><span class="line"></span><br><span class="line">        // 创建票据</span><br><span class="line">        receiptCount++;</span><br><span class="line">        receipts[receiptCount] = Receipt(&#123;</span><br><span class="line">            senderAddress: msg.sender,</span><br><span class="line">            accepterAddress: _accepterAddress,</span><br><span class="line">            receiptType: _receiptType,</span><br><span class="line">            transferType: _transferType,</span><br><span class="line">            amount: _amount,</span><br><span class="line">            isActive: true</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        // 通过Receipt结构进行存证，存储交易记录</span><br><span class="line">        companies[msg.sender].sendReceiptIndex.push(receiptCount);</span><br><span class="line">        companies[_accepterAddress].acceptReceiptIndex.push(receiptCount);</span><br><span class="line"></span><br><span class="line">        emit ReceiptCreated(receiptCount, msg.sender, _accepterAddress, _amount);</span><br><span class="line">        return receiptCount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 转让票据 - 保证交易的合法性</span><br><span class="line">    function transferReceipt(uint _receiptId, address _newAccepter) public returns (bool) &#123;</span><br><span class="line">        // 验证票据有效性</span><br><span class="line">        require(receipts[_receiptId].isActive, &quot;Receipt is not active&quot;);</span><br><span class="line"></span><br><span class="line">        // 必须只能接受人创建此交易，也就是接受人承认这笔交易存在</span><br><span class="line">        require(receipts[_receiptId].accepterAddress == msg.sender, &quot;Only current accepter can transfer&quot;);</span><br><span class="line"></span><br><span class="line">        // 验证新接收方企业存在</span><br><span class="line">        require(companies[_newAccepter].companyAddress != address(0), &quot;New accepter company not registered&quot;);</span><br><span class="line"></span><br><span class="line">        address oldAccepter = receipts[_receiptId].accepterAddress;</span><br><span class="line">        receipts[_receiptId].accepterAddress = _newAccepter;</span><br><span class="line"></span><br><span class="line">        // 更新票据索引</span><br><span class="line">        _removeFromArray(companies[oldAccepter].acceptReceiptIndex, _receiptId);</span><br><span class="line">        companies[_newAccepter].acceptReceiptIndex.push(_receiptId);</span><br><span class="line"></span><br><span class="line">        emit ReceiptTransferred(_receiptId, oldAccepter, _newAccepter);</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 内部函数：从数组中移除元素</span><br><span class="line">    function _removeFromArray(uint[] storage array, uint value) internal &#123;</span><br><span class="line">        for (uint i = 0; i &lt; array.length; i++) &#123;</span><br><span class="line">            if (array[i] == value) &#123;</span><br><span class="line">                array[i] = array[array.length - 1];</span><br><span class="line">                array.length--;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 查询函数</span><br><span class="line">    function getCompany(address _companyAddress) public view returns (</span><br><span class="line">        string, address, uint, uint[], uint[]</span><br><span class="line">    ) &#123;</span><br><span class="line">        Company memory company = companies[_companyAddress];</span><br><span class="line">        return (</span><br><span class="line">            company.companyName,</span><br><span class="line">            company.companyAddress,</span><br><span class="line">            company.creditAsset,</span><br><span class="line">            company.acceptReceiptIndex,</span><br><span class="line">            company.sendReceiptIndex</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function getReceipt(uint _receiptId) public view returns (</span><br><span class="line">        address, address, uint8, uint8, uint, bool</span><br><span class="line">    ) &#123;</span><br><span class="line">        Receipt memory receipt = receipts[_receiptId];</span><br><span class="line">        return (</span><br><span class="line">            receipt.senderAddress,</span><br><span class="line">            receipt.accepterAddress,</span><br><span class="line">            receipt.receiptType,</span><br><span class="line">            receipt.transferType,</span><br><span class="line">            receipt.amount,</span><br><span class="line">            receipt.isActive</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 获取所有企业地址</span><br><span class="line">    function getAllCompanies() public view returns (address[]) &#123;</span><br><span class="line">        return companyAddresses;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><strong>继承结构</strong>：<code>SupplyChainFin is Ownable</code> 继承权限控制基础合约</li>
+<li><strong>结构体定义</strong>：Company 和 Receipt 结构体分别管理企业和票据数据</li>
+<li><strong>映射存储</strong>：<code>mapping(address =&gt; Company)</code> 和 <code>mapping(uint =&gt; Receipt)</code> 实现快速数据访问</li>
+<li><strong>地址列表</strong>：<code>address[] companyAddresses</code> 存储所有注册企业地址</li>
+<li><strong>权限控制</strong>：使用 <code>onlyOwner</code> 修饰符保护企业注册功能</li>
+<li><strong>哈希验证</strong>：通过地址比较验证企业存在性（替代哈希验证）</li>
+<li><strong>交易合法性</strong>：严格的发送方、接收方、金额验证</li>
+<li><strong>存证系统</strong>：Receipt 结构记录交易凭证，并更新企业票据索引</li>
+<li><strong>事件日志</strong>：完整的事件系统记录所有关键操作</li>
+<li><strong>工具函数</strong>：内部函数处理数组操作，保证数据一致性</li>
+</ol>
+<h2 id="转账合约设计"><a href="#转账合约设计" class="headerlink" title="转账合约设计"></a>转账合约设计</h2><h3 id="转账合约设计-1"><a href="#转账合约设计-1" class="headerlink" title="转账合约设计"></a>转账合约设计</h3><p>示例：</p>
+<p>供应链金融智能合约</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.22;</span><br><span class="line">import &#x27;./Ownable.sol&#x27;;</span><br><span class="line"></span><br><span class="line">//供应链金融智能合约</span><br><span class="line">contract SupplyChainFin is Ownable &#123;</span><br><span class="line"></span><br><span class="line">    //监管者信息结构体</span><br><span class="line">    struct Supervisor &#123;</span><br><span class="line">        string supervisorName;</span><br><span class="line">        address supervisorAddress;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //公司信息结构体</span><br><span class="line">    struct Company &#123;</span><br><span class="line">        string companyName;</span><br><span class="line">        address companyAddress;</span><br><span class="line">        uint creditAsset;</span><br><span class="line">        uint[] acceptReceiptIndex;</span><br><span class="line">        uint[] sendReceiptIndex;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //银行信息结构体</span><br><span class="line">    struct Bank &#123;</span><br><span class="line">        string bankName;</span><br><span class="line">        address bankAddress;</span><br><span class="line">        uint creditAsset;</span><br><span class="line">        uint[] acceptReceiptIndex;</span><br><span class="line">        uint[] sendReceiptIndex;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //数字发票收据信息</span><br><span class="line">    struct Receipt &#123;</span><br><span class="line">        address senderAddress;</span><br><span class="line">        address accepterAddress;</span><br><span class="line">        uint8 receiptType;</span><br><span class="line">        uint8 transferType;</span><br><span class="line">        uint amount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //公司的Map，用于快速搜索</span><br><span class="line">    mapping(address =&gt; Company) companyMap;</span><br><span class="line"></span><br><span class="line">    //银行的Map，用于快速搜索</span><br><span class="line">    mapping(address =&gt; Bank) bankMap;</span><br><span class="line"></span><br><span class="line">    //发票的Map，用于快速搜索</span><br><span class="line">    mapping(uint =&gt; Receipt) receiptMap;</span><br><span class="line"></span><br><span class="line">    //监管者实体</span><br><span class="line">    Supervisor public superviosrIns;</span><br><span class="line"></span><br><span class="line">    //公司地址的数组</span><br><span class="line">    address[] public companies;</span><br><span class="line"></span><br><span class="line">    //银行地址的数组</span><br><span class="line">    address[] public banks;</span><br><span class="line"></span><br><span class="line">    //数字发票的索引</span><br><span class="line">    uint public receiptIndex;</span><br><span class="line"></span><br><span class="line">    //构造函数</span><br><span class="line">    constructor(string name) &#123;</span><br><span class="line">        receiptIndex = 0;</span><br><span class="line">        superviosrIns = Supervisor(name, msg.sender);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    function addCompany(string name, address companyAddress) returns(bool) &#123;</span><br><span class="line">        Company memory newCompany = Company(name, companyAddress, 0, new uint, new uint);</span><br><span class="line">        companies.push(companyAddress);</span><br><span class="line">        companyMap[companyAddress] = newCompany;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function getCompany(address companyAddress) public view returns(string, address, uint, uint[], uint[]) &#123;</span><br><span class="line">        Company company = companyMap[companyAddress];</span><br><span class="line">        return (company.companyName, company.companyAddress, company.creditAsset, company.acceptReceiptIndex, company.sendReceiptIndex);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function addBank(string name, address bankAddress, uint credit) public onlyOwner &#123;</span><br><span class="line">        Bank memory newBank = Bank(name, bankAddress, credit, new uint, new uint);</span><br><span class="line">        banks.push(bankAddress);</span><br><span class="line">        bankMap[bankAddress] = newBank;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function getBank(address bankAddress) public view returns(string, address, uint, uint[], uint[])&#123;</span><br><span class="line">        Bank bank = bankMap[bankAddress];</span><br><span class="line">        return (bank.bankName, bank.bankAddress, bank.creditAsset, bank.acceptReceiptIndex, bank.sendReceiptIndex);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function getAllCompanyAddress() public view returns(address[]) &#123;</span><br><span class="line">        return companies;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function getAllBankAddress() public view returns(address[]) &#123;</span><br><span class="line">        return banks;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function getReceipt(uint index) public view returns(address, address, uint8, uint8, uint) &#123;</span><br><span class="line">        Receipt receipt = receiptMap[index];</span><br><span class="line">        return (receipt.senderAddress, receipt.accepterAddress, receipt.receiptType, receipt.transferType, receipt.amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //存证交易</span><br><span class="line">    // receiptType: 发票类型(存证、现金)</span><br><span class="line">    //1: 交易类型为存证</span><br><span class="line">    //2：交易类型为现金</span><br><span class="line">    // transferType: 交易类型</span><br><span class="line">    //1: 银行转账给公司</span><br><span class="line">    //2: 公司与公司间转账</span><br><span class="line">    //3: 公司转账给银行</span><br><span class="line"></span><br><span class="line">    //银行向公司交易（公司向银行提供交易存证）</span><br><span class="line">    function bankToCompanyReceipt(address senderAddress, address accepterAddress, uint amount, uint8 receiptType) returns(uint) &#123;</span><br><span class="line"></span><br><span class="line">       //transferType :1 银行转账给公司</span><br><span class="line">       //必须只能接受人创建此交易，也就是接受人承认这笔交易存在</span><br><span class="line">        require(msg.sender == accepterAddress);</span><br><span class="line">        Bank memory bank = bankMap[accepterAddress];</span><br><span class="line">        Company memory company = companyMap[senderAddress];</span><br><span class="line"></span><br><span class="line">        //确认银行存在</span><br><span class="line">        if (keccak256(bank.bankName) == keccak256(&quot;&quot;)) &#123;</span><br><span class="line">            return 404001;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //确认公司存在</span><br><span class="line">        if (keccak256(company.companyName) == keccak256(&quot;&quot;)) &#123;</span><br><span class="line">            return 404002;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (bank.creditAsset &lt; amount) &#123;</span><br><span class="line">            return 500001;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Receipt memory newReceipt = Receipt(senderAddress, accepterAddress, receiptType, 1, amount);</span><br><span class="line">        receiptIndex += 1;</span><br><span class="line">        receiptMap[receiptIndex] = newReceipt;</span><br><span class="line">        companyMap[senderAddress].sendReceiptIndex.push(receiptIndex);</span><br><span class="line">        bankMap[accepterAddress].acceptReceiptIndex.push(receiptIndex);</span><br><span class="line">        bankMap[accepterAddress].creditAsset -= amount;</span><br><span class="line">        companyMap[senderAddress].creditAsset += amount;</span><br><span class="line">        return 200;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    //公司与公司交易</span><br><span class="line">    //接收存证的公司需要给发送存证的公司转账存证对应的数额</span><br><span class="line">    function companyToCompanyReceipt(address senderAddress, address accepterAddress, uint amount, uint8 receiptType) returns(uint) &#123;</span><br><span class="line"></span><br><span class="line">        //transferType :2 公司与公司间转账</span><br><span class="line">        //存证接收的公司可以产生这一笔交易</span><br><span class="line">        require(msg.sender == accepterAddress);</span><br><span class="line"></span><br><span class="line">        Company memory senderCompany = companyMap[senderAddress];</span><br><span class="line">        Company memory accepterCompany = companyMap[accepterAddress];</span><br><span class="line">        //确认发送公司存在</span><br><span class="line">        if (keccak256(senderCompany.companyName) == keccak256(&quot;&quot;)) &#123;</span><br><span class="line">            return 404001;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //确认接收公司存在</span><br><span class="line">        if (keccak256(accepterCompany.companyName) == keccak256(&quot;&quot;)) &#123;</span><br><span class="line">            return 404002;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //如果存证接收的公司资产小于存证数额，那么就不能交易发送存证</span><br><span class="line">        if (accepterCompany.creditAsset &lt; amount) &#123;</span><br><span class="line">            return 500001;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //创建存证</span><br><span class="line">        Receipt memory newReceipt = Receipt(senderAddress, accepterAddress, receiptType, 2, amount);</span><br><span class="line">        receiptIndex += 1;</span><br><span class="line">        //记录存证（存证Map，公司Map对应地址的发送和接收存证列表）</span><br><span class="line">        receiptMap[receiptIndex] = newReceipt;</span><br><span class="line">        companyMap[senderAddress].sendReceiptIndex.push(receiptIndex);</span><br><span class="line">        companyMap[accepterAddress].acceptReceiptIndex.push(receiptIndex);</span><br><span class="line"></span><br><span class="line">        companyMap[senderAddress].creditAsset += amount;</span><br><span class="line">        companyMap[accepterAddress].creditAsset -= amount;</span><br><span class="line">        return 200;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    //公司与银行交易</span><br><span class="line">    function companyToBankReceipt(address senderAddress, address accepterAddress, uint amount, uint8 receiptType) returns(uint) &#123;</span><br><span class="line"></span><br><span class="line">        //transferType :3 公司向银行转账</span><br><span class="line">        //存证接收的公司可以产生这一笔交易</span><br><span class="line">        require(msg.sender == accepterAddress);</span><br><span class="line"></span><br><span class="line">        Bank memory bank = bankMap[senderAddress];</span><br><span class="line">        Company memory accepterCompany = companyMap[accepterAddress];</span><br><span class="line"></span><br><span class="line">        //确认发送公司存在</span><br><span class="line">        if (keccak256(bank.bankName) == keccak256(&quot;&quot;)) &#123;</span><br><span class="line">            return 404001;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //确认接收公司存在</span><br><span class="line">        if (keccak256(accepterCompany.companyName) == keccak256(&quot;&quot;)) &#123;</span><br><span class="line">            return 404002;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //如果存证接收的公司资产小于存证数额，那么就不能交易发送存证</span><br><span class="line">        if (accepterCompany.creditAsset &lt; amount) &#123;</span><br><span class="line">            return 500001;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //创建存证</span><br><span class="line">        Receipt memory newReceipt = Receipt(senderAddress, accepterAddress, receiptType, 3, amount);</span><br><span class="line">        receiptIndex += 1;</span><br><span class="line">        //记录存证（存证Map，公司Map对应地址的发送和接收存证列表）</span><br><span class="line">        receiptMap[receiptIndex] = newReceipt;</span><br><span class="line">        bankMap[senderAddress].sendReceiptIndex.push(receiptIndex);</span><br><span class="line">        companyMap[accepterAddress].acceptReceiptIndex.push(receiptIndex);</span><br><span class="line">        bankMap[senderAddress].creditAsset += amount;</span><br><span class="line">        companyMap[accepterAddress].creditAsset -= amount;</span><br><span class="line">        return 200;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>设计解构：</p>
+<ul>
+<li><p><code>SupplyChainFin is Ownable</code> 开局先继承</p>
+</li>
+<li><p>利用 <code>struct</code> 结构体制定表示 银行 公司 收据 的 三种信息结构</p>
+</li>
+<li><p>利用<code>mapping</code>  快速通过地址得到信息</p>
+</li>
+<li><p>使用<code>address[]</code> 专门存储不同的地址</p>
+</li>
+<li><p>权限设计 <code>onlyOwner</code></p>
+<p>​	实际上隐藏在 <code>Ownable.sol</code></p>
+<ul>
+<li><pre><code class="solidity">  /**
+   * @dev Throws if called by any account other than the owner.
+   */
+  modifier onlyOwner() &#123;
+    require(msg.sender == owner);
+    _;
+  &#125;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 通过 `keccak256` 对比哈希值，确认部门存在</span><br><span class="line"></span><br><span class="line">  ```solidity</span><br><span class="line">      if (keccak256(company.companyName) == keccak256(&quot;&quot;)) &#123;</span><br><span class="line">          return 404002;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>保证交易的合法性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//transferType :1 银行转账给公司</span><br><span class="line">//必须只能接受人创建此交易，也就是接受人承认这笔交易存在</span><br><span class="line"> require(msg.sender == accepterAddress);</span><br><span class="line"> Bank memory bank = bankMap[accepterAddress];</span><br><span class="line"> Company memory company = companyMap[senderAddress];</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过<code>Receipt</code>结构进行存证，存储交易记录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//创建存证</span><br><span class="line">Receipt memory newReceipt = Receipt(senderAddress, accepterAddress, receiptType, 2, amount);</span><br><span class="line">receiptIndex += 1;</span><br><span class="line">//记录存证（存证Map，公司Map对应地址的发送和接收存证列表）</span><br><span class="line">receiptMap[receiptIndex] = newReceipt;</span><br><span class="line">companyMap[senderAddress].sendReceiptIndex.push(receiptIndex);</span><br><span class="line">companyMap[accepterAddress].acceptReceiptIndex.push(receiptIndex);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>简单的交易计算</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bankMap[senderAddress].creditAsset += amount;</span><br><span class="line">companyMap[accepterAddress].creditAsset -= amount;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>返回 状态码 <code>200</code> 表示成功</p>
+</li>
+</ul>
+<pre><code>
+## 复现时的自查
+
+- 记录自己实际使用的版本、配置和缺失依赖。
+- 对照本篇关键步骤，保存命令或调用结果，并解释结果代表什么。
+- 对失败或与原记录不一致的情况保留错误信息，不把历史输出当成自己的验证结果。
+
+[返回系列导读](/guosai-notes/) · [上一篇](/guosai-notes/solidity-abi/) · [下一篇](/guosai-notes/foundry/)
+</code></pre>
+
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
+                <ul id="audio-list" style="display:none">
+                    
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
+                    
+                </ul>
+                
+            </div>
+
+            
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/guosai-notes/supply-chain/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
+
+
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
+    
+    <a class="f-pn-card f-pn-prev" href="/guosai-notes/foundry/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">区块链国赛笔记 09｜Foundry 入门：工具分工与 Counter 测试</span>
+        <span class="f-pn-date">2026-11-03</span>
+    </a>
+    
+    
+    <a class="f-pn-card f-pn-next" href="/guosai-notes/webase/">
+        <span class="f-pn-label">更早的文章 →</span>
+        <span class="f-pn-title">区块链国赛笔记 04｜WeBASE 部署、用户管理与 CNS</span>
+        <span class="f-pn-date">2026-11-03</span>
+    </a>
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E5%89%8D%E5%85%88%E7%A1%AE%E8%AE%A4"><span class="toc-text">阅读前先确认</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%88%E7%BA%A6%E5%BC%80%E5%8F%911"><span class="toc-text">合约开发1</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%88%E7%BA%A6%E5%BC%80%E5%8F%91"><span class="toc-text">合约开发</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9C%81%E8%B5%9B%E9%80%89%E6%8B%94%E9%A2%98%E8%A7%A3%E5%89%96"><span class="toc-text">省赛选拔题解剖</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%88%E7%BA%A6%E5%BC%80%E5%8F%912-%E9%87%91%E8%9E%8D%E5%90%88%E7%BA%A6"><span class="toc-text">合约开发2 金融合约</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%91%E8%9E%8D%E5%90%88%E7%BA%A6%E5%BC%80%E5%8F%91"><span class="toc-text">金融合约开发</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AC%E8%B4%A6%E5%90%88%E7%BA%A6%E8%AE%BE%E8%AE%A1"><span class="toc-text">转账合约设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E8%B4%A6%E5%90%88%E7%BA%A6%E8%AE%BE%E8%AE%A1-1"><span class="toc-text">转账合约设计</span></a></li></ol></li></ol></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <img class="f-footer-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="34" height="34">
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">
+            <span class="f-footer-quote-zh">我不相信命运，且我将在醉生梦死中追寻真正的自我。</span>
+            <span class="f-footer-quote-en">I do not believe in fate. In wine and dreams, I will seek out my true self.</span>
+        </p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

